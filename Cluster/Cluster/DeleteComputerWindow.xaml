@@ -1,0 +1,39 @@
+﻿<Window x:Class="Cluster.DeleteComputerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cluster"
+        mc:Ignorable="d"
+        Title="Delete computer" Height="450" Width="800">
+    <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label FontSize="24">Delete computers</Label>
+        <ListBox x:Name="lbComputers"
+                 Grid.Row="1"
+                 Margin="0 8 4 8"
+                 SelectionChanged="lbComputers_SelectionChanged"/>
+        <Button x:Name="btnDelete"
+                Grid.Row="2"
+                Click="btnDelete_Click">Delete</Button>
+
+        <Label
+            Grid.Column="1"
+            VerticalAlignment="Bottom">Processes:</Label>
+        <DataGrid x:Name="dgProcesses"
+                  Grid.Column="1"
+                  Grid.Row="1"
+                  Grid.RowSpan="2"
+                  Margin="4 0 0 0"
+                  IsReadOnly="True"/>
+    </Grid>
+</Window>

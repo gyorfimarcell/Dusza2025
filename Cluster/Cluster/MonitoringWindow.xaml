@@ -1,0 +1,69 @@
+﻿<Window x:Class="Cluster.MonitoringWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cluster"
+        mc:Ignorable="d"
+        Title="Monitoring" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.ColumnSpan="3">
+            <TabItem Header="Computers">
+                <DataGrid x:Name="dgComputers"
+                          IsReadOnly="True"
+                          CanUserAddRows="True"
+                          Margin="8"/>
+            </TabItem>
+            <TabItem Header="Programs">
+                <Grid Margin="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    
+                    <ComboBox x:Name="cbProgram"
+                              SelectionChanged="cbProgram_SelectionChanged"/>
+                    <Label x:Name="lblProgramCount"
+                           Grid.Column="1"
+                           HorizontalAlignment="Center"/>
+                    <DataGrid x:Name="dgPrograms"
+                              Grid.Row="1"
+                              Grid.ColumnSpan="2"
+                              IsReadOnly="True"
+                              CanUserAddRows="True"
+                              Margin="0 8 0 0"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Label x:Name="lblActive"
+               Grid.Row="1"
+               Content="Active processes: 0"
+               HorizontalAlignment="Center"/>
+        <Label x:Name="lblInctive"
+               Grid.Row="1"
+               Grid.Column="1"
+               Content="Inactive processes: 0"
+               HorizontalAlignment="Center"/>
+        <Label x:Name="lblStatus"
+               Grid.Row="1"
+               Grid.Column="2"
+               Content="TODO CLUSTER HEALTH"
+               HorizontalAlignment="Center"/>
+    </Grid>
+</Window>

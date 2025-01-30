@@ -1,0 +1,41 @@
+﻿<Window x:Class="Cluster.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cluster"
+        mc:Ignorable="d"
+        Title="Cluster Management" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <Label HorizontalAlignment="Center"
+                   FontSize="32">Cluster Management</Label>
+            <Label x:Name="lblPath"
+                HorizontalAlignment="Center"
+                   Margin="0 0 0 32">
+                Path: asdasd
+            </Label>
+            <Button x:Name="btnMonitoring"
+                    Margin="0 0 0 6" Click="btnMonitoring_Click">Monitoring</Button>
+            <Button x:Name="btnAddComputer"
+                    Margin="0 0 0 6" Click="btnAddComputer_Click">Add Computer</Button>
+            <Button x:Name="btnDeleteComputer"
+                    Margin="0 0 0 6" Click="btnDeleteComputer_Click">Delete Computer</Button>
+            <Button x:Name="btnShutdownProgram"
+                    Margin="0 0 0 6" Click="btnShutdownProgram_Click">Shutdown Program</Button>
+            <Button x:Name="btnModifyProgram"
+        Margin="0 0 0 6" Click="btnModifyProgram_Click">Modify Program</Button>
+            <Button x:Name="btnRunInstance"
+                    Margin="0 0 0 6" Click="btnRunInstance_Click">Run program instance</Button>
+            <Button x:Name="btnShutdownInstance"
+                    Margin="0 0 0 6" Click="btnShutdownInstance_Click">Shutdown program instance</Button>
+            <Button x:Name="btnExit" Click="btnExit_Click">Exit</Button>
+        </StackPanel>
+    </Grid>
+</Window>
