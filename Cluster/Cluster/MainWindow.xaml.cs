@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Cluster.Pages;
+using Microsoft.Win32;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Wpf.Ui.Controls;
+using MessageBox = Wpf.Ui.Controls.MessageBox;
 
 namespace Cluster
 {
@@ -18,16 +21,15 @@ namespace Cluster
     /// </summary>
     public partial class MainWindow
     {
-        public static String ClusterPath { get; private set; } = "";
+        public static string ClusterPath { get; private set; } = "";
 
         public MainWindow()
         {
             InitializeComponent();
-            
+            Loaded += MainWindow_Loaded;
         }
 
-        private void loadNavItem_Click(object sender, RoutedEventArgs e)
-        {
+        public void OpenClusterSelectionDialog() {
             OpenFolderDialog ofd = new OpenFolderDialog();
             if (ofd.ShowDialog() == true)
             {
@@ -35,18 +37,40 @@ namespace Cluster
                 List<ProgramType> programs = ProgramType.ReadClusterFile(ofd.FolderName);
                 if (programs == null)
                 {
-                    MessageBox.Show("The chosen folder doesn't contain a .klaszter file.");
+                    MessageBox msg = new() { Title = "Invalid folder", Content = "The chosen folder doesn't contain a .klaszter file." };
+                    msg.ShowDialogAsync();
                 }
                 else
                 {
                     lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+                    loadNavItem.Content = "Load another Cluster";
+                    foreach (var item in RootNavigation.MenuItems)
+                    {
+                        if (item is NavigationViewItem)
+                        {
+                            NavigationViewItem navItem = (NavigationViewItem)item;
+                            if (!navItem.IsEnabled) navItem.IsEnabled = true;
+                        }
+                    }
+
                     ClusterHealth health = new(Computer.GetComputers(ClusterPath), programs);
                     if (!health.Ok)
                     {
-                        MessageBox.Show($"This cluster has errors:\n{String.Join("\n", health.Errors.Select(x => $" - {x}"))}");
+                        //MessageBox.Show($"This cluster has errors:\n{String.Join("\n", health.Errors.Select(x => $" - {x}"))}");
                     }
                 }
             }
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            RootNavigation.Navigate(typeof(StartPage));
+            RootNavigation.ClearJournal();
+        }
+
+        private void loadNavItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenClusterSelectionDialog();
         }
     }
 }
