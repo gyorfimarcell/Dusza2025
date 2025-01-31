@@ -43,6 +43,7 @@ namespace Cluster
             File.Delete($@"{path}\{computerName}\{fileName}");
             programs = programs.Where(x => x.FileName != fileName).ToList();
             lbCurrentPrograms.ItemsSource = programs.Select(x => x.FileName).ToList();
+            //Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}", $"{program.ActivePrograms}"], LogType.ShutdownProgramInstance);
         }
     }
 }

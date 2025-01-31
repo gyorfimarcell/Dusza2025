@@ -50,7 +50,7 @@ namespace Cluster
 
             Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory);
             process.Write(Path.Combine(path, computer.Name));
-            //Close();
+            Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}", $"{program.ActivePrograms}"], LogType.RunProgramInstance);
         }
     }
 }

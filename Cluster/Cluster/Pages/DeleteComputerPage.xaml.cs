@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Cluster
 {
@@ -51,7 +53,7 @@ namespace Cluster
             Computer c = Computer.GetComputers(path).Find(x => x.Name == lbComputers.SelectedItem.ToString());
             bool success = c.Delete(path);
             if (success) {
-                //Close();
+                Log.WriteLog([c.Name, $"{c.ProcessorCore}", $"{c.RamCapacity}"], LogType.DeleteComputer);
             }
         }
     }
