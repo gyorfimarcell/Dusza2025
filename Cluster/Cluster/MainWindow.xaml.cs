@@ -53,11 +53,8 @@ namespace Cluster
                         }
                     }
 
-                    ClusterHealth health = new(Computer.GetComputers(ClusterPath), programs);
-                    if (!health.Ok)
-                    {
-                        //MessageBox.Show($"This cluster has errors:\n{String.Join("\n", health.Errors.Select(x => $" - {x}"))}");
-                    }
+                    RootNavigation.ClearJournal();
+                    RootNavigation.Navigate(typeof(ClusterHealthPage));
                 }
             }
         }
