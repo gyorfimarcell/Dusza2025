@@ -17,15 +17,15 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for DeleteComputerWindow.xaml
     /// </summary>
-    public partial class DeleteComputerWindow : Window
+    public partial class DeleteComputerPage : Page
     {
         string path;
 
-        public DeleteComputerWindow(string path)
+        public DeleteComputerPage()
         {
             InitializeComponent();
 
-            this.path = path;
+            path = MainWindow.ClusterPath;
 
             btnDelete.IsEnabled = false;
 
@@ -51,7 +51,7 @@ namespace Cluster
             Computer c = Computer.GetComputers(path).Find(x => x.Name == lbComputers.SelectedItem.ToString());
             bool success = c.Delete(path);
             if (success) {
-                Close();
+                //Close();
             }
         }
     }

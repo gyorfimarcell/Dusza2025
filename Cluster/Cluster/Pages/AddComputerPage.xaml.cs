@@ -17,14 +17,14 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for AddComputerWindow.xaml
     /// </summary>
-    public partial class AddComputerWindow : Window
+    public partial class AddComputerPage : Page
     {
         string path;
 
-        public AddComputerWindow(string path)
+        public AddComputerPage()
         {
             InitializeComponent();
-            this.path = path;
+            path = MainWindow.ClusterPath;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace Cluster
 
             bool success = Computer.AddComputer(path, tbName.Text, processor, memory);
             if (success) {
-                Close();
+                //Close();
             }
         }
     }

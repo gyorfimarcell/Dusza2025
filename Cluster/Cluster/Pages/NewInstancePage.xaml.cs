@@ -17,15 +17,15 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for NewInstanceWindow.xaml
     /// </summary>
-    public partial class NewInstanceWindow : Window
+    public partial class NewInstancePage : Page
     {
         string path;
 
-        public NewInstanceWindow(string path)
+        public NewInstancePage()
         {
             InitializeComponent();
 
-            this.path = path;
+            path = MainWindow.ClusterPath;
 
             cbProgram.ItemsSource = ProgramType.ReadClusterFile(path).Select(x => x.ProgramName);
             cbComputer.ItemsSource = Computer.GetComputers(path).Select(x => x.Name);
@@ -50,7 +50,7 @@ namespace Cluster
 
             Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory);
             process.Write(Path.Combine(path, computer.Name));
-            Close();
+            //Close();
         }
     }
 }

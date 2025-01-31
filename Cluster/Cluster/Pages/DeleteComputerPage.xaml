@@ -1,11 +1,16 @@
-﻿<Window x:Class="Cluster.DeleteComputerWindow"
+﻿<Page x:Class="Cluster.DeleteComputerPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:local="clr-namespace:Cluster"
         mc:Ignorable="d"
-        Title="Delete computer" Height="450" Width="800">
+        Title="Delete computer"
+        d:DesignHeight="750"
+        d:DesignWidth="1200"
+        ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+        ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <Grid Margin="8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -36,4 +41,4 @@
                   Margin="4 0 0 0"
                   IsReadOnly="True"/>
     </Grid>
-</Window>
+</Page>

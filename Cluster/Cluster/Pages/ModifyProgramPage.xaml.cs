@@ -17,15 +17,15 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ModifyProgram.xaml
     /// </summary>
-    public partial class ModifyProgram : Window
+    public partial class ModifyProgramPage : Page
     {
         List<ProgramType> programs = new List<ProgramType>();
         string path = string.Empty;
-        public ModifyProgram(List<ProgramType> programs, string path)
+        public ModifyProgramPage()
         {
             InitializeComponent();
-            this.programs = programs;
-            this.path = path;
+            path = MainWindow.ClusterPath;
+            programs = ProgramType.ReadClusterFile(path);
             lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
         }
 

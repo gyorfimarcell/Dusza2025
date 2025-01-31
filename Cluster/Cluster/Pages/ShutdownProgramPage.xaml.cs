@@ -18,15 +18,15 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ShutdownProgram.xaml
     /// </summary>
-    public partial class ShutdownProgram : Window
+    public partial class ShutdownProgramPage : Page
     {
         List<ProgramType> programs = new();
         string path = string.Empty;
-        public ShutdownProgram(List<ProgramType> programs, string path)
+        public ShutdownProgramPage()
         {
             InitializeComponent();
-            this.programs = programs;
-            this.path = path;
+            path = MainWindow.ClusterPath;
+            programs = ProgramType.ReadClusterFile(path);
             lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
         }
 

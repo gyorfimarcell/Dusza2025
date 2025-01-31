@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,14 +19,16 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for MonitoringWindow.xaml
     /// </summary>
-    public partial class MonitoringWindow : Window
+    public partial class MonitoringPage : Page
     {
         List<Computer> computers;
         List<Process> processes;
 
-        public MonitoringWindow(List<Computer> computers, List<ProgramType> programs) 
+        public MonitoringPage()
         {
-            this.computers = computers;
+            this.computers = Computer.GetComputers(MainWindow.ClusterPath);
+            List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
+
             processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
 
             InitializeComponent();
