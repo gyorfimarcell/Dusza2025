@@ -11,6 +11,9 @@ namespace Cluster
 {
     public enum LogType
     {
+        OpenProgram,
+        CloseProgram,
+        LoadCluster,
         AddComputer,
         DeleteComputer,
         ExportCSV,
@@ -30,7 +33,7 @@ namespace Cluster
         }
         public static void WriteLog(List<string> logData, LogType type)
         {
-            if (logData == null || logData.Count == 0) return;
+            if (logData == null) return;
 
             string date = DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss");
             string logFilePath = Path.Combine(GetLogDirectoryPath(), $"{date[..10].Replace(".", "")}.log");

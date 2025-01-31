@@ -23,7 +23,8 @@ namespace Cluster
         public MainWindow()
         {
             InitializeComponent();
-            
+            Log.WriteLog([], LogType.OpenProgram);
+
         }
 
         private void loadNavItem_Click(object sender, RoutedEventArgs e)
@@ -45,8 +46,14 @@ namespace Cluster
                     {
                         MessageBox.Show($"This cluster has errors:\n{String.Join("\n", health.Errors.Select(x => $" - {x}"))}");
                     }
+                    Log.WriteLog([ClusterPath], LogType.LoadCluster);
                 }
             }
+        }
+
+        private void FluentWindow_Closed(object sender, EventArgs e)
+        {
+            Log.WriteLog([], LogType.CloseProgram);
         }
     }
 }
