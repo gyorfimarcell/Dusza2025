@@ -18,16 +18,17 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ShutdownProgram.xaml
     /// </summary>
-    public partial class ShutdownProgram : Window
+    public partial class ShutdownProgramInstancePage : Page
     {
-        List<ProgramType> programs = new();
+        List<Process> programs = new();
         string path = string.Empty;
-        public ShutdownProgram(List<ProgramType> programs, string path)
+        public ShutdownProgramInstancePage()
         {
             InitializeComponent();
-            this.programs = programs;
-            this.path = path;
-            lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
+            path = MainWindow.path;
+            programs = Computer.GetComputers(path)
+                .Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
+            lbCurrentPrograms.ItemsSource = programs.Select(x => x.FileName).ToList();
         }
 
         private void lbCurrentPrograms_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -37,13 +38,11 @@ namespace Cluster
 
         private void btnShutdown_Click(object sender, RoutedEventArgs e)
         {
-            bool result = ProgramType.ShutdownProgram(path, programs, lbCurrentPrograms.SelectedItem.ToString());
-            if (result)
-            {
-                programs = ProgramType.ReadClusterFile(path);
-                lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
-                MessageBox.Show("Program has been successfully shut down!");
-            }
+            string fileName = programs.Find(x => x.FileName == lbCurrentPrograms.SelectedItem.ToString()).FileName;
+            string computerName = Computer.GetComputers(path).Find(x => x.processes.Select(x => x.FileName).Contains(fileName)).Name;
+            File.Delete($@"{path}\{computerName}\{fileName}");
+            programs = programs.Where(x => x.FileName != fileName).ToList();
+            lbCurrentPrograms.ItemsSource = programs.Select(x => x.FileName).ToList();
         }
     }
 }

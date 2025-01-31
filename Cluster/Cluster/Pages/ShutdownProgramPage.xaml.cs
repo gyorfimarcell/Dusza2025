@@ -18,16 +18,16 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ShutdownProgram.xaml
     /// </summary>
-    public partial class ShutdownProgramInstance : Window
+    public partial class ShutdownProgramPage : Page
     {
-        List<Process> programs = new();
+        List<ProgramType> programs = new();
         string path = string.Empty;
-        public ShutdownProgramInstance(List<Process> programs, string path)
+        public ShutdownProgramPage()
         {
             InitializeComponent();
-            this.programs = programs;
-            this.path = path;
-            lbCurrentPrograms.ItemsSource = programs.Select(x => x.FileName).ToList();
+            path = MainWindow.path;
+            programs = ProgramType.ReadClusterFile(path);
+            lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
         }
 
         private void lbCurrentPrograms_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -37,11 +37,13 @@ namespace Cluster
 
         private void btnShutdown_Click(object sender, RoutedEventArgs e)
         {
-            string fileName = programs.Find(x => x.FileName == lbCurrentPrograms.SelectedItem.ToString()).FileName;
-            string computerName = Computer.GetComputers(path).Find(x => x.processes.Select(x => x.FileName).Contains(fileName)).Name;
-            File.Delete($@"{path}\{computerName}\{fileName}");
-            programs = programs.Where(x => x.FileName != fileName).ToList();
-            lbCurrentPrograms.ItemsSource = programs.Select(x => x.FileName).ToList();
+            bool result = ProgramType.ShutdownProgram(path, programs, lbCurrentPrograms.SelectedItem.ToString());
+            if (result)
+            {
+                programs = ProgramType.ReadClusterFile(path);
+                lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
+                MessageBox.Show("Program has been successfully shut down!");
+            }
         }
     }
 }
