@@ -18,6 +18,7 @@ namespace Cluster
         RunProgramInstance,
         ShutdownProgramInstance,
         ModifyProgram,
+        ShutdownProgram,
         ClearProramInstances,
         OptimizeProgramInstances
     }
@@ -38,7 +39,7 @@ namespace Cluster
 
             try
             {
-                MessageBox.Show(Path.GetDirectoryName(GetLogDirectoryPath()));
+                //MessageBox.Show(Path.GetDirectoryName(GetLogDirectoryPath()));
                 using (StreamWriter sw = new(logFilePath, File.Exists(logFilePath)))
                 {
                     sw.WriteLine(logEntry);
