@@ -24,7 +24,7 @@ namespace Cluster
         public AddComputerPage()
         {
             InitializeComponent();
-            path = MainWindow.path;
+            path = MainWindow.ClusterPath;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)

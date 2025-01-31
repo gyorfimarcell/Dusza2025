@@ -70,6 +70,18 @@
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
+            <ui:NavigationView.FooterMenuItems>
+                <Label x:Name="lblPath"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold">Cluster: None</Label>
+                <ui:NavigationViewItem x:Name="loadNavItem"
+                                       Content="Load cluster"
+                                       Click="loadNavItem_Click">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Home24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+            </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
 
         <ui:TitleBar
@@ -78,10 +90,5 @@
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
         </ui:TitleBar>
-        <!--<Label x:Name="lblPath"
-                HorizontalAlignment="Center"
-                   Margin="0 0 0 32">
-            Path: asdasd
-        </Label>-->
     </Grid>
 </ui:FluentWindow>

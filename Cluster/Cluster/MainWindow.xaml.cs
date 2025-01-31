@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -9,7 +10,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cluster
 {
@@ -18,35 +18,34 @@ namespace Cluster
     /// </summary>
     public partial class MainWindow
     {
-        public static string path = "";
+        public static String ClusterPath { get; private set; } = "";
 
-        List<ProgramType> programs = new();
         public MainWindow()
         {
             InitializeComponent();
+            
+        }
+
+        private void loadNavItem_Click(object sender, RoutedEventArgs e)
+        {
             OpenFolderDialog ofd = new OpenFolderDialog();
             if (ofd.ShowDialog() == true)
             {
-                path = ofd.FolderName;
-                programs = ProgramType.ReadClusterFile(ofd.FolderName);
+                ClusterPath = ofd.FolderName;
+                List<ProgramType> programs = ProgramType.ReadClusterFile(ofd.FolderName);
                 if (programs == null)
                 {
                     MessageBox.Show("The chosen folder doesn't contain a .klaszter file.");
-                    Close();
                 }
                 else
                 {
-                    //MessageBox.Show(programs.Count().ToString());
-                    //lblPath.Content = $"Path: {path}";
-                    ClusterHealth health = new(Computer.GetComputers(path), programs);
-                    if (!health.Ok) {
+                    lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+                    ClusterHealth health = new(Computer.GetComputers(ClusterPath), programs);
+                    if (!health.Ok)
+                    {
                         MessageBox.Show($"This cluster has errors:\n{String.Join("\n", health.Errors.Select(x => $" - {x}"))}");
                     }
                 }
-            }
-            else
-            {
-                Close();
             }
         }
     }

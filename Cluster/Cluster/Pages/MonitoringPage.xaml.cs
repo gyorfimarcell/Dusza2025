@@ -26,8 +26,8 @@ namespace Cluster
 
         public MonitoringPage()
         {
-            this.computers = Computer.GetComputers(MainWindow.path);
-            List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.path);
+            this.computers = Computer.GetComputers(MainWindow.ClusterPath);
+            List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
             processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
 

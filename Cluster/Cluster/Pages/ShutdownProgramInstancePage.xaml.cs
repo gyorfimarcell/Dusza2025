@@ -25,7 +25,7 @@ namespace Cluster
         public ShutdownProgramInstancePage()
         {
             InitializeComponent();
-            path = MainWindow.path;
+            path = MainWindow.ClusterPath;
             programs = Computer.GetComputers(path)
                 .Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
             lbCurrentPrograms.ItemsSource = programs.Select(x => x.FileName).ToList();

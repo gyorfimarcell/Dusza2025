@@ -25,7 +25,7 @@ namespace Cluster
         {
             InitializeComponent();
 
-            path = MainWindow.path;
+            path = MainWindow.ClusterPath;
 
             btnDelete.IsEnabled = false;
 

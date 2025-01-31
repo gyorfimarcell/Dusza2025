@@ -25,7 +25,7 @@ namespace Cluster
         {
             InitializeComponent();
 
-            path = MainWindow.path;
+            path = MainWindow.ClusterPath;
 
             cbProgram.ItemsSource = ProgramType.ReadClusterFile(path).Select(x => x.ProgramName);
             cbComputer.ItemsSource = Computer.GetComputers(path).Select(x => x.Name);

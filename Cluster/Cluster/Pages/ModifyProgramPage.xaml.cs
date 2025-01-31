@@ -24,7 +24,7 @@ namespace Cluster
         public ModifyProgramPage()
         {
             InitializeComponent();
-            path = MainWindow.path;
+            path = MainWindow.ClusterPath;
             programs = ProgramType.ReadClusterFile(path);
             lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
         }
