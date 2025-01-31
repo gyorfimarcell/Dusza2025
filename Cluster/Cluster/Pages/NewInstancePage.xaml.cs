@@ -20,6 +20,7 @@ namespace Cluster
     public partial class NewInstancePage : Page
     {
         string path;
+        List<string> instances;
 
         public NewInstancePage()
         {
@@ -27,7 +28,8 @@ namespace Cluster
 
             path = MainWindow.ClusterPath;
 
-            cbProgram.ItemsSource = ProgramType.ReadClusterFile(path).Select(x => x.ProgramName);
+            instances = ProgramType.ReadClusterFile(path).Select(x => x.ProgramName).ToList();
+            cbProgram.ItemsSource = instances;
             cbComputer.ItemsSource = Computer.GetComputers(path).Select(x => x.Name);
         }
 
@@ -51,6 +53,16 @@ namespace Cluster
             Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory);
             process.Write(Path.Combine(path, computer.Name));
             //Close();
+        }
+
+        private void cbProgram_KeyUp(object sender, KeyEventArgs e)
+        {
+            spNewInstance.Visibility = !instances.Contains(cbProgram.Text) && cbProgram.Text != string.Empty ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void cbProgram_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            spNewInstance.Visibility = !instances.Contains(cbProgram.SelectedValue) && cbProgram.Text != string.Empty ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
