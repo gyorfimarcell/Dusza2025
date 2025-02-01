@@ -22,16 +22,16 @@
             <Label HorizontalAlignment="Center"
                    FontSize="24">Add a new instance</Label>
             <Label>Program:</Label>
-            <ComboBox x:Name="cbProgram" IsEditable="True" IsTextSearchEnabled="False"
+            <ComboBox x:Name="cbProgram" IsEditable="True" IsTextSearchEnabled="True"
                       KeyUp="cbProgram_KeyUp" SelectionChanged="cbProgram_SelectionChanged"/>
             <StackPanel x:Name="spNewInstance" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
                 <StackPanel Margin="0 0 50 0">
                     <Label>CpuMilliCore:</Label>
-                    <ui:NumberBox x:Name="txtInstanceCpuMilliCore" Width="150"/>
+                    <ui:NumberBox x:Name="txtInstanceCpuMilliCore" Width="150" TextChanged="NewInstanceDetailsChanged"/>
                 </StackPanel>
                 <StackPanel Margin="50 0 0 0">
                     <Label>Memory:</Label>
-                    <ui:NumberBox x:Name="txtInstanceMemory" Width="150"/>
+                    <ui:NumberBox x:Name="txtInstanceMemory" Width="150"  TextChanged="NewInstanceDetailsChanged"/>
                 </StackPanel>
             </StackPanel>
             <Label>Processor Capacity:</Label>

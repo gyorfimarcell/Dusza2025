@@ -64,5 +64,10 @@ namespace Cluster
         {
             spNewInstance.Visibility = !instances.Contains(cbProgram.SelectedValue) && cbProgram.Text != string.Empty ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        private void NewInstanceDetailsChanged(object sender, TextChangedEventArgs e)
+        {
+            //cbComputer.ItemsSource = Computer.GetComputers(path).Where(x => x.HasEnoughCore()).Select(x => x.Name);
+        }
     }
 }

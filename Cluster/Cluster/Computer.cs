@@ -29,12 +29,12 @@ namespace Cluster
         public List<Process> processes { get; set; }
 
 
-        public bool HasEnoughCore(int ram)
+        public bool HasEnoughRam(int ram)
         {
             return ram > RamCapacity ? false : true;
         }
 
-        public bool HasEnoughRam(int cores)
+        public bool HasEnoughCore(int cores)
         {
             return cores > ProcessorCore ? false : true;
         }
