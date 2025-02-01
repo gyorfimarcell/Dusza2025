@@ -60,6 +60,7 @@ namespace Cluster
             bool result = ProgramType.ModifyProgram(path, programs, foundProgram.ProgramName, inputValues);
             if (result)
             {
+                Log.WriteLog([foundProgram.ProgramName, $"{foundProgram.CpuMilliCore}", $"{foundProgram.Memory}", $"{foundProgram.ActivePrograms}"], LogType.ModifyProgram);
                 programs = ProgramType.ReadClusterFile(path);
                 lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
                 stEdit.Visibility = Visibility.Hidden;

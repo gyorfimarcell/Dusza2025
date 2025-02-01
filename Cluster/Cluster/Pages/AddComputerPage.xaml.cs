@@ -47,8 +47,9 @@ namespace Cluster
             }
 
             bool success = Computer.AddComputer(path, tbName.Text, processor, memory);
+                MessageBox.Show(success.ToString());
             if (success) {
-                //Close();
+                Log.WriteLog([tbName.Text, $"{processor}", $"{memory}"], LogType.AddComputer);
             }
         }
     }
