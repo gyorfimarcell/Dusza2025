@@ -1,4 +1,4 @@
-﻿using Cluster.Pages;
+using Cluster.Pages;
 using Microsoft.Win32;
 using System.IO;
 using System.Security.Cryptography;
