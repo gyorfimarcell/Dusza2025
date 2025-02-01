@@ -28,6 +28,14 @@
                         <ui:SymbolIcon Symbol="HeartPulse24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Computers"
+                                       TargetPageType="{x:Type local:ComputersPage}"
+                                       NavigationCacheMode="Disabled"
+                                       IsEnabled="False">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Server24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Monitoring"
                                        TargetPageType="{x:Type local:MonitoringPage}"
                                        NavigationCacheMode="Disabled"
