@@ -1,16 +1,16 @@
 ﻿<Page x:Class="Cluster.NewInstancePage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:local="clr-namespace:Cluster"
-        mc:Ignorable="d"
-        Title="New Instance"
-        d:DesignHeight="750"
-        d:DesignWidth="1200"
-        ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-        ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:Cluster"
+      mc:Ignorable="d"
+      Title="New Instance"
+      d:DesignHeight="750"
+      d:DesignWidth="1200"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -22,18 +22,7 @@
             <Label HorizontalAlignment="Center"
                    FontSize="24">Add a new instance</Label>
             <Label>Program:</Label>
-            <ComboBox x:Name="cbProgram" IsEditable="True" IsTextSearchEnabled="True"
-                      KeyUp="cbProgram_KeyUp" SelectionChanged="cbProgram_SelectionChanged"/>
-            <StackPanel x:Name="spNewInstance" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
-                <StackPanel Margin="0 0 50 0">
-                    <Label>CpuMilliCore:</Label>
-                    <ui:NumberBox x:Name="txtInstanceCpuMilliCore" Width="150" TextChanged="NewInstanceDetailsChanged"/>
-                </StackPanel>
-                <StackPanel Margin="50 0 0 0">
-                    <Label>Memory:</Label>
-                    <ui:NumberBox x:Name="txtInstanceMemory" Width="150"  TextChanged="NewInstanceDetailsChanged"/>
-                </StackPanel>
-            </StackPanel>
+            <ComboBox x:Name="cbProgram" SelectionChanged="cbProgram_SelectionChanged"/>
             <Label>Processor Capacity:</Label>
             <ComboBox x:Name="cbComputer"
              Margin="0 0 0 16"/>

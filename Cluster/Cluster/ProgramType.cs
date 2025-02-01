@@ -49,6 +49,12 @@ namespace Cluster
             return programs;
         }
 
+        public void AddNewProgramToCluster(string path)
+        {
+            string fileContent = ClusterFileLines(this);
+            File.AppendAllText(path + "/.klaszter", fileContent);
+        }
+
         public static string ClusterFileLines(ProgramType program)
         {
             return $"{program.ProgramName}\n{program.ActivePrograms}\n{program.CpuMilliCore}\n{program.Memory}\n";
