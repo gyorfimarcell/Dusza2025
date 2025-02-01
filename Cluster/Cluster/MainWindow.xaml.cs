@@ -61,8 +61,22 @@ namespace Cluster
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            RootNavigation.Navigated += RootNavigationOnNavigated;
+            
             RootNavigation.Navigate(typeof(StartPage));
             RootNavigation.ClearJournal();
+        }
+
+        private void RootNavigationOnNavigated(NavigationView sender, NavigatedEventArgs args)
+        {
+            if (args.Page is CustomPage page && page.HeaderControls.Any())
+            {
+                icHeaderControls.ItemsSource = page.HeaderControls;
+            }
+            else
+            {
+                icHeaderControls.ItemsSource = null;
+            }
         }
 
         private void loadNavItem_Click(object sender, RoutedEventArgs e)

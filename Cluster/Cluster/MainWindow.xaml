@@ -14,10 +14,18 @@
     <Grid>
         <ui:NavigationView x:Name="RootNavigation"
                            TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}"
-                           BreadcrumbBar="{Binding ElementName=BreadcrumbBar}">
+                           BreadcrumbBar="{Binding ElementName=BreadcrumbBar}" >
             <ui:NavigationView.Header>
-                <ui:BreadcrumbBar x:Name="BreadcrumbBar"
-                                  Margin="42,32,42,20"/>
+                <Grid Margin="42,32,42,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ui:BreadcrumbBar x:Name="BreadcrumbBar"/>
+                    <ItemsControl x:Name="icHeaderControls"
+                                  Grid.Column="2"/>
+                </Grid>
             </ui:NavigationView.Header>
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Content="Cluster Health"

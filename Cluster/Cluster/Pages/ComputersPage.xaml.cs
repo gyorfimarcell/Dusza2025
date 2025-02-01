@@ -1,8 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Cluster;
 
-public partial class ComputersPage : Page
+public partial class ComputersPage : CustomPage
 {
     public ComputersPage()
     {
@@ -14,6 +15,12 @@ public partial class ComputersPage : Page
     {
         List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
         icComputers.ItemsSource = computers.OrderBy(x => x.Name).Select(x => new ComputerRow(x));
+    }
+
+    private void MenuItemNew_OnClick(object sender, RoutedEventArgs e)
+    {
+        MainWindow window = (MainWindow)Application.Current.MainWindow!;
+        window.RootNavigation.NavigateWithHierarchy(typeof(AddComputerPage));
     }
 }
 
