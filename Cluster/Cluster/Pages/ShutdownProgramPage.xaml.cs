@@ -40,6 +40,9 @@ namespace Cluster
             bool result = ProgramType.ShutdownProgram(path, programs, lbCurrentPrograms.SelectedItem.ToString());
             if (result)
             {
+                ProgramType foundProgram = programs.First(x => x.ProgramName == lbCurrentPrograms.SelectedItem.ToString());
+                Log.WriteLog([foundProgram.ProgramName, $"{foundProgram.CpuMilliCore}", $"{foundProgram.Memory}"], LogType.ShutdownProgram);
+
                 programs = ProgramType.ReadClusterFile(path);
                 lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
                 MessageBox.Show("Program has been successfully shut down!");

@@ -27,6 +27,7 @@ namespace Cluster
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            Log.WriteLog([], LogType.OpenProgram);
         }
 
         public void OpenClusterSelectionDialog() {
@@ -55,6 +56,7 @@ namespace Cluster
 
                     RootNavigation.ClearJournal();
                     RootNavigation.Navigate(typeof(ClusterHealthPage));
+                    Log.WriteLog([ClusterPath], LogType.LoadCluster);
                 }
             }
         }
@@ -82,6 +84,11 @@ namespace Cluster
         private void loadNavItem_Click(object sender, RoutedEventArgs e)
         {
             OpenClusterSelectionDialog();
+        }
+
+        private void FluentWindow_Closed(object sender, EventArgs e)
+        {
+            Log.WriteLog([], LogType.CloseProgram);
         }
     }
 }

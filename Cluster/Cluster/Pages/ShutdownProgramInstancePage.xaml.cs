@@ -39,10 +39,13 @@ namespace Cluster
         private void btnShutdown_Click(object sender, RoutedEventArgs e)
         {
             string fileName = programs.Find(x => x.FileName == lbCurrentPrograms.SelectedItem.ToString()).FileName;
+            Process process = Computer.GetComputers(path).SelectMany(x => x.processes).First(x => x.FileName == fileName);
             string computerName = Computer.GetComputers(path).Find(x => x.processes.Select(x => x.FileName).Contains(fileName)).Name;
             File.Delete($@"{path}\{computerName}\{fileName}");
             programs = programs.Where(x => x.FileName != fileName).ToList();
             lbCurrentPrograms.ItemsSource = programs.Select(x => x.FileName).ToList();
+
+            Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}"], LogType.ShutdownProgramInstance);
         }
     }
 }
