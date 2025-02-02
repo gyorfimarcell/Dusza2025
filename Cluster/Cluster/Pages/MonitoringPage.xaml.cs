@@ -29,7 +29,8 @@ namespace Cluster
             this.computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
-            processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
+            processes = computers.Aggregate(new List<Process>(),
+                (list, computer) => list.Concat(computer.processes).ToList());
 
             InitializeComponent();
 
@@ -39,38 +40,21 @@ namespace Cluster
             ClusterHealth health = new(computers, programs);
             lblStatus.Content = $"Cluster {(health.Ok ? "is healthy." : "has errors!")}";
 
-            dgComputers.ItemsSource = computers.Select(x => new ComputerRow(x));
-
             cbProgram.ItemsSource = programs.Select(x => x.ProgramName).Order().Prepend("--All--");
             cbProgram.SelectedIndex = 0;
         }
 
         private void cbProgram_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgPrograms.ItemsSource = processes.Where(x => cbProgram.SelectedIndex == 0 ? true : x.ProgramName == cbProgram.SelectedItem.ToString()).Select(x => new ProcessRow(x, computers));
+            dgPrograms.ItemsSource = processes
+                .Where(x => cbProgram.SelectedIndex == 0 ? true : x.ProgramName == cbProgram.SelectedItem.ToString())
+                .Select(x => new ProcessRow(x, computers));
             lblProgramCount.Content = $"{dgPrograms.Items.Count} process{(dgPrograms.Items.Count > 1 ? "es" : "")}";
         }
     }
 
-    public class ComputerRow {
-        Computer computer;
-
-        public string Name => computer.Name;
-
-        public int ProcessorCapacity => computer.ProcessorCore;
-        private int _processorUsage => computer.processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
-        public string ProcessorUsage => $"{_processorUsage} ({Math.Round(_processorUsage / (double)ProcessorCapacity * 100)}%)";
-
-        public int MemoryCapacity => computer.RamCapacity;
-        private int _memoryUsage => computer.processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
-        public string MemoryUsage => $"{_memoryUsage} ({Math.Round(_memoryUsage / (double)MemoryCapacity * 100)}%)";
-
-        public ComputerRow(Computer computer) {
-            this.computer = computer;
-        }
-    }
-
-    public class ProcessRow {
+    public class ProcessRow
+    {
         Process process;
         Computer computer;
 
@@ -80,8 +64,8 @@ namespace Cluster
         public int ProcessorUsage => process.ProcessorUsage;
         public int MemoryUsage => process.MemoryUsage;
 
-
-        public ProcessRow(Process process, List<Computer> computers) {
+        public ProcessRow(Process process, List<Computer> computers)
+        {
             this.process = process;
             this.computer = computers.Find(x => x.processes.Contains(process));
         }
