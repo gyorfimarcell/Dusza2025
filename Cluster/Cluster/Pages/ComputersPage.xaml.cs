@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Controls;
+using Button = Wpf.Ui.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Cluster;
@@ -35,5 +36,27 @@ public partial class ComputersPage : CustomPage
         Computer computer = (Computer)cardControl.DataContext;
 
         _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);
+    }
+
+    private void Delete_OnClick(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+        
+        Button button = (Button)sender;
+        Computer computer = (Computer)button.DataContext;
+        
+        string? error = computer.Delete();
+        if (error != null)
+        {
+            _window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
+                new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+        }
+        else
+        {
+            _window.RootSnackbarService.Show("Computer deleted", $"Computer '{computer.Name}' successfully deleted.",
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+
+            LoadData();
+        }
     }
 }

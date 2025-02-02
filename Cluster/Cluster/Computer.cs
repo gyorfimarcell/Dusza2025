@@ -86,15 +86,15 @@ namespace Cluster
             return null;
         }
 
-        public bool Delete(string Path)
+        public string? Delete()
         {
             if (processes.Count > 0)
             {
-                MessageBox.Show("Shut down all the programs before deleting the computer!");
-                return false;
+                return "Shut down all the programs before deleting the computer!";
             }
-            Directory.Delete($@"{Path}\{Name}", true);
-            return true;
+            Directory.Delete($@"{MainWindow.ClusterPath}\{Name}", true);
+            Log.WriteLog([Name, $"{ProcessorCore}", $"{RamCapacity}"], LogType.DeleteComputer);
+            return null;
         }
     }
 }

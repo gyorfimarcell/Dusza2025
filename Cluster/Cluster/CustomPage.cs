@@ -12,7 +12,7 @@ namespace Cluster;
 
 public class CustomPage : Page
 {
-    private readonly MainWindow _window;
+    protected readonly MainWindow _window;
     
     public static readonly DependencyProperty HeaderControlsProperty =
         DependencyProperty.Register(

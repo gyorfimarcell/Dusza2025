@@ -16,7 +16,8 @@
     <local:CustomPage.HeaderControls>
         <Menu FontSize="14">
             <ui:MenuItem Header="Delete"
-                         Icon="{ui:SymbolIcon Delete20}" />
+                         Icon="{ui:SymbolIcon Delete20}"
+                         Click="Delete_OnClick"/>
         </Menu>
     </local:CustomPage.HeaderControls>
     <StackPanel Margin="48 0">

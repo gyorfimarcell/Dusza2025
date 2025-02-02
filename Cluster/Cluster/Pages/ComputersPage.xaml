@@ -54,7 +54,8 @@
                             </StackPanel>
                         </ui:CardControl.Header>
                         <ui:Button Appearance="Transparent"
-                                   Icon="{ui:SymbolIcon Delete24}" />
+                                   Icon="{ui:SymbolIcon Delete24}"
+                                   Click="Delete_OnClick"/>
                     </ui:CardControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

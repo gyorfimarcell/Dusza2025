@@ -37,4 +37,21 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageComputer)));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcessesText)));
     }
+
+    private void Delete_OnClick(object sender, RoutedEventArgs e)
+    {
+        string? error = PageComputer.Delete();
+        if (error != null)
+        {
+            _window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
+                new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+        }
+        else
+        {
+            _window.RootSnackbarService.Show("Computer deleted", $"Computer '{PageComputer.Name}' successfully deleted.",
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+
+            _window.RootNavigation.Navigate(typeof(ComputersPage));
+        }
+    }
 }

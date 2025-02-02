@@ -53,14 +53,6 @@
                         <ui:SymbolIcon Symbol="Home24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Delete Computer"
-                                       TargetPageType="{x:Type local:DeleteComputerPage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Shutdown Program"
                                        TargetPageType="{x:Type local:ShutdownProgramPage}"
                                        NavigationCacheMode="Disabled"
