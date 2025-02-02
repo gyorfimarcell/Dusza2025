@@ -30,12 +30,6 @@
         </StackPanel>-->
 
         <TabControl Grid.ColumnSpan="3" Grid.Row="1">
-            <TabItem Header="Computers">
-                <DataGrid x:Name="dgComputers"
-                          IsReadOnly="True"
-                          CanUserAddRows="True"
-                          Margin="8"/>
-            </TabItem>
             <TabItem Header="Programs">
                 <Grid Margin="8">
                     <Grid.ColumnDefinitions>

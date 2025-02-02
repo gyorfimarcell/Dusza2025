@@ -1,0 +1,24 @@
+﻿<Page x:Class="Cluster.Pages.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:Cluster"
+      mc:Ignorable="d"
+      Title="Shutdown Program"
+      d:DesignHeight="750"
+      d:DesignWidth="1200"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <StackPanel x:Name="spStart"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,128"
+                MouseLeftButtonUp="spStart_MouseLeftButtonUp">
+        <ui:SymbolIcon Symbol="Folder48" FontSize="128"/>
+        <TextBlock
+               FontSize="64">To start, load a cluster.</TextBlock>
+    </StackPanel>
+</Page>

@@ -31,8 +31,7 @@ namespace Cluster
         {
             this.computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
-
-            computerRows = computers.Select(x => new ComputerRow(x)).ToList();
+            
             processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
 
             InitializeComponent();
@@ -42,8 +41,6 @@ namespace Cluster
 
             ClusterHealth health = new(computers, programs);
             lblStatus.Content = $"Cluster {(health.Ok ? "is healthy." : "has errors!")}";
-
-            dgComputers.ItemsSource = computerRows;
 
             cbProgram.ItemsSource = programs.Select(x => x.ProgramName).Order().Prepend("--All--");
             cbProgram.SelectedIndex = 0;
@@ -82,26 +79,6 @@ namespace Cluster
             }
         }*/
 
-        public class ComputerRow
-        {
-            Computer computer;
-
-            public string Name => computer.Name;
-
-            public int ProcessorCapacity => computer.ProcessorCore;
-            private int _processorUsage => computer.processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
-            public string ProcessorUsage => $"{_processorUsage} ({Math.Round(_processorUsage / (double)ProcessorCapacity * 100)}%)";
-
-            public int MemoryCapacity => computer.RamCapacity;
-            private int _memoryUsage => computer.processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
-            public string MemoryUsage => $"{_memoryUsage} ({Math.Round(_memoryUsage / (double)MemoryCapacity * 100)}%)";
-            //public string CsvRow => $"{Name};{ProcessorCapacity};{ProcessorUsage};{MemoryCapacity};{MemoryUsage}";
-
-            public ComputerRow(Computer computer)
-            {
-                this.computer = computer;
-            }
-        }
 
         public class ProcessRow
         {
