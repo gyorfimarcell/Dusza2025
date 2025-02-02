@@ -1,0 +1,72 @@
+﻿<local:CustomPage x:Class="Cluster.ComputerDetailsPage"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                  xmlns:local="clr-namespace:Cluster"
+                  xmlns:controls="clr-namespace:Cluster.Controls"
+                  mc:Ignorable="d"
+                  Title="ComputerDetailsPage"
+                  ui:NavigationView.HeaderContent="temp"
+                  d:DesignHeight="750"
+                  d:DesignWidth="1200"
+                  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+                  ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+    <local:CustomPage.HeaderControls>
+        <Menu FontSize="14">
+            <ui:MenuItem Header="Delete"
+                         Icon="{ui:SymbolIcon Delete20}" />
+        </Menu>
+    </local:CustomPage.HeaderControls>
+    <StackPanel Margin="48 0">
+        <Grid Margin="0 0 0 12"
+              DataContext="{ Binding PageComputer, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ui:TextBlock FontTypography="Body"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Text="{Binding ProcessesText, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}" />
+            <controls:UsageBar Grid.Column="1"
+                               Text="Processor"
+                               Current="{Binding ProcessorUsage}"
+                               Max="{Binding ProcessorCore}"
+                               Margin="8 0" />
+            <controls:UsageBar Grid.Column="2"
+                               Text="Memory"
+                               Current="{Binding MemoryUsage}"
+                               Max="{Binding RamCapacity}"
+                               Margin="8 0" />
+        </Grid>
+
+        <ui:TextBlock
+            FontTypography="Subtitle"
+            Text="Processes" />
+        <ItemsControl x:Name="icProcesses"
+                      ItemsSource="{Binding PageComputer.processes, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Process}">
+                    <controls:CustomCard Title="{Binding FileName}"
+                                         Description="{Binding StartTime}"
+                                         Margin="0 0 0 8" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ui:TextBlock FontTypography="Body"
+                      Text="This computer doesn't have any running processes.">
+            <ui:TextBlock.Style>
+                <Style TargetType="ui:TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icProcesses}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ui:TextBlock.Style>
+        </ui:TextBlock>
+    </StackPanel>
+</local:CustomPage>

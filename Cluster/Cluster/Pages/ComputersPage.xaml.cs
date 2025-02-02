@@ -1,36 +1,39 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Wpf.Ui.Controls;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Cluster;
 
 public partial class ComputersPage : CustomPage
 {
+    MainWindow _window;
+    
     public ComputersPage()
     {
         InitializeComponent();
+        
+        _window = (MainWindow)Application.Current.MainWindow!;
+        
         LoadData();
     }
 
     private void LoadData()
     {
         List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
-        icComputers.ItemsSource = computers.OrderBy(x => x.Name).Select(x => new ComputerRow(x));
+        icComputers.ItemsSource = computers.OrderBy(x => x.Name);
     }
 
     private void MenuItemNew_OnClick(object sender, RoutedEventArgs e)
     {
-        MainWindow window = (MainWindow)Application.Current.MainWindow!;
-        window.RootNavigation.NavigateWithHierarchy(typeof(AddComputerPage));
+        _window.RootNavigation.NavigateWithHierarchy(typeof(AddComputerPage));
     }
-}
 
-public class ComputerRow(Computer computer)
-{
-    public string Name => computer.Name;
+    private void ComputerCard_OnClick(object sender, RoutedEventArgs e)
+    {
+        CardControl cardControl = (CardControl)sender;
+        Computer computer = (Computer)cardControl.DataContext;
 
-    public int ProcessorCapacity => computer.ProcessorCore;
-    public int ProcessorUsage => computer.processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
-
-    public int MemoryCapacity => computer.RamCapacity;
-    public int MemoryUsage => computer.processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
+        _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);
+    }
 }

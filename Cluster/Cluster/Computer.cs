@@ -25,7 +25,11 @@ namespace Cluster
 
         public string Name { get; set; }
         public int ProcessorCore { get; set; }
+        public int ProcessorUsage => processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
+
         public int RamCapacity { get; set; }
+        public int MemoryUsage => processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
+        
         public List<Process> processes { get; set; }
 
 

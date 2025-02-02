@@ -1,3 +1,4 @@
+using System.Collections;
 using Cluster.Pages;
 using Microsoft.Win32;
 using System.IO;
@@ -25,6 +26,8 @@ namespace Cluster
         public static string ClusterPath { get; private set; } = "";
         
         public SnackbarService RootSnackbarService { get; private set; }
+        
+        private IEnumerable originalBreadcrumbs;
 
         public MainWindow()
         {
@@ -71,6 +74,8 @@ namespace Cluster
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             RootNavigation.Navigated += RootNavigationOnNavigated;
+
+            originalBreadcrumbs = BreadcrumbBar.ItemsSource;
             
             RootNavigation.Navigate(typeof(StartPage));
             RootNavigation.ClearJournal();
@@ -78,6 +83,8 @@ namespace Cluster
 
         private void RootNavigationOnNavigated(NavigationView sender, NavigatedEventArgs args)
         {
+            BreadcrumbBar.ItemsSource = originalBreadcrumbs;
+            
             if (args.Page is CustomPage page && page.HeaderControls.Any())
             {
                 icHeaderControls.ItemsSource = page.HeaderControls;
