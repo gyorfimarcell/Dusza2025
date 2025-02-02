@@ -69,7 +69,7 @@ namespace Cluster
             }
         }
 
-        private void csvExportComputersButton_Click(object sender, RoutedEventArgs e)
+        /*private void csvExportComputersButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "CSV Files | *.csv";
@@ -80,7 +80,7 @@ namespace Cluster
                 File.WriteAllLines(sfd.FileName, lines);
                 MessageBox.Show("Successfully exported!", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-        }
+        }*/
 
         public class ComputerRow
         {
@@ -95,7 +95,7 @@ namespace Cluster
             public int MemoryCapacity => computer.RamCapacity;
             private int _memoryUsage => computer.processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
             public string MemoryUsage => $"{_memoryUsage} ({Math.Round(_memoryUsage / (double)MemoryCapacity * 100)}%)";
-            public string CsvRow => $"{Name};{ProcessorCapacity};{ProcessorUsage};{MemoryCapacity};{MemoryUsage}";
+            //public string CsvRow => $"{Name};{ProcessorCapacity};{ProcessorUsage};{MemoryCapacity};{MemoryUsage}";
 
             public ComputerRow(Computer computer)
             {

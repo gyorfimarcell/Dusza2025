@@ -24,10 +24,10 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
+        <!--<StackPanel Grid.Row="0">
             <ui:Button x:Name="csvExportProgramsButton" Content="Export running programs to CSV" Icon="Save16" Grid.Row="0" Margin="10" Click="csvExportProgramsButton_Click" />
             <ui:Button x:Name="csvExportComputersButton" Content="Export computers to CSV" Icon="Save16" Grid.Row="0" Margin="10" Click="csvExportComputersButton_Click" />
-        </StackPanel>
+        </StackPanel>-->
 
         <TabControl Grid.ColumnSpan="3" Grid.Row="1">
             <TabItem Header="Computers">
