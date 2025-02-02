@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wpf.Ui;
+using Wpf.Ui.Controls;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Cluster
 {
@@ -20,35 +23,42 @@ namespace Cluster
     public partial class AddComputerPage : Page
     {
         string path;
+        private MainWindow window;
 
         public AddComputerPage()
         {
             InitializeComponent();
             path = MainWindow.ClusterPath;
+            window = (MainWindow)Application.Current.MainWindow!;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            int processor, memory;
-
-            if (tbName.Text == "" || tbMemory.Text == "" || tbProcessor.Text == "") {
-                MessageBox.Show("You must fill out all fields");
-                return;
-            }
-            if (!Int32.TryParse(tbProcessor.Text, out processor))
+            if (tbName.Text == "" || nbProcessor.Value == null || nbMemory.Value == null)
             {
-                MessageBox.Show("Processor capacity must be a number!");
-                return;
-            }
-            if (!Int32.TryParse(tbMemory.Text, out memory))
-            {
-                MessageBox.Show("Memory capacity must be a number!");
+                window.RootSnackbarService.Show("Error", "You must fill out all fields!", ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
 
-            bool success = Computer.AddComputer(path, tbName.Text, processor, memory);
-                MessageBox.Show(success.ToString());
-            if (success) {
+            int processor = Convert.ToInt32(nbProcessor.Value);
+            int memory = Convert.ToInt32(nbMemory.Value);
+
+            string? error = Computer.AddComputer(path, tbName.Text, processor, memory);
+            if (error != null)
+            {
+                window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+            }
+            else
+            {
+                window.RootSnackbarService.Show("Computer created", $"Computer '{tbName.Text}' successfully created.",
+                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+
+                tbName.Clear();
+                nbProcessor.Clear();
+                nbMemory.Clear();
+
                 Log.WriteLog([tbName.Text, $"{processor}", $"{memory}"], LogType.AddComputer);
             }
         }

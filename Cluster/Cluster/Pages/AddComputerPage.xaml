@@ -1,35 +1,51 @@
 ﻿<Page x:Class="Cluster.AddComputerPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:local="clr-namespace:Cluster"
-        mc:Ignorable="d"
-        Title="Add computer" 
-        d:DesignHeight="750"
-        d:DesignWidth="1200"
-        ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-        ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:controls="clr-namespace:Cluster.Controls"
+      mc:Ignorable="d"
+      Title="New"
+      d:DesignHeight="750"
+      d:DesignWidth="1200"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+    <StackPanel Margin="48 0">
+        <controls:CustomCard Title="Name"
+                             Description="A unique identifier for this computer."
+                             Icon="{ui:SymbolIcon Tag20}"
+                             Margin="0 0 0 12">
+            <ui:TextBox x:Name="tbName"
+                        PlaceholderText="my_computer"
+                        MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard Title="Processor Capacity"
+                             Icon="{ui:SymbolIcon DeveloperBoard24}"
+                             Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbProcessor"
+                          MaxDecimalPlaces="0"
+                          Minimum="1"
+                          PlaceholderText="100"
+                          SmallChange="1"
+                          MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard Title="Memory Capacity"
+                             Icon="{ui:SymbolIcon Ram20}"
+                             Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbMemory"
+                          MaxDecimalPlaces="0"
+                          Minimum="1"
+                          PlaceholderText="100"
+                          SmallChange="1"
+                          MinWidth="250" />
+        </controls:CustomCard>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-            <Label HorizontalAlignment="Center"
-           FontSize="24">Add a new computer</Label>
-            <Label>Name:</Label>
-            <TextBox x:Name="tbName"/>
-            <Label>Processor Capacity:</Label>
-            <TextBox x:Name="tbProcessor"/>
-            <Label>Memory Capacity:</Label>
-            <TextBox x:Name="tbMemory"
-                     Margin="0 0 0 16"/>
-            <Button x:Name="btnAdd"
-                    Click="btnAdd_Click">Add</Button>
-        </StackPanel>
-    </Grid>
+        <ui:Button x:Name="btnAdd"
+                   Appearance="Primary"
+                   HorizontalAlignment="Right"
+                   MinWidth="300"
+                   Content="Add"
+                   Click="btnAdd_Click" />
+    </StackPanel>
 </Page>

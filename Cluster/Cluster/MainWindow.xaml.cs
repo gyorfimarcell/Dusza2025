@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 
@@ -22,10 +23,16 @@ namespace Cluster
     public partial class MainWindow
     {
         public static string ClusterPath { get; private set; } = "";
+        
+        public SnackbarService RootSnackbarService { get; private set; }
 
         public MainWindow()
         {
             InitializeComponent();
+            
+            RootSnackbarService = new SnackbarService();
+            RootSnackbarService.SetSnackbarPresenter(RootSnackbarPresenter);
+            
             Loaded += MainWindow_Loaded;
             Log.WriteLog([], LogType.OpenProgram);
         }
