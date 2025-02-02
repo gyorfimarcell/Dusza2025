@@ -29,25 +29,24 @@ namespace Cluster
 
         public int RamCapacity { get; set; }
         public int MemoryUsage => processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
-        
+
         public List<Process> processes { get; set; }
 
 
         public bool HasEnoughRam(int ram)
         {
-            return ram <= RamCapacity;
+            return ram <= RamCapacity - MemoryUsage;
         }
 
         public bool HasEnoughCore(int cores)
         {
-            return cores <= ProcessorCore;
+            return cores <= ProcessorCore - ProcessorUsage;
         }
 
         public static List<Computer> GetComputers(string Path)
         {
-
             List<Computer> computers = new List<Computer>();
-            
+
             foreach (var item in Directory.GetDirectories(Path))
             {
                 if (!Directory.GetFiles(item).Select(x => x.Split("\\").Last()).Contains(".szamitogep_konfig"))
@@ -70,7 +69,8 @@ namespace Cluster
 
         public static string? AddComputer(string Path, string name, int cores, int ram, List<string>? computerNames = null)
         {
-            if (computerNames == null) computerNames = GetComputers(Path).Select(x => x.Name).ToList();
+            if (computerNames == null)
+                computerNames = GetComputers(Path).Select(x => x.Name).ToList();
             if (computerNames!.Contains(name))
             {
                 return "A computer already uses this name";
@@ -95,6 +95,23 @@ namespace Cluster
             Directory.Delete($@"{MainWindow.ClusterPath}\{Name}", true);
             Log.WriteLog([Name, $"{ProcessorCore}", $"{RamCapacity}"], LogType.DeleteComputer);
             return null;
+        }
+
+        public bool CanOutSourcePrograms(string? path = null)
+        {
+            List<Computer> computers = GetComputers(path ?? MainWindow.ClusterPath)
+                .Where(x => x.Name != Name).ToList();
+            foreach (var program in processes)
+            {
+                Computer? capable = computers.FirstOrDefault(x => x.HasEnoughCore(program.ProcessorUsage) && x.HasEnoughRam(program.MemoryUsage));
+                if (capable == null)
+                {
+                    return false;
+                }
+                capable.processes.Add(program);
+                computers = computers.Where(x => x.Name != capable.Name).ToList().Append(capable).ToList();
+            }
+            return true;
         }
     }
 }
