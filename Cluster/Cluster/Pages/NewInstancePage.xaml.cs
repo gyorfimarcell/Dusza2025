@@ -19,7 +19,8 @@ namespace Cluster
     /// </summary>
     public partial class NewInstancePage : Page
     {
-        string path;
+        readonly string path;
+        readonly List<ProgramType> instances;
 
         public NewInstancePage()
         {
@@ -27,23 +28,28 @@ namespace Cluster
 
             path = MainWindow.ClusterPath;
 
-            cbProgram.ItemsSource = ProgramType.ReadClusterFile(path).Select(x => x.ProgramName);
+            instances = ProgramType.ReadClusterFile(path).ToList();
+            cbProgram.ItemsSource = instances.Select(x => x.ProgramName).ToList();
             cbComputer.ItemsSource = Computer.GetComputers(path).Select(x => x.Name);
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (cbProgram.SelectedIndex == -1 || cbComputer.SelectedIndex == -1) {
+            if (cbComputer.SelectedIndex == -1 || cbProgram.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please fill out all the fields!");
                 return;
             }
 
             ProgramType program = ProgramType.ReadClusterFile(path).Find(x => x.ProgramName == cbProgram.SelectedItem.ToString());
+
             Computer computer = Computer.GetComputers(path).Find(x => x.Name == cbComputer.SelectedItem.ToString());
 
             int cpuUsage = computer.processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
             int memoryUsage = computer.processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
 
-            if (cpuUsage + program.CpuMilliCore > computer.ProcessorCore || memoryUsage + program.Memory > computer.RamCapacity) {
+            if (cpuUsage + program.CpuMilliCore > computer.ProcessorCore || memoryUsage + program.Memory > computer.RamCapacity)
+            {
                 MessageBox.Show("This computer doesn't have enough resources!");
                 return;
             }
@@ -52,6 +58,12 @@ namespace Cluster
             process.Write(Path.Combine(path, computer.Name));
 
             Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}"], LogType.RunProgramInstance);
+        }
+
+        private void cbProgram_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ProgramType program = instances.Find(x => x.ProgramName == cbProgram.SelectedItem.ToString());
+            cbComputer.ItemsSource = Computer.GetComputers(path).Where(x => x.HasEnoughCore(program.CpuMilliCore) && x.HasEnoughRam(program.Memory)).Select(x => x.Name);
         }
     }
 }
