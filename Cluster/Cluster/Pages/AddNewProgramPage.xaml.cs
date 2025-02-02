@@ -38,7 +38,7 @@ namespace Cluster
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (txtProgramName.Text.Length < 1 ||
+            if (!Validate.ValidateFileName(txtProgramName.Text) ||
                 !int.TryParse(txtActivePrograms.Text, out int activePrograms) || activePrograms < 1 ||
                 !uint.TryParse(txtCpuMilliCore.Text, out uint cpuMilliCore) || cpuMilliCore < 1 ||
                 !uint.TryParse(txtMemory.Text, out uint memory) || memory < 1)
