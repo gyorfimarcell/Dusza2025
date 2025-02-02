@@ -9,6 +9,7 @@
         Title="Cluster Management"
         Height="750"
         Width="1200"
+        Closed="FluentWindow_Closed"
         ExtendsContentIntoTitleBar="True"
         WindowStartupLocation="CenterScreen">
     <Grid>
