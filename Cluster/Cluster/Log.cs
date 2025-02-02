@@ -29,7 +29,12 @@ namespace Cluster
     {
         public static string GetLogDirectoryPath()
         {
-            return Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, "Logs");
+            string logDirectoryPath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, "Logs");
+            if (!Directory.Exists(logDirectoryPath))
+            {
+                Directory.CreateDirectory(logDirectoryPath);
+            }
+            return logDirectoryPath;
         }
         public static void WriteLog(List<string> logData, LogType type)
         {
