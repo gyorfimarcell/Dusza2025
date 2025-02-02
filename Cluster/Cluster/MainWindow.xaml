@@ -53,6 +53,13 @@
                         <ui:SymbolIcon Symbol="Home24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Add New Program"
+                       TargetPageType="{x:Type local:AddNewProgramPage}"
+                       NavigationCacheMode="Disabled">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Home24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Shutdown Program"
                                        TargetPageType="{x:Type local:ShutdownProgramPage}"
                                        NavigationCacheMode="Disabled"
