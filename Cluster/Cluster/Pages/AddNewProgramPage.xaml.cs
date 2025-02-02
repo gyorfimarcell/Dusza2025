@@ -71,7 +71,8 @@ namespace Cluster
                 }
 
                 program.AddNewProgramToCluster(path);
-                //TODO: Maybe un the program on computers
+
+                Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}", $"{program.ActivePrograms}"], LogType.AddProgram);
 
             }
             catch (Exception ex)
