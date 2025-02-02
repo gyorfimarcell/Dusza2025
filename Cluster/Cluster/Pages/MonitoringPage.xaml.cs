@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -23,14 +24,14 @@ namespace Cluster
     {
         List<Computer> computers;
         List<Process> processes;
+        List<ProcessRow> processRows;
 
         public MonitoringPage()
         {
             this.computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
-
-            processes = computers.Aggregate(new List<Process>(),
-                (list, computer) => list.Concat(computer.processes).ToList());
+            
+            processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
 
             InitializeComponent();
 
@@ -46,28 +47,56 @@ namespace Cluster
 
         private void cbProgram_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgPrograms.ItemsSource = processes
-                .Where(x => cbProgram.SelectedIndex == 0 ? true : x.ProgramName == cbProgram.SelectedItem.ToString())
-                .Select(x => new ProcessRow(x, computers));
+            processRows = processes.Where(x => cbProgram.SelectedIndex == 0 ? true : x.ProgramName == cbProgram.SelectedItem.ToString()).Select(x => new ProcessRow(x, computers)).ToList();
+            dgPrograms.ItemsSource = processRows;
             lblProgramCount.Content = $"{dgPrograms.Items.Count} process{(dgPrograms.Items.Count > 1 ? "es" : "")}";
         }
-    }
 
-    public class ProcessRow
-    {
-        Process process;
-        Computer computer;
-
-        public string Name => process.FileName;
-        public string Computer => computer.Name;
-        public string Status => process.Active ? "Active" : "Inactive";
-        public int ProcessorUsage => process.ProcessorUsage;
-        public int MemoryUsage => process.MemoryUsage;
-
-        public ProcessRow(Process process, List<Computer> computers)
+        private void csvExportProgramsButton_Click(object sender, RoutedEventArgs e)
         {
-            this.process = process;
-            this.computer = computers.Find(x => x.processes.Contains(process));
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV Files | *.csv";
+            sfd.DefaultExt = "csv";
+            if (sfd.ShowDialog() == true)
+            {
+                string[] lines = ["Name;Computer;Status;ProcessorUsage;MemoryUsage", .. processRows.Select(x => x.CsvRow)];
+                File.WriteAllLines(sfd.FileName, lines);
+                MessageBox.Show("Successfully exported!", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        /*private void csvExportComputersButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV Files | *.csv";
+            sfd.DefaultExt = "csv";
+            if (sfd.ShowDialog() == true)
+            {
+                string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", .. computerRows.Select(x => x.CsvRow)];
+                File.WriteAllLines(sfd.FileName, lines);
+                MessageBox.Show("Successfully exported!", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }*/
+
+
+        public class ProcessRow
+        {
+            Process process;
+            Computer computer;
+
+            public string Name => process.FileName;
+            public string Computer => computer.Name;
+            public string Status => process.Active ? "Active" : "Inactive";
+            public int ProcessorUsage => process.ProcessorUsage;
+            public int MemoryUsage => process.MemoryUsage;
+            public string CsvRow => $"{Name};{Computer};{Status};{ProcessorUsage};{MemoryUsage}";
+
+
+            public ProcessRow(Process process, List<Computer> computers)
+            {
+                this.process = process;
+                this.computer = computers.Find(x => x.processes.Contains(process));
+            }
         }
     }
 }
