@@ -25,7 +25,11 @@ namespace Cluster
 
         public string Name { get; set; }
         public int ProcessorCore { get; set; }
+        public int ProcessorUsage => processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
+
         public int RamCapacity { get; set; }
+        public int MemoryUsage => processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
+        
         public List<Process> processes { get; set; }
 
 
@@ -64,35 +68,33 @@ namespace Cluster
             return computers;
         }
 
-        public static bool AddComputer(string Path, string name, int cores, int ram, List<string>? computerNames = null)
+        public static string? AddComputer(string Path, string name, int cores, int ram, List<string>? computerNames = null)
         {
             if (computerNames == null) computerNames = GetComputers(Path).Select(x => x.Name).ToList();
             if (computerNames!.Contains(name))
             {
-                MessageBox.Show("A computer already uses this name");
-                return false;
+                return "A computer already uses this name";
             }
             if (cores < 1 || ram < 1)
             {
-                MessageBox.Show("The amount of cpu cores and memory must be positive.");
-                return false;
+                return "The amount of cpu cores and memory must be positive.";
             }
 
             string dir = Directory.CreateDirectory($@"{Path}\{name}").FullName;
             File.WriteAllLines($@"{dir}\.szamitogep_konfig", [cores.ToString(), ram.ToString()]);
 
-            return true;
+            return null;
         }
 
-        public bool Delete(string Path)
+        public string? Delete()
         {
             if (processes.Count > 0)
             {
-                MessageBox.Show("Shut down all the programs before deleting the computer!");
-                return false;
+                return "Shut down all the programs before deleting the computer!";
             }
-            Directory.Delete($@"{Path}\{Name}", true);
-            return true;
+            Directory.Delete($@"{MainWindow.ClusterPath}\{Name}", true);
+            Log.WriteLog([Name, $"{ProcessorCore}", $"{RamCapacity}"], LogType.DeleteComputer);
+            return null;
         }
     }
 }

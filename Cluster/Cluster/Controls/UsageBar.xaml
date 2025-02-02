@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Cluster.Controls.UsageBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Cluster.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="40" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Content="{Binding Text, RelativeSource={RelativeSource AncestorType=local:UsageBar} }" />
+        <TextBlock Grid.Row="0"
+                   HorizontalAlignment="Right">
+            <Run Text="{Binding Current, RelativeSource={RelativeSource AncestorType=local:UsageBar} }" />
+            <Run Text=" / " />
+            <Run Text="{Binding Max, RelativeSource={RelativeSource AncestorType=local:UsageBar} }" />
+        </TextBlock>
+        <ProgressBar Value="{Binding Current, RelativeSource={RelativeSource AncestorType=local:UsageBar} }"
+                     Maximum="{Binding Max, RelativeSource={RelativeSource AncestorType=local:UsageBar} }"
+                     Height="8"
+                     Grid.Row="1" />
+    </Grid>
+</UserControl>
