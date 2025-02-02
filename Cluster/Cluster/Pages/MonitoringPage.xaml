@@ -24,12 +24,6 @@
         </Grid.RowDefinitions>
 
         <TabControl Grid.ColumnSpan="3">
-            <TabItem Header="Computers">
-                <DataGrid x:Name="dgComputers"
-                          IsReadOnly="True"
-                          CanUserAddRows="True"
-                          Margin="8"/>
-            </TabItem>
             <TabItem Header="Programs">
                 <Grid Margin="8">
                     <Grid.ColumnDefinitions>
