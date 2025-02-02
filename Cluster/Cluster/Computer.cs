@@ -31,12 +31,12 @@ namespace Cluster
 
         public bool HasEnoughRam(int ram)
         {
-            return ram > RamCapacity ? false : true;
+            return ram <= RamCapacity;
         }
 
         public bool HasEnoughCore(int cores)
         {
-            return cores > ProcessorCore ? false : true;
+            return cores <= ProcessorCore;
         }
 
         public static List<Computer> GetComputers(string Path)

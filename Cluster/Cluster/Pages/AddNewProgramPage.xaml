@@ -19,7 +19,13 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <TextBlock Text="New Program Name:" Margin="0 20 0 0" />
             <TextBox x:Name="txtProgramName" />
             <Grid>
@@ -30,18 +36,19 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0 0 20 0">
                     <TextBlock Text="Active Programs:" Margin="0 20 0 0" />
-                    <ui:NumberBox x:Name="txtActivePrograms" />
+                    <TextBox x:Name="txtActivePrograms" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="10 0 10 0">
                     <TextBlock Text="CPU Millicore:" Margin="0 20 0 0" />
-                    <ui:NumberBox x:Name="txtCpuMilliCore" />
+                    <TextBox x:Name="txtCpuMilliCore" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="20 0 0 0">
                     <TextBlock Text="Memory:" Margin="0 20 0 0" />
-                    <ui:NumberBox x:Name="txtMemory" />
+                    <TextBox x:Name="txtMemory" />
                 </StackPanel>
             </Grid>
             <Button x:Name="btnSave" Content="Save" Margin="0 20 0 0" Click="btnSave_Click" />
         </StackPanel>
+        <ui:SnackbarPresenter x:Name="snackbarPresenter" Grid.Row="2" Grid.Column="1"/>
     </Grid>
 </Page>
