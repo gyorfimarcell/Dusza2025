@@ -76,7 +76,7 @@ namespace Cluster
             sfd.DefaultExt = "csv";
             if (sfd.ShowDialog() == true)
             {
-                string[] lines = ["Name;ProcessorUsage;MemoryCapacity;MemoryUsage", .. computerRows.Select(x => x.CsvRow)];
+                string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", .. computerRows.Select(x => x.CsvRow)];
                 File.WriteAllLines(sfd.FileName, lines);
                 MessageBox.Show("Successfully exported!", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
             }
