@@ -25,7 +25,6 @@ namespace Cluster
         List<Computer> computers;
         List<Process> processes;
         List<ProcessRow> processRows;
-        List<ComputerRow> computerRows;
 
         public MonitoringPage()
         {
