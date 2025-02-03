@@ -51,7 +51,8 @@
                       ItemsSource="{Binding PageComputer.processes, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
-                    <controls:ProcessCard Process="{Binding Path=.}"/>
+                    <controls:ProcessCard Process="{Binding Path=.}"
+                                          OnProcessShutdown="ProcessCard_OnProcessShutdown"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
