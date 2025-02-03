@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Cluster
 {
@@ -52,6 +54,13 @@ namespace Cluster
                 return String.Join("\n", lines);
             }
         }
+
+        public string GetCSVRow() {
+            Computer computer = Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.processes.Any(x => x.FileName == this.FileName));
+
+            string status = Active ? "Active" : "Inactive";
+            return $"{FileName};{computer.Name};{status};{ProcessorUsage};{MemoryUsage}";
+    }
 
         public void Write(string folder) {
             File.WriteAllText(Path.Combine(folder, FileName), FileContent);
