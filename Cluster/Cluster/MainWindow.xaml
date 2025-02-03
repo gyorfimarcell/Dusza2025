@@ -76,6 +76,14 @@
                         <ui:SymbolIcon Symbol="Home24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Cluster change logs"
+                       TargetPageType="{x:Type local:ClusterChangeLogsPage}"
+                       NavigationCacheMode="Disabled"
+                       IsEnabled="False">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Home24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
                 <Label x:Name="lblPath"

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -52,47 +52,32 @@ public partial class ComputersPage : CustomPage
         Button button = (Button)sender;
         Computer computer = (Computer)button.DataContext;
 
-        string? error = computer.Delete();
-        if (error == null)
+        if (computer.processes.Count > 0)
         {
-            _window.RootSnackbarService.Show("Computer deleted", $"Computer '{computer.Name}' successfully deleted.",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
-
-            LoadData();
-            return;
-        }
-
-        if (computer.CanOutSourcePrograms())
-        {
-            MessageBox mgbox = new()
+            string? res = computer.OutSourcePrograms();
+            if (res != null)
             {
-                Title = "Error",
-                Content = "Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?",
-                IsPrimaryButtonEnabled = true,
-                IsSecondaryButtonEnabled = false,
-                //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
-                PrimaryButtonText = "Yes",
-                CloseButtonText = "Cancel"
-
-            };
-            MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
-            if (result == MessageBoxResult.Primary)
-            {
-                //TODO: Implement outsource programs
-                bool isSuccess = computer.OutSourcePrograms();
-                if (!isSuccess)
-                {
-                    _window.RootSnackbarService.Show("Error", "Outsourcing failed! Please try again later.", ControlAppearance.Danger,
+                if (res.Length == 0) return;
+                _window.RootSnackbarService.Show("Error", res, ControlAppearance.Danger,
                         new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
-                    return;
-                }
-                _window.RootSnackbarService.Show("Success", @$"Outsourcing succeed! You can delete now the '{computer.Name}' safely.", ControlAppearance.Danger,
-                        new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                return;
             }
-            return;
+            _window.RootSnackbarService.Show("Success", @$"Outsourcing succeed! You can delete now the '{computer.Name}' safely.", ControlAppearance.Success,
+                        new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
         }
-        _window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
-            new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+        else
+        {
+            string? error = computer.Delete();
+            if (error != null)
+            {
+                _window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                return;
+            }
+            _window.RootSnackbarService.Show("Computer deleted", $"Computer '{computer.Name}' successfully deleted.",
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+        }
+        LoadData();
     }
 
     private void MenuItemExport_Click(object sender, RoutedEventArgs e)
