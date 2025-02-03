@@ -15,7 +15,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
     public Computer PageComputer { get; set; }
 
     public string ProcessesText =>
-        $"{PageComputer.processes.Count} processes ({PageComputer.processes.Count(x => x.Active)} active)";
+        PageComputer == null ? "" : $"{PageComputer.processes.Count} processes ({PageComputer.processes.Count(x => x.Active)} active)";
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
