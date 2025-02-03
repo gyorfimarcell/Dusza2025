@@ -51,9 +51,7 @@
                       ItemsSource="{Binding PageComputer.processes, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
-                    <controls:CustomCard Title="{Binding FileName}"
-                                         Description="{Binding StartTime}"
-                                         Margin="0 0 0 8" />
+                    <controls:ProcessCard Process="{Binding Path=.}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

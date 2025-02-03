@@ -42,6 +42,8 @@ namespace Cluster
 
         public List<Process> processes { get; set; }
 
+        public string CsvRow => $"{Name};{ProcessorCore};{ProcessorUsage};{RamCapacity};{MemoryUsage}";
+
 
         public bool HasEnoughRam(int ram)
         {
