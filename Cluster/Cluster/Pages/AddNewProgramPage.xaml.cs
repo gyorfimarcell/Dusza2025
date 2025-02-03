@@ -24,16 +24,13 @@ namespace Cluster
     public partial class AddNewProgramPage : Page
     {
         string path;
-        SnackbarService snackbarService;
+        MainWindow _window;
         public AddNewProgramPage()
         {
             InitializeComponent();
 
             path = MainWindow.ClusterPath;
-
-            snackbarService = new();
-            snackbarService.SetSnackbarPresenter(snackbarPresenter);
-
+            _window = (MainWindow)Application.Current.MainWindow!;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -43,7 +40,7 @@ namespace Cluster
                 !uint.TryParse(txtCpuMilliCore.Text, out uint cpuMilliCore) || cpuMilliCore < 1 ||
                 !uint.TryParse(txtMemory.Text, out uint memory) || memory < 1)
             {
-                snackbarService.Show(
+                _window.RootSnackbarService.Show(
                     "Error",
                     "Please fill out all the fields in proper format!",
                     ControlAppearance.Danger,
@@ -59,7 +56,7 @@ namespace Cluster
             {
                 if (ProgramType.ReadClusterFile(path).Select(x => x.ProgramName).Contains(program.ProgramName))
                 {
-                    snackbarService.Show(
+                    _window.RootSnackbarService.Show(
                         "Error",
                         "This program already exists in the cluster!",
                         ControlAppearance.Danger,
@@ -77,7 +74,7 @@ namespace Cluster
             }
             catch (Exception ex)
             {
-                snackbarService.Show(
+                _window.RootSnackbarService.Show(
                     "Error",
                     ex.Message,
                     ControlAppearance.Danger,
@@ -88,7 +85,7 @@ namespace Cluster
                 return;
             }
             txtProgramName.Text = txtProgramName.Text = txtActivePrograms.Text = txtCpuMilliCore.Text = txtMemory.Text = "";
-            snackbarService.Show(
+            _window.RootSnackbarService.Show(
                 "Success",
                 "Program added successfully!",
                 ControlAppearance.Success,
