@@ -7,6 +7,8 @@ using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace Cluster
 {
@@ -109,6 +111,25 @@ namespace Cluster
                     return false;
                 }
                 capable.processes.Add(program);
+                computers = computers.Where(x => x.Name != capable.Name).ToList().Append(capable).ToList();
+            }
+            return true;
+        }
+
+        public bool OutSourcePrograms(string? path = null)
+        {
+            path = path ?? MainWindow.ClusterPath;
+            List<Computer> computers = GetComputers(path)
+                .Where(x => x.Name != Name).ToList();
+            foreach (var process in processes)
+            {
+                Computer? capable = computers.FirstOrDefault(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage));
+                if (capable == null)
+                {
+                    return false;
+                }
+                File.Move(Path.Combine(path, Name, process.ProgramName), Path.Combine(path, capable.Name, process.ProgramName));
+                capable.processes.Add(process);
                 computers = computers.Where(x => x.Name != capable.Name).ToList().Append(capable).ToList();
             }
             return true;

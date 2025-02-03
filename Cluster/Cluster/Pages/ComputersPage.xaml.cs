@@ -74,6 +74,7 @@ public partial class ComputersPage : CustomPage
             if (result == MessageBoxResult.Primary)
             {
                 //TODO: Implement outsource programs
+
             }
             return;
         }
