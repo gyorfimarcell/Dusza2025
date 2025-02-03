@@ -128,7 +128,17 @@ namespace Cluster
                 {
                     return false;
                 }
-                File.Move(Path.Combine(path, Name, process.ProgramName), Path.Combine(path, capable.Name, process.ProgramName));
+
+                try
+                {
+                    File.Move(Path.Combine(path, Name, process.FileName), Path.Combine(path, capable.Name, process.FileName));
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                    return false;
+                }
+
                 capable.processes.Add(process);
                 computers = computers.Where(x => x.Name != capable.Name).ToList().Append(capable).ToList();
             }

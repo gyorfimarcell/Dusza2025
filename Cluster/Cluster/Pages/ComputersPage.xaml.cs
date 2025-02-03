@@ -74,7 +74,15 @@ public partial class ComputersPage : CustomPage
             if (result == MessageBoxResult.Primary)
             {
                 //TODO: Implement outsource programs
-
+                bool isSuccess = computer.OutSourcePrograms();
+                if (!isSuccess)
+                {
+                    _window.RootSnackbarService.Show("Error", "Outsourcing failed! Please try again later.", ControlAppearance.Danger,
+                        new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                    return;
+                }
+                _window.RootSnackbarService.Show("Success", @$"Outsourcing succeed! You can delete now the '{computer.Name}' safely.", ControlAppearance.Danger,
+                        new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
             }
             return;
         }
