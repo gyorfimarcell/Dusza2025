@@ -40,6 +40,48 @@ namespace Cluster
             Log.WriteLog([], LogType.OpenProgram);
         }
 
+        private void LoadLastOpenedCluster()
+        {
+            string directoryPath = Log.GetLogDirectoryPath();
+
+            if (Directory.Exists(directoryPath))
+            {
+                string[] files = Directory.GetFiles(directoryPath, "*.log");
+
+                if (files != null)
+                {
+                    var latestFile = files.Select(file => new { FilePath = file, Date = DateTime.TryParseExact(Path.GetFileNameWithoutExtension(file), "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime date) ? date : (DateTime?)null}).Where(f => f.Date.HasValue).OrderByDescending(f => f.Date).FirstOrDefault();
+
+                    string[] clusterLines = File.ReadAllLines(latestFile.FilePath).Where(x => x.StartsWith("LoadCluster")).ToArray();
+
+                    if (clusterLines.Length == 0) 
+                    {
+                        return;
+                    }
+
+                    ClusterPath = clusterLines.Last().Split(" - ").Last();
+
+                    if (ClusterPath != null)
+                    {
+                        lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+                        loadNavItem.Content = "Load another Cluster";
+                        foreach (var item in RootNavigation.MenuItems)
+                        {
+                            if (item is NavigationViewItem)
+                            {
+                                NavigationViewItem navItem = (NavigationViewItem)item;
+                                if (!navItem.IsEnabled) navItem.IsEnabled = true;
+                            }
+                        }
+
+                        RootNavigation.ClearJournal();
+                        RootNavigation.Navigate(typeof(ClusterHealthPage));
+                        Log.WriteLog([ClusterPath], LogType.LoadCluster);
+                    }
+                }
+            }
+        }
+
         public void OpenClusterSelectionDialog() {
             OpenFolderDialog ofd = new OpenFolderDialog();
             if (ofd.ShowDialog() == true)
@@ -79,6 +121,7 @@ namespace Cluster
             
             RootNavigation.Navigate(typeof(StartPage));
             RootNavigation.ClearJournal();
+            LoadLastOpenedCluster();
         }
 
         private void RootNavigationOnNavigated(NavigationView sender, NavigatedEventArgs args)

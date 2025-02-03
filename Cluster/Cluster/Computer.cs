@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
@@ -8,7 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 using Path = System.IO.Path;
+using MessageBox = Wpf.Ui.Controls.MessageBox;
+using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
+using static System.Net.WebRequestMethods;
+using System.Numerics;
+using File = System.IO.File;
 
 namespace Cluster
 {
@@ -90,12 +98,15 @@ namespace Cluster
 
         public string? Delete()
         {
-            if (processes.Count > 0)
+            try
             {
-                return "Shut down all the programs before deleting the computer!";
+                Directory.Delete($@"{MainWindow.ClusterPath}\{Name}", true);
+                Log.WriteLog([Name, $"{ProcessorCore}", $"{RamCapacity}"], LogType.DeleteComputer);
             }
-            Directory.Delete($@"{MainWindow.ClusterPath}\{Name}", true);
-            Log.WriteLog([Name, $"{ProcessorCore}", $"{RamCapacity}"], LogType.DeleteComputer);
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
             return null;
         }
 
@@ -116,7 +127,37 @@ namespace Cluster
             return true;
         }
 
-        public bool OutSourcePrograms(string? path = null)
+        public string? OutSourcePrograms()
+        {
+            if (CanOutSourcePrograms())
+            {
+                MessageBox mgbox = new()
+                {
+                    Title = "Error",
+                    Content = "Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?",
+                    IsPrimaryButtonEnabled = true,
+                    IsSecondaryButtonEnabled = false,
+                    //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
+                    PrimaryButtonText = "Yes",
+                    CloseButtonText = "Cancel"
+
+                };
+                MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+                if (result == MessageBoxResult.Primary)
+                {
+                    bool isSuccess = OutSource() == null;
+                    if (!isSuccess)
+                    {
+                        return "Outsourcing failed! Please try again later.";
+                    }
+                    return null;
+                }
+                return string.Empty;
+            }
+            return "Outsourcing isn't possible. Shut down all the programs before deleting the computer!";
+        }
+
+        private string? OutSource(string? path = null)
         {
             path = path ?? MainWindow.ClusterPath;
             List<Computer> computers = GetComputers(path)
@@ -126,7 +167,7 @@ namespace Cluster
                 Computer? capable = computers.FirstOrDefault(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage));
                 if (capable == null)
                 {
-                    return false;
+                    return "There's not enough resource on other computers to outsource.";
                 }
 
                 try
@@ -136,13 +177,28 @@ namespace Cluster
                 catch (Exception ex)
                 {
                     throw ex;
-                    return false;
+                    return ex.Message;
                 }
 
                 capable.processes.Add(process);
                 computers = computers.Where(x => x.Name != capable.Name).ToList().Append(capable).ToList();
             }
-            return true;
+            return null;
+        }
+
+        public void MoveProcess(string processPath, Computer destination, string? path = null)
+        {
+            path = path ?? MainWindow.ClusterPath;
+            string filename = Path.GetFileName(processPath);
+            try
+            {
+                File.Move(processPath, Path.Combine(path, destination.Name, filename));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }
