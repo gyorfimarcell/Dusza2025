@@ -122,5 +122,10 @@ namespace Cluster
                     ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
             }
         }
+
+        private void MenuItemNew_Click(object sender, RoutedEventArgs e)
+        {
+            _window.RootNavigation.NavigateWithHierarchy(typeof(NewInstancePage));
+        }
     }
 }

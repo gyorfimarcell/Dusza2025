@@ -21,7 +21,8 @@
                          Icon="{ui:SymbolIcon Share20}"
                          Click="MenuItemExport_Click"/>
             <ui:MenuItem Header="New"
-                 Icon="{ui:SymbolIcon Add20}"/>
+                         Icon="{ui:SymbolIcon Add20}"
+                         Click="MenuItemNew_Click"/>
         </Menu>
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">

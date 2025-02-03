@@ -76,14 +76,6 @@
                         <ui:SymbolIcon Symbol="Home24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Run Program Instance"
-                                       TargetPageType="{x:Type local:NewInstancePage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Shutdown Program Instance"
                                        TargetPageType="{x:Type local:ShutdownProgramInstancePage}"
                                        NavigationCacheMode="Disabled"
