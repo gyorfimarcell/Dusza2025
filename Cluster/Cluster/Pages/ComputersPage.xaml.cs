@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
@@ -19,10 +22,12 @@ public partial class ComputersPage : CustomPage
         LoadData();
     }
 
+    public List<Computer> Computers;
+
     private void LoadData()
     {
-        List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
-        icComputers.ItemsSource = computers.OrderBy(x => x.Name);
+        Computers = Computer.GetComputers(MainWindow.ClusterPath).OrderBy(x => x.Name).ToList();
+        icComputers.ItemsSource = Computers;
     }
 
     private void MenuItemNew_OnClick(object sender, RoutedEventArgs e)
@@ -54,9 +59,23 @@ public partial class ComputersPage : CustomPage
         else
         {
             _window.RootSnackbarService.Show("Computer deleted", $"Computer '{computer.Name}' successfully deleted.",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
 
             LoadData();
+        }
+    }
+
+    private void MenuItemExport_Click(object sender, RoutedEventArgs e)
+    {
+        SaveFileDialog sfd = new SaveFileDialog();
+        sfd.Filter = "CSV Files | *.csv";
+        sfd.DefaultExt = "csv";
+        if (sfd.ShowDialog() == true)
+        {
+            string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", ..Computers.Select(x => x.CsvRow)];
+            File.WriteAllLines(sfd.FileName, lines);
+            _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
         }
     }
 }

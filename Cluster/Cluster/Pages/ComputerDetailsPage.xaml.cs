@@ -49,7 +49,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         else
         {
             _window.RootSnackbarService.Show("Computer deleted", $"Computer '{PageComputer.Name}' successfully deleted.",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
 
             _window.RootNavigation.Navigate(typeof(ComputersPage));
         }
