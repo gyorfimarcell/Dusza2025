@@ -34,13 +34,13 @@ namespace Cluster
 
         List<Process> Processes;
 
-        public void LoadData() {
+        public void LoadData(bool skipFilterReload = false) {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
             Processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
 
-            UpdateProgramsMenuItem(programs);
+             if (!skipFilterReload) UpdateProgramsMenuItem(programs);
             FilterProcesses();
         }
 
@@ -126,6 +126,11 @@ namespace Cluster
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
             _window.RootNavigation.NavigateWithHierarchy(typeof(NewInstancePage));
+        }
+
+        private void ProcessCard_OnProcessShutdown(object sender, EventArgs e)
+        {
+            LoadData(true);
         }
     }
 }

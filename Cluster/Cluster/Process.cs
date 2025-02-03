@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 using System.Xml.Linq;
+using Path = System.IO.Path;
 
 namespace Cluster
 {
@@ -17,6 +19,8 @@ namespace Cluster
         public bool Active { get; set; }
         public int ProcessorUsage { get; set; }
         public int MemoryUsage { get; set; }
+
+        public Computer HostComputer => Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.processes.Any(x => x.FileName == this.FileName));
 
         public Process(string path)
         {
@@ -56,10 +60,8 @@ namespace Cluster
         }
 
         public string GetCSVRow() {
-            Computer computer = Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.processes.Any(x => x.FileName == this.FileName));
-
             string status = Active ? "Active" : "Inactive";
-            return $"{FileName};{computer.Name};{status};{ProcessorUsage};{MemoryUsage}";
+            return $"{FileName};{HostComputer.Name};{status};{ProcessorUsage};{MemoryUsage}";
     }
 
         public void Write(string folder) {
@@ -86,6 +88,11 @@ namespace Cluster
             }
 
             return id;
+        }
+
+        public void Shutdown() {
+            File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
+            Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], LogType.ShutdownProgramInstance);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,17 @@ namespace Cluster.Controls
                 SetValue(ProcessProperty, value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Process)));
             }
+        }
+
+        public delegate void ProcessShutdownHandler(object sender, EventArgs e);
+        public event ProcessShutdownHandler OnProcessShutdown;
+
+        private void btnShutdown_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Shutdown();
+
+            if (OnProcessShutdown == null) return;
+            OnProcessShutdown(this, new());
         }
     }
 }

@@ -69,10 +69,12 @@
                               Text="{Binding MemoryUsage}"/>
             </StackPanel>
 
-            <ui:Button Grid.Column="3"
+            <ui:Button x:Name="btnShutdown"
+                       Grid.Column="3"
                        Grid.RowSpan="2"
                        Appearance="Transparent"
-                       Icon="{ui:SymbolIcon Power24}"/>
+                       Icon="{ui:SymbolIcon Power24}"
+                       Click="btnShutdown_Click"/>
         </Grid>
     </ui:Card>
 </UserControl>
