@@ -55,11 +55,11 @@ namespace Cluster
                 window.RootSnackbarService.Show("Computer created", $"Computer '{tbName.Text}' successfully created.",
                     ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
 
+                Log.WriteLog([tbName.Text, $"{processor}", $"{memory}"], LogType.AddComputer);
+
                 tbName.Clear();
                 nbProcessor.Clear();
                 nbMemory.Clear();
-
-                Log.WriteLog([tbName.Text, $"{processor}", $"{memory}"], LogType.AddComputer);
             }
         }
     }
