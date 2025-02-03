@@ -205,7 +205,7 @@ namespace Cluster
 
         public void OptimizeComputers(int min, int max)
         {
-
+            //TODO: do it
         }
     }
 }
