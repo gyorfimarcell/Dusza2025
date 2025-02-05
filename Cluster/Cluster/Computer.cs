@@ -148,12 +148,15 @@ namespace Cluster
                 MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
                 if (result == MessageBoxResult.Primary)
                 {
+                    int processesCount = processes.Count;
                     bool isSuccess = OutSource() == null;
                     if (!isSuccess)
                     {
                         return "Outsourcing failed! Please try again later.";
                     }
+                    Log.WriteLog([Name, $"{processesCount}"], LogType.ClearProgramInstances);
                     return null;
+
                 }
                 return string.Empty;
             }
@@ -196,7 +199,7 @@ namespace Cluster
             try
             {
                 File.Move(Path.Combine(path, sourceComputer.Name, processFilename), Path.Combine(path, destinationComputer.Name, processFilename));
-                Log.WriteLog([processFilename, sourceComputer.Name, destinationComputer.Name], LogType.MoveProramInstance);
+                Log.WriteLog([processFilename, sourceComputer.Name, destinationComputer.Name], LogType.MoveProgramInstance);
             }
             catch (Exception ex)
             {
