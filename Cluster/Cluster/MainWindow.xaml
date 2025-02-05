@@ -53,27 +53,12 @@
                         <ui:SymbolIcon Symbol="AppsList24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Add New Program"
-                                       TargetPageType="{x:Type local:AddNewProgramPage}"
-                                       NavigationCacheMode="Disabled">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Shutdown Program"
-                                       TargetPageType="{x:Type local:ShutdownProgramPage}"
+                <ui:NavigationViewItem Content="Programs"
+                                       TargetPageType="{x:Type local:ProgramsPage}"
                                        NavigationCacheMode="Disabled"
                                        IsEnabled="False">
                     <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Modify Program"
-                                       TargetPageType="{x:Type local:ModifyProgramPage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
+                        <ui:SymbolIcon Symbol="Apps24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Cluster change logs"
