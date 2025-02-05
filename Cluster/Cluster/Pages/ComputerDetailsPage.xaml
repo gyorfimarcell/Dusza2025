@@ -52,7 +52,8 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
                     <controls:ProcessCard Process="{Binding Path=.}"
-                                          OnProcessShutdown="ProcessCard_OnProcessShutdown"/>
+                                          OnProcessShutdown="ProcessCard_OnProcessChange"
+                                          OnProcessActivate="ProcessCard_OnProcessChange"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -35,11 +35,11 @@ namespace Cluster
             this.MemoryUsage = Convert.ToInt32(lines[3]);
         }
 
-        public Process(string programName, int processorUsage, int MemoryUsage) {
+        public Process(string programName, int processorUsage, int MemoryUsage, bool active) {
             this.ProgramName=programName;
             this.ProcessId = GenerateId();
             this.StartTime = DateTime.Now;
-            this.Active = true;
+            this.Active = active;
             this.ProcessorUsage = processorUsage;
             this.MemoryUsage = MemoryUsage;
         }
@@ -93,6 +93,11 @@ namespace Cluster
         public void Shutdown() {
             File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
             Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], LogType.ShutdownProgramInstance);
+        }
+
+        public void ToggleActive() {
+            Active = !Active;
+            Write($@"{MainWindow.ClusterPath}\{HostComputer.Name}");
         }
     }
 }

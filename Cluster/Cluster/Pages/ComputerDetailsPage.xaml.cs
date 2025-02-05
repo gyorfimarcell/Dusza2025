@@ -76,7 +76,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         }
     }
 
-    private void ProcessCard_OnProcessShutdown(object sender, EventArgs e)
+    private void ProcessCard_OnProcessChange(object sender, EventArgs e)
     {
         SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name));
     }
