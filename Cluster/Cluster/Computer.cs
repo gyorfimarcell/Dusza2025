@@ -1,12 +1,22 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shapes;
+using Wpf.Ui.Controls;
+using Path = System.IO.Path;
+using MessageBox = Wpf.Ui.Controls.MessageBox;
+using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
+using static System.Net.WebRequestMethods;
+using System.Numerics;
+using File = System.IO.File;
 
 namespace Cluster
 {
@@ -29,25 +39,26 @@ namespace Cluster
 
         public int RamCapacity { get; set; }
         public int MemoryUsage => processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
-        
+
         public List<Process> processes { get; set; }
+
+        public string CsvRow => $"{Name};{ProcessorCore};{ProcessorUsage};{RamCapacity};{MemoryUsage}";
 
 
         public bool HasEnoughRam(int ram)
         {
-            return ram <= RamCapacity;
+            return ram <= RamCapacity - MemoryUsage;
         }
 
         public bool HasEnoughCore(int cores)
         {
-            return cores <= ProcessorCore;
+            return cores <= ProcessorCore - ProcessorUsage;
         }
 
         public static List<Computer> GetComputers(string Path)
         {
-
             List<Computer> computers = new List<Computer>();
-            
+
             foreach (var item in Directory.GetDirectories(Path))
             {
                 if (!Directory.GetFiles(item).Select(x => x.Split("\\").Last()).Contains(".szamitogep_konfig"))
@@ -70,7 +81,8 @@ namespace Cluster
 
         public static string? AddComputer(string Path, string name, int cores, int ram, List<string>? computerNames = null)
         {
-            if (computerNames == null) computerNames = GetComputers(Path).Select(x => x.Name).ToList();
+            if (computerNames == null)
+                computerNames = GetComputers(Path).Select(x => x.Name).ToList();
             if (computerNames!.Contains(name))
             {
                 return "A computer already uses this name";
@@ -88,13 +100,107 @@ namespace Cluster
 
         public string? Delete()
         {
-            if (processes.Count > 0)
+            try
             {
-                return "Shut down all the programs before deleting the computer!";
+                Directory.Delete($@"{MainWindow.ClusterPath}\{Name}", true);
+                Log.WriteLog([Name, $"{ProcessorCore}", $"{RamCapacity}"], LogType.DeleteComputer);
             }
-            Directory.Delete($@"{MainWindow.ClusterPath}\{Name}", true);
-            Log.WriteLog([Name, $"{ProcessorCore}", $"{RamCapacity}"], LogType.DeleteComputer);
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
             return null;
+        }
+
+        public bool CanOutSourcePrograms(string? path = null)
+        {
+            List<Computer> computers = GetComputers(path ?? MainWindow.ClusterPath)
+                .Where(x => x.Name != Name).ToList();
+            foreach (var program in processes)
+            {
+                Computer? capable = computers.FirstOrDefault(x => x.HasEnoughCore(program.ProcessorUsage) && x.HasEnoughRam(program.MemoryUsage));
+                if (capable == null)
+                {
+                    return false;
+                }
+                capable.processes.Add(program);
+                computers = computers.Where(x => x.Name != capable.Name).ToList().Append(capable).ToList();
+            }
+            return true;
+        }
+
+        public string? OutSourcePrograms()
+        {
+            if (CanOutSourcePrograms())
+            {
+                MessageBox mgbox = new()
+                {
+                    Title = "Error",
+                    Content = "Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?",
+                    IsPrimaryButtonEnabled = true,
+                    IsSecondaryButtonEnabled = false,
+                    //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
+                    PrimaryButtonText = "Yes",
+                    CloseButtonText = "Cancel"
+
+                };
+                MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+                if (result == MessageBoxResult.Primary)
+                {
+                    bool isSuccess = OutSource() == null;
+                    if (!isSuccess)
+                    {
+                        return "Outsourcing failed! Please try again later.";
+                    }
+                    return null;
+                }
+                return string.Empty;
+            }
+            return "Outsourcing isn't possible. Shut down all the programs before deleting the computer!";
+        }
+
+        private string? OutSource(string? path = null)
+        {
+            path = path ?? MainWindow.ClusterPath;
+            List<Computer> computers = GetComputers(path)
+                .Where(x => x.Name != Name).ToList();
+            foreach (var process in processes)
+            {
+                Computer? capable = computers.FirstOrDefault(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage));
+                if (capable == null)
+                {
+                    return "There's not enough resource on other computers to outsource.";
+                }
+
+                try
+                {
+                    File.Move(Path.Combine(path, Name, process.FileName), Path.Combine(path, capable.Name, process.FileName));
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                    return ex.Message;
+                }
+
+                capable.processes.Add(process);
+                computers = computers.Where(x => x.Name != capable.Name).ToList().Append(capable).ToList();
+            }
+            return null;
+        }
+
+        public void MoveProcess(string processPath, Computer destination, string? path = null)
+        {
+            path = path ?? MainWindow.ClusterPath;
+            string filename = Path.GetFileName(processPath);
+            try
+            {
+                File.Move(processPath, Path.Combine(path, destination.Name, filename));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }
