@@ -14,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Controls;
+using static Cluster.ComputersPage;
 using Button = Wpf.Ui.Controls.Button;
+using MenuItem = Wpf.Ui.Controls.MenuItem;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 using TextBlock = Wpf.Ui.Controls.TextBlock;
@@ -24,6 +26,7 @@ namespace Cluster
     public partial class ProgramsPage : CustomPage
     {
         List<ProgramType> Programs;
+        ProgramsPageSort sort = ProgramsPageSort.Name;
 
         public ProgramsPage()
         {
@@ -34,7 +37,35 @@ namespace Cluster
         public void LoadData()
         {
             Programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
-            icPrograms.ItemsSource = Programs;
+            UpdateFiltering();
+        }
+
+        internal enum ProgramsPageSort
+        {
+            Name,
+            Active,
+            ProcessorUsage,
+            MemoryUsage
+        }
+
+        private void UpdateFiltering()
+        {
+            IEnumerable<ProgramType> filtered = [..Programs];
+
+            filtered = filtered.Where(x => tbFilter.Text == "" || x.ProgramName.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
+
+            filtered = sort switch
+            {
+                ProgramsPageSort.Name => filtered.OrderBy(x => x.ProgramName),
+                ProgramsPageSort.Active => filtered.OrderBy(x => x.ActivePrograms),
+                ProgramsPageSort.ProcessorUsage => filtered.OrderBy(x => x.CpuMilliCore),         
+                ProgramsPageSort.MemoryUsage => filtered.OrderBy(x => x.Memory),
+                _ => throw new NotImplementedException(),
+            };
+
+            if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
+
+            icPrograms.ItemsSource = filtered;
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
@@ -92,6 +123,23 @@ namespace Cluster
                     LoadData();
                 }
             }
+        }
+
+        private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateFiltering();
+        }
+
+        private void MenuItemSort_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)sender;
+            sort = (ProgramsPageSort)Enum.Parse(typeof(ProgramsPageSort), (string)menuItem.Tag);
+            UpdateFiltering();
+        }
+
+        private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateFiltering();
         }
     }
 }
