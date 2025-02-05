@@ -208,9 +208,27 @@ namespace Cluster
 
         }
 
-        public void OptimizeComputers(int min, int max)
+        public static void OptimizeComputers(int min, int max)
         {
-            //TODO: do it
+            List<Computer> sortedComputers = GetComputers(MainWindow.ClusterPath).OrderBy(x => x.ProcessorCore + x.RamCapacity).ToList();
+
+            List<Process> allProcesses = sortedComputers.SelectMany(x => x.processes).OrderBy(x => x.ProcessorUsage + x.MemoryUsage).ToList();
+            sortedComputers.ForEach(x => x.processes.Clear());
+
+            double sumProcesses = allProcesses.Sum(x => x.ProcessorUsage + x.MemoryUsage);
+            double sumComputers = sortedComputers.Sum(x => x.ProcessorCore + x.RamCapacity);
+            bool canOptimize = sumProcesses / sumComputers >= min && 
+                               sumProcesses / sumComputers <= max;
+
+            if ()
+            {
+                
+            }
+
+        }
+
+        private static void OptimizeEqually(List<Computer> sortedComputers, List<Process> allProcesses)
+        {
         }
     }
 }

@@ -55,7 +55,6 @@ namespace Cluster
             //
             //// Show the dialog asynchronously
             //var result = await mainWindow._dialogService.ShowAsync(dialog, );
-
             MessageBox mgbox = new()
             {
                 Title = "Error",
