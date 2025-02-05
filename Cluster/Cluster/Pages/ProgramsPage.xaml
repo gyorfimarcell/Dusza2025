@@ -85,7 +85,8 @@
                                            Click="btnEdit_Click"/>
                                 <ui:Button x:Name="btnShutdown"
                                            Appearance="Transparent"
-                                           Icon="{ui:SymbolIcon Power24}"/>
+                                           Icon="{ui:SymbolIcon Power24}"
+                                           Click="btnShutdown_Click"/>
                             </StackPanel>
                         </Grid>
                     </ui:CardAction>

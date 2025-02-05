@@ -60,22 +60,25 @@ namespace Cluster
             return $"{program.ProgramName}\n{program.ActivePrograms}\n{program.CpuMilliCore}\n{program.Memory}\n";
         }
 
-        public static bool ShutdownProgram(string path, List<ProgramType> programs, string programName)
+        public static bool ShutdownProgram(ProgramType program)
         {
-            if(!programs.Select(x => x.ProgramName).Contains(programName)) { return false; }
-            List<ProgramType> newPrograms = programs.Where(x => x.ProgramName != programName).ToList();
+            List<ProgramType> programs = ReadClusterFile(MainWindow.ClusterPath);
+            int index = programs.FindIndex(x => x.ProgramName == program.ProgramName);
+            if(index == -1) { return false; }
+
+            programs.RemoveAt(index);
             string fileContent = "";
-            foreach (var program in newPrograms)
+            foreach (var p in programs)
             {
-                fileContent += ClusterFileLines(program);
+                fileContent += ClusterFileLines(p);
             }
-            File.WriteAllText(path + "/.klaszter", fileContent);
-            foreach (var directory in Directory.GetDirectories(path)) 
+            File.WriteAllText(MainWindow.ClusterPath + "/.klaszter", fileContent);
+            foreach (var directory in Directory.GetDirectories(MainWindow.ClusterPath)) 
             {
                 string[] directoryFiles = Directory.GetFiles(directory);
                 foreach (var file in directoryFiles)
                 {
-                    if (Path.GetFileName(file).Contains(programName))
+                    if (Path.GetFileName(file).Contains(program.ProgramName))
                     {
                         File.Delete(file);
                     }
