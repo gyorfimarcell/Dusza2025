@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using static Cluster.ProgramsPage;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
 
 namespace Cluster
@@ -44,6 +46,8 @@ namespace Cluster
         }
 
         List<Process> Processes;
+
+        ProcessesPageSort sort = ProcessesPageSort.Id;
 
         public void LoadData(bool skipFilterReload = false) {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
@@ -77,11 +81,35 @@ namespace Cluster
             }
         }
 
+        internal enum ProcessesPageSort {
+            Program,
+            Id,
+            ProcessorUsage,
+            MemoryUsage,
+            Start
+        }
+
         private void FilterProcesses() {
             List<string> programNames = GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
-            List<Process> filtered = Processes.Where(x => programNames.Contains(x.ProgramName)).ToList();
+
+            IEnumerable<Process> filtered = Processes;
+            filtered = filtered.Where(x => programNames.Contains(x.ProgramName)).ToList();
+            filtered = filtered.Where(x => x.FileName.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
+
+            filtered = sort switch
+            {
+                ProcessesPageSort.Program => filtered.OrderBy(x => x.ProgramName),
+                ProcessesPageSort.Id => filtered.OrderBy(x => x.ProcessId),
+                ProcessesPageSort.ProcessorUsage => filtered.OrderBy(x => x.ProcessorUsage),
+                ProcessesPageSort.MemoryUsage => filtered.OrderBy(x => x.MemoryUsage),
+                ProcessesPageSort.Start => filtered.OrderBy(x => x.StartTime),
+                _ => throw new NotImplementedException(),
+            };
+
+            if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
+
             icProcesses.ItemsSource = filtered;
-            tbCount.Text = $"{filtered.Count} processes ({filtered.Count(x => x.Active)} active)";
+            tbCount.Text = $"{filtered.Count()} processes ({filtered.Count(x => x.Active)} active)";
         }
 
         private List<MenuItem> GetProgramMenuItems() {
@@ -142,6 +170,23 @@ namespace Cluster
         private void ProcessCard_OnProcessChange(object sender, EventArgs e)
         {
             LoadData(true);
+        }
+
+        private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            FilterProcesses();
+        }
+
+        private void MenuItemSort_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)sender;
+            sort = (ProcessesPageSort)Enum.Parse(typeof(ProcessesPageSort), (string)menuItem.Tag);
+            FilterProcesses();
+        }
+
+        private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
+        {
+            FilterProcesses();
         }
     }
 }

@@ -12,18 +12,61 @@
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <local:CustomPage.HeaderControls>
-        <Menu FontSize="14">
-            <ui:MenuItem x:Name="menuItemPrograms"
-                         Header="Programs"
-                         StaysOpenOnClick="True"/>
-            <Separator/>
-            <ui:MenuItem Header="Export"
-                         Icon="{ui:SymbolIcon Share20}"
-                         Click="MenuItemExport_Click"/>
-            <ui:MenuItem Header="New"
-                         Icon="{ui:SymbolIcon Add20}"
-                         Click="MenuItemNew_Click"/>
-        </Menu>
+        <StackPanel Orientation="Horizontal">
+            <ui:TextBox x:Name="tbFilter"
+                        VerticalAlignment="Center"
+                        PlaceholderText="Filter..."
+                        Icon="{ui:SymbolIcon Search20}"
+                        Width="200"
+                        Margin="0 0 4 0"
+                        TextChanged="tbFilter_TextChanged"/>
+            <Menu FontSize="14">
+                <ui:MenuItem x:Name="menuItemPrograms"
+                             Header="Programs"
+                             Icon="{ui:SymbolIcon Apps20}"
+                             StaysOpenOnClick="True"/>
+                <ui:MenuItem Icon="{ui:SymbolIcon ArrowSort20}">
+                    <ui:MenuItem Header="Program"
+                                 Icon="{ui:SymbolIcon Apps20}"
+                                 Tag="0"
+                                 StaysOpenOnClick="True"
+                                 Click="MenuItemSort_Click"/>
+                    <ui:MenuItem Header="Id"
+                                 Icon="{ui:SymbolIcon NumberSymbol20}"
+                                 Tag="1"
+                                 StaysOpenOnClick="True"
+                                 Click="MenuItemSort_Click"/>
+                    <ui:MenuItem Header="Processor Usage"
+                                 Icon="{ui:SymbolIcon DeveloperBoard20}"
+                                 Tag="2"
+                                 StaysOpenOnClick="True"
+                                 Click="MenuItemSort_Click"/>
+                    <ui:MenuItem Header="Memory Usage"
+                                 Icon="{ui:SymbolIcon Ram20}"
+                                 Tag="3"
+                                 StaysOpenOnClick="True"
+                                 Click="MenuItemSort_Click"/>
+                    <ui:MenuItem Header="Start time"
+                                 Icon="{ui:SymbolIcon Clock20}"
+                                 Tag="3"
+                                 StaysOpenOnClick="True"
+                                 Click="MenuItemSort_Click"/>
+                    <Separator/>
+                    <ui:MenuItem x:Name="MenuItemSortOrder"
+                                  Header="Descending"
+                                  IsCheckable="True"
+                                  StaysOpenOnClick="True"
+                                  Click="MenuItemSortOrder_Click"/>
+                </ui:MenuItem>
+                <Separator/>
+                <ui:MenuItem Header="Export"
+                             Icon="{ui:SymbolIcon Share20}"
+                             Click="MenuItemExport_Click"/>
+                <ui:MenuItem Header="New"
+                             Icon="{ui:SymbolIcon Add20}"
+                             Click="MenuItemNew_Click"/>
+            </Menu>
+        </StackPanel>
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
         <Grid.RowDefinitions>
