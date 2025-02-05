@@ -17,6 +17,7 @@ using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 using static System.Net.WebRequestMethods;
 using System.Numerics;
 using File = System.IO.File;
+using System.Xml.Linq;
 
 namespace Cluster
 {
@@ -147,12 +148,15 @@ namespace Cluster
                 MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
                 if (result == MessageBoxResult.Primary)
                 {
+                    int processesCount = processes.Count;
                     bool isSuccess = OutSource() == null;
                     if (!isSuccess)
                     {
                         return "Outsourcing failed! Please try again later.";
                     }
+                    Log.WriteLog([Name, $"{processesCount}"], LogType.ClearProgramInstances);
                     return null;
+
                 }
                 return string.Empty;
             }
@@ -174,7 +178,8 @@ namespace Cluster
 
                 try
                 {
-                    File.Move(Path.Combine(path, Name, process.FileName), Path.Combine(path, capable.Name, process.FileName));
+                    //File.Move(Path.Combine(path, Name, process.FileName), Path.Combine(path, capable.Name, process.FileName));
+                    MoveProcess(process.FileName, this, capable);
                 }
                 catch (Exception ex)
                 {
@@ -188,13 +193,13 @@ namespace Cluster
             return null;
         }
 
-        public void MoveProcess(string processPath, Computer destination, string? path = null)
+        private static void MoveProcess(string processFilename, Computer sourceComputer, Computer destinationComputer, string? path = null)
         {
             path = path ?? MainWindow.ClusterPath;
-            string filename = Path.GetFileName(processPath);
             try
             {
-                File.Move(processPath, Path.Combine(path, destination.Name, filename));
+                File.Move(Path.Combine(path, sourceComputer.Name, processFilename), Path.Combine(path, destinationComputer.Name, processFilename));
+                Log.WriteLog([processFilename, sourceComputer.Name, destinationComputer.Name], LogType.MoveProgramInstance);
             }
             catch (Exception ex)
             {
