@@ -22,7 +22,8 @@ namespace Cluster
         ShutdownProgramInstance,
         ModifyProgram,
         ShutdownProgram,
-        ClearProramInstances,
+        ClearProgramInstances,
+        MoveProgramInstance,
         OptimizeProgramInstances
     }
     public static class Log
