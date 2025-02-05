@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 using Wpf.Ui.Controls;
 
 namespace Cluster;
@@ -48,6 +51,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
 
         if (PageComputer.processes.Count > 0)
         {
+            int processesCount = PageComputer.processes.Count;
             string? res = PageComputer.OutSourcePrograms();
             if (res != null)
             {
@@ -56,6 +60,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                         new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
+            Log.WriteLog([PageComputer.Name, $"{processesCount}"], LogType.ClearProgramInstances);
             _window.RootSnackbarService.Show("Success", @$"Outsourcing succeed! You can delete now the '{PageComputer.Name}' safely.", ControlAppearance.Success,
                         new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
 
