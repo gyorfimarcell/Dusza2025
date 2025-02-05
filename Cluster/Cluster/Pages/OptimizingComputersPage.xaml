@@ -14,6 +14,8 @@
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
     <Grid>
-
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="btnOptimizeDialog" Content="Optimize" Click="btnOptimizeDialog_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -24,5 +24,10 @@ namespace Cluster
         {
             InitializeComponent();
         }
+
+        private void btnOptimizeDialog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
