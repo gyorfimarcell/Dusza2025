@@ -53,6 +53,14 @@
                         <ui:SymbolIcon Symbol="AppsList24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Programs"
+                                       TargetPageType="{x:Type local:ProgramsPage}"
+                                       NavigationCacheMode="Disabled"
+                                       IsEnabled="False">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Apps24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Add New Program"
                                        TargetPageType="{x:Type local:AddNewProgramPage}"
                                        NavigationCacheMode="Disabled">

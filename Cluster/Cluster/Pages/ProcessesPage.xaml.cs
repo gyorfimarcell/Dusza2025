@@ -29,7 +29,18 @@ namespace Cluster
         public ProcessesPage()
         {
             InitializeComponent();
+
+            Loaded += ProcessesPage_Loaded;
+        }
+
+        private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
+        {
             LoadData();
+            if (DataContext != null && DataContext is string programName) {
+                List<MenuItem> menuItems = GetProgramMenuItems();
+                menuItems.ForEach(x => x.IsChecked = x.Header.ToString() == programName);
+                FilterProcesses();
+            }
         }
 
         List<Process> Processes;
