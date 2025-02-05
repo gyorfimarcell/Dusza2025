@@ -140,7 +140,7 @@ namespace Cluster
             _window.RootNavigation.NavigateWithHierarchy(typeof(NewInstancePage));
         }
 
-        private void ProcessCard_OnProcessShutdown(object sender, EventArgs e)
+        private void ProcessCard_OnProcessChange(object sender, EventArgs e)
         {
             LoadData(true);
         }
