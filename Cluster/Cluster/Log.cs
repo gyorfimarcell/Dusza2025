@@ -26,8 +26,27 @@ namespace Cluster
         MoveProgramInstance,
         OptimizeProgramInstances
     }
-    public static class Log
+
+    public class Log
     {
+
+        public Dictionary<LogType, List<string>> LogDataTypes = new()
+        {
+            { LogType.OpenProgram, new(){} },
+            { LogType.CloseProgram, new(){} },
+            { LogType.LoadCluster, new(){"Path"} },
+            { LogType.AddComputer, new(){"Name", "CPU", "Memory"} },
+            { LogType.DeleteComputer, new(){"Name", "CPU", "Memory"} },
+            { LogType.ExportCSV, new(){"Type"} },
+            { LogType.AddProgram, new(){"Name", "CPU", "Memory", "Active programs"} },
+            { LogType.RunProgramInstance, new(){"Filename", "Start", "Active", "CPU", "Memory"} },
+            { LogType.ShutdownProgramInstance, new(){"Filename", "Start", "Active", "CPU", "Memory"} },
+            { LogType.ModifyProgram, new(){"Name", "CPU", "Memory", "Active programs"} },
+            { LogType.ShutdownProgram, new(){"Name", "CPU", "Memory"}},
+            { LogType.ClearProgramInstances, new(){} },
+            { LogType.OptimizeProgramInstances, new(){} },
+        };
+
         public static string GetLogDirectoryPath()
         {
             string logDirectoryPath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, "Logs");
