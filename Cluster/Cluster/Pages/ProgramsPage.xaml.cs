@@ -37,5 +37,10 @@ namespace Cluster
             ProgramType program = (ProgramType)card.DataContext;
             _window.RootNavigation.Navigate(typeof(ProcessesPage), program.ProgramName);
         }
+
+        private void MenuItemNew_Click(object sender, RoutedEventArgs e)
+        {
+            _window.RootNavigation.NavigateWithHierarchy(typeof(AddNewProgramPage));
+        }
     }
 }

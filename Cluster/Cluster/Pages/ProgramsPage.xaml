@@ -11,6 +11,13 @@
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+    <local:CustomPage.HeaderControls>
+        <Menu FontSize="14">
+            <ui:MenuItem Header="New"
+                     Icon="{ui:SymbolIcon Add20}"
+                     Click="MenuItemNew_Click"/>
+        </Menu>
+    </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
