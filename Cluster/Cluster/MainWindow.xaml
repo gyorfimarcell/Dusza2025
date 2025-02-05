@@ -69,14 +69,6 @@
                         <ui:SymbolIcon Symbol="Home24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Modify Program"
-                                       TargetPageType="{x:Type local:ModifyProgramPage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Cluster change logs"
                        TargetPageType="{x:Type local:ClusterChangeLogsPage}"
                        NavigationCacheMode="Disabled"

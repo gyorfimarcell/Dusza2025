@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Controls;
+using Button = Wpf.Ui.Controls.Button;
 
 namespace Cluster
 {
@@ -41,6 +42,15 @@ namespace Cluster
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
             _window.RootNavigation.NavigateWithHierarchy(typeof(AddNewProgramPage));
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            Button card = (Button)sender;
+            ProgramType program = (ProgramType)card.DataContext;
+            _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyProgramPage), program);
         }
     }
 }

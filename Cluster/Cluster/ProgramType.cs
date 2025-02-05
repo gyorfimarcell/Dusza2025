@@ -84,19 +84,22 @@ namespace Cluster
             return true;
         }
 
-        public static bool ModifyProgram(string path, List<ProgramType> programs, string programName, List<string> values)
+        public static bool ModifyProgram(ProgramType program, int activePrograms, int processor, int memory)
         {
-            if (!programs.Select(x => x.ProgramName).Contains(programName)) { return false; }
-            List<ProgramType> newPrograms = programs;
-            newPrograms[programs.FindIndex(x => x.ProgramName == programName)].ActivePrograms = int.Parse(values[0]);
-            newPrograms[programs.FindIndex(x => x.ProgramName == programName)].CpuMilliCore = int.Parse(values[1]);
-            newPrograms[programs.FindIndex(x => x.ProgramName == programName)].Memory = int.Parse(values[2]);
+            List<ProgramType> programs = ReadClusterFile(MainWindow.ClusterPath);
+
+            int index = programs.FindIndex(x => x.ProgramName == program.ProgramName);
+            if (index == -1) { return false; }
+
+            programs[index].ActivePrograms = activePrograms;
+            programs[index].CpuMilliCore = processor;
+            programs[index].Memory = memory;
             string fileContent = "";
-            foreach (var program in newPrograms)
+            foreach (var p in programs)
             {
-                fileContent += ClusterFileLines(program);
+                fileContent += ClusterFileLines(p);
             }
-            File.WriteAllText(path + "/.klaszter", fileContent);
+            File.WriteAllText(MainWindow.ClusterPath + "/.klaszter", fileContent);
             return true;
         }
     }
