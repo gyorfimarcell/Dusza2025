@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Cluster.Controls;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,16 +29,17 @@ namespace Cluster
     /// </summary>
     public partial class OptimizingComputersPage : Page
     {
-        MainWindow mainWindow;
-        StackPanel sp;
+        string path;
+        MainWindow window;
         public OptimizingComputersPage()
         {
             InitializeComponent();
-            mainWindow = (MainWindow)Application.Current.MainWindow;
+            path = MainWindow.ClusterPath;
+            window = (MainWindow)Application.Current.MainWindow!;
 
-            sp = (StackPanel)Resources["DialogContent"];
-
-            sp.Children.OfType<StackPanel>().ToList().SelectMany(x => x.Children.OfType<Slider>()).ToList().ForEach(x => x.ValueChanged += volume_ValueChanged);
+            //sp = (StackPanel)Resources["DialogContent"];
+            //
+            //sp.Children.OfType<StackPanel>().ToList().SelectMany(x => x.Children.OfType<Slider>()).ToList().ForEach(x => x.ValueChanged += volume_ValueChanged);
         }
 
         private void btnOptimizeDialog_Click(object sender, RoutedEventArgs e)
@@ -51,15 +56,14 @@ namespace Cluster
             //// Show the dialog asynchronously
             //var result = await mainWindow._dialogService.ShowAsync(dialog, );
 
-            
             MessageBox mgbox = new()
             {
                 Title = "Error",
-                Content = Resources["DialogContent"],
+                Content = new OptimizeDialog(),
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = false,
                 //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
-                PrimaryButtonText = "Yes",
+                PrimaryButtonText = "Optimize",
                 CloseButtonText = "Cancel"
 
             };
@@ -67,15 +71,6 @@ namespace Cluster
             mgbox.ShowDialogAsync();
         }
 
-        private void volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> args)
-        {
-            Slider slider = (Slider)sender;
-            double value = (double)slider.Value;
-
-            sp.Children.OfType<StackPanel>().ToList()
-                .SelectMany(x => x.Children.OfType<TextBlock>().Select(x => (Run)x.Inlines.FirstInline))
-                .ToList()[slider.Name == "txtMinimumPercentage" ? 0 : 1].Text = value.ToString();
-
-        }
+        
     }
 }
