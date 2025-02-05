@@ -12,6 +12,31 @@
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+	
+	<Page.Resources>
+        <ResourceDictionary>
+            <StackPanel x:Key="DialogContent">
+                <TextBlock Text="Set the optimal minimum and maximum usage percentage of a computer!" TextWrapping="Wrap" 
+                           FontSize="24" TextAlignment="Center"/>
+                    <Label Content="Minimum Percentage"/>
+                <StackPanel Orientation="Horizontal">
+                    <Slider x:Name="sliMinimumPercentage"/>
+                    <ui:TextBlock>
+                        <Run Text="0" x:Name="txtMinimumPercentage"/>
+                        <Run Text=" %"/>
+                    </ui:TextBlock>
+                </StackPanel>
+                    <Label Content="Maximum Percentage"/>
+                <StackPanel Orientation="Horizontal">
+                    <Slider x:Name="sliMaximumPercentage"/>
+                    <ui:TextBlock>
+                        <Run Text="100" x:Name="txtMaximumPercentage"/>
+                        <Run Text=" %"/>
+                    </ui:TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

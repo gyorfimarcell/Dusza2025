@@ -98,6 +98,8 @@
             </ui:NavigationView.ContentOverlay>
         </ui:NavigationView>
 
+        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" />
+
         <ui:TitleBar
             x:Name="TitleBar"
             Title="Cluster Management"
