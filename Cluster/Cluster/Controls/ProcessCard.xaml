@@ -44,8 +44,9 @@
                           Margin="0"
                           FontTypography="BodyStrong"
                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                          Text="{Binding FileName }"
-                          TextWrapping="WrapWithOverflow" />
+                          Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}"
+                          TextWrapping="WrapWithOverflow">
+            </ui:TextBlock>
             <ui:TextBlock Grid.Column="1"
                           Grid.Row="1"
                           Appearance="Secondary"

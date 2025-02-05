@@ -39,8 +39,25 @@ namespace Cluster.Controls
             set {
                 SetValue(ProcessProperty, value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Process)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Title)));
             }
         }
+
+        public static readonly DependencyProperty ShowComputerProperty =
+        DependencyProperty.Register(nameof(ShowComputer), typeof(bool), typeof(ProcessCard), new PropertyMetadata(false));
+
+        public bool ShowComputer
+        {
+            get => (bool)GetValue(ShowComputerProperty);
+            set
+            {
+                SetValue(ShowComputerProperty, value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowComputer)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Title)));
+            }
+        }
+
+        public string Title => ShowComputer ? $"{Process.FileName} ({Process.HostComputer.Name})" : Process.FileName;
 
         public delegate void ProcessShutdownHandler(object sender, EventArgs e);
         public event ProcessShutdownHandler OnProcessShutdown;
