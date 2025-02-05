@@ -30,7 +30,7 @@ namespace Cluster
     public class Log
     {
 
-        public Dictionary<LogType, List<string>> LogDataTypes = new()
+        public static Dictionary<LogType, List<string>> LogDataTypes = new()
         {
             { LogType.OpenProgram, new(){} },
             { LogType.CloseProgram, new(){} },
@@ -39,11 +39,12 @@ namespace Cluster
             { LogType.DeleteComputer, new(){"Name", "CPU", "Memory"} },
             { LogType.ExportCSV, new(){"Type"} },
             { LogType.AddProgram, new(){"Name", "CPU", "Memory", "Active programs"} },
-            { LogType.RunProgramInstance, new(){"Filename", "Start", "Active", "CPU", "Memory"} },
-            { LogType.ShutdownProgramInstance, new(){"Filename", "Start", "Active", "CPU", "Memory"} },
+            { LogType.RunProgramInstance, new(){"Instance", "Start", "Active", "CPU", "Memory"} },
+            { LogType.ShutdownProgramInstance, new(){"Instance", "Start", "Active", "CPU", "Memory"} },
             { LogType.ModifyProgram, new(){"Name", "CPU", "Memory", "Active programs"} },
             { LogType.ShutdownProgram, new(){"Name", "CPU", "Memory"}},
-            { LogType.ClearProgramInstances, new(){} },
+            { LogType.ClearProgramInstances, new(){"Name", "Process count"} },
+            { LogType.MoveProgramInstance, new(){"Instance", "Source computer", "Destination computer"} },
             { LogType.OptimizeProgramInstances, new(){} },
         };
 
