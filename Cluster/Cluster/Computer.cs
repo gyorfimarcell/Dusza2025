@@ -268,8 +268,8 @@ namespace Cluster
                 while (pc.ProcessorUsage + pc.MemoryUsage < consumableResources)
                 {
                     Process? processToAdd = allActiveProcesses.FirstOrDefault(x => 
-                    (pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) > consumableResources - movingRange && 
-                    (pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources + movingRange);
+                    ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) > consumableResources - movingRange && 
+                    (pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources + movingRange) || ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources - movingRange));
                     if (processToAdd == null) break;
                     pc.processes.Add(processToAdd);
                     allActiveProcesses.Remove(processToAdd);
