@@ -54,7 +54,7 @@ namespace Cluster
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
-            Processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
+            Processes = computers.SelectMany(x => x.processes).ToList();
 
              if (!skipFilterReload) UpdateProgramsMenuItem(programs);
             FilterProcesses();
