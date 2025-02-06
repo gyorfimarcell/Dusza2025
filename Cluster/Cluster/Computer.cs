@@ -14,7 +14,6 @@ using Wpf.Ui.Controls;
 using Path = System.IO.Path;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
-using static System.Net.WebRequestMethods;
 using System.Numerics;
 using File = System.IO.File;
 using System.Xml.Linq;
@@ -217,13 +216,10 @@ namespace Cluster
 
             double sumProcesses = allProcesses.Sum(x => x.ProcessorUsage + x.MemoryUsage);
             double sumComputers = sortedComputers.Sum(x => x.ProcessorCore + x.RamCapacity);
-            bool canOptimize = sumProcesses / sumComputers >= min && 
-                               sumProcesses / sumComputers <= max;
+            bool canOptimize = sumProcesses * 100.0 / sumComputers >= min && 
+                               sumProcesses * 100.0 / sumComputers <= max;
 
-            if ()
-            {
-                
-            }
+            System.Windows.MessageBox.Show($"{canOptimize}\nProc: {sumProcesses} - Comp: {sumComputers}\nMin:{min} - Max:{max}");
 
         }
 

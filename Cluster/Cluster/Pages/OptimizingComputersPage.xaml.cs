@@ -55,10 +55,12 @@ namespace Cluster
             //
             //// Show the dialog asynchronously
             //var result = await mainWindow._dialogService.ShowAsync(dialog, );
+
+            OptimizeDialog optimizeDialog = new();
             MessageBox mgbox = new()
             {
                 Title = "Error",
-                Content = new OptimizeDialog(),
+                Content = optimizeDialog,
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = false,
                 //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
@@ -67,7 +69,10 @@ namespace Cluster
 
             };
             MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
-            mgbox.ShowDialogAsync();
+            if (result == MessageBoxResult.Primary)
+            {
+                Computer.OptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum);
+            }
         }
 
         

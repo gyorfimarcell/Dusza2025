@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace Cluster.Controls
     {
         string path;
         MainWindow window;
+
+        public int Minimum { get; private set; }
+        public int Maximum { get; private set; }
         public OptimizeDialog()
         {
             InitializeComponent();
@@ -48,6 +52,8 @@ namespace Cluster.Controls
                 txtMaximumPercentage.Text = value.ToString() + " %";
                 sliMinimumPercentage.Maximum = value;
             }
+            Minimum = (int)sliMinimumPercentage.Value;
+            Maximum = (int)sliMaximumPercentage.Value;
 
 
             //sp.Children.OfType<StackPanel>().ToList()
