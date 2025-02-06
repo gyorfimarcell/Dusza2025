@@ -48,6 +48,7 @@ namespace Cluster
         List<Process> Processes;
 
         ProcessesPageSort sort = ProcessesPageSort.Id;
+        ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
 
         public void LoadData(bool skipFilterReload = false) {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
@@ -88,6 +89,13 @@ namespace Cluster
             MemoryUsage,
             Start
         }
+        
+        internal enum  ProcessesPageStatus
+        {
+            All,
+            Active,
+            Inactive,
+        }
 
         private void FilterProcesses() {
             List<string> programNames = GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
@@ -95,6 +103,14 @@ namespace Cluster
             IEnumerable<Process> filtered = Processes;
             filtered = filtered.Where(x => programNames.Contains(x.ProgramName)).ToList();
             filtered = filtered.Where(x => x.FileName.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
+
+            filtered = statusFilter switch
+            {
+                ProcessesPageStatus.All => filtered,
+                ProcessesPageStatus.Active => filtered.Where(x => x.Active),
+                ProcessesPageStatus.Inactive => filtered.Where(x => !x.Active),
+                _ => throw new NotImplementedException()
+            };
 
             filtered = sort switch
             {
@@ -107,9 +123,11 @@ namespace Cluster
             };
 
             if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
+            
+            List<Process> filteredList = filtered.ToList();
 
-            icProcesses.ItemsSource = filtered;
-            tbCount.Text = $"{filtered.Count()} processes ({filtered.Count(x => x.Active)} active)";
+            icProcesses.ItemsSource = filteredList;
+            tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
         }
 
         private List<MenuItem> GetProgramMenuItems() {
@@ -186,6 +204,13 @@ namespace Cluster
 
         private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
         {
+            FilterProcesses();
+        }
+
+        private void MenuItemStatus_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)sender;
+            statusFilter = (ProcessesPageStatus)Enum.Parse(typeof(ProcessesPageStatus), (string)menuItem.Tag);
             FilterProcesses();
         }
     }
