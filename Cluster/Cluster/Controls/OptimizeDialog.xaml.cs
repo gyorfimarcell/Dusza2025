@@ -34,6 +34,9 @@ namespace Cluster.Controls
             window = (MainWindow)Application.Current.MainWindow!;
             sliMaximumPercentage.ValueChanged += volume_ValueChanged;
             sliMinimumPercentage.ValueChanged += volume_ValueChanged;
+
+            Minimum = (int)sliMinimumPercentage.Value;
+            Maximum = (int)sliMaximumPercentage.Value;
         }
 
         private void volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> args)

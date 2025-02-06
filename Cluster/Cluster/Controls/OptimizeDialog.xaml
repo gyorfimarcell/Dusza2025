@@ -6,29 +6,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cluster.Controls" xmlns:controls="clr-namespace:Cluster.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400"
+             d:DesignHeight="280" d:DesignWidth="500"
              >
-    <Grid>
-        <StackPanel x:Name="spDialogContent">
+    <Grid Margin="30 0 30 0">
+        <StackPanel x:Name="spDialogContent" MaxHeight="280" Height="280">
             <TextBlock Text="Set the optimal minimum and maximum usage percentage of a computer!" 
-                       TextWrapping="Wrap" FontSize="16" TextAlignment="Center" FontWeight="Bold" 
-                       Margin="0 20 0 40"/>
-            
+                       TextWrapping="Wrap" FontSize="18" TextAlignment="Center" FontWeight="Bold" 
+                       Margin="0 15 0 20"/>
+
+            <TextBlock Text="Any inactive process will remain untouched." 
+           TextWrapping="Wrap" FontSize="14" TextAlignment="Center" Foreground="DimGray"
+           Margin="0 0 0 35"/>
+
             <Label Content="Minimum Percentage" HorizontalAlignment="Center" 
-                   FontSize="20" FontWeight="Medium"/>
+                   FontSize="24" FontWeight="Medium" Foreground="DimGray"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Slider x:Name="sliMinimumPercentage" 
-                        Width="200" Margin="20 10 20 10" Minimum="1" Maximum="100" Value="1"
+                        Width="300" Margin="20 10 20 10" Minimum="1" Maximum="100" Value="1"
                         IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="None"/>
-                <ui:TextBlock x:Name="txtMinimumPercentage" Text="0 %" VerticalAlignment="Center" 
+                <ui:TextBlock x:Name="txtMinimumPercentage" Text="1 %" VerticalAlignment="Center" 
                               FontSize="18" FontWeight="Bold"/>
             </StackPanel>
             
             <Label Content="Maximum Percentage" HorizontalAlignment="Center" 
-                   FontSize="20" FontWeight="Medium"/>
+                   FontSize="24" FontWeight="Medium" Foreground="DimGray"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Slider x:Name="sliMaximumPercentage" 
-                        Width="200" Margin="20 10 20 10" Minimum="1" Maximum="100" Value="100"
+                        Width="300" Margin="20 10 20 10" Minimum="1" Maximum="100" Value="100"
                         IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="None"/>
                 <ui:TextBlock x:Name="txtMaximumPercentage" Text="100 %" VerticalAlignment="Center"
                                FontSize="18" FontWeight="Bold"/>

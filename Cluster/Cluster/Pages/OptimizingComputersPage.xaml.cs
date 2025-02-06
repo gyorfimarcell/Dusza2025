@@ -59,22 +59,63 @@ namespace Cluster
             OptimizeDialog optimizeDialog = new();
             MessageBox mgbox = new()
             {
-                Title = "Error",
+                Title = "Set Optimizing Values",
                 Content = optimizeDialog,
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = false,
-                //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
                 PrimaryButtonText = "Optimize",
-                CloseButtonText = "Cancel"
+                CloseButtonText = "Cancel",
+                Width = 500,
+                MaxWidth = 500,
+                MaxHeight = 1000
+                //Icon = new BitmapImage(new Uri("pack://application:,,,/Resources/Icons/optimizing.png"))
 
             };
             MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
-            if (result == MessageBoxResult.Primary)
+
+            // Hit cancel
+            if (result != MessageBoxResult.Primary)
+                return;
+
+            if (!Computer.CanOptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum))
             {
-                Computer.OptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum);
+                mgbox = new()
+                {
+                    Title = "Error",
+                    Content = "Optimizing cannot be done with the given values! Would you like to spread the processes equally?",
+                    IsPrimaryButtonEnabled = true,
+                    IsSecondaryButtonEnabled = false,
+                    PrimaryButtonText = "Spread",
+                    CloseButtonText = "Cancel",
+                };
+                result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+
+                // Hit cancel
+                if (result != MessageBoxResult.Primary)
+                    return;
+
+                string? spreadRes = Computer.SpreadProcesses();
+                if (spreadRes != null)
+                {
+                    window.RootSnackbarService.Show("Error", spreadRes, ControlAppearance.Danger,
+                        new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                }
+                else
+                {
+                    window.RootSnackbarService.Show("Success", "Processes were spread equally!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+                }
+                return;
             }
+            string? optimizeRes = Computer.OptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum);
+
+            if (optimizeRes != null)
+            {
+                window.RootSnackbarService.Show("Error", optimizeRes, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                return;
+            }
+            window.RootSnackbarService.Show("Success", "Optimization was successful!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
         }
 
-        
     }
 }
