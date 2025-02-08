@@ -250,9 +250,15 @@ namespace Cluster
             List<Computer> sortedComputers = GetComputers(MainWindow.ClusterPath)
                 .OrderBy(x => x.ProcessorCore + x.RamCapacity).ToList();
 
+            if (sortedComputers.Sum(x => x.ProcessorCore) == sortedComputers.Sum(x => x.ProcessorUsage) && sortedComputers.Sum(x => x.RamCapacity) == sortedComputers.Sum(x => x.MemoryUsage))
+            {
+                return "The computers are already optimized!";
+            }
+
             List<Process> allActiveProcesses = sortedComputers
                 .SelectMany(x => x.processes).Where(x => x.Active)
                 .OrderBy(x => x.ProcessorUsage + x.MemoryUsage).ToList();
+
 
             sortedComputers.ForEach(x => x.processes.RemoveAll(x => x.Active));
 
@@ -282,7 +288,7 @@ namespace Cluster
             }
         }
 
-        public static string? SpreadProcesses(int movingRangePercent = 5)
+        public static object? SpreadProcesses(int movingRangePercent = 5, int? minOptimizePercent = null)
         {
             //Save the computers and their active processes in lists
             List<Computer> computers = GetComputers(MainWindow.ClusterPath);
@@ -332,8 +338,10 @@ namespace Cluster
             computers.ForEach(x => x.processes.RemoveAll(x => x.Active));
 
             //Calculate the equal spread percentage both for memory and cpu
-            int equalSpreadRamPercent = Convert.ToInt32(Math.Round(allActiveProcesses.Sum(x => x.MemoryUsage) * 100.0 / computers.Sum(x => x.RamCapacity)));
-            int equalSpreadCpuPercent = Convert.ToInt32(Math.Round(allActiveProcesses.Sum(x => x.ProcessorUsage) * 100.0 / computers.Sum(x => x.ProcessorCore)));
+            int equalSpreadRamPercent = minOptimizePercent ??
+                Convert.ToInt32(Math.Round(allActiveProcesses.Sum(x => x.MemoryUsage) * 100.0 / computers.Sum(x => x.RamCapacity)));
+            int equalSpreadCpuPercent = minOptimizePercent ??
+                Convert.ToInt32(Math.Round(allActiveProcesses.Sum(x => x.ProcessorUsage) * 100.0 / computers.Sum(x => x.ProcessorCore)));
 
             //When the while loop iterates, the computers that are full will be added to the blacklist
             List<string> blackListComputers = new List<string>();
@@ -346,8 +354,8 @@ namespace Cluster
                 {
                     int consumableRam = Convert.ToInt32(Math.Round(pc.RamCapacity * equalSpreadRamPercent / 100.0));
                     int consumableCpu = Convert.ToInt32(Math.Round(pc.ProcessorCore * equalSpreadCpuPercent / 100.0));
-                    int movingRangeRam = Convert.ToInt32(Math.Round(pc.RamCapacity * movingRangePercent / 100.0));
-                    int movingRangeCpu = Convert.ToInt32(Math.Round(pc.ProcessorCore * movingRangePercent / 100.0));
+                    int movingRangeRam = minOptimizePercent != null ? 0 : Convert.ToInt32(Math.Round(pc.RamCapacity * movingRangePercent / 100.0));
+                    int movingRangeCpu = minOptimizePercent != null ? 0 : Convert.ToInt32(Math.Round(pc.ProcessorCore * movingRangePercent / 100.0));
 
                     if (pc.MemoryUsage > consumableRam - movingRangeRam || pc.ProcessorUsage > consumableCpu - movingRangeCpu)
                     {
@@ -357,9 +365,25 @@ namespace Cluster
 
                     bool isRamMoreUsed = consumableRam - pc.MemoryUsage < consumableCpu - pc.ProcessorUsage;
 
-                    Process? fitProcess = (isRamMoreUsed ? cpuBasedActiveProcesses : ramBasedActiveProcesses)
+                    Process? fitProcess = null;
+
+                    // ------------------------------- RAM/CPU BASED -------------------------------
+                    if (minOptimizePercent == null)
+                    {
+                        fitProcess = (isRamMoreUsed ? cpuBasedActiveProcesses : ramBasedActiveProcesses)
                         .Where(x => (pc.MemoryUsage + x.MemoryUsage) <= consumableRam + movingRangeRam &&
                         (pc.ProcessorUsage + x.ProcessorUsage) <= consumableCpu + movingRangeCpu)?.MaxBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage);
+                    } else
+                    {
+                        fitProcess = (isRamMoreUsed ? cpuBasedActiveProcesses : ramBasedActiveProcesses)
+                        .Where(x => (pc.MemoryUsage + x.MemoryUsage) >= consumableRam &&
+                        (pc.ProcessorUsage + x.ProcessorUsage) >= consumableCpu)?.MinBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage) 
+                        
+                        ??
+
+                        (isRamMoreUsed ? cpuBasedActiveProcesses : ramBasedActiveProcesses)
+                        .MaxBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage);
+                    }
 
                     if (fitProcess != null)
                     {
@@ -368,9 +392,26 @@ namespace Cluster
                         continue;
                     }
 
-                    fitProcess = equallyBasedActiveProcesses.Where(x =>
+
+                    // --------------------------------- BOTH BASED ---------------------------------
+                    if (minOptimizePercent == null)
+                    {
+                        fitProcess = equallyBasedActiveProcesses.Where(x =>
                         (pc.MemoryUsage + x.MemoryUsage) <= consumableRam + movingRangeRam &&
                         (pc.ProcessorUsage + x.ProcessorUsage) <= consumableCpu + movingRangeCpu)?.MaxBy(x => x.ProcessorUsage);
+                    }
+                    else
+                    {
+                        fitProcess = equallyBasedActiveProcesses.Where(x =>
+                        (pc.MemoryUsage + x.MemoryUsage) >= consumableRam &&
+                        (pc.ProcessorUsage + x.ProcessorUsage) >= consumableCpu)?.MinBy(x => x.ProcessorUsage)
+                        
+                        ??
+
+                        equallyBasedActiveProcesses.MaxBy(x => x.ProcessorUsage);
+                    }
+
+                    
 
                     if (fitProcess != null)
                     {
@@ -379,9 +420,24 @@ namespace Cluster
                         continue;
                     }
 
-                    fitProcess = (isRamMoreUsed ? ramBasedActiveProcesses : cpuBasedActiveProcesses).Where(x =>
+                    // ------------------------------- CPU/RAM BASED -------------------------------
+                    if (minOptimizePercent == null)
+                    {
+                        fitProcess = (isRamMoreUsed ? ramBasedActiveProcesses : cpuBasedActiveProcesses).Where(x =>
                         (pc.MemoryUsage + x.MemoryUsage) <= consumableRam + movingRangeRam &&
                         (pc.ProcessorUsage + x.ProcessorUsage) <= consumableCpu + movingRangeCpu)?.MaxBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage);
+                    }
+                    else
+                    {
+                        fitProcess = (isRamMoreUsed ? ramBasedActiveProcesses : cpuBasedActiveProcesses)
+                        .Where(x => (pc.MemoryUsage + x.MemoryUsage) >= consumableRam &&
+                        (pc.ProcessorUsage + x.ProcessorUsage) >= consumableCpu)?.MinBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage)
+
+                        ??
+
+                        (isRamMoreUsed ? cpuBasedActiveProcesses : ramBasedActiveProcesses)
+                        .MaxBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage);
+                    }
 
                     if (fitProcess != null)
                     {
@@ -396,6 +452,10 @@ namespace Cluster
                 }
             }
 
+            if (minOptimizePercent != null)
+            {
+                return computers;
+            }
 
             List<Process?> remainingProcesses = ramBasedActiveProcesses.Concat(cpuBasedActiveProcesses).Concat(equallyBasedActiveProcesses).ToList().OrderByDescending(x => x.MemoryUsage + x.ProcessorUsage).ToList();
 
