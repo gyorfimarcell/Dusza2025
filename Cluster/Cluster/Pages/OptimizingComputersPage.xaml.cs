@@ -94,7 +94,7 @@ namespace Cluster
                 if (result != MessageBoxResult.Primary)
                     return;
 
-                string? spreadRes = Computer.SpreadProcesses2(1);
+                string? spreadRes = Computer.SpreadProcesses(1);
                 if (spreadRes != null)
                 {
                     window.RootSnackbarService.Show("Error", spreadRes, ControlAppearance.Danger,

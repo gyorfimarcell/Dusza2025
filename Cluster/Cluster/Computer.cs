@@ -260,48 +260,6 @@ namespace Cluster
             return null;
         }
 
-        public static string? SpreadProcesses(int movingRangePercent = 5)
-        {
-            List<Computer> computers = GetComputers(MainWindow.ClusterPath);
-
-            List<Process> allActiveProcesses = computers
-                .SelectMany(x => x.processes).Where(x => x.Active)
-                .OrderByDescending(x => x.ProcessorUsage + x.MemoryUsage).ToList();
-
-            computers.ForEach(x => x.processes.RemoveAll(x => x.Active));
-
-            double equalSpreadPercentValue = allActiveProcesses.Sum(x => x.ProcessorUsage + x.MemoryUsage) * 100.0 / computers.Sum(x => x.ProcessorCore + x.RamCapacity);
-
-            int equalSpreadPercent = Convert.ToInt32(Math.Round(equalSpreadPercentValue));
-
-            foreach (Computer pc in computers)
-            {
-                int consumableResources = Convert.ToInt32((pc.RamCapacity + pc.ProcessorCore) * equalSpreadPercent / 100.0);
-                int movingRange = Convert.ToInt32((pc.RamCapacity + pc.ProcessorCore) * movingRangePercent / 100.0);
-
-                while (pc.ProcessorUsage + pc.MemoryUsage < consumableResources)
-                {
-                    Process? processToAdd = allActiveProcesses.FirstOrDefault(x =>
-                    ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) > consumableResources - movingRange &&
-                    (pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources + movingRange) || ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources - movingRange));
-                    if (processToAdd == null)
-                        break;
-                    pc.processes.Add(processToAdd);
-                    allActiveProcesses.Remove(processToAdd);
-
-
-                    //remainingResources =
-                    //(pc.RamCapacity * Convert.ToInt32(equalSpreadPercent) - pc.MemoryUsage) +
-                    //(pc.ProcessorCore * Convert.ToInt32(equalSpreadPercent) - pc.ProcessorUsage);
-                }
-                computers.Find(x => x.Name == pc.Name)!.processes.AddRange(pc.processes);
-            }
-
-            ArrangeFiles(computers);
-
-            return null;
-        }
-
         /// <summary>
         ///     Arranges the processes in the cluster folder according to the given computers' data.
         /// </summary>
@@ -324,7 +282,7 @@ namespace Cluster
             }
         }
 
-        public static string? SpreadProcesses2(int movingRangePercent = 5)
+        public static string? SpreadProcesses(int movingRangePercent = 5)
         {
             //Save the computers and their active processes in lists
             List<Computer> computers = GetComputers(MainWindow.ClusterPath);
