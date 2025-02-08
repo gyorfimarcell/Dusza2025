@@ -13,18 +13,15 @@ namespace Cluster;
 
 public partial class ComputersPage : CustomPage
 {
-    MainWindow _window;
-
+    public List<Computer> Computers;
     public ComputersPage()
     {
         InitializeComponent();
 
-        _window = (MainWindow)Application.Current.MainWindow!;
-
+        Computers = [];
         LoadData();
     }
 
-    public List<Computer> Computers;
 
     private void LoadData()
     {
@@ -57,7 +54,9 @@ public partial class ComputersPage : CustomPage
             string? res = computer.OutSourcePrograms();
             if (res != null)
             {
-                if (res.Length == 0) return;
+                if (res.Length == 0)
+                    return;
+
                 _window.RootSnackbarService.Show("Error", res, ControlAppearance.Danger,
                         new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
@@ -87,7 +86,7 @@ public partial class ComputersPage : CustomPage
         sfd.DefaultExt = "csv";
         if (sfd.ShowDialog() == true)
         {
-            string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", ..Computers.Select(x => x.CsvRow)];
+            string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", .. Computers.Select(x => x.CsvRow)];
             File.WriteAllLines(sfd.FileName, lines);
             _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
                 ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));

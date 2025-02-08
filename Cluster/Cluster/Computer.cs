@@ -193,6 +193,13 @@ namespace Cluster
             return null;
         }
 
+        /// <summary>
+        ///    Moves a process from one computer to another.
+        /// </summary>
+        /// <param name="processFilename"></param>
+        /// <param name="sourceComputer"></param>
+        /// <param name="destinationComputer"></param>
+        /// <param name="path"></param>
         private static void MoveProcess(string processFilename, Computer sourceComputer, Computer destinationComputer, string? path = null)
         {
             path = path ?? MainWindow.ClusterPath;
@@ -208,6 +215,12 @@ namespace Cluster
 
         }
 
+        /// <summary>
+        ///    Checks if the computers can be optimized with the given values.
+        /// </summary>
+        /// <param name="min">Minimum resource usage in percentage</param>
+        /// <param name="max">Maximum resource usage in percentage</param>
+        /// <returns>If the computers can be optimized, then yes, otherwise false</returns>
         public static bool CanOptimizeComputers(int min, int max)
         {
             List<Computer> computers = GetComputers(MainWindow.ClusterPath);
@@ -220,7 +233,7 @@ namespace Cluster
 
             double sumProcesses = allActiveProcesses.Sum(x => x.ProcessorUsage + x.MemoryUsage);
             double sumComputers = computers.Sum(x => x.ProcessorCore + x.RamCapacity);
-            
+
             bool canOptimize = sumProcesses * 100.0 / sumComputers >= min &&
                                sumProcesses * 100.0 / sumComputers <= max;
 
@@ -268,66 +281,6 @@ namespace Cluster
 
                 while (pc.ProcessorUsage + pc.MemoryUsage < consumableResources)
                 {
-                    Process? processToAdd = allActiveProcesses.FirstOrDefault(x => 
-                    ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) > consumableResources - movingRange && 
-                    (pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources + movingRange) || ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources - movingRange));
-                    if (processToAdd == null) break;
-                    pc.processes.Add(processToAdd);
-                    allActiveProcesses.Remove(processToAdd);
-
-
-                    //remainingResources =
-                    //(pc.RamCapacity * Convert.ToInt32(equalSpreadPercent) - pc.MemoryUsage) +
-                    //(pc.ProcessorCore * Convert.ToInt32(equalSpreadPercent) - pc.ProcessorUsage);
-                }
-                computers.Find(x => x.Name == pc.Name)!.processes.AddRange(pc.processes);
-            }
-
-            ArrangeFiles(computers);
-
-            return null;
-        }
-
-        private static void ArrangeFiles(List<Computer> computers)
-        {
-            List<Computer> oldComputers = GetComputers(MainWindow.ClusterPath);
-            bool areSame = computers.Select(x => x.Name).OrderBy(x => x).SequenceEqual(oldComputers.Select(x => x.Name).OrderBy(x => x));
-            if (!areSame) throw new InvalidDataException("The computers are not the same as the old ones!");
-
-            foreach (Computer computer in computers)
-            {
-                foreach (Process process in computer.processes)
-                {
-                    MoveProcess(process.FileName, process.HostComputer, computer);
-                }
-            }
-        }
-
-        public static string? SpreadProcesses2(int movingRangePercent = 5)
-        {
-            List<Computer> computers = GetComputers(MainWindow.ClusterPath);
-
-            List<Process> ramBasedActiveProcesses = computers
-                .SelectMany(x => x.processes).Where(x => x.Active && x.MemoryUsage > x.ProcessorUsage)
-                .OrderByDescending(x => x.MemoryUsage).ToList();
-
-            List<Process> cpuBasedActiveProcesses = computers
-                .SelectMany(x => x.processes).Where(x => x.Active && x.MemoryUsage < x.ProcessorUsage)
-                .OrderByDescending(x => x.ProcessorUsage).ToList();
-
-            computers.ForEach(x => x.processes.RemoveAll(x => x.Active));
-
-            double equalSpreadPercentValue = allActiveProcesses.Sum(x => x.ProcessorUsage + x.MemoryUsage) * 100.0 / computers.Sum(x => x.ProcessorCore + x.RamCapacity);
-
-            int equalSpreadPercent = Convert.ToInt32(Math.Round(equalSpreadPercentValue));
-
-            foreach (Computer pc in computers)
-            {
-                int consumableResources = Convert.ToInt32((pc.RamCapacity + pc.ProcessorCore) * equalSpreadPercent / 100.0);
-                int movingRange = Convert.ToInt32((pc.RamCapacity + pc.ProcessorCore) * movingRangePercent / 100.0);
-
-                while (pc.ProcessorUsage + pc.MemoryUsage < consumableResources)
-                {
                     Process? processToAdd = allActiveProcesses.FirstOrDefault(x =>
                     ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) > consumableResources - movingRange &&
                     (pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources + movingRange) || ((pc.ProcessorUsage + pc.MemoryUsage + x.MemoryUsage + x.ProcessorUsage) < consumableResources - movingRange));
@@ -348,5 +301,195 @@ namespace Cluster
 
             return null;
         }
+
+        /// <summary>
+        ///     Arranges the processes in the cluster folder according to the given computers' data.
+        /// </summary>
+        /// <param name="computers">The file structure will be based on the computerlist</param>
+        /// <exception cref="InvalidDataException">Throws if the computers are not the same as in the existing file system</exception>
+
+        private static void ArrangeFiles(List<Computer> computers)
+        {
+            List<Computer> oldComputers = GetComputers(MainWindow.ClusterPath);
+            bool areSame = computers.Select(x => x.Name).OrderBy(x => x).SequenceEqual(oldComputers.Select(x => x.Name).OrderBy(x => x));
+            if (!areSame)
+                throw new InvalidDataException("The computers are not the same as the old ones!");
+
+            foreach (Computer computer in computers)
+            {
+                foreach (Process process in computer.processes)
+                {
+                    MoveProcess(process.FileName, process.HostComputer, computer);
+                }
+            }
+        }
+
+        public static string? SpreadProcesses2(int movingRangePercent = 5)
+        {
+            //Save the computers and their active processes in lists
+            List<Computer> computers = GetComputers(MainWindow.ClusterPath);
+
+            List<Process> allActiveProcesses = computers
+                .SelectMany(x => x.processes).Where(x => x.Active).
+                OrderByDescending(x => x.ProcessorUsage + x.MemoryUsage).ToList();
+
+            //Check if there are active processes and computers
+            if (allActiveProcesses.Count == 0 || computers.Count == 0)
+            {
+                return "There are no active processes to spread or no computers!";
+            }
+
+            //First round: Add one active process to each computer if possible
+            for (int i = 0; i < allActiveProcesses.Count; i++)
+            {
+                if (i >= computers.Count)
+                    break;
+                computers[i].processes.Add(allActiveProcesses[i]);
+            }
+
+            //Check if there are as many active processes as computers
+            if (allActiveProcesses.Count <= computers.Count)
+            {
+                ArrangeFiles(computers);
+                return null;
+            }
+
+            //Separate the active processes into two lists based on their resource usage
+            //One list for the ones that use more memory than cpu and the other for the opposite
+            //Those, who use equal amount of resources remain in the original list
+            List<Process> ramBasedActiveProcesses = allActiveProcesses
+                .Where(x => x.MemoryUsage > x.ProcessorUsage)
+                .OrderBy(x => x.MemoryUsage).ToList();
+
+            List<Process> cpuBasedActiveProcesses = allActiveProcesses
+                .Where(x => x.MemoryUsage < x.ProcessorUsage)
+                .OrderByDescending(x => x.ProcessorUsage).ToList();
+
+            //Create a third list for the processes that use equal amount of resources
+            List<Process> equallyBasedActiveProcesses = allActiveProcesses
+                .Where(x => x.MemoryUsage == x.ProcessorUsage)
+                .OrderByDescending(x => x.MemoryUsage).ToList();
+
+            //Remove the active processes from the computers
+            computers.ForEach(x => x.processes.RemoveAll(x => x.Active));
+
+            //Calculate the equal spread percentage both for memory and cpu
+            int equalSpreadRamPercent = Convert.ToInt32(Math.Round(allActiveProcesses.Sum(x => x.MemoryUsage) * 100.0 / computers.Sum(x => x.RamCapacity)));
+            int equalSpreadCpuPercent = Convert.ToInt32(Math.Round(allActiveProcesses.Sum(x => x.ProcessorUsage) * 100.0 / computers.Sum(x => x.ProcessorCore)));
+
+            //When the while loop iterates, the computers that are full will be added to the blacklist
+            List<string> blackListComputers = new List<string>();
+
+            //Add the active processes to the computers until all of them are added
+            while (blackListComputers.Count < computers.Count)
+            {
+                List<Computer> capableComputers = computers.Where(x => !blackListComputers.Contains(x.Name)).ToList();
+                foreach (Computer pc in capableComputers)
+                {
+                    int consumableRam = Convert.ToInt32(Math.Round(pc.RamCapacity * equalSpreadRamPercent / 100.0));
+                    int consumableCpu = Convert.ToInt32(Math.Round(pc.ProcessorCore * equalSpreadCpuPercent / 100.0));
+                    int movingRangeRam = Convert.ToInt32(Math.Round(pc.RamCapacity * movingRangePercent / 100.0));
+                    int movingRangeCpu = Convert.ToInt32(Math.Round(pc.ProcessorCore * movingRangePercent / 100.0));
+
+                    if (pc.MemoryUsage > consumableRam - movingRangeRam || pc.ProcessorUsage > consumableCpu - movingRangeCpu)
+                    {
+                        blackListComputers.Add(pc.Name);
+                        continue;
+                    }
+
+                    bool isRamMoreUsed = consumableRam - pc.MemoryUsage < consumableCpu - pc.ProcessorUsage;
+
+                    Process? fitProcess = (isRamMoreUsed ? cpuBasedActiveProcesses : ramBasedActiveProcesses)
+                        .Where(x => (pc.MemoryUsage + x.MemoryUsage) <= consumableRam + movingRangeRam &&
+                        (pc.ProcessorUsage + x.ProcessorUsage) <= consumableCpu + movingRangeCpu)?.MaxBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage);
+
+                    if (fitProcess != null)
+                    {
+                        computers.Find(x => x.Name == pc.Name).processes.Add(fitProcess);
+                        (isRamMoreUsed ? cpuBasedActiveProcesses : ramBasedActiveProcesses).Remove(fitProcess);
+                        continue;
+                    }
+
+                    fitProcess = equallyBasedActiveProcesses.Where(x =>
+                        (pc.MemoryUsage + x.MemoryUsage) <= consumableRam + movingRangeRam &&
+                        (pc.ProcessorUsage + x.ProcessorUsage) <= consumableCpu + movingRangeCpu)?.MaxBy(x => x.ProcessorUsage);
+
+                    if (fitProcess != null)
+                    {
+                        computers.Find(x => x.Name == pc.Name).processes.Add(fitProcess);
+                        equallyBasedActiveProcesses.Remove(fitProcess);
+                        continue;
+                    }
+
+                    fitProcess = (isRamMoreUsed ? ramBasedActiveProcesses : cpuBasedActiveProcesses).Where(x =>
+                        (pc.MemoryUsage + x.MemoryUsage) <= consumableRam + movingRangeRam &&
+                        (pc.ProcessorUsage + x.ProcessorUsage) <= consumableCpu + movingRangeCpu)?.MaxBy(x => isRamMoreUsed ? x.ProcessorUsage : x.MemoryUsage);
+
+                    if (fitProcess != null)
+                    {
+                        computers.Find(x => x.Name == pc.Name).processes.Add(fitProcess);
+                        (isRamMoreUsed ? ramBasedActiveProcesses : cpuBasedActiveProcesses).Remove(fitProcess);
+                        continue;
+                    }
+                    else
+                    {
+                        blackListComputers.Add(pc.Name);
+                    }
+                }
+            }
+
+
+            List<Process?> remainingProcesses = ramBasedActiveProcesses.Concat(cpuBasedActiveProcesses).Concat(equallyBasedActiveProcesses).ToList().OrderByDescending(x => x.MemoryUsage + x.ProcessorUsage).ToList();
+
+
+            for (int i = remainingProcesses.Count - 1; i >= 0; i--)
+            {
+                Process process = remainingProcesses[i];
+                Computer? leastLoaded = computers
+                    .Where(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage))
+                    .MinBy(x =>
+                    {
+                        int ramPercent = Convert.ToInt32(Math.Round(x.MemoryUsage * 100.0 / x.RamCapacity));
+                        int cpuPercent = Convert.ToInt32(Math.Round(x.ProcessorUsage * 100.0 / x.ProcessorCore));
+                        return (cpuPercent + ramPercent) / 2.0;
+                    })!;
+
+                leastLoaded ??= computers
+                    .Where(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage))
+                    .MaxBy(x => (x.ProcessorCore - x.ProcessorUsage) + (x.RamCapacity - x.MemoryUsage))!;
+
+                if (leastLoaded == null)
+                {
+                    continue;
+                }
+
+                computers.Find(x => x.Name == leastLoaded.Name).processes.Add(process);
+                remainingProcesses.RemoveAt(i);
+                //System.Windows.MessageBox.Show($"{leastLoaded.Name}\n" + string.Join("\n", computers.Select(x => $"{x.Name}: {x.ProcessorCore - x.ProcessorUsage} - {x.RamCapacity - x.MemoryUsage}")));
+            }
+
+
+            if (remainingProcesses.Count > 0)
+            {
+                MessageBox mgbox = new()
+                {
+                    Title = "Error",
+                    Content = "There were some processes that cannot fit any computers! Would you like to optimize anyway?",
+                    IsPrimaryButtonEnabled = true,
+                    IsSecondaryButtonEnabled = false,
+                    PrimaryButtonText = "Continue",
+                    CloseButtonText = "Cancel",
+                };
+                MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+                if (result != MessageBoxResult.Primary)
+                    return "The optimization was cancelled.";
+                ;
+            }
+
+            ArrangeFiles(computers);
+
+            return null;
+        }
     }
+
 }
