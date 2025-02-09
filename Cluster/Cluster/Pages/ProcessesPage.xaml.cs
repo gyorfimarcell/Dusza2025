@@ -197,7 +197,17 @@ namespace Cluster
 
         private void MenuItemSort_Click(object sender, RoutedEventArgs e)
         {
+            foreach (object item in MenuItemSort.Items)
+            {
+                if (item is MenuItem otherItem && otherItem.Tag != null)
+                {
+                    otherItem.FontWeight = FontWeights.Normal;
+                }
+            }
+            
             MenuItem menuItem = (MenuItem)sender;
+            menuItem.FontWeight = FontWeights.Bold;
+            
             sort = (ProcessesPageSort)Enum.Parse(typeof(ProcessesPageSort), (string)menuItem.Tag);
             FilterProcesses();
         }
@@ -209,7 +219,17 @@ namespace Cluster
 
         private void MenuItemStatus_Click(object sender, RoutedEventArgs e)
         {
+            foreach (object item in MenuItemStatus.Items)
+            {
+                if (item is MenuItem otherItem && otherItem.Tag != null)
+                {
+                    otherItem.FontWeight = FontWeights.Normal;
+                }
+            }
+            
             MenuItem menuItem = (MenuItem)sender;
+            menuItem.FontWeight = FontWeights.Bold;
+            
             statusFilter = (ProcessesPageStatus)Enum.Parse(typeof(ProcessesPageStatus), (string)menuItem.Tag);
             FilterProcesses();
         }

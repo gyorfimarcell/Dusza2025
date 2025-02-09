@@ -24,11 +24,13 @@
                 <ui:MenuItem x:Name="menuItemPrograms"
                              Icon="{ui:SymbolIcon Apps20}"
                              StaysOpenOnClick="True"/>
-                <ui:MenuItem Icon="{ui:SymbolIcon VideoPlayPause20}"
+                <ui:MenuItem x:Name="MenuItemStatus"
+                             Icon="{ui:SymbolIcon VideoPlayPause20}"
                              StaysOpenOnClick="True">
                     <ui:MenuItem Header="All"
                                  Icon="{ui:SymbolIcon VideoPlayPause20}"
                                  Tag="0"
+                                 FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemStatus_Click"/>
                     <ui:MenuItem Header="Active only"
@@ -42,7 +44,8 @@
                                  StaysOpenOnClick="True"
                                  Click="MenuItemStatus_Click"/>
                 </ui:MenuItem>
-                <ui:MenuItem Icon="{ui:SymbolIcon ArrowSort20}">
+                <ui:MenuItem x:Name="MenuItemSort"
+                             Icon="{ui:SymbolIcon ArrowSort20}">
                     <ui:MenuItem Header="Program"
                                  Icon="{ui:SymbolIcon Apps20}"
                                  Tag="0"
@@ -51,6 +54,7 @@
                     <ui:MenuItem Header="Id"
                                  Icon="{ui:SymbolIcon NumberSymbol20}"
                                  Tag="1"
+                                 FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <ui:MenuItem Header="Processor Usage"

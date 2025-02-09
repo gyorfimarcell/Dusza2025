@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
@@ -131,7 +132,17 @@ public partial class ComputersPage : CustomPage
 
     private void MenuItemSort_Click(object sender, RoutedEventArgs e)
     {
+        foreach (object item in MenuItemSort.Items)
+        {
+            if (item is MenuItem otherItem && otherItem.Tag != null)
+            {
+                otherItem.FontWeight = FontWeights.Normal;
+            }
+        }
+        
         MenuItem menuItem = (MenuItem)sender;
+        menuItem.FontWeight = FontWeights.Bold;
+
         sort = (ComputersPageSort)Enum.Parse(typeof(ComputersPageSort), (string)menuItem.Tag);
         UpdateFiltering();
     }

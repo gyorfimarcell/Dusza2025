@@ -21,10 +21,12 @@
                         Margin="0 0 4 0"
                         TextChanged="tbFilter_TextChanged"/>
             <Menu FontSize="14">
-                <ui:MenuItem Icon="{ui:SymbolIcon ArrowSort20}">
+                <ui:MenuItem x:Name="MenuItemSort"
+                             Icon="{ui:SymbolIcon ArrowSort20}">
                     <ui:MenuItem Header="Name"
                                  Icon="{ui:SymbolIcon Tag20}"
                                  Tag="0"
+                                 FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <ui:MenuItem Header="Requested processes"

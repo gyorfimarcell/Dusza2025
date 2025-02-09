@@ -132,7 +132,17 @@ namespace Cluster
 
         private void MenuItemSort_Click(object sender, RoutedEventArgs e)
         {
+            foreach (object item in MenuItemSort.Items)
+            {
+                if (item is MenuItem otherItem && otherItem.Tag != null)
+                {
+                    otherItem.FontWeight = FontWeights.Normal;
+                }
+            }
+            
             MenuItem menuItem = (MenuItem)sender;
+            menuItem.FontWeight = FontWeights.Bold;
+            
             sort = (ProgramsPageSort)Enum.Parse(typeof(ProgramsPageSort), (string)menuItem.Tag);
             UpdateFiltering();
         }
