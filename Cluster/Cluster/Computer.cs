@@ -310,6 +310,12 @@ namespace Cluster
                     int consumableRam = Convert.ToInt32(Math.Round(pc.RamCapacity * spreadMinPercent / 100.0));
                     int consumableCpu = Convert.ToInt32(Math.Round(pc.ProcessorCore * spreadMinPercent / 100.0));
 
+                    if (pc.MemoryUsage > consumableRam || pc.ProcessorUsage > consumableCpu)
+                    {
+                        blackListComputers.Add(pc.Name);
+                        continue;
+                    }
+
                     bool isRamMoreUsed = consumableRam - pc.MemoryUsage < consumableCpu - pc.ProcessorUsage;
 
                     // ------------------------------- RAM/CPU BASED -------------------------------
@@ -371,6 +377,9 @@ namespace Cluster
                 }
             }
 
+            List<Process> temp = [.. ramBasedActiveProcesses, .. cpuBasedActiveProcesses, .. equallyBasedActiveProcesses];
+            System.Windows.MessageBox.Show("Remaining Processes: " + temp.Count);
+
             //Third round: Fill up the computers to their maximum with the active processes
             for (int i = 0; i < computers.Count; i++)
             {
@@ -379,6 +388,8 @@ namespace Cluster
                 int consumableCpu = Convert.ToInt32(Math.Round(pc.ProcessorCore * spreadMaxPercent / 100.0));
                 while (true)
                 {
+                    System.Windows.MessageBox.Show("Before\n"+ $"{pc.Name}\n" + string.Join("\n", computers.Select(x => $"{x.Name}: {x.ProcessorCore - x.ProcessorUsage} - {x.RamCapacity - x.MemoryUsage}")));
+
                     bool isRamMoreUsed = consumableRam - pc.MemoryUsage < consumableCpu - pc.ProcessorUsage;
 
                     // ------------------------------- RAM/CPU BASED -------------------------------
