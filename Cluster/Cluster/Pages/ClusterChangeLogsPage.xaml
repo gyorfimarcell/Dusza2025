@@ -12,6 +12,6 @@
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   >
     <Grid>
-        <TreeView AllowDrop="True" x:Name="trLogs"></TreeView>
+        <StackPanel x:Name="stLogs" Margin="10"></StackPanel>
     </Grid>
 </Page>
