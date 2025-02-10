@@ -68,14 +68,17 @@ namespace Cluster
                     continue;
                 }
                 string data = string.Join(';', File.ReadAllLines(@$"{item}\.szamitogep_konfig"));
-                computers.Add(new Computer
+                Computer newComputer = new Computer
                 {
                     Name = item.Split('\\').Last(),
                     ProcessorCore = Convert.ToInt32(data.Split(';')[0]),
                     RamCapacity = Convert.ToInt32(data.Split(";")[1]),
-                    processes = Directory.GetFiles(item).Where(x => !x.EndsWith(".szamitogep_konfig")).Select(x => new Process(x)).ToList()
-
-                });
+                };
+                newComputer.processes = Directory.GetFiles(item)
+                    .Where(x => !x.EndsWith(".szamitogep_konfig"))
+                    .Select(x => new Process(x) { HostComputer = newComputer })
+                    .ToList();
+                computers.Add(newComputer);
             }
             return computers;
         }

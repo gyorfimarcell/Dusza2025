@@ -3,9 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
+using MenuItem = Wpf.Ui.Controls.MenuItem;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 
@@ -22,11 +24,46 @@ public partial class ComputersPage : CustomPage
         LoadData();
     }
 
+    public List<Computer> Computers;
+    ComputersPageSort sort = ComputersPageSort.Name;
 
     private void LoadData()
     {
-        Computers = Computer.GetComputers(MainWindow.ClusterPath).OrderBy(x => x.Name).ToList();
-        icComputers.ItemsSource = Computers;
+        Computers = Computer.GetComputers(MainWindow.ClusterPath);
+        UpdateFiltering();
+    }
+
+    internal enum ComputersPageSort
+    {
+        Name,
+        ProcessorUsage,
+        ProcessorUsagePercent,
+        ProcessorCapacity,
+        MemoryUsage,
+        MemoryUsagePercent,
+        MemoryCapacity
+    }
+
+    private void UpdateFiltering() {
+        IEnumerable<Computer> filtered = [.. Computers];
+
+        filtered = filtered.Where(x => tbFilter.Text == "" || x.Name.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
+
+        filtered = sort switch
+        {
+            ComputersPageSort.Name => filtered.OrderBy(x => x.Name),
+            ComputersPageSort.ProcessorUsage => filtered.OrderBy(x => x.ProcessorUsage),
+            ComputersPageSort.ProcessorUsagePercent => filtered.OrderBy(x => x.ProcessorUsage / (double)x.ProcessorCore),
+            ComputersPageSort.ProcessorCapacity => filtered.OrderBy(x => x.ProcessorCore),
+            ComputersPageSort.MemoryUsage => filtered.OrderBy(x => x.MemoryUsage),
+            ComputersPageSort.MemoryUsagePercent => filtered.OrderBy(x => x.MemoryUsage / (double)x.RamCapacity),
+            ComputersPageSort.MemoryCapacity => filtered.OrderBy(x => x.RamCapacity),
+            _ => throw new NotImplementedException(),
+        };
+
+        if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
+
+        icComputers.ItemsSource = filtered;
     }
 
     private void MenuItemNew_OnClick(object sender, RoutedEventArgs e)
@@ -90,6 +127,36 @@ public partial class ComputersPage : CustomPage
             File.WriteAllLines(sfd.FileName, lines);
             _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
                 ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+            Log.WriteLog(["Computers"], LogType.ExportCSV);
         }
+    }
+
+    private void MenuItemSort_Click(object sender, RoutedEventArgs e)
+    {
+        foreach (object item in MenuItemSort.Items)
+        {
+            if (item is MenuItem otherItem && otherItem.Tag != null)
+            {
+                otherItem.FontWeight = FontWeights.Normal;
+            }
+        }
+        
+        MenuItem menuItem = (MenuItem)sender;
+        menuItem.FontWeight = FontWeights.Bold;
+
+        sort = (ComputersPageSort)Enum.Parse(typeof(ComputersPageSort), (string)menuItem.Tag);
+        UpdateFiltering();
+    }
+
+    
+
+    private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        UpdateFiltering();
+    }
+
+    private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
+    {
+        UpdateFiltering();
     }
 }
