@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Cluster.Controls;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -23,8 +24,6 @@ public partial class ComputersPage : CustomPage
         Computers = [];
         LoadData();
     }
-
-    public List<Computer> Computers;
     ComputersPageSort sort = ComputersPageSort.Name;
 
     private void LoadData()
@@ -44,7 +43,8 @@ public partial class ComputersPage : CustomPage
         MemoryCapacity
     }
 
-    private void UpdateFiltering() {
+    private void UpdateFiltering()
+    {
         IEnumerable<Computer> filtered = [.. Computers];
 
         filtered = filtered.Where(x => tbFilter.Text == "" || x.Name.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
@@ -140,15 +140,76 @@ public partial class ComputersPage : CustomPage
                 otherItem.FontWeight = FontWeights.Normal;
             }
         }
-        
+
         MenuItem menuItem = (MenuItem)sender;
         menuItem.FontWeight = FontWeights.Bold;
 
         sort = (ComputersPageSort)Enum.Parse(typeof(ComputersPageSort), (string)menuItem.Tag);
         UpdateFiltering();
     }
+    private void MenuItemOptimize_Click(object sender, RoutedEventArgs e)
+    {
+        MainWindow window = (MainWindow)Application.Current.MainWindow!;
+        OptimizeDialog optimizeDialog = new();
+        MessageBox mgbox = new()
+        {
+            Title = "Set Optimizing Values",
+            Content = optimizeDialog,
+            IsPrimaryButtonEnabled = true,
+            IsSecondaryButtonEnabled = false,
+            PrimaryButtonText = "Optimize",
+            CloseButtonText = "Cancel",
+            Width = 500,
+            MaxWidth = 500,
+            MaxHeight = 1000
+        };
+        MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
 
-    
+        // Hit cancel
+        if (result != MessageBoxResult.Primary)
+            return;
+
+        if (!Computer.CanOptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum))
+        {
+            mgbox = new()
+            {
+                Title = "Error",
+                Content = "Optimizing cannot be done with the given values! Would you like to spread the processes equally?",
+                IsPrimaryButtonEnabled = true,
+                IsSecondaryButtonEnabled = false,
+                PrimaryButtonText = "Spread",
+                CloseButtonText = "Cancel",
+            };
+            result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+
+            // Hit cancel
+            if (result != MessageBoxResult.Primary)
+                return;
+
+            string? spreadRes = Computer.SpreadProcesses(1);
+            if (spreadRes != null)
+            {
+                window.RootSnackbarService.Show("Error", spreadRes, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+            }
+            else
+            {
+                LoadData();
+                window.RootSnackbarService.Show("Success", "Processes were spread equally!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+            }
+            return;
+        }
+        string? optimizeRes = Computer.OptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum);
+
+        if (optimizeRes != null)
+        {
+            window.RootSnackbarService.Show("Error", optimizeRes, ControlAppearance.Danger,
+                new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+            return;
+        }
+        LoadData();
+        window.RootSnackbarService.Show("Success", "Optimization was successful!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+    }
 
     private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
     {
@@ -159,4 +220,5 @@ public partial class ComputersPage : CustomPage
     {
         UpdateFiltering();
     }
+
 }
