@@ -82,6 +82,13 @@
                         <ui:SymbolIcon Symbol="Folder24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+
+                <ui:NavigationViewItem x:Name="generateClusterNavItem"
+                       Content="Generate cluster" TargetPageType="{x:Type local:GenerateClusterPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Add24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
             </ui:NavigationView.FooterMenuItems>
             <ui:NavigationView.ContentOverlay>
                 <Grid>

@@ -487,6 +487,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        ///    Spreads the active processes equally among the computers.
+        /// </summary>
+        /// <param name="movingRangePercent">A range that specify the sensitivity range</param>
+        /// <returns>Error message, otherwise null</returns>
         public static string? SpreadProcesses(int movingRangePercent = 5)
         {
             //Save the computers and their active processes in lists

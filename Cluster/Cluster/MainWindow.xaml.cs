@@ -23,7 +23,7 @@ namespace Cluster
     /// </summary>
     public partial class MainWindow
     {
-        public static string ClusterPath { get; private set; } = "";
+        public static string ClusterPath { get; set; } = "";
         
         public SnackbarService RootSnackbarService { get; private set; }
         public readonly ContentDialogService _dialogService;
@@ -42,6 +42,11 @@ namespace Cluster
             
             Loaded += MainWindow_Loaded;
             Log.WriteLog([], LogType.OpenProgram);
+        }
+
+        public void RefreshLblPath()
+        {
+            lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
         }
 
         private void LoadLastOpenedCluster()
@@ -67,7 +72,7 @@ namespace Cluster
 
                     if (ClusterPath != null)
                     {
-                        lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+                        RefreshLblPath();
                         loadNavItem.Content = "Load another Cluster";
                         foreach (var item in RootNavigation.MenuItems)
                         {
