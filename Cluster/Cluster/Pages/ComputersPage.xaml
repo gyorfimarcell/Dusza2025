@@ -68,6 +68,9 @@
                                  Click="MenuItemSortOrder_Click"/>
                 </ui:MenuItem>
                 <Separator/>
+                <ui:MenuItem Header="Optimize"
+                Icon="{ui:SymbolIcon ArrowTrendingSettings20}"
+                Click="MenuItemOptimize_Click"/>
                 <ui:MenuItem Header="Export"
                  Icon="{ui:SymbolIcon Share20}"
                  Click="MenuItemExport_Click"/>

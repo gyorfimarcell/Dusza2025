@@ -61,6 +61,7 @@
                         <ui:SymbolIcon Symbol="Apps24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+
                 <ui:NavigationViewItem Content="Cluster change logs"
                        TargetPageType="{x:Type local:ClusterChangeLogsPage}"
                        NavigationCacheMode="Disabled"
@@ -88,6 +89,8 @@
                 </Grid>
             </ui:NavigationView.ContentOverlay>
         </ui:NavigationView>
+
+        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" />
 
         <ui:TitleBar
             x:Name="TitleBar"

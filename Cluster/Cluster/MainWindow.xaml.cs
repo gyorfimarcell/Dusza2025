@@ -26,7 +26,8 @@ namespace Cluster
         public static string ClusterPath { get; private set; } = "";
         
         public SnackbarService RootSnackbarService { get; private set; }
-        
+        public readonly ContentDialogService _dialogService;
+
         private IEnumerable originalBreadcrumbs;
 
         public MainWindow()
@@ -35,6 +36,9 @@ namespace Cluster
             
             RootSnackbarService = new SnackbarService();
             RootSnackbarService.SetSnackbarPresenter(RootSnackbarPresenter);
+
+            _dialogService = new ContentDialogService();
+            _dialogService.SetDialogHost(RootContentDialog);
             
             Loaded += MainWindow_Loaded;
             Log.WriteLog([], LogType.OpenProgram);
