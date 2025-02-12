@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cluster.ChartModels;
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -43,6 +44,13 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
 
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageComputer)));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcessesText)));
+
+        ComputerDetailsPageCharts data = new(PageComputer);
+        piePrograms.Series = data.ProgramsSeries;
+        pieProcessor.Series = data.ProcessorSeries;
+        pieMemory.Series = data.MemorySeries;
+
+        chartsRow.Height = PageComputer.processes.Count != 0 ? new GridLength(175) : new GridLength(0);
     }
 
     private void Delete_OnClick(object sender, RoutedEventArgs e)

@@ -74,6 +74,8 @@ namespace Cluster
             barPrograms.XAxes = data.ProgramsAxes;
             barPrograms.YAxes = data.ProgramsYAxes;
             pieComputers.Series = data.ComputersSeries;
+
+            chartsRow.Height = icProcesses.Items.Count != 0 ? new GridLength(250) : new GridLength(0);
         }
 
         public void UpdateProgramsMenuItem(List<ProgramType> programs) {

@@ -93,7 +93,7 @@
     <Grid Margin="46 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="250"/>
+            <RowDefinition x:Name="chartsRow" Height="250"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
