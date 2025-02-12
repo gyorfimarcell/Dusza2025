@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Cluster.ChartModels;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,6 +59,21 @@ namespace Cluster
 
              if (!skipFilterReload) UpdateProgramsMenuItem(programs);
             FilterProcesses();
+        }
+
+        public void UpdateCharts() {
+            ProcessesPageCharts data = new(icProcesses.Items.Cast<Process>());
+            barPrograms.Series = statusFilter switch
+            {
+                ProcessesPageStatus.All => [data.ProgramsActiveSeries, data.ProgramInactiveSeries],
+                ProcessesPageStatus.Active => [data.ProgramsActiveSeries],
+                ProcessesPageStatus.Inactive => [data.ProgramInactiveSeries],
+                _ => throw new NotImplementedException()
+            };
+            barPrograms.LegendPosition = statusFilter == ProcessesPageStatus.All ? LiveChartsCore.Measure.LegendPosition.Bottom : LiveChartsCore.Measure.LegendPosition.Hidden;
+            barPrograms.XAxes = data.ProgramsAxes;
+            barPrograms.YAxes = data.ProgramsYAxes;
+            pieComputers.Series = data.ComputersSeries;
         }
 
         public void UpdateProgramsMenuItem(List<ProgramType> programs) {
@@ -128,6 +144,7 @@ namespace Cluster
 
             icProcesses.ItemsSource = filteredList;
             tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
+            UpdateCharts();
         }
 
         private List<MenuItem> GetProgramMenuItems() {

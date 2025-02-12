@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:local="clr-namespace:Cluster" xmlns:controls="clr-namespace:Cluster.Controls"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      xmlns:local="clr-namespace:Cluster" xmlns:controls="clr-namespace:Cluster.Controls" xmlns:visualelements="clr-namespace:LiveChartsCore.SkiaSharpView.VisualElements;assembly=LiveChartsCore.SkiaSharpView"
                   mc:Ignorable="d" 
       Title="Processes"
       d:DesignHeight="750"
@@ -92,15 +93,42 @@
     <Grid Margin="46 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
         <ui:TextBlock x:Name="tbCount"
+                      Grid.ColumnSpan="2"
                       FontTypography="Body"
                       Margin="0 0 0 4"/>
 
+        <lvc:CartesianChart x:Name="barPrograms"
+                            Grid.Row="1"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch">
+            <lvc:CartesianChart.Title>
+                <visualelements:LabelVisual Text="Programs"/>
+            </lvc:CartesianChart.Title>
+        </lvc:CartesianChart>
+
+        <lvc:PieChart x:Name="pieComputers"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      Height="200"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Stretch">
+            <lvc:PieChart.Title>
+                <visualelements:LabelVisual Text="Computers"/>
+            </lvc:PieChart.Title>
+        </lvc:PieChart>
+
         <ItemsControl x:Name="icProcesses"
-                  Grid.Row="1">
+                      Grid.Row="2"
+                      Grid.ColumnSpan="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
                     <controls:ProcessCard Process="{Binding Path=.}"
