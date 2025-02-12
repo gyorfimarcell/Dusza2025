@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cluster.ChartModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace Cluster
         {
             Programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
             UpdateFiltering();
+            UpdateCharts();
         }
 
         internal enum ProgramsPageSort
@@ -66,6 +68,14 @@ namespace Cluster
             if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
 
             icPrograms.ItemsSource = filtered;
+        }
+
+        private void UpdateCharts() {
+            ProgramsPageCharts data = new(Programs);
+
+            barRequested.Series = data.RequestedSeries;
+            barRequested.XAxes = data.RequestedXAxis;
+            barRequested.YAxes = data.RequestedYAxis;
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
