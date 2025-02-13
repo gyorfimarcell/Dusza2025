@@ -11,7 +11,7 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ClusterChangeLogsPage.xaml
     /// </summary>
-    public partial class ClusterChangeLogsPage : Page
+    public partial class ClusterChangeLogsPage : CustomPage
     {
         public ClusterChangeLogsPage()
         {
@@ -114,5 +114,19 @@ namespace Cluster
             return cardContainer;
         }
 
+        private void MenuItemSort_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
