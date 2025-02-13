@@ -15,11 +15,11 @@
                        Margin="0 15 0 20"/>
 
             <TextBlock Text="Any inactive process will remain untouched." 
-           TextWrapping="Wrap" FontSize="14" TextAlignment="Center" Foreground="DimGray"
+           TextWrapping="Wrap" FontSize="14" TextAlignment="Center" Foreground="{StaticResource TextFillColorSecondaryBrush}"
            Margin="0 0 0 35"/>
 
             <Label Content="Minimum Percentage" HorizontalAlignment="Center" 
-                   FontSize="24" FontWeight="Medium" Foreground="DimGray"/>
+                   FontSize="24" FontWeight="Medium" Foreground="{StaticResource TextFillColorSecondaryBrush}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Slider x:Name="sliMinimumPercentage" 
                         Width="300" Margin="20 10 20 10" Minimum="1" Maximum="100" Value="1"
@@ -29,7 +29,7 @@
             </StackPanel>
             
             <Label Content="Maximum Percentage" HorizontalAlignment="Center" 
-                   FontSize="24" FontWeight="Medium" Foreground="DimGray"/>
+                   FontSize="24" FontWeight="Medium" Foreground="{StaticResource TextFillColorSecondaryBrush}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Slider x:Name="sliMaximumPercentage" 
                         Width="300" Margin="20 10 20 10" Minimum="1" Maximum="100" Value="100"

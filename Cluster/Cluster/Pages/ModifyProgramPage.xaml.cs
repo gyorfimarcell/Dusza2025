@@ -33,7 +33,8 @@ namespace Cluster
         {
             if (DataContext is not ProgramType program)
             {
-                throw new ArgumentException("A program must be passed as this page's DataContext!");
+                _window.RootNavigation.GoBack();
+                return;
             }
 
             Program = program;

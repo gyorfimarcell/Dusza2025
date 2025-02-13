@@ -15,20 +15,41 @@ using System.Windows.Navigation;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
+using System.Windows.Media.Media3D;
+using System.ComponentModel;
 
 namespace Cluster
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : INotifyPropertyChanged
     {
         public static string ClusterPath { get; set; } = "";
         
         public SnackbarService RootSnackbarService { get; private set; }
         public readonly ContentDialogService _dialogService;
 
+        private bool _darkMode = false;
+        public bool DarkMode
+        {
+            get => _darkMode; set
+            {
+                _darkMode = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DarkMode)));
+                Wpf.Ui.Appearance.ApplicationThemeManager.Apply(
+                    _darkMode ? Wpf.Ui.Appearance.ApplicationTheme.Dark : Wpf.Ui.Appearance.ApplicationTheme.Light,
+                    WindowBackdropType.None,
+                    true
+                );
+                Registry.SetValue(SETTINGS_KEY, "darkMode", _darkMode);
+            }
+        }
+        private const string SETTINGS_KEY = @"HKEY_CURRENT_USER\SOFTWARE\kibirodKolega\Cluster\";
+
         private IEnumerable originalBreadcrumbs;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public MainWindow()
         {
@@ -124,6 +145,9 @@ namespace Cluster
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            bool savedDarkMode = Registry.GetValue(SETTINGS_KEY, "darkMode", false) is string s && s == "True";
+            DarkMode = savedDarkMode;
+
             RootNavigation.Navigated += RootNavigationOnNavigated;
 
             originalBreadcrumbs = BreadcrumbBar.ItemsSource;
@@ -155,6 +179,11 @@ namespace Cluster
         private void FluentWindow_Closed(object sender, EventArgs e)
         {
             Log.WriteLog([], LogType.CloseProgram);
+        }
+
+        private void MenuItemTheme_Click(object sender, RoutedEventArgs e)
+        {
+            DarkMode = !DarkMode;
         }
     }
 }
