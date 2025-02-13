@@ -53,7 +53,8 @@ namespace Cluster.ChartModels
             ComputersSeries = processes.GroupBy(x => x.HostComputer.Name).Select(x => new PieSeries<int> {
                 Values = [x.Count()],
                 Name = x.Key,
-                InnerRadius = 30
+                InnerRadius = 30,
+                ToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue} processes"
             }).ToList();
         }
     }
