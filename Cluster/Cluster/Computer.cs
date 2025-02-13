@@ -282,21 +282,6 @@ namespace Cluster
                 return "There are no active processes to optimize or no computers!";
             }
 
-            //First round: Add one active process to each computer if possible
-            for (int i = 0; i < allActiveProcesses.Count; i++)
-            {
-                if (i >= computers.Count)
-                    break;
-                computers[i].processes.Add(allActiveProcesses[i]);
-            }
-
-            //Check if there are as many active processes as computers
-            if (allActiveProcesses.Count <= computers.Count)
-            {
-                ArrangeFiles(computers);
-                return null;
-            }
-
             //Separate the active processes into two lists based on their resource usage
             //One list for the ones that use more memory than cpu and the other for the opposite
             //Those, who use equal amount of resources remain in the original list
@@ -526,21 +511,6 @@ namespace Cluster
                 return "There are no active processes to spread or no computers!";
             }
 
-            //First round: Add one active process to each computer if possible
-            for (int i = 0; i < allActiveProcesses.Count; i++)
-            {
-                if (i >= computers.Count)
-                    break;
-                computers[i].processes.Add(allActiveProcesses[i]);
-            }
-
-            //Check if there are as many active processes as computers
-            if (allActiveProcesses.Count <= computers.Count)
-            {
-                ArrangeFiles(computers);
-                return null;
-            }
-
             //Separate the active processes into two lists based on their resource usage
             //One list for the ones that use more memory than cpu and the other for the opposite
             //Those, who use equal amount of resources remain in the original list
@@ -636,12 +606,14 @@ namespace Cluster
             for (int i = remainingProcesses.Count - 1; i >= 0; i--)
             {
                 Process process = remainingProcesses[i];
+                
+                //Find the computer, that if we add a new process to it, the percent of the usage moves the least
                 Computer? leastLoaded = computers
                     .Where(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage))
                     .MinBy(x =>
                     {
-                        int ramPercent = Convert.ToInt32(Math.Round(x.MemoryUsage * 100.0 / x.RamCapacity));
-                        int cpuPercent = Convert.ToInt32(Math.Round(x.ProcessorUsage * 100.0 / x.ProcessorCore));
+                        int ramPercent = Convert.ToInt32(Math.Round((x.MemoryUsage + process.MemoryUsage) * 100.0 / x.RamCapacity));
+                        int cpuPercent = Convert.ToInt32(Math.Round((x.ProcessorUsage + process.ProcessorUsage) * 100.0 / x.ProcessorCore));
                         return (cpuPercent + ramPercent) / 2.0;
                     })!;
 
