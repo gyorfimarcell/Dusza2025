@@ -50,7 +50,11 @@ namespace Cluster.ChartModels
                 MinLimit = 0
             }];
 
-            ComputersSeries = processes.GroupBy(x => x.HostComputer.Name).Select(x => new PieSeries<int> { Values = [x.Count()], Name = x.Key }).ToList();
+            ComputersSeries = processes.GroupBy(x => x.HostComputer.Name).Select(x => new PieSeries<int> {
+                Values = [x.Count()],
+                Name = x.Key,
+                InnerRadius = 30
+            }).ToList();
         }
     }
 }
