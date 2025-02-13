@@ -82,7 +82,7 @@ namespace Cluster
 
                     ClusterPath = clusterLines.Last().Split(" - ").Last();
 
-                    if (ClusterPath != null)
+                    if (ClusterPath != null && ProgramType.ReadClusterFile(ClusterPath) != null)
                     {
                         RefreshLblPath();
                         loadNavItem.Content = "Load another Cluster";
@@ -91,6 +91,10 @@ namespace Cluster
                         RootNavigation.ClearJournal();
                         RootNavigation.Navigate(typeof(ClusterHealthPage));
                         Log.WriteLog([ClusterPath], LogType.LoadCluster);
+                    } 
+                    else
+                    {
+                        ClusterPath = null;
                     }
                 }
             }
