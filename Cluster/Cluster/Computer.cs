@@ -116,6 +116,19 @@ namespace Cluster
             return null;
         }
 
+        public string? Modify(int processor, int memory) {
+            if (processor < ProcessorUsage) {
+                return "The processes running on this computer require more processor capacity!";
+            }
+            if (memory < MemoryUsage)
+            {
+                return "The processes running on this computer require more memory capacity!";
+            }
+
+            File.WriteAllLines($@"{MainWindow.ClusterPath}\{Name}\.szamitogep_konfig", [processor.ToString(), memory.ToString()]);
+            return null;
+        }
+
         public bool CanOutSourcePrograms(string? path = null)
         {
             List<Computer> computers = GetComputers(path ?? MainWindow.ClusterPath)

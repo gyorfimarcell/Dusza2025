@@ -1,4 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using Cluster.ChartModels;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,6 +37,7 @@ namespace Cluster
             InitializeComponent();
 
             Loaded += ProcessesPage_Loaded;
+            _window.PropertyChanged += _window_PropertyChanged;
         }
 
         private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
@@ -45,7 +50,18 @@ namespace Cluster
             }
         }
 
-        List<Process> Processes;
+        private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindow.DarkMode))
+            {
+                barPrograms.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+                barPrograms.LegendTextPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+
+                pieComputers.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+            }
+        }
+
+            List<Process> Processes;
 
         ProcessesPageSort sort = ProcessesPageSort.Id;
         ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
@@ -58,6 +74,23 @@ namespace Cluster
 
              if (!skipFilterReload) UpdateProgramsMenuItem(programs);
             FilterProcesses();
+        }
+
+        public void UpdateCharts() {
+            ProcessesPageCharts data = new(icProcesses.Items.Cast<Process>());
+            barPrograms.Series = statusFilter switch
+            {
+                ProcessesPageStatus.All => [data.ProgramsActiveSeries, data.ProgramInactiveSeries],
+                ProcessesPageStatus.Active => [data.ProgramsActiveSeries],
+                ProcessesPageStatus.Inactive => [data.ProgramInactiveSeries],
+                _ => throw new NotImplementedException()
+            };
+            barPrograms.LegendPosition = statusFilter == ProcessesPageStatus.All ? LiveChartsCore.Measure.LegendPosition.Bottom : LiveChartsCore.Measure.LegendPosition.Hidden;
+            barPrograms.XAxes = data.ProgramsAxes;
+            barPrograms.YAxes = data.ProgramsYAxes;
+            pieComputers.Series = data.ComputersSeries;
+
+            chartsRow.Height = icProcesses.Items.Count != 0 ? new GridLength(250) : new GridLength(0);
         }
 
         public void UpdateProgramsMenuItem(List<ProgramType> programs) {
@@ -128,6 +161,7 @@ namespace Cluster
 
             icProcesses.ItemsSource = filteredList;
             tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
+            UpdateCharts();
         }
 
         private List<MenuItem> GetProgramMenuItems() {
