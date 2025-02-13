@@ -48,7 +48,9 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         ComputerDetailsPageCharts data = new(PageComputer);
         piePrograms.Series = data.ProgramsSeries;
         pieProcessor.Series = data.ProcessorSeries;
+        pieProcessor.MaxValue = computer.ProcessorCore;
         pieMemory.Series = data.MemorySeries;
+        pieMemory.MaxValue = computer.RamCapacity;
 
         chartsRow.Height = PageComputer.processes.Count != 0 ? new GridLength(175) : new GridLength(0);
     }

@@ -52,31 +52,28 @@
             <lvc:PieChart x:Name="piePrograms"
                           Grid.Row="2"
                           HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch">
-                <lvc:PieChart.Title>
-                    <visualelements:LabelVisual Text="Programs"/>
-                </lvc:PieChart.Title>
-            </lvc:PieChart>
+                          VerticalAlignment="Stretch"/>
+
 
             <lvc:PieChart x:Name="pieProcessor"
-              Grid.Row="2"
-              Grid.Column="1"
-              HorizontalAlignment="Stretch"
-              VerticalAlignment="Stretch">
-                <lvc:PieChart.Title>
-                    <visualelements:LabelVisual Text="Processor Usage"/>
-                </lvc:PieChart.Title>
-            </lvc:PieChart>
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          InitialRotation="-225"
+                          MaxAngle="270"
+                          Margin="0 16 0 0"/>
+
 
             <lvc:PieChart x:Name="pieMemory"
                           Grid.Row="2"
                           Grid.Column="2"
                           HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch">
-                <lvc:PieChart.Title>
-                    <visualelements:LabelVisual Text="Memory Usage"/>
-                </lvc:PieChart.Title>
-            </lvc:PieChart>
+                          VerticalAlignment="Stretch"
+                          InitialRotation="-225"
+                          MaxAngle="270"
+                          Margin="0 16 0 0"/>
+
         </Grid>
 
         <ui:TextBlock
