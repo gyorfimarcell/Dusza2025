@@ -49,6 +49,18 @@ namespace Cluster
             lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
         }
 
+        public void EnableNavigationItems()
+        {
+            foreach (var item in RootNavigation.MenuItems)
+            {
+                if (item is NavigationViewItem)
+                {
+                    NavigationViewItem navItem = (NavigationViewItem)item;
+                    if (!navItem.IsEnabled) navItem.IsEnabled = true;
+                }
+            }
+        }
+
         private void LoadLastOpenedCluster()
         {
             string directoryPath = Log.GetLogDirectoryPath();
@@ -74,14 +86,7 @@ namespace Cluster
                     {
                         RefreshLblPath();
                         loadNavItem.Content = "Load another Cluster";
-                        foreach (var item in RootNavigation.MenuItems)
-                        {
-                            if (item is NavigationViewItem)
-                            {
-                                NavigationViewItem navItem = (NavigationViewItem)item;
-                                if (!navItem.IsEnabled) navItem.IsEnabled = true;
-                            }
-                        }
+                        EnableNavigationItems();
 
                         RootNavigation.ClearJournal();
                         RootNavigation.Navigate(typeof(ClusterHealthPage));
@@ -106,14 +111,7 @@ namespace Cluster
                 {
                     lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
                     loadNavItem.Content = "Load another Cluster";
-                    foreach (var item in RootNavigation.MenuItems)
-                    {
-                        if (item is NavigationViewItem)
-                        {
-                            NavigationViewItem navItem = (NavigationViewItem)item;
-                            if (!navItem.IsEnabled) navItem.IsEnabled = true;
-                        }
-                    }
+                    EnableNavigationItems();
 
                     RootNavigation.ClearJournal();
                     RootNavigation.Navigate(typeof(ClusterHealthPage));
