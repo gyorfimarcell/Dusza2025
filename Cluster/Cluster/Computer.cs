@@ -116,8 +116,10 @@ namespace Cluster
             return null;
         }
 
-        public string? Modify(int processor, int memory) {
-            if (processor < ProcessorUsage) {
+        public string? Modify(int processor, int memory)
+        {
+            if (processor < ProcessorUsage)
+            {
                 return "The processes running on this computer require more processor capacity!";
             }
             if (memory < MemoryUsage)
@@ -146,60 +148,98 @@ namespace Cluster
             return true;
         }
 
-        public string? OutSourcePrograms()
+        public List<string>? OutSourcePrograms()
         {
-            if (CanOutSourcePrograms())
+            MessageBox mgbox = new()
             {
-                MessageBox mgbox = new()
+                Title = "Error",
+                Content = "Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?",
+                IsPrimaryButtonEnabled = true,
+                IsSecondaryButtonEnabled = true,
+                //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
+                PrimaryButtonText = "Delete",
+                SecondaryButtonText = "Outsource only",
+                CloseButtonText = "Cancel"
+
+            };
+
+            MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+
+            if (result != MessageBoxResult.Primary && result != MessageBoxResult.Secondary)
+                return null;
+
+            bool deleteAsWell = result == MessageBoxResult.Primary;
+
+            bool canOutsource = CanOutSourcePrograms();
+            if (!canOutsource)
+            {
+                //return "Outsourcing isn't possible. Shut down all the programs before deleting the computer!";
+                deleteAsWell = false;
+                mgbox = new()
                 {
                     Title = "Error",
-                    Content = "Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?",
+                    Content = "There's not enough space to completely outsource all processes. Continue anyway?",
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
-                    PrimaryButtonText = "Yes",
+                    PrimaryButtonText = "Continue",
                     CloseButtonText = "Cancel"
 
                 };
-                MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
-                if (result == MessageBoxResult.Primary)
-                {
-                    int processesCount = processes.Count;
-                    bool isSuccess = OutSource() == null;
-                    if (!isSuccess)
-                    {
-                        return "Outsourcing failed! Please try again later.";
-                    }
-                    Log.WriteLog([Name, $"{processesCount}"], LogType.ClearProgramInstances);
-                    return null;
 
+                result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+                if (result != MessageBoxResult.Primary)
+                {
+                    return ["Outsourcing canceled.", "Info"];
                 }
-                return string.Empty;
             }
-            return "Outsourcing isn't possible. Shut down all the programs before deleting the computer!";
+
+            int processesCount = processes.Count;
+            bool isSuccess = OutSource(forceOutSource: !canOutsource) == null;
+            if (!isSuccess)
+            {
+                return ["Outsourcing failed! Please try again later.", "Error"];
+            }
+
+            List<Process> remainingProcesses = GetComputers(MainWindow.ClusterPath).Find(x => x.Name == Name).processes;
+            Log.WriteLog([Name, $"{processesCount - remainingProcesses.Count}"], LogType.ClearProgramInstances);
+
+            if (deleteAsWell)
+            {
+                string? res = Delete();
+                return res == null ? null : [res, "Error"];
+            }
+
+            if (!canOutsource)
+            {
+                return [$@"Outsourced as many processes as possible! {remainingProcesses.Count} processes remain on '{Name}' computer.", "Info"];
+            }
+
+            return [!deleteAsWell ? @$"Outsourcing succeeded! You can delete now the '{Name}' safely." : @$"Outsourcing and deletion succeeded of the '{Name}' computer!", "Success"];
         }
 
-        private string? OutSource(string? path = null)
+        private string? OutSource(string? path = null, bool forceOutSource = false)
         {
             path = path ?? MainWindow.ClusterPath;
-            List<Computer> computers = GetComputers(path)
-                .Where(x => x.Name != Name).ToList();
-            foreach (var process in processes)
+            List<Computer> computers = GetComputers(path).Where(x => x.Name != Name)
+                .OrderByDescending(x => (x.ProcessorCore - x.ProcessorUsage + (x.RamCapacity - x.MemoryUsage)) / 2.0).ToList();
+            List<Process> orderedProcesses = processes.OrderBy(x => (x.ProcessorUsage + x.MemoryUsage) / 2.0).ToList();
+
+            foreach (Process process in orderedProcesses)
             {
                 Computer? capable = computers.FirstOrDefault(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage));
                 if (capable == null)
                 {
+                    if (forceOutSource)
+                        continue;
                     return "There's not enough resource on other computers to outsource.";
                 }
 
                 try
                 {
-                    //File.Move(Path.Combine(path, Name, process.FileName), Path.Combine(path, capable.Name, process.FileName));
                     MoveProcess(process.FileName, this, capable);
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
                     return ex.Message;
                 }
 
@@ -606,7 +646,7 @@ namespace Cluster
             for (int i = remainingProcesses.Count - 1; i >= 0; i--)
             {
                 Process process = remainingProcesses[i];
-                
+
                 //Find the computer, that if we add a new process to it, the percent of the usage moves the least
                 Computer? leastLoaded = computers
                     .Where(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage))

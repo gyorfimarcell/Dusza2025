@@ -92,16 +92,23 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
 
         if (PageComputer.processes.Count > 0)
         {
-            string? res = PageComputer.OutSourcePrograms();
-            if (res != null)
-            {
-                if (res.Length == 0) return;
-                _window.RootSnackbarService.Show("Error", res, ControlAppearance.Danger,
-                        new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+            List<string>? res = PageComputer.OutSourcePrograms();
+            if (res == null)
                 return;
+
+            ControlAppearance controlAppearance = ControlAppearance.Success;
+
+            if (Enum.TryParse(res[1], out ControlAppearance parsedAppearance))
+            {
+                controlAppearance = parsedAppearance;
             }
-            _window.RootSnackbarService.Show("Success", @$"Outsourcing succeed! You can delete now the '{PageComputer.Name}' safely.", ControlAppearance.Success,
-                        new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+
+            _window.RootSnackbarService.Show(
+                res[1],
+                res[0],
+                controlAppearance,
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24),
+                TimeSpan.FromSeconds(3));
 
             SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name));
         }
