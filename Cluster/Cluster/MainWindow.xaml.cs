@@ -71,7 +71,14 @@ namespace Cluster
 
                 if (files != null)
                 {
-                    var latestFile = files.Select(file => new { FilePath = file, Date = DateTime.TryParseExact(Path.GetFileNameWithoutExtension(file), "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime date) ? date : (DateTime?)null}).Where(f => f.Date.HasValue).OrderByDescending(f => f.Date).FirstOrDefault();
+                    var latestFile = files.Select(file => new
+                    {
+                        FilePath = file,
+                    })
+                    .Where(f => f.FilePath != null)
+                    .OrderByDescending(f => Path.GetFileNameWithoutExtension(f.FilePath))
+                    .FirstOrDefault(f => File.ReadAllLines(f.FilePath).Any(x => x.StartsWith("LoadCluster")));
+
 
                     string[] clusterLines = File.ReadAllLines(latestFile.FilePath).Where(x => x.StartsWith("LoadCluster")).ToArray();
 
