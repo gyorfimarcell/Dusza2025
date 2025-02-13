@@ -6,21 +6,22 @@
              xmlns:local="clr-namespace:Cluster.Controls"
              mc:Ignorable="d"
              d:DesignHeight="40" d:DesignWidth="300">
-    <Grid>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:UsageBar}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
-               Content="{Binding Text, RelativeSource={RelativeSource AncestorType=local:UsageBar} }" />
+               Content="{Binding Text }" />
         <TextBlock Grid.Row="0"
                    HorizontalAlignment="Right">
-            <Run Text="{Binding Current, RelativeSource={RelativeSource AncestorType=local:UsageBar} }" />
+            <Run Text="{Binding Current }" />
+            <Run Text="{Binding Percent }" Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
             <Run Text=" / " />
-            <Run Text="{Binding Max, RelativeSource={RelativeSource AncestorType=local:UsageBar} }" />
+            <Run Text="{Binding Max }" />
         </TextBlock>
-        <ProgressBar Value="{Binding Current, RelativeSource={RelativeSource AncestorType=local:UsageBar} }"
-                     Maximum="{Binding Max, RelativeSource={RelativeSource AncestorType=local:UsageBar} }"
+        <ProgressBar Value="{Binding Current }"
+                     Maximum="{Binding Max }"
                      Height="8"
                      Grid.Row="1" />
     </Grid>
