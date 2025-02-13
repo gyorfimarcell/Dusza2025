@@ -83,7 +83,7 @@ namespace Cluster
 
         public void RefreshLblPath()
         {
-            lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+            lblPath.Text = $"Cluster: {Path.GetFileName(ClusterPath)}";
         }
 
         public void EnableNavigationItems()
@@ -157,7 +157,7 @@ namespace Cluster
                 }
                 else
                 {
-                    lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+                    lblPath.Text = $"Cluster: {Path.GetFileName(ClusterPath)}";
                     loadNavItem.Content = "Load another Cluster";
                     EnableNavigationItems();
 

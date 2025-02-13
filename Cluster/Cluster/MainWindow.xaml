@@ -9,6 +9,8 @@
         Title="Cluster Management"
         Height="750"
         Width="1200"
+        MinHeight="750"
+        MinWidth="1200"
         Closed="FluentWindow_Closed"
         ExtendsContentIntoTitleBar="True"
         WindowStartupLocation="CenterScreen">
@@ -72,9 +74,20 @@
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
-                <Label x:Name="lblPath"
+                <ui:TextBlock x:Name="lblPath"
                        HorizontalAlignment="Center"
-                       FontWeight="Bold">Cluster: None</Label>
+                       FontWeight="Bold"
+                       Text="Cluster: None">
+                    <ui:TextBlock.Style>
+                        <Style TargetType="ui:TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Value="False" Binding="{Binding Path=IsPaneOpen, RelativeSource={RelativeSource AncestorType=ui:NavigationView}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ui:TextBlock.Style>
+                </ui:TextBlock>
                 <ui:NavigationViewItem x:Name="loadNavItem"
                                        Content="Load cluster"
                                        Click="loadNavItem_Click">
