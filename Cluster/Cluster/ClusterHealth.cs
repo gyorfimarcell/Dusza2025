@@ -30,7 +30,7 @@ namespace Cluster
                 }
 
                 //2. 
-                if ((active + inactive) > p.ActivePrograms) {
+                if (active > p.ActivePrograms) {
                     Errors.Add($"{p.ProgramName} has too many processes ({p.ActivePrograms} wanted, {active} active, {inactive} inactive)");
                 }
             }
@@ -107,6 +107,7 @@ namespace Cluster
                             break;
                         }
                         Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory, true);
+                        process.HostComputer = computer;
                         computers[computers.FindIndex(x => x.Name == computer.Name)].processes.Add(process);
                     }
 
@@ -150,7 +151,7 @@ namespace Cluster
             //1. Update the active status of the processes
             List<Process> originalProcesses = Computer.GetComputers(MainWindow.ClusterPath).SelectMany(x => x.processes).ToList();
             List<Process> activeChangeProcesses = computers.SelectMany(x => x.processes).Where(x => originalProcesses.Any(y => x.FileName == y.FileName && x.Active != y.Active)).ToList();
-            System.Windows.MessageBox.Show(activeChangeProcesses.Count.ToString());
+            //System.Windows.MessageBox.Show(activeChangeProcesses.Count.ToString());
             foreach (Process process in activeChangeProcesses)
             {
                 process.Active = !process.Active;
@@ -162,6 +163,7 @@ namespace Cluster
             foreach (Process process in newProcesses)
             {
                 process.Write(Path.Combine(MainWindow.ClusterPath, process.HostComputer.Name));
+                Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}"], LogType.RunProgramInstance);
             }
         }
     }

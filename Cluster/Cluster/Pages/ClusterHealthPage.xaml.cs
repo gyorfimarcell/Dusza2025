@@ -34,6 +34,7 @@ namespace Cluster
             health = new(Computer.GetComputers(MainWindow.ClusterPath), ProgramType.ReadClusterFile(MainWindow.ClusterPath));
             if (health.Ok)
             {
+                //System.Windows.MessageBox.Show("OK");
                 HealthyInfobar.IsOpen = true;
                 spFixIssues.Visibility = Visibility.Hidden;
             }
@@ -58,8 +59,10 @@ namespace Cluster
         private void FixIssues_Click(object sender, RoutedEventArgs e)
         {
             ClusterHealth.FixIssues();
+            var clusterOk = spErrors.Children[0];
             spErrors.Children.Clear();
-            ClusterHealthPage_Loaded(sender, e);
+            spErrors.Children.Add(clusterOk);
+            ClusterHealthPage_Loaded(new(), new());
         }
     }
 }
