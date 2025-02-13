@@ -45,53 +45,23 @@
                         <ui:SymbolIcon Symbol="Server24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Monitoring"
-                                       TargetPageType="{x:Type local:MonitoringPage}"
+                <ui:NavigationViewItem Content="Processes"
+                       TargetPageType="{x:Type local:ProcessesPage}"
+                       NavigationCacheMode="Disabled"
+                       IsEnabled="False">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="AppsList24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Programs"
+                                       TargetPageType="{x:Type local:ProgramsPage}"
                                        NavigationCacheMode="Disabled"
                                        IsEnabled="False">
                     <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
+                        <ui:SymbolIcon Symbol="Apps24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Add New Program"
-                       TargetPageType="{x:Type local:AddNewProgramPage}"
-                       NavigationCacheMode="Disabled">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Shutdown Program"
-                                       TargetPageType="{x:Type local:ShutdownProgramPage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Modify Program"
-                                       TargetPageType="{x:Type local:ModifyProgramPage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Run Program Instance"
-                                       TargetPageType="{x:Type local:NewInstancePage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Shutdown Program Instance"
-                                       TargetPageType="{x:Type local:ShutdownProgramInstancePage}"
-                                       NavigationCacheMode="Disabled"
-                                       IsEnabled="False">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
+
                 <ui:NavigationViewItem Content="Cluster change logs"
                        TargetPageType="{x:Type local:ClusterChangeLogsPage}"
                        NavigationCacheMode="Disabled"
@@ -112,6 +82,13 @@
                         <ui:SymbolIcon Symbol="Folder24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+
+                <ui:NavigationViewItem x:Name="generateClusterNavItem"
+                       Content="Generate cluster" TargetPageType="{x:Type local:GenerateClusterPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Add24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
             </ui:NavigationView.FooterMenuItems>
             <ui:NavigationView.ContentOverlay>
                 <Grid>
@@ -120,11 +97,32 @@
             </ui:NavigationView.ContentOverlay>
         </ui:NavigationView>
 
+        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" />
+
         <ui:TitleBar
             x:Name="TitleBar"
             Title="Cluster Management"
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
+            <ui:TitleBar.TrailingContent>
+                <Menu>
+                    <ui:MenuItem x:Name="MenuItemTheme"
+                                 Click="MenuItemTheme_Click">
+                        <ui:MenuItem.Style>
+                            <Style TargetType="ui:MenuItem">
+                                <Style.Triggers>
+                                    <DataTrigger Value="True" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                                        <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherSunny24}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Value="False" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                                        <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherMoon24}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:MenuItem.Style>
+                    </ui:MenuItem>
+                </Menu>
+            </ui:TitleBar.TrailingContent>
         </ui:TitleBar>
     </Grid>
 </ui:FluentWindow>

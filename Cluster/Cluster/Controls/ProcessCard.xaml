@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="Cluster.Controls.ProcessCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cluster.Controls" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ui:Card DataContext="{Binding Process, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ContentControl
+                Grid.RowSpan="2"
+                Margin="0, 0, 14, 0"
+                VerticalAlignment="Center"
+                Focusable="False"
+                FontSize="24"
+                KeyboardNavigation.IsTabStop="False">
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                            <DataTrigger Value="True" Binding="{Binding Process.Active, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}">
+                                <Setter Property="Content" Value="{ui:SymbolIcon Symbol=Play24, Filled=True}"/>
+                            </DataTrigger>
+                            <DataTrigger Value="False" Binding="{Binding Process.Active, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}">
+                                <Setter Property="Content" Value="{ui:SymbolIcon Symbol=Pause24, Filled=True}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+
+            <ui:TextBlock Grid.Column="1"
+                          Margin="0"
+                          FontTypography="BodyStrong"
+                          Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                          Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}"
+                          TextWrapping="WrapWithOverflow">
+            </ui:TextBlock>
+            <ui:TextBlock Grid.Column="1"
+                          Grid.Row="1"
+                          Appearance="Secondary"
+                          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                          Text="{Binding StartTime }"
+                          TextWrapping="WrapWithOverflow" />
+
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="DeveloperBoard20"
+                               Margin="0 0 4 0"/>
+                <ui:TextBlock Appearance="Secondary"
+                              Text="{Binding ProcessorUsage}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2"
+                        Grid.Row="1"
+                        Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="Ram20"
+                               Margin="0 0 4 0"/>
+                <ui:TextBlock Appearance="Secondary"
+                              Text="{Binding MemoryUsage}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="3"
+                        Grid.RowSpan="2">
+                <ui:Button x:Name="btnActivate"
+                           Appearance="Transparent"
+                           Margin="0 0 4 0"
+                           Click="btnActivate_Click">
+                    <ui:Button.Icon>
+                        <ui:SymbolIcon>
+                            <ui:SymbolIcon.Style>
+                                <Style TargetType="ui:SymbolIcon">
+                                    <Style.Triggers>
+                                        <DataTrigger Value="True" Binding="{Binding Process.Active, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}">
+                                            <Setter Property="Symbol" Value="Pause24"/>
+                                        </DataTrigger>
+                                        <DataTrigger Value="False" Binding="{Binding Process.Active, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}">
+                                            <Setter Property="Symbol" Value="Play24"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:SymbolIcon.Style>
+                        </ui:SymbolIcon>
+                    </ui:Button.Icon>
+                </ui:Button>
+                <ui:Button x:Name="btnShutdown"
+                           Appearance="Transparent"
+                           Icon="{ui:SymbolIcon Power24}"
+                           Click="btnShutdown_Click"/>
+            </StackPanel>
+            
+            
+        </Grid>
+    </ui:Card>
+</UserControl>

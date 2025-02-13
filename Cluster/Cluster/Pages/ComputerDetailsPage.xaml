@@ -4,8 +4,9 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                  xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                   xmlns:local="clr-namespace:Cluster"
-                  xmlns:controls="clr-namespace:Cluster.Controls"
+                  xmlns:controls="clr-namespace:Cluster.Controls" xmlns:visualelements="clr-namespace:LiveChartsCore.SkiaSharpView.VisualElements;assembly=LiveChartsCore.SkiaSharpView"
                   mc:Ignorable="d"
                   Title="ComputerDetailsPage"
                   ui:NavigationView.HeaderContent="temp"
@@ -15,6 +16,9 @@
                   ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <local:CustomPage.HeaderControls>
         <Menu FontSize="14">
+            <ui:MenuItem Header="Edit"
+                         Icon="{ui:SymbolIcon Edit20}"
+                         Click="Edit_OnClick"/>
             <ui:MenuItem Header="Delete"
                          Icon="{ui:SymbolIcon Delete20}"
                          Click="Delete_OnClick"/>
@@ -28,6 +32,12 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="16"/>
+                <RowDefinition x:Name="chartsRow" Height="175"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
             <ui:TextBlock FontTypography="Body"
                           VerticalAlignment="Center"
                           HorizontalAlignment="Center"
@@ -42,6 +52,44 @@
                                Current="{Binding MemoryUsage}"
                                Max="{Binding RamCapacity}"
                                Margin="8 0" />
+
+            <lvc:PieChart x:Name="piePrograms"
+                          Grid.Row="2"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"/>
+            <ui:TextBlock Grid.Row="3"
+                          HorizontalAlignment="Center"
+                          Text="Programs"/>
+
+
+            <lvc:PieChart x:Name="pieProcessor"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          InitialRotation="-225"
+                          MaxAngle="270"
+                          Margin="0 20 0 0"/>
+            <ui:TextBlock Grid.Row="3"
+                          Grid.Column="1"
+                          HorizontalAlignment="Center"
+                          Text="Processor Usage"/>
+
+
+            <lvc:PieChart x:Name="pieMemory"
+                          Grid.Row="2"
+                          Grid.Column="2"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          InitialRotation="-225"
+                          MaxAngle="270"
+                          Margin="0 20 0 0"/>
+            <ui:TextBlock Grid.Row="3"
+                          Grid.Column="2"
+                          HorizontalAlignment="Center"
+                          Text="Memory Usage"/>
+
+
         </Grid>
 
         <ui:TextBlock
@@ -51,9 +99,9 @@
                       ItemsSource="{Binding PageComputer.processes, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
-                    <controls:CustomCard Title="{Binding FileName}"
-                                         Description="{Binding StartTime}"
-                                         Margin="0 0 0 8" />
+                    <controls:ProcessCard Process="{Binding Path=.}"
+                                          OnProcessShutdown="ProcessCard_OnProcessChange"
+                                          OnProcessActivate="ProcessCard_OnProcessChange"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
