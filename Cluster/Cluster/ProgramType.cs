@@ -26,27 +26,33 @@ namespace Cluster
 
         public static List<ProgramType> ReadClusterFile(string path)
         {
-            string[] files = Directory.GetFiles(path);
-            List<ProgramType> programs = new();
-            if (!files.Select(x => Path.GetFileName(x)).Contains(".klaszter"))
+            try
             {
+                string[] files = Directory.GetFiles(path);
+                List<ProgramType> programs = new();
+                if (!files.Select(x => Path.GetFileName(x)).Contains(".klaszter"))
+                {
+                    return null;
+                }
+                StreamReader sr = new(path + "\\.klaszter");
+                List<string> currentValues = new();
+                while (!sr.EndOfStream)
+                {
+                    currentValues.Add(sr.ReadLine());
+                    if (currentValues.Count() == 4)
+                    {
+                        ProgramType newProgram = new(currentValues[0], int.Parse(currentValues[1]), int.Parse(currentValues[2]), int.Parse(currentValues[3]));
+                        programs.Add(newProgram);
+                        currentValues.Clear();
+                    }
+                }
+                sr.Close();
+
+                return programs;
+            }
+            catch (Exception ex) {
                 return null;
             }
-            StreamReader sr = new(path + "\\.klaszter");
-            List<string> currentValues = new();
-            while (!sr.EndOfStream)
-            {
-                currentValues.Add(sr.ReadLine());
-                if (currentValues.Count() == 4)
-                {
-                    ProgramType newProgram = new(currentValues[0], int.Parse(currentValues[1]), int.Parse(currentValues[2]), int.Parse(currentValues[3]));
-                    programs.Add(newProgram);
-                    currentValues.Clear();
-                }
-            }
-            sr.Close();
-
-            return programs;
         }
 
         public void AddNewProgramToCluster(string path)

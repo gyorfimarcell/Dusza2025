@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Cluster.ChartModels;
+using LiveChartsCore;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,12 +36,24 @@ namespace Cluster
         {
             InitializeComponent();
             LoadData();
+
+            _window.PropertyChanged += _window_PropertyChanged;
+        }
+
+        private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindow.DarkMode))
+            {
+                barRequested.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+                barRequested.LegendTextPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+            }
         }
 
         public void LoadData()
         {
             Programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
             UpdateFiltering();
+            UpdateCharts();
         }
 
         internal enum ProgramsPageSort
@@ -66,6 +82,14 @@ namespace Cluster
             if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
 
             icPrograms.ItemsSource = filtered;
+        }
+
+        private void UpdateCharts() {
+            ProgramsPageCharts data = new(Programs);
+
+            barRequested.Series = data.RequestedSeries;
+            barRequested.XAxes = data.RequestedXAxis;
+            barRequested.YAxes = data.RequestedYAxis;
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
