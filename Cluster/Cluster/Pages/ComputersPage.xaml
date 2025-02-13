@@ -86,7 +86,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Computer}">
                     <ui:CardControl
-                        Margin="4"
+                        Margin="0 0 0 8"
                         Padding="20,10,20,10"
                         Icon="{ui:SymbolIcon Server24}"
                         Click="ComputerCard_OnClick">

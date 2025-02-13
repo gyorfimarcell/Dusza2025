@@ -36,15 +36,19 @@ namespace Cluster
                     Expander expander = new Expander
                     {
                         Header = fileName,
-                        Margin = new Thickness(5)
+                        Margin = new Thickness(0, 0, 0, 8)
+                        
                     };
 
                     StackPanel stackPanel = new StackPanel();
 
                     string[] lines = File.ReadAllLines(file);
 
-                    foreach (var line in lines)
+                    for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
                     {
+                        string? line = lines[lineIndex];
+                        bool last = lineIndex == lines.Length - 1;
+
                         string[] lineData = line.Replace("\n", "").Split(" - ");
                         LogType type;
                         bool success = Enum.TryParse(lineData[0], true, out type);
@@ -55,7 +59,7 @@ namespace Cluster
                             Expander subExpander = new Expander
                             {
                                 Header = headerText,
-                                Margin = new Thickness(5)
+                                Margin = last ? new Thickness(0) : new Thickness(0, 0, 0, 8),
                             };
                             subExpander.SetResourceReference(Control.BorderBrushProperty, "ControlStrokeColorDefaultBrush");
                             stackPanel.Children.Add(subExpander);
@@ -66,12 +70,12 @@ namespace Cluster
                             {
                                     cardData.Add($"{Log.LogDataTypes[type][i]}: {lineData[i]}");
                             }
-                            subStackPanel.Children.Add(GetUnexpandableCard(cardData));
+                            subStackPanel.Children.Add(GetUnexpandableCard(cardData, true));
                             subExpander.Content = subStackPanel;
                         }
                         else
                         {
-                            Border card = GetUnexpandableCard(new() { headerText });
+                            Border card = GetUnexpandableCard(new() { headerText }, last);
                             stackPanel.Children.Add(card);
                         }
                     }
@@ -82,14 +86,14 @@ namespace Cluster
             }
         }
 
-        private Border GetUnexpandableCard(List<string> headerTextList)
+        private Border GetUnexpandableCard(List<string> headerTextList, bool last)
         {
             Border cardContainer = new Border()
             {
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(5),
                 Padding = new Thickness(5),
-                Margin = new Thickness(5),
+                Margin = last ? new Thickness(0) : new Thickness(0, 0, 0, 8),
             };
 
             cardContainer.SetResourceReference(Control.BackgroundProperty, "ControlFillColorDefaultBrush");
