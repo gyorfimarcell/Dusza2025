@@ -248,6 +248,12 @@ namespace Cluster
             return canOptimize;
         }
 
+        /// <summary>
+        ///   Optimizes the computers in the cluster folder.
+        /// </summary>
+        /// <param name="min">Minimum running percent</param>
+        /// <param name="max">Maximum running percent</param>
+        /// <returns>Error mesaage if any error occures, otherwise false</returns>
         public static string? OptimizeComputers(int min, int max)
         {
             //Save the computers and their active processes in lists

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Cluster.Controls;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wpf.Ui.Controls;
 
 namespace Cluster
 {
@@ -45,6 +48,120 @@ namespace Cluster
                 {
                     Errors.Add($"{c.Name} doesn't have enough memory capacity ({memoryUsage}/{c.RamCapacity})");
                 }
+            }
+        }
+
+        public static void FixIssues()
+        {
+            List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
+            List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
+
+            List<Process> processes = computers.Aggregate(new List<Process>(), (list, computer) => [.. list, .. computer.processes]);
+            
+            Dictionary<ProgramType, int> missingProcesses = new();
+
+            //Collect data about missing processes in a dictionary
+            foreach (ProgramType p in programs)
+            {
+                int active = processes.Count(x => x.ProgramName == p.ProgramName && x.Active);
+                missingProcesses.Add(p, p.ActivePrograms - active);
+            }
+
+            bool issuesFixable = true;
+            foreach (var missingProcess in missingProcesses)
+            {
+                ProgramType program = missingProcess.Key;
+                int missingProcessNumber = missingProcess.Value;
+
+                if (missingProcessNumber > 0)
+                {
+                    //If there are proper processes that are inactive, then activate them, if they can be activated
+                    List<Process> inactiveProcesses = processes.Where(x => x.ProgramName == program.ProgramName && !x.Active && 
+                    x.HostComputer.HasEnoughRam(x.MemoryUsage) && x.HostComputer.HasEnoughCore(x.ProcessorUsage)).ToList();
+                    
+                    for (int i = 0; i < inactiveProcesses.Count; i++)
+                    {
+                        Process process = inactiveProcesses[i];
+                        int computerIndex = computers.FindIndex(x => x.Name == process.HostComputer.Name);
+                        int processIndex = computers[computerIndex].processes.FindIndex(x => x.FileName == process.FileName);
+
+                        if (computers[computerIndex].HasEnoughCore(process.ProcessorUsage) && computers[computerIndex].HasEnoughRam(process.MemoryUsage))
+                        {
+                            computers[computerIndex].processes[processIndex].Active = true;
+                            missingProcessNumber--;
+                        }
+
+                        if (missingProcessNumber == 0)
+                        {
+                            break;
+                        }
+                    }
+
+                    //If there are still missing processes, then create new ones
+                    for (int i = 0; i < missingProcessNumber; i++)
+                    {
+                        Computer? computer = computers.FirstOrDefault(x => x.HasEnoughRam(program.Memory) && x.HasEnoughCore(program.CpuMilliCore));
+                        if (computer == null)
+                        {
+                            issuesFixable = false;
+                            break;
+                        }
+                        Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory, true);
+                        computers[computers.FindIndex(x => x.Name == computer.Name)].processes.Add(process);
+                    }
+
+                } else
+                {
+                    //If there are too many processes, then deactivate them
+                    List<Process> activeProcesses = processes.Where(x => x.ProgramName == program.ProgramName && x.Active).ToList();
+                    for (int i = 0; i < Math.Abs(missingProcessNumber); i++)
+                    {
+                        Process process = activeProcesses[i];
+                        int computerIndex = computers.FindIndex(x => x.Name == process.HostComputer.Name);
+                        int processIndex = computers[computerIndex].processes.FindIndex(x => x.FileName == process.FileName);
+                        computers[computerIndex].processes[processIndex].Active = false;
+                    }
+                }
+            }
+
+            if (!issuesFixable)
+            {
+                //Show a message box that the issues are not fixable and if the user wants to continue anyway
+                MessageBox mgbox = new()
+                {
+                    Title = "Set Optimizing Values",
+                    Content = "The issues cannot be solved completely. Would you like to continue anyway?",
+                    IsPrimaryButtonEnabled = true,
+                    IsSecondaryButtonEnabled = false,
+                    PrimaryButtonText = "Continue",
+                    CloseButtonText = "Cancel",
+                    Width = 500,
+                    MaxWidth = 500,
+                    MaxHeight = 1000
+                };
+                MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+
+                // Hit cancel
+                if (result != MessageBoxResult.Primary)
+                    return;
+            }
+
+            //Save the changes
+            //1. Update the active status of the processes
+            List<Process> originalProcesses = Computer.GetComputers(MainWindow.ClusterPath).SelectMany(x => x.processes).ToList();
+            List<Process> activeChangeProcesses = computers.SelectMany(x => x.processes).Where(x => originalProcesses.Any(y => x.FileName == y.FileName && x.Active != y.Active)).ToList();
+            System.Windows.MessageBox.Show(activeChangeProcesses.Count.ToString());
+            foreach (Process process in activeChangeProcesses)
+            {
+                process.Active = !process.Active;
+                process.ToggleActive();
+            }
+
+            //2. Add new processes
+            List<Process> newProcesses = computers.SelectMany(x => x.processes).Where(x => !originalProcesses.Any(y => x.FileName == y.FileName)).ToList();
+            foreach (Process process in newProcesses)
+            {
+                process.Write(Path.Combine(MainWindow.ClusterPath, process.HostComputer.Name));
             }
         }
     }
