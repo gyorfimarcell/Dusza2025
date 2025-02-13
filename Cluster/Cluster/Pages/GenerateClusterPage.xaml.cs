@@ -171,7 +171,7 @@ namespace Cluster
             if (ofd.ShowDialog() == true)
             {
                 chosenPath = ofd.FolderName;
-                lblPath.Content = chosenPath;
+                PathCard.Description = chosenPath;
             }
         }
     }
