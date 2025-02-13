@@ -17,6 +17,11 @@ using Wpf.Ui.Controls;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using System.Windows.Media.Media3D;
 using System.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.Themes;
+using SkiaSharp;
+using LiveChartsCore.SkiaSharpView.Painting;
 
 namespace Cluster
 {
@@ -36,13 +41,24 @@ namespace Cluster
             get => _darkMode; set
             {
                 _darkMode = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DarkMode)));
+
                 Wpf.Ui.Appearance.ApplicationThemeManager.Apply(
                     _darkMode ? Wpf.Ui.Appearance.ApplicationTheme.Dark : Wpf.Ui.Appearance.ApplicationTheme.Light,
                     WindowBackdropType.None,
                     true
                 );
+                LiveCharts.Configure(config => {
+                    if (_darkMode) config.AddDarkTheme(theme => theme.Colors = ColorPalletes.MaterialDesign500);
+                    else
+                    {
+                        config.AddLightTheme();
+                        config.LegendTextPaint = new SolidColorPaint(new SKColor(35, 35, 35));
+                    }
+                });
+
                 Registry.SetValue(SETTINGS_KEY, "darkMode", _darkMode);
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DarkMode)));
             }
         }
         private const string SETTINGS_KEY = @"HKEY_CURRENT_USER\SOFTWARE\kibirodKolega\Cluster\";

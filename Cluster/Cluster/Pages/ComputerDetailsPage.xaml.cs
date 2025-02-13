@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Cluster.ChartModels;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore;
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +27,8 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
     {
         InitializeComponent();
         Loaded += OnLoaded;
+
+        _window.PropertyChanged += _window_PropertyChanged;
     }
 
     /// <summary>
@@ -41,6 +47,19 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         SetData(computer);
     }
 
+    private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MainWindow.DarkMode))
+        {
+            piePrograms.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+            pieProcessor.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+            pieMemory.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+
+            pieProcessor.Series.Last().DataLabelsPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+            pieMemory.Series.Last().DataLabelsPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+        }
+    }
+
     /// <summary>
     /// Sets the data of the page
     /// </summary>
@@ -53,6 +72,25 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
 
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageComputer)));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcessesText)));
+
+        UpdateCharts();
+        chartsRow.Height = PageComputer.processes.Count != 0 ? new GridLength(175) : new GridLength(0);
+    }
+
+    private void UpdateCharts()
+    {
+        ComputerDetailsPageCharts data = new(PageComputer);
+        piePrograms.Series = data.ProgramsSeries;
+        pieProcessor.Series = data.ProcessorSeries;
+        pieProcessor.MaxValue = PageComputer.ProcessorCore;
+        pieMemory.Series = data.MemorySeries;
+        pieMemory.MaxValue = PageComputer.RamCapacity;
+    }
+
+    private void Edit_OnClick(object sender, RoutedEventArgs e)
+    {
+        _window.RootNavigation.GoBack();
+        _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyComputerPage), PageComputer);
     }
 
     /// <summary>

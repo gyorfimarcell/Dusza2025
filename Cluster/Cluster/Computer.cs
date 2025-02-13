@@ -150,6 +150,19 @@ namespace Cluster
             return null;
         }
 
+        public string? Modify(int processor, int memory) {
+            if (processor < ProcessorUsage) {
+                return "The processes running on this computer require more processor capacity!";
+            }
+            if (memory < MemoryUsage)
+            {
+                return "The processes running on this computer require more memory capacity!";
+            }
+
+            File.WriteAllLines($@"{MainWindow.ClusterPath}\{Name}\.szamitogep_konfig", [processor.ToString(), memory.ToString()]);
+            return null;
+        }
+
         /// <summary>
         ///  Checks if the programs can be outsourced to other computers.
         /// </summary>

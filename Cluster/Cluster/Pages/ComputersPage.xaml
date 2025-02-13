@@ -114,9 +114,15 @@
                                 </Grid>
                             </StackPanel>
                         </ui:CardControl.Header>
-                        <ui:Button Appearance="Transparent"
-                                   Icon="{ui:SymbolIcon Delete24}"
-                                   Click="Delete_OnClick"/>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:Button Appearance="Transparent"
+                                       Icon="{ui:SymbolIcon Edit24}"
+                                       Margin="0 0 4 0"
+                                       Click="Edit_OnClick"/>
+                            <ui:Button Appearance="Transparent"
+                                       Icon="{ui:SymbolIcon Delete24}"
+                                       Click="Delete_OnClick"/>
+                        </StackPanel>                        
                     </ui:CardControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
