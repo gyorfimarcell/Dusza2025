@@ -24,7 +24,8 @@ namespace Cluster
         ShutdownProgram,
         ClearProgramInstances,
         MoveProgramInstance,
-        OptimizeProgramInstances
+        OptimizeProgramInstances,
+        ModifyComputer,
     }
 
     public class Log
@@ -46,6 +47,7 @@ namespace Cluster
             { LogType.ClearProgramInstances, new(){"Name", "Process count"} },
             { LogType.MoveProgramInstance, new(){"Instance", "Source computer", "Destination computer"} },
             { LogType.OptimizeProgramInstances, new(){} },
+            { LogType.ModifyComputer, new(){"Name", "CPU", "Memory"} },
         };
 
         public static string GetLogDirectoryPath()
