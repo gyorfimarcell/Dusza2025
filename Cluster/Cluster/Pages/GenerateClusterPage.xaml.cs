@@ -160,6 +160,7 @@ namespace Cluster
             MainWindow.ClusterPath = rootPath;
             _window.RefreshLblPath();
             Log.WriteLog([rootPath], LogType.LoadCluster);
+            _window.EnableNavigationItems();
             _window.RootNavigation.Navigate(typeof(ClusterHealthPage));
         }
 

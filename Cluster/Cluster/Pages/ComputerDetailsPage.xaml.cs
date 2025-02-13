@@ -30,7 +30,8 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
     {
         if (DataContext is not Computer computer)
         {
-            throw new ArgumentException("A computer must be passed as this page's DataContext!");
+            _window.RootNavigation.GoBack();
+            return;
         }
 
         SetData(computer);

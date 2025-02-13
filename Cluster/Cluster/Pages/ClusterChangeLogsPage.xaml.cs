@@ -55,9 +55,9 @@ namespace Cluster
                             Expander subExpander = new Expander
                             {
                                 Header = headerText,
-                                Margin = new Thickness(5),
-                                BorderBrush = Brushes.LightGray
+                                Margin = new Thickness(5)
                             };
+                            subExpander.SetResourceReference(Control.BorderBrushProperty, "ControlStrokeColorDefaultBrush");
                             stackPanel.Children.Add(subExpander);
                             lineData = lineData[2..];
                             StackPanel subStackPanel = new StackPanel();
@@ -86,13 +86,14 @@ namespace Cluster
         {
             Border cardContainer = new Border()
             {
-                BorderBrush = Brushes.LightGray,
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(5),
                 Padding = new Thickness(5),
                 Margin = new Thickness(5),
-                Background = Brushes.White
             };
+
+            cardContainer.SetResourceReference(Control.BackgroundProperty, "ControlFillColorDefaultBrush");
+            cardContainer.SetResourceReference(Control.BorderBrushProperty, "ControlStrokeColorDefaultBrush");
 
             StackPanel mainPanel = new StackPanel();
 
