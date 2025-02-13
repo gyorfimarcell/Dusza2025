@@ -53,7 +53,7 @@ namespace Cluster.ChartModels
             {
                 s.InnerRadius = 50;
                 s.DataLabelsSize = 24;
-                s.DataLabelsPaint = new SolidColorPaint(SKColors.Black);
+                s.DataLabelsPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
                 s.DataLabelsPosition = PolarLabelsPosition.ChartCenter;
                 s.DataLabelsFormatter = _ => $"{percent:f0}%";
             });

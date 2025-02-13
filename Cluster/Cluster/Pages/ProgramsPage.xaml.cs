@@ -1,4 +1,7 @@
 ﻿using Cluster.ChartModels;
+using LiveChartsCore;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +36,17 @@ namespace Cluster
         {
             InitializeComponent();
             LoadData();
+
+            _window.PropertyChanged += _window_PropertyChanged;
+        }
+
+        private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindow.DarkMode))
+            {
+                barRequested.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+                barRequested.LegendTextPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+            }
         }
 
         public void LoadData()

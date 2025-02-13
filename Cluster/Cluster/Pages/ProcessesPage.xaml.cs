@@ -1,4 +1,7 @@
 ﻿using Cluster.ChartModels;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore;
 using Microsoft.Win32;
 using System;
 using System.Collections;
@@ -34,6 +37,7 @@ namespace Cluster
             InitializeComponent();
 
             Loaded += ProcessesPage_Loaded;
+            _window.PropertyChanged += _window_PropertyChanged;
         }
 
         private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
@@ -46,7 +50,18 @@ namespace Cluster
             }
         }
 
-        List<Process> Processes;
+        private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindow.DarkMode))
+            {
+                barPrograms.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+                barPrograms.LegendTextPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+
+                pieComputers.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+            }
+        }
+
+            List<Process> Processes;
 
         ProcessesPageSort sort = ProcessesPageSort.Id;
         ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
