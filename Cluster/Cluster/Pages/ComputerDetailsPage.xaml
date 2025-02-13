@@ -15,6 +15,9 @@
                   ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <local:CustomPage.HeaderControls>
         <Menu FontSize="14">
+            <ui:MenuItem Header="Edit"
+                         Icon="{ui:SymbolIcon Edit20}"
+                         Click="Edit_OnClick"/>
             <ui:MenuItem Header="Delete"
                          Icon="{ui:SymbolIcon Delete20}"
                          Click="Delete_OnClick"/>

@@ -79,6 +79,16 @@ public partial class ComputersPage : CustomPage
         _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);
     }
 
+    private void Edit_OnClick(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+
+        Button button = (Button)sender;
+        Computer computer = (Computer)button.DataContext;
+
+        _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyComputerPage), computer);
+    }
+
     private void Delete_OnClick(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
@@ -220,5 +230,4 @@ public partial class ComputersPage : CustomPage
     {
         UpdateFiltering();
     }
-
 }

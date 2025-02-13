@@ -46,6 +46,12 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcessesText)));
     }
 
+    private void Edit_OnClick(object sender, RoutedEventArgs e)
+    {
+        _window.RootNavigation.GoBack();
+        _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyComputerPage), PageComputer);
+    }
+
     private void Delete_OnClick(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
