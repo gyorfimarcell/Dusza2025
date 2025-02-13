@@ -25,6 +25,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         Loaded += OnLoaded;
     }
 
+    /// <summary>
+    /// Sets the data of the page if the DataContext is a Computer
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         if (DataContext is not Computer computer)
@@ -36,6 +41,10 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         SetData(computer);
     }
 
+    /// <summary>
+    /// Sets the data of the page
+    /// </summary>
+    /// <param name="computer">Instance of a computer</param>
     private void SetData(Computer computer)
     {
         PageComputer = computer;
@@ -46,6 +55,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProcessesText)));
     }
 
+    /// <summary>
+    /// Deleting computer or outsourcing programs
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Delete_OnClick(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
@@ -80,6 +94,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Set data with the right computers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ProcessCard_OnProcessChange(object sender, EventArgs e)
     {
         SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name));

@@ -25,6 +25,11 @@ namespace Cluster.Pages
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Open the cluster selection dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void spStart_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             MainWindow window = (MainWindow)Window.GetWindow(this);

@@ -27,6 +27,11 @@ namespace Cluster
             Loaded += ClusterHealthPage_Loaded;
         }
 
+        /// <summary>
+        /// Checks the health of the cluster and displays the results
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClusterHealthPage_Loaded(object sender, RoutedEventArgs e)
         {
             ClusterHealth health = new(Computer.GetComputers(MainWindow.ClusterPath), ProgramType.ReadClusterFile(MainWindow.ClusterPath));

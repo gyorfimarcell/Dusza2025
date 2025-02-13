@@ -34,6 +34,11 @@ namespace Cluster
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Generates a cluster based on the user input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGenerate_Click(object sender, RoutedEventArgs e)
         {
             if (nbComputer.Value == null || nbProgram.Value == null || nbProcess.Value == null || chosenPath == null)
@@ -164,7 +169,11 @@ namespace Cluster
             _window.RootNavigation.Navigate(typeof(ClusterHealthPage));
         }
 
-
+        /// <summary>
+        /// Opens a dialog to choose the path for the cluster
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnChoosePath_Click(object sender, RoutedEventArgs e)
         {
             OpenFolderDialog ofd = new();

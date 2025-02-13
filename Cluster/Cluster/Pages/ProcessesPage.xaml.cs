@@ -35,6 +35,11 @@ namespace Cluster
             Loaded += ProcessesPage_Loaded;
         }
 
+        /// <summary>
+        /// Load data and filter processes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
         {
             LoadData();
@@ -50,6 +55,10 @@ namespace Cluster
         ProcessesPageSort sort = ProcessesPageSort.Id;
         ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
 
+        /// <summary>
+        /// Load data from cluster and filter processes
+        /// </summary>
+        /// <param name="skipFilterReload">Deciding to reload the program menu item or not</param>
         public void LoadData(bool skipFilterReload = false) {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
@@ -60,6 +69,10 @@ namespace Cluster
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Update the program menu item
+        /// </summary>
+        /// <param name="programs">List of programs</param>
         public void UpdateProgramsMenuItem(List<ProgramType> programs) {
             menuItemPrograms.Items.Clear();
 
@@ -97,6 +110,10 @@ namespace Cluster
             Inactive,
         }
 
+        /// <summary>
+        /// Filter processes based on the selected program and filter text
+        /// </summary>
+        /// <exception cref="NotImplementedException">If filtering is not implemented</exception>
         private void FilterProcesses() {
             List<string> programNames = GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
 
@@ -130,6 +147,10 @@ namespace Cluster
             tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
         }
 
+        /// <summary>
+        /// Get the program menu items
+        /// </summary>
+        /// <returns>The list of menu items</returns>
         private List<MenuItem> GetProgramMenuItems() {
             List<MenuItem> menuItems = [];
 
@@ -144,12 +165,22 @@ namespace Cluster
             return menuItems;
         }
 
+        /// <summary>
+        /// Program checked event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProgramChecked(object sender, RoutedEventArgs e)
         {
             List<MenuItem> menuItems = GetProgramMenuItems();
             FilterProcesses();
         }
 
+        /// <summary>
+        /// All programs clicked event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProgramsAllClick(object sender, RoutedEventArgs e)
         {
             List<MenuItem> menuItems = GetProgramMenuItems();
@@ -166,6 +197,11 @@ namespace Cluster
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Export the processes to a CSV file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemExport_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -181,21 +217,41 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Navigate to the new instance page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
             _window.RootNavigation.NavigateWithHierarchy(typeof(NewInstancePage));
         }
 
+        /// <summary>
+        /// Load the data when a process is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProcessCard_OnProcessChange(object sender, EventArgs e)
         {
             LoadData(true);
         }
 
+        /// <summary>
+        /// Filter the processes based on the filter text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Sort the processes based on the selected menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSort_Click(object sender, RoutedEventArgs e)
         {
             foreach (object item in MenuItemSort.Items)
@@ -213,11 +269,21 @@ namespace Cluster
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Sort the processes based on the selected menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
         {
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Filter the processes based on the selected status
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemStatus_Click(object sender, RoutedEventArgs e)
         {
             foreach (object item in MenuItemStatus.Items)

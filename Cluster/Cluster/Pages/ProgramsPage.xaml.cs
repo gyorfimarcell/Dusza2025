@@ -34,6 +34,9 @@ namespace Cluster
             LoadData();
         }
 
+        /// <summary>
+        /// Loading the programs of the cluster
+        /// </summary>
         public void LoadData()
         {
             Programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
@@ -48,6 +51,10 @@ namespace Cluster
             MemoryUsage
         }
 
+        /// <summary>
+        /// Updates the filtering of the programs
+        /// </summary>
+        /// <exception cref="NotImplementedException">If filtering is not implemented</exception>
         private void UpdateFiltering()
         {
             IEnumerable<ProgramType> filtered = [..Programs];
@@ -68,6 +75,11 @@ namespace Cluster
             icPrograms.ItemsSource = filtered;
         }
 
+        /// <summary>
+        /// Opens the processes page for the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CardAction_Click(object sender, RoutedEventArgs e)
         {
             CardAction card = (CardAction)sender;
@@ -75,11 +87,21 @@ namespace Cluster
             _window.RootNavigation.Navigate(typeof(ProcessesPage), program.ProgramName);
         }
 
+        /// <summary>
+        /// Opens the AddNewProgramPage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
             _window.RootNavigation.NavigateWithHierarchy(typeof(AddNewProgramPage));
         }
 
+        /// <summary>
+        /// Opens the ModifyProgramPage based on the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
@@ -89,6 +111,11 @@ namespace Cluster
             _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyProgramPage), program);
         }
 
+        /// <summary>
+        /// Shuts down the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void btnShutdown_Click(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
@@ -125,11 +152,21 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Filter updating
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateFiltering();
         }
 
+        /// <summary>
+        /// Sorting the menu items by program name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSort_Click(object sender, RoutedEventArgs e)
         {
             foreach (object item in MenuItemSort.Items)
@@ -147,6 +184,11 @@ namespace Cluster
             UpdateFiltering();
         }
 
+        /// <summary>
+        /// Sorting the menu items by program name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
         {
             UpdateFiltering();

@@ -11,6 +11,11 @@ namespace Cluster
         public List<string> Errors { get; set; }
         public bool Ok => Errors.Count == 0;
 
+        /// <summary>
+        /// ClusterHealth constructor
+        /// </summary>
+        /// <param name="computers">List of computers</param>
+        /// <param name="programs">List of programs</param>
         public ClusterHealth(List<Computer> computers, List<ProgramType> programs)
         {
             Errors = new();

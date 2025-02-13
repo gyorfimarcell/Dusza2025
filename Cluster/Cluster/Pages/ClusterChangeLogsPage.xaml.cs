@@ -19,6 +19,9 @@ namespace Cluster
             GenerateLogView();
         }
 
+        /// <summary>
+        /// Generates the log view.
+        /// </summary>
         private void GenerateLogView()
         {
             string directoryPath = Log.GetLogDirectoryPath();
@@ -82,6 +85,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Generates an unexpandable card.
+        /// </summary>
+        /// <param name="headerTextList">Text of the card</param>
+        /// <returns></returns>
         private Border GetUnexpandableCard(List<string> headerTextList)
         {
             Border cardContainer = new Border()
