@@ -73,7 +73,7 @@ public partial class ComputersPage : CustomPage
 
     private void ComputerCard_OnClick(object sender, RoutedEventArgs e)
     {
-        CardControl cardControl = (CardControl)sender;
+        CardAction cardControl = (CardAction)sender;
         Computer computer = (Computer)cardControl.DataContext;
 
         _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);

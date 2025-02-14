@@ -128,7 +128,8 @@
 
         <ItemsControl x:Name="icProcesses"
                       Grid.Row="2"
-                      Grid.ColumnSpan="2">
+                      Grid.ColumnSpan="2"
+                      Focusable="False">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
                     <controls:ProcessCard Process="{Binding Path=.}"

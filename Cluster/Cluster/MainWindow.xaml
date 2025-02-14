@@ -27,7 +27,8 @@
                     </Grid.ColumnDefinitions>
                     <ui:BreadcrumbBar x:Name="BreadcrumbBar"/>
                     <ItemsControl x:Name="icHeaderControls"
-                                  Grid.Column="2"/>
+                                  Grid.Column="2"
+                                  Focusable="False"/>
                 </Grid>
             </ui:NavigationView.Header>
             <ui:NavigationView.MenuItems>
