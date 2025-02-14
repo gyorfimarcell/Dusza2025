@@ -142,7 +142,7 @@ public partial class ComputersPage : CustomPage
             File.WriteAllLines(sfd.FileName, lines);
             _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
                 ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(5));
-            Log.WriteLog(["Computers"], LogType.ExportCSV);
+            Log.WriteLog(["Computers", sfd.FileName], LogType.ExportCSV);
         }
     }
 
@@ -222,6 +222,7 @@ public partial class ComputersPage : CustomPage
                 new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
             return;
         }
+        Log.WriteLog([$"{optimizeDialog.Minimum}", $"{optimizeDialog.Maximum}", Computers.Count.ToString()], LogType.OptimizeProgramInstances);
         LoadData();
         window.RootSnackbarService.Show("Success", "Optimization was successful!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
     }

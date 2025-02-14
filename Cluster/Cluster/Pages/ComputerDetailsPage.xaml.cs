@@ -1,4 +1,4 @@
-﻿using Cluster.ChartModels;
+using Cluster.ChartModels;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore;
