@@ -12,11 +12,6 @@ public partial class UsageBar : UserControl
         InitializeComponent();
     }
 
-    private void UsageBar_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
     public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register(nameof(Text), typeof(string), typeof(UsageBar), new PropertyMetadata("Usage"));
 

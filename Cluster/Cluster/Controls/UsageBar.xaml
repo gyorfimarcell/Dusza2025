@@ -16,7 +16,7 @@
         <TextBlock Grid.Row="0"
                    HorizontalAlignment="Right">
             <Run Text="{Binding Current }" />
-            <Run Text="{Binding Percent }" Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
+            <Run Text="{Binding Percent }" Foreground="{DynamicResource TextFillColorTertiaryBrush}"/>
             <Run Text=" / " />
             <Run Text="{Binding Max }" />
         </TextBlock>

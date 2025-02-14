@@ -138,5 +138,21 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <controls:EmptyStatus Title="No computers"
+                              Icon="TextBulletListDismiss20">
+            <controls:EmptyStatus.Style>
+                <Style TargetType="controls:EmptyStatus">
+                    <Setter Value="There are no computers matching this filter." Property="Description"/>
+                    <Style.Triggers>
+                        <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icComputers}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Value="" Binding="{Binding Text, ElementName=tbFilter}">
+                            <Setter Value="There are no computers in this cluster." Property="Description"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:EmptyStatus.Style>
+        </controls:EmptyStatus>
     </Grid>
 </local:CustomPage>

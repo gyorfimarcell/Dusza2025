@@ -90,6 +90,8 @@ namespace Cluster
             barRequested.Series = data.RequestedSeries;
             barRequested.XAxes = data.RequestedXAxis;
             barRequested.YAxes = data.RequestedYAxis;
+
+            chartRow.Height = Programs.Count == 0 ? new GridLength(0) : new GridLength(150);
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
