@@ -165,6 +165,7 @@ namespace Cluster
                 process.Write(Path.Combine(MainWindow.ClusterPath, process.HostComputer.Name));
                 Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}"], LogType.RunProgramInstance);
             }
+            Log.WriteLog([$"{activeChangeProcesses.Count + newProcesses.Count}"], LogType.FixIssues);
         }
     }
 }

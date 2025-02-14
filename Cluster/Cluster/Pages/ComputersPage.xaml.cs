@@ -222,6 +222,7 @@ public partial class ComputersPage : CustomPage
                 new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
             return;
         }
+        Log.WriteLog([$"{optimizeDialog.Minimum}", $"{optimizeDialog.Maximum}", Computers.Count.ToString()], LogType.OptimizeProgramInstances);
         LoadData();
         window.RootSnackbarService.Show("Success", "Optimization was successful!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
     }

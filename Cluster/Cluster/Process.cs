@@ -106,6 +106,7 @@ namespace Cluster
         public void ToggleActive() {
             Active = !Active;
             Write($@"{MainWindow.ClusterPath}\{HostComputer.Name}");
+            Log.WriteLog([$"{FileName}", HostComputer.Name, $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], Active ? LogType.ActivateProgramInstance : LogType.DeactivateProgramInstance);
         }
     }
 }

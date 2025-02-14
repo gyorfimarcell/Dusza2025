@@ -26,6 +26,11 @@ namespace Cluster
         MoveProgramInstance,
         OptimizeProgramInstances,
         ModifyComputer,
+        SpreadProgramInstances,
+        FixIssues,
+        ActivateProgramInstance,
+        DeactivateProgramInstance,
+        GenerateCluster,
     }
 
     public class Log
@@ -45,9 +50,14 @@ namespace Cluster
             { LogType.ModifyProgram, new(){"Name", "CPU", "Memory", "Active programs"} },
             { LogType.ShutdownProgram, new(){"Name", "CPU", "Memory"}},
             { LogType.ClearProgramInstances, new(){"Name", "Process count"} },
-            { LogType.MoveProgramInstance, new(){"Instance", "Source computer", "Destination computer"} },
-            { LogType.OptimizeProgramInstances, new(){} },
-            { LogType.ModifyComputer, new(){"Name", "CPU", "Memory"} },
+            { LogType.MoveProgramInstance, new(){"Filename", "Source computer", "Destination computer"} },
+            { LogType.OptimizeProgramInstances, new(){ "Minimum Percent", "Maximum Percent", "Computers"} },
+            { LogType.ModifyComputer, new(){"Name", "CPU Capacity", "Memory Capacity"} },
+            { LogType.SpreadProgramInstances, new(){ "CPU Spread Percent", "RAM Spread Percent", "Computers", "Processes" } },
+            { LogType.FixIssues, new(){ "Fixed Processes" } },
+            { LogType.ActivateProgramInstance, new(){"Instance", "Start", "Active", "Processor Usage", "Memory Usage"} },
+            { LogType.DeactivateProgramInstance, new(){"Filename", "Host Computer", "Active", "Processor Usage", "Memory Usage"} },
+            { LogType.GenerateCluster, new(){ "Path", "Computers", "Programtypes", "Processes" } }
         };
 
         public static string GetLogDirectoryPath()
