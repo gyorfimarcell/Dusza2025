@@ -185,8 +185,11 @@ namespace Cluster
                     }
                 }
 
-                expander.Content = stackPanel;
-                stLogs.Children.Add(expander);
+                if(stackPanel.Children.Count != 0) 
+                {
+                    expander.Content = stackPanel;
+                    stLogs.Children.Add(expander);
+                }
             }
         }
 
