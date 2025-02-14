@@ -14,61 +14,15 @@
   >
     <local:CustomPage.HeaderControls>
         <StackPanel Orientation="Horizontal">
+            <ComboBox x:Name="cbLogTypes" Margin="0 0 10 0" SelectionChanged="cbLogTypes_SelectionChanged" />
+            <ComboBox x:Name="cbLogDetails" Margin="0 0 10 0" SelectionChanged="cbLogDetails_SelectionChanged" />
             <ui:TextBox x:Name="tbFilter"
                     VerticalAlignment="Center"
                     PlaceholderText="Filter..."
                     Icon="{ui:SymbolIcon Search20}"
                     Width="200"
-                    Margin="0 0 4 0"
-                    TextChanged="tbFilter_TextChanged"/>
-            <Menu FontSize="14">
-                <ui:MenuItem x:Name="MenuItemSort"
-                         Icon="{ui:SymbolIcon ArrowSort20}">
-                    <ui:MenuItem Header="Name"
-                             Icon="{ui:SymbolIcon Tag20}"
-                             Tag="0"
-                             FontWeight="Bold"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage"
-                             Icon="{ui:SymbolIcon DeveloperBoard20}"
-                             Tag="1"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage (%)"
-                             Icon="{ui:SymbolIcon DeveloperBoard20}"
-                             Tag="2"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Capacity"
-                             Icon="{ui:SymbolIcon DeveloperBoard20}"
-                             Tag="3"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage"
-                             Icon="{ui:SymbolIcon Ram20}"
-                             Tag="4"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage (%)"
-                             Icon="{ui:SymbolIcon Ram20}"
-                             Tag="5"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Capacity"
-                             Icon="{ui:SymbolIcon Ram20}"
-                             Tag="6"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSort_Click"/>
-                    <Separator/>
-                    <ui:MenuItem x:Name="MenuItemSortOrder"
-                             Header="Descending"
-                             IsCheckable="True"
-                             StaysOpenOnClick="True"
-                             Click="MenuItemSortOrder_Click"/>
-                </ui:MenuItem>
-                <Separator/>
-            </Menu>
+                    Margin="0 0 10 0"
+                    LostFocus="tbFilter_LostFocus"/>
         </StackPanel>
     </local:CustomPage.HeaderControls>
     <Grid>
