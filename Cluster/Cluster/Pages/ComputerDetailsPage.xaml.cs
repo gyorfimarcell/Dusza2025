@@ -110,6 +110,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                 new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24),
                 TimeSpan.FromSeconds(3));
 
+            if (res[0].Contains("Outsourcing and deletion succeeded"))
+            {
+                _window.RootNavigation.GoBack();
+                return;
+            }
             SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name));
         }
         else
