@@ -139,12 +139,15 @@
             x:Name="TitleBar"
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
+                <ui:TitleBar.Icon>
+                    <ui:ImageIcon Source="pack://application:,,,/images/icon.ico"/>
+                </ui:TitleBar.Icon>
             <ui:TitleBar.Header>
                 <StackPanel Orientation="Horizontal">
                     <ui:TextBlock VerticalAlignment="Center"
                                   FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ui:TitleBar }}"
                                   Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
-                                  Margin="16 0"/>
+                                  Margin="0 0 16 0"/>
                     <Menu>
                         <ui:MenuItem x:Name="MenuItemTheme"
                                      Click="MenuItemTheme_Click">
