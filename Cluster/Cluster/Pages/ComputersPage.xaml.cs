@@ -111,9 +111,9 @@ public partial class ComputersPage : CustomPage
 
             _window.RootSnackbarService.Show(
                 res[1],
-                res[0], 
+                res[0],
                 controlAppearance,
-                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24), 
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24),
                 TimeSpan.FromSeconds(3));
         }
         else

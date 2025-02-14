@@ -197,7 +197,7 @@ namespace Cluster
             bool isSuccess = OutSource(forceOutSource: !canOutsource) == null;
             if (!isSuccess)
             {
-                return ["Outsourcing failed! Please try again later.", "Error"];
+                return ["Outsourcing failed! Please try again later.", "Danger"];
             }
 
             List<Process> remainingProcesses = GetComputers(MainWindow.ClusterPath).Find(x => x.Name == Name).processes;
@@ -206,7 +206,7 @@ namespace Cluster
             if (deleteAsWell)
             {
                 string? res = Delete();
-                return res == null ? null : [res, "Error"];
+                return res == null ? [@$"Outsourcing and deletion succeeded of the '{Name}' computer!", "Success"] : [res, "Danger"];
             }
 
             if (!canOutsource)
@@ -214,7 +214,7 @@ namespace Cluster
                 return [$@"Outsourced as many processes as possible! {remainingProcesses.Count} processes remain on '{Name}' computer.", "Info"];
             }
 
-            return [!deleteAsWell ? @$"Outsourcing succeeded! You can delete now the '{Name}' safely." : @$"Outsourcing and deletion succeeded of the '{Name}' computer!", "Success"];
+            return [@$"Outsourcing succeeded! You can delete now the '{Name}' safely.", "Success"];
         }
 
         private string? OutSource(string? path = null, bool forceOutSource = false)
