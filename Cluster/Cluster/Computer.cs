@@ -18,6 +18,7 @@ using System.Numerics;
 using File = System.IO.File;
 using System.Xml.Linq;
 using System.Windows.Documents;
+using Cluster.Controls;
 
 namespace Cluster
 {
@@ -689,6 +690,9 @@ namespace Cluster
             }
 
             ArrangeFiles(computers);
+
+            string processCount = allActiveProcesses.Count.ToString();
+            Log.WriteLog([$"{equalSpreadCpuPercent}", $"{equalSpreadRamPercent}", computers.Count.ToString(), processCount.ToString()], LogType.SpreadProgramInstances);
 
             return null;
         }

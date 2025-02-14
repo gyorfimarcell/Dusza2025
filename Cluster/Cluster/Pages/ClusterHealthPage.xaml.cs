@@ -63,6 +63,7 @@ namespace Cluster
             spErrors.Children.Clear();
             spErrors.Children.Add(clusterOk);
             ClusterHealthPage_Loaded(new(), new());
+            
         }
     }
 }
