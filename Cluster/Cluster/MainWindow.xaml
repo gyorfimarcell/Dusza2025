@@ -115,28 +115,33 @@
 
         <ui:TitleBar
             x:Name="TitleBar"
-            Title="Cluster Management"
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
-            <ui:TitleBar.TrailingContent>
-                <Menu>
-                    <ui:MenuItem x:Name="MenuItemTheme"
-                                 Click="MenuItemTheme_Click">
-                        <ui:MenuItem.Style>
-                            <Style TargetType="ui:MenuItem">
-                                <Style.Triggers>
-                                    <DataTrigger Value="True" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-                                        <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherSunny24}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Value="False" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-                                        <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherMoon24}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ui:MenuItem.Style>
-                    </ui:MenuItem>
-                </Menu>
-            </ui:TitleBar.TrailingContent>
+            <ui:TitleBar.Header>
+                <StackPanel Orientation="Horizontal">
+                    <ui:TextBlock VerticalAlignment="Center"
+                                  FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ui:TitleBar }}"
+                                  Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+                                  Margin="16 0"/>
+                    <Menu>
+                        <ui:MenuItem x:Name="MenuItemTheme"
+                                     Click="MenuItemTheme_Click">
+                            <ui:MenuItem.Style>
+                                <Style TargetType="ui:MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Value="True" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                                            <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherSunny24}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Value="False" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                                            <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherMoon24}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:MenuItem.Style>
+                        </ui:MenuItem>
+                    </Menu>
+                </StackPanel>
+            </ui:TitleBar.Header>
         </ui:TitleBar>
     </Grid>
 </ui:FluentWindow>
