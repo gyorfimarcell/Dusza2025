@@ -11,7 +11,7 @@
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   >
-    <Grid>
-        <StackPanel x:Name="stLogs" Margin="10"></StackPanel>
+    <Grid Margin="46 0">
+        <StackPanel x:Name="stLogs"></StackPanel>
     </Grid>
 </Page>

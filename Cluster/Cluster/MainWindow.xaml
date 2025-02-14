@@ -9,6 +9,8 @@
         Title="Cluster Management"
         Height="750"
         Width="1200"
+        MinHeight="750"
+        MinWidth="1200"
         Closed="FluentWindow_Closed"
         ExtendsContentIntoTitleBar="True"
         WindowStartupLocation="CenterScreen">
@@ -25,7 +27,8 @@
                     </Grid.ColumnDefinitions>
                     <ui:BreadcrumbBar x:Name="BreadcrumbBar"/>
                     <ItemsControl x:Name="icHeaderControls"
-                                  Grid.Column="2"/>
+                                  Grid.Column="2"
+                                  Focusable="False"/>
                 </Grid>
             </ui:NavigationView.Header>
             <ui:NavigationView.MenuItems>
@@ -72,9 +75,42 @@
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
-                <Label x:Name="lblPath"
-                       HorizontalAlignment="Center"
-                       FontWeight="Bold">Cluster: None</Label>
+                <ui:TextBlock HorizontalAlignment="Center"
+                              Padding="0 12">
+                    <ui:TextBlock.Style>
+                        <Style TargetType="ui:TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Value="False" Binding="{Binding Path=IsPaneOpen, RelativeSource={RelativeSource AncestorType=ui:NavigationView}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ui:TextBlock.Style>
+                    <Run FontWeight="Bold" Text="Cluster: "/>
+                    <Run x:Name="lblPath"
+                         Text="None"
+                         Focusable="True"
+                         KeyUp="LblPath_OnKeyUp"
+                         MouseLeftButtonUp="LblPath_OnMouseLeftButtonUp">
+                        <Run.Style>
+                            <Style TargetType="Run">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="None">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsEnabled" Value="True"/>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                    </MultiTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Run.Style>
+                    </Run>
+                </ui:TextBlock>
                 <ui:NavigationViewItem x:Name="loadNavItem"
                                        Content="Load cluster"
                                        Click="loadNavItem_Click">
@@ -101,28 +137,36 @@
 
         <ui:TitleBar
             x:Name="TitleBar"
-            Title="Cluster Management"
             Grid.Row="0"
             CloseWindowByDoubleClickOnIcon="True">
-            <ui:TitleBar.TrailingContent>
-                <Menu>
-                    <ui:MenuItem x:Name="MenuItemTheme"
-                                 Click="MenuItemTheme_Click">
-                        <ui:MenuItem.Style>
-                            <Style TargetType="ui:MenuItem">
-                                <Style.Triggers>
-                                    <DataTrigger Value="True" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-                                        <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherSunny24}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Value="False" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-                                        <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherMoon24}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ui:MenuItem.Style>
-                    </ui:MenuItem>
-                </Menu>
-            </ui:TitleBar.TrailingContent>
+                <ui:TitleBar.Icon>
+                    <ui:ImageIcon Source="pack://application:,,,/images/icon.ico"/>
+                </ui:TitleBar.Icon>
+            <ui:TitleBar.Header>
+                <StackPanel Orientation="Horizontal">
+                    <ui:TextBlock VerticalAlignment="Center"
+                                  FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ui:TitleBar }}"
+                                  Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+                                  Margin="0 0 16 0"/>
+                    <Menu>
+                        <ui:MenuItem x:Name="MenuItemTheme"
+                                     Click="MenuItemTheme_Click">
+                            <ui:MenuItem.Style>
+                                <Style TargetType="ui:MenuItem">
+                                    <Style.Triggers>
+                                        <DataTrigger Value="True" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                                            <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherSunny24}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Value="False" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                                            <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherMoon24}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:MenuItem.Style>
+                        </ui:MenuItem>
+                    </Menu>
+                </StackPanel>
+            </ui:TitleBar.Header>
         </ui:TitleBar>
     </Grid>
 </ui:FluentWindow>
