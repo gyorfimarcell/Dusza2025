@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace Cluster.Controls
 {
@@ -38,11 +39,31 @@ namespace Cluster.Controls
             set {
                 SetValue(ProcessProperty, value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Process)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Title)));
             }
         }
 
+        public static readonly DependencyProperty ShowComputerProperty =
+        DependencyProperty.Register(nameof(ShowComputer), typeof(bool), typeof(ProcessCard), new PropertyMetadata(false));
+
+        public bool ShowComputer
+        {
+            get => (bool)GetValue(ShowComputerProperty);
+            set
+            {
+                SetValue(ShowComputerProperty, value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowComputer)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Title)));
+            }
+        }
+
+        public string Title => ShowComputer ? $"{Process.FileName} ({Process.HostComputer.Name})" : Process.FileName;
+
         public delegate void ProcessShutdownHandler(object sender, EventArgs e);
         public event ProcessShutdownHandler OnProcessShutdown;
+
+        public delegate void ProcessActivateHandler(object sender, EventArgs e);
+        public event ProcessShutdownHandler OnProcessActivate;
 
         private void btnShutdown_Click(object sender, RoutedEventArgs e)
         {
@@ -50,6 +71,26 @@ namespace Cluster.Controls
 
             if (OnProcessShutdown == null) return;
             OnProcessShutdown(this, new());
+        }
+
+        private void btnActivate_Click(object sender, RoutedEventArgs e)
+        {
+            if (Process.Active == false) {
+                Computer host = Process.HostComputer;
+
+                if (host.ProcessorUsage + Process.ProcessorUsage > host.ProcessorCore ||
+                    host.MemoryUsage + Process.MemoryUsage > host.RamCapacity) {
+
+                    MainWindow window = (MainWindow)Application.Current.MainWindow!;
+                    window.RootSnackbarService.Show("Error", $"Computer '{host.Name}' doesn't have enough resources!",
+                        ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                    return;
+                }
+            }
+            Process.ToggleActive();
+
+            if (OnProcessActivate == null) return;
+            OnProcessActivate(this, new());
         }
     }
 }

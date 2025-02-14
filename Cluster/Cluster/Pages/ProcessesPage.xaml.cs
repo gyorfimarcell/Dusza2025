@@ -1,5 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using Cluster.ChartModels;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore;
+using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using static Cluster.ProgramsPage;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
 
 namespace Cluster
@@ -29,19 +35,62 @@ namespace Cluster
         public ProcessesPage()
         {
             InitializeComponent();
-            LoadData();
+
+            Loaded += ProcessesPage_Loaded;
+            _window.PropertyChanged += _window_PropertyChanged;
         }
 
-        List<Process> Processes;
+        private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadData();
+            if (DataContext != null && DataContext is string programName) {
+                List<MenuItem> menuItems = GetProgramMenuItems();
+                menuItems.ForEach(x => x.IsChecked = x.Header.ToString() == programName);
+                FilterProcesses();
+            }
+        }
+
+        private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindow.DarkMode))
+            {
+                barPrograms.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+                barPrograms.LegendTextPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+
+                pieComputers.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+            }
+        }
+
+            List<Process> Processes;
+
+        ProcessesPageSort sort = ProcessesPageSort.Id;
+        ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
 
         public void LoadData(bool skipFilterReload = false) {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
-            Processes = computers.Aggregate(new List<Process>(), (list, computer) => list.Concat(computer.processes).ToList());
+            Processes = computers.SelectMany(x => x.processes).ToList();
 
              if (!skipFilterReload) UpdateProgramsMenuItem(programs);
             FilterProcesses();
+        }
+
+        public void UpdateCharts() {
+            ProcessesPageCharts data = new(icProcesses.Items.Cast<Process>());
+            barPrograms.Series = statusFilter switch
+            {
+                ProcessesPageStatus.All => [data.ProgramsActiveSeries, data.ProgramInactiveSeries],
+                ProcessesPageStatus.Active => [data.ProgramsActiveSeries],
+                ProcessesPageStatus.Inactive => [data.ProgramInactiveSeries],
+                _ => throw new NotImplementedException()
+            };
+            barPrograms.LegendPosition = statusFilter == ProcessesPageStatus.All ? LiveChartsCore.Measure.LegendPosition.Bottom : LiveChartsCore.Measure.LegendPosition.Hidden;
+            barPrograms.XAxes = data.ProgramsAxes;
+            barPrograms.YAxes = data.ProgramsYAxes;
+            pieComputers.Series = data.ComputersSeries;
+
+            chartsRow.Height = icProcesses.Items.Count != 0 ? new GridLength(250) : new GridLength(0);
         }
 
         public void UpdateProgramsMenuItem(List<ProgramType> programs) {
@@ -66,11 +115,53 @@ namespace Cluster
             }
         }
 
+        internal enum ProcessesPageSort {
+            Program,
+            Id,
+            ProcessorUsage,
+            MemoryUsage,
+            Start
+        }
+        
+        internal enum  ProcessesPageStatus
+        {
+            All,
+            Active,
+            Inactive,
+        }
+
         private void FilterProcesses() {
             List<string> programNames = GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
-            List<Process> filtered = Processes.Where(x => programNames.Contains(x.ProgramName)).ToList();
-            icProcesses.ItemsSource = filtered;
-            tbCount.Text = $"{filtered.Count} processes ({filtered.Count(x => x.Active)} active)";
+
+            IEnumerable<Process> filtered = Processes;
+            filtered = filtered.Where(x => programNames.Contains(x.ProgramName)).ToList();
+            filtered = filtered.Where(x => x.FileName.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
+
+            filtered = statusFilter switch
+            {
+                ProcessesPageStatus.All => filtered,
+                ProcessesPageStatus.Active => filtered.Where(x => x.Active),
+                ProcessesPageStatus.Inactive => filtered.Where(x => !x.Active),
+                _ => throw new NotImplementedException()
+            };
+
+            filtered = sort switch
+            {
+                ProcessesPageSort.Program => filtered.OrderBy(x => x.ProgramName),
+                ProcessesPageSort.Id => filtered.OrderBy(x => x.ProcessId),
+                ProcessesPageSort.ProcessorUsage => filtered.OrderBy(x => x.ProcessorUsage),
+                ProcessesPageSort.MemoryUsage => filtered.OrderBy(x => x.MemoryUsage),
+                ProcessesPageSort.Start => filtered.OrderBy(x => x.StartTime),
+                _ => throw new NotImplementedException(),
+            };
+
+            if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
+            
+            List<Process> filteredList = filtered.ToList();
+
+            icProcesses.ItemsSource = filteredList;
+            tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
+            UpdateCharts();
         }
 
         private List<MenuItem> GetProgramMenuItems() {
@@ -120,6 +211,7 @@ namespace Cluster
                 File.WriteAllLines(sfd.FileName, lines);
                 _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
                     ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+                Log.WriteLog(["Processes"], LogType.ExportCSV);
             }
         }
 
@@ -128,9 +220,53 @@ namespace Cluster
             _window.RootNavigation.NavigateWithHierarchy(typeof(NewInstancePage));
         }
 
-        private void ProcessCard_OnProcessShutdown(object sender, EventArgs e)
+        private void ProcessCard_OnProcessChange(object sender, EventArgs e)
         {
             LoadData(true);
+        }
+
+        private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            FilterProcesses();
+        }
+
+        private void MenuItemSort_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (object item in MenuItemSort.Items)
+            {
+                if (item is MenuItem otherItem && otherItem.Tag != null)
+                {
+                    otherItem.FontWeight = FontWeights.Normal;
+                }
+            }
+            
+            MenuItem menuItem = (MenuItem)sender;
+            menuItem.FontWeight = FontWeights.Bold;
+            
+            sort = (ProcessesPageSort)Enum.Parse(typeof(ProcessesPageSort), (string)menuItem.Tag);
+            FilterProcesses();
+        }
+
+        private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
+        {
+            FilterProcesses();
+        }
+
+        private void MenuItemStatus_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (object item in MenuItemStatus.Items)
+            {
+                if (item is MenuItem otherItem && otherItem.Tag != null)
+                {
+                    otherItem.FontWeight = FontWeights.Normal;
+                }
+            }
+            
+            MenuItem menuItem = (MenuItem)sender;
+            menuItem.FontWeight = FontWeights.Bold;
+            
+            statusFilter = (ProcessesPageStatus)Enum.Parse(typeof(ProcessesPageStatus), (string)menuItem.Tag);
+            FilterProcesses();
         }
     }
 }

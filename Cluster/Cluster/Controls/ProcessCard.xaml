@@ -44,8 +44,9 @@
                           Margin="0"
                           FontTypography="BodyStrong"
                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                          Text="{Binding FileName }"
-                          TextWrapping="WrapWithOverflow" />
+                          Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}"
+                          TextWrapping="WrapWithOverflow">
+            </ui:TextBlock>
             <ui:TextBlock Grid.Column="1"
                           Grid.Row="1"
                           Appearance="Secondary"
@@ -69,12 +70,37 @@
                               Text="{Binding MemoryUsage}"/>
             </StackPanel>
 
-            <ui:Button x:Name="btnShutdown"
-                       Grid.Column="3"
-                       Grid.RowSpan="2"
-                       Appearance="Transparent"
-                       Icon="{ui:SymbolIcon Power24}"
-                       Click="btnShutdown_Click"/>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="3"
+                        Grid.RowSpan="2">
+                <ui:Button x:Name="btnActivate"
+                           Appearance="Transparent"
+                           Margin="0 0 4 0"
+                           Click="btnActivate_Click">
+                    <ui:Button.Icon>
+                        <ui:SymbolIcon>
+                            <ui:SymbolIcon.Style>
+                                <Style TargetType="ui:SymbolIcon">
+                                    <Style.Triggers>
+                                        <DataTrigger Value="True" Binding="{Binding Process.Active, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}">
+                                            <Setter Property="Symbol" Value="Pause24"/>
+                                        </DataTrigger>
+                                        <DataTrigger Value="False" Binding="{Binding Process.Active, RelativeSource={RelativeSource AncestorType=local:ProcessCard}}">
+                                            <Setter Property="Symbol" Value="Play24"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:SymbolIcon.Style>
+                        </ui:SymbolIcon>
+                    </ui:Button.Icon>
+                </ui:Button>
+                <ui:Button x:Name="btnShutdown"
+                           Appearance="Transparent"
+                           Icon="{ui:SymbolIcon Power24}"
+                           Click="btnShutdown_Click"/>
+            </StackPanel>
+            
+            
         </Grid>
     </ui:Card>
 </UserControl>

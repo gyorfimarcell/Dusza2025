@@ -60,7 +60,7 @@ namespace Cluster
                 return;
             }
 
-            Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory);
+            Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory, tsActive.IsChecked == true);
             process.Write(Path.Combine(path, computer.Name));
 
             _window.RootSnackbarService.Show("Process started", $"Process '{process.FileName}' is now running on '{computer.Name}'.",
