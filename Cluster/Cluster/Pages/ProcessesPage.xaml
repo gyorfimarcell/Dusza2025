@@ -70,7 +70,7 @@
                                  Click="MenuItemSort_Click"/>
                     <ui:MenuItem Header="Start time"
                                  Icon="{ui:SymbolIcon Clock20}"
-                                 Tag="3"
+                                 Tag="4"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <Separator/>
@@ -128,7 +128,8 @@
 
         <ItemsControl x:Name="icProcesses"
                       Grid.Row="2"
-                      Grid.ColumnSpan="2">
+                      Grid.ColumnSpan="2"
+                      Focusable="False">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
                     <controls:ProcessCard Process="{Binding Path=.}"
@@ -139,5 +140,20 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <controls:EmptyStatus Title="No processes"
+                              Description="There are no processes matching this filter."
+                              Icon="TextBulletListDismiss20"
+                              Grid.Row="2"
+                              Grid.ColumnSpan="2">
+            <controls:EmptyStatus.Style>
+                <Style TargetType="controls:EmptyStatus">
+                    <Style.Triggers>
+                        <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icProcesses}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:EmptyStatus.Style>
+        </controls:EmptyStatus>
     </Grid>
 </local:CustomPage>

@@ -25,7 +25,7 @@
                     LostFocus="tbFilter_LostFocus"/>
         </StackPanel>
     </local:CustomPage.HeaderControls>
-    <Grid>
-        <StackPanel x:Name="stLogs" Margin="10"></StackPanel>
+    <Grid Margin="46 0">
+        <StackPanel x:Name="stLogs"></StackPanel>
     </Grid>
 </local:CustomPage>

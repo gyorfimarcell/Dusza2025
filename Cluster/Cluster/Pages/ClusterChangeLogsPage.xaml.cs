@@ -159,7 +159,7 @@ namespace Cluster
                         Expander subExpander = new Expander
                         {
                             Header = headerText,
-                            Margin = new Thickness(5)
+                            Margin = new Thickness(0, 0, 0, 8)
                         };
                         subExpander.SetResourceReference(Control.BorderBrushProperty, "ControlStrokeColorDefaultBrush");
                         stackPanel.Children.Add(subExpander);
@@ -187,14 +187,14 @@ namespace Cluster
             }
         }
 
-        private Border GetUnexpandableCard(List<string> headerTextList)
+        private Border GetUnexpandableCard(List<string> headerTextList, bool last)
         {
             Border cardContainer = new Border()
             {
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(5),
                 Padding = new Thickness(5),
-                Margin = new Thickness(5),
+                Margin = last ? new Thickness(0) : new Thickness(0, 0, 0, 8),
             };
 
             cardContainer.SetResourceReference(Control.BackgroundProperty, "ControlFillColorDefaultBrush");
