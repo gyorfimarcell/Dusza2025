@@ -116,6 +116,10 @@ namespace Cluster
                     .OrderByDescending(f => Path.GetFileNameWithoutExtension(f.FilePath))
                     .FirstOrDefault(f => File.ReadAllLines(f.FilePath).Any(x => x.StartsWith("LoadCluster")));
 
+                    if (latestFile == null)
+                    {
+                        return;
+                    }   
 
                     string[] clusterLines = File.ReadAllLines(latestFile.FilePath).Where(x => x.StartsWith("LoadCluster")).ToArray();
 
