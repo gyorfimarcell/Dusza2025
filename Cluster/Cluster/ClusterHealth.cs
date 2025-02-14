@@ -25,12 +25,14 @@ namespace Cluster
                 int inactive = processes.Count(x => x.ProgramName == p.ProgramName && !x.Active);
 
                 // 1. 
-                if (active < p.ActivePrograms) {
+                if (active < p.ActivePrograms)
+                {
                     Errors.Add($"{p.ProgramName} doesn't have enough processes ({p.ActivePrograms} wanted, {active} active, {inactive} inactive)");
                 }
 
                 //2. 
-                if (active > p.ActivePrograms) {
+                if (active > p.ActivePrograms)
+                {
                     Errors.Add($"{p.ProgramName} has too many processes ({p.ActivePrograms} wanted, {active} active, {inactive} inactive)");
                 }
             }
@@ -41,7 +43,8 @@ namespace Cluster
                 int processorUsage = c.processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
                 int memoryUsage = c.processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
 
-                if (processorUsage > c.ProcessorCore) {
+                if (processorUsage > c.ProcessorCore)
+                {
                     Errors.Add($"{c.Name} doesn't have enough processor capacity ({processorUsage}/{c.ProcessorCore})");
                 }
                 if (memoryUsage > c.RamCapacity)
@@ -57,7 +60,7 @@ namespace Cluster
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
             List<Process> processes = computers.Aggregate(new List<Process>(), (list, computer) => [.. list, .. computer.processes]);
-            
+
             Dictionary<ProgramType, int> missingProcesses = new();
 
             //Collect data about missing processes in a dictionary
@@ -76,9 +79,9 @@ namespace Cluster
                 if (missingProcessNumber > 0)
                 {
                     //If there are proper processes that are inactive, then activate them, if they can be activated
-                    List<Process> inactiveProcesses = processes.Where(x => x.ProgramName == program.ProgramName && !x.Active && 
+                    List<Process> inactiveProcesses = processes.Where(x => x.ProgramName == program.ProgramName && !x.Active &&
                     x.HostComputer.HasEnoughRam(x.MemoryUsage) && x.HostComputer.HasEnoughCore(x.ProcessorUsage)).ToList();
-                    
+
                     for (int i = 0; i < inactiveProcesses.Count; i++)
                     {
                         Process process = inactiveProcesses[i];
@@ -111,7 +114,8 @@ namespace Cluster
                         computers[computers.FindIndex(x => x.Name == computer.Name)].processes.Add(process);
                     }
 
-                } else
+                }
+                else
                 {
                     //If there are too many processes, then deactivate them
                     List<Process> activeProcesses = processes.Where(x => x.ProgramName == program.ProgramName && x.Active).ToList();
@@ -163,7 +167,7 @@ namespace Cluster
             foreach (Process process in newProcesses)
             {
                 process.Write(Path.Combine(MainWindow.ClusterPath, process.HostComputer.Name));
-                Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}"], LogType.RunProgramInstance);
+                Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}", process.HostComputer.Name], LogType.RunProgramInstance);
             }
             Log.WriteLog([$"{activeChangeProcesses.Count + newProcesses.Count}"], LogType.FixIssues);
         }
