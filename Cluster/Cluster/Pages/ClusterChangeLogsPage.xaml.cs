@@ -133,8 +133,11 @@ namespace Cluster
 
                 StackPanel stackPanel = new StackPanel();
 
-                foreach (var line in lines)
+                for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
                 {
+                    string? line = lines[lineIndex];
+                    bool last = lineIndex == lines.Count - 1;
+
                     string[] lineData = line.Replace("\n", "").Split(" - ");
                     if (lineData.Length < 2) continue;
 
@@ -159,7 +162,7 @@ namespace Cluster
                         Expander subExpander = new Expander
                         {
                             Header = headerText,
-                            Margin = new Thickness(0, 0, 0, 8)
+                            Margin = last ? new Thickness(0) : new Thickness(0, 0, 0, 8),
                         };
                         subExpander.SetResourceReference(Control.BorderBrushProperty, "ControlStrokeColorDefaultBrush");
                         stackPanel.Children.Add(subExpander);
@@ -172,12 +175,12 @@ namespace Cluster
                             cardData.Add($"{Log.LogDataTypes[type][i]}: {lineData[i + 2]}");
                         }
 
-                        subStackPanel.Children.Add(GetUnexpandableCard(cardData));
+                        subStackPanel.Children.Add(GetUnexpandableCard(cardData, true));
                         subExpander.Content = subStackPanel;
                     }
                     else
                     {
-                        Border card = GetUnexpandableCard(new() { headerText });
+                        Border card = GetUnexpandableCard(new() { headerText }, last);
                         stackPanel.Children.Add(card);
                     }
                 }
