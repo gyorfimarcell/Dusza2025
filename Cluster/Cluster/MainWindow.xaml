@@ -75,10 +75,8 @@
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
-                <ui:TextBlock x:Name="lblPath"
-                       HorizontalAlignment="Center"
-                       FontWeight="Bold"
-                       Text="Cluster: None">
+                <ui:TextBlock HorizontalAlignment="Center"
+                              Padding="0 12">
                     <ui:TextBlock.Style>
                         <Style TargetType="ui:TextBlock">
                             <Style.Triggers>
@@ -88,6 +86,30 @@
                             </Style.Triggers>
                         </Style>
                     </ui:TextBlock.Style>
+                    <Run FontWeight="Bold" Text="Cluster: "/>
+                    <Run x:Name="lblPath"
+                         Text="None"
+                         Focusable="True"
+                         KeyUp="LblPath_OnKeyUp"
+                         MouseLeftButtonUp="LblPath_OnMouseLeftButtonUp">
+                        <Run.Style>
+                            <Style TargetType="Run">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="None">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsEnabled" Value="True"/>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                    </MultiTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Run.Style>
+                    </Run>
                 </ui:TextBlock>
                 <ui:NavigationViewItem x:Name="loadNavItem"
                                        Content="Load cluster"
