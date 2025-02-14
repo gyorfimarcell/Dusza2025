@@ -123,14 +123,6 @@ namespace Cluster
 
                 expander.Header = headerGrid;
 
-                expander.Content = new Wpf.Ui.Controls.TextBlock
-                {
-                    Text = "Ez a kiterjesztett tartalom.",
-                    Margin = new Thickness(10)
-                };
-
-
-
                 StackPanel stackPanel = new StackPanel();
 
                 for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
@@ -190,6 +182,7 @@ namespace Cluster
                     expander.Content = stackPanel;
                     stLogs.Children.Add(expander);
                 }
+                showStatus.Visibility = stLogs.Children.Count > 0 ? Visibility.Hidden : Visibility.Visible;
             }
         }
 

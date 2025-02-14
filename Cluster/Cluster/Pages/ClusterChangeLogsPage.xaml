@@ -27,5 +27,13 @@
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
         <StackPanel x:Name="stLogs"></StackPanel>
+        <controls:EmptyStatus Title="No logs to show"
+                      Icon="TextBulletListDismiss20" x:Name="showStatus" Visibility="Hidden">
+            <controls:EmptyStatus.Style>
+                <Style TargetType="controls:EmptyStatus">
+                    <Setter Value="There are no logs matching this filter." Property="Description"/>
+                </Style>
+            </controls:EmptyStatus.Style>
+        </controls:EmptyStatus>
     </Grid>
 </local:CustomPage>
