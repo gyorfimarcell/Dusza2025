@@ -244,7 +244,7 @@ namespace Cluster
             GenerateLogView();
         }
 
-        private void tbFilter_LostFocus(object sender, RoutedEventArgs e)
+        private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             GenerateLogView();
         }

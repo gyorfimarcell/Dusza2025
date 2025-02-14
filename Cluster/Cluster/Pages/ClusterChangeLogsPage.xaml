@@ -22,7 +22,7 @@
                     Icon="{ui:SymbolIcon Search20}"
                     Width="200"
                     Margin="0 0 10 0"
-                    LostFocus="tbFilter_LostFocus"/>
+                    TextChanged="tbFilter_TextChanged"/>
         </StackPanel>
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
