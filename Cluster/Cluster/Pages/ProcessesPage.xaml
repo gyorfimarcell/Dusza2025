@@ -70,7 +70,7 @@
                                  Click="MenuItemSort_Click"/>
                     <ui:MenuItem Header="Start time"
                                  Icon="{ui:SymbolIcon Clock20}"
-                                 Tag="3"
+                                 Tag="4"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <Separator/>
