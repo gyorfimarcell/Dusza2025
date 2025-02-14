@@ -25,9 +25,9 @@ namespace Cluster.Pages
             InitializeComponent();
         }
 
-        private void spStart_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void EmptyStatus_OnClick(object sender, EventArgs e)
         {
-            MainWindow window = (MainWindow)Window.GetWindow(this);
+            MainWindow window = (MainWindow)Window.GetWindow(this)!;
             window.OpenClusterSelectionDialog();
         }
     }

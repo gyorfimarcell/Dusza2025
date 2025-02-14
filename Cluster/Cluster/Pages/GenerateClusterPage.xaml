@@ -42,9 +42,14 @@
               SmallChange="1"
               MinWidth="250" />
         </controls:CustomCard>
-
-        <ui:Button x:Name="btnChoosePath" Margin="0 0 0 12" Click="btnChoosePath_Click">Choose Path</ui:Button>
-        <Label Margin="0 0 0 12" x:Name="lblPath" />
+        <controls:CustomCard x:Name="PathCard"
+                             Title="Cluster Path"
+                             Icon="{ui:SymbolIcon Folder24}"
+                             Margin="0 0 0 12">
+            <ui:Button x:Name="btnChoosePath"
+                       MinWidth="250"
+                       Click="btnChoosePath_Click">Choose Path</ui:Button>
+        </controls:CustomCard>
 
         <ui:Button x:Name="btnGenerate"
                    Appearance="Primary"
