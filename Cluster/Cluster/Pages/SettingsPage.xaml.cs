@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace Cluster
 {
@@ -41,7 +42,7 @@ namespace Cluster
             Registry.SetValue(MainWindow.SETTINGS_KEY, "language", newLanguage);
 
             ChangeTitle(TranslationSource.T("Settings.Title"));
-
+            _window.RefreshLblPath();
         }
 
         private void tsDarkmode_Click(object sender, RoutedEventArgs e)

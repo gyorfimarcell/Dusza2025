@@ -85,6 +85,7 @@ namespace Cluster
         public void RefreshLblPath()
         {
             lblPath.Text = Path.GetFileName(ClusterPath);
+            loadNavItem.Content = TranslationSource.T("Menu.LoadAnother");
         }
 
         public void EnableNavigationItems()
@@ -134,7 +135,6 @@ namespace Cluster
                     if (ClusterPath != null && ProgramType.ReadClusterFile(ClusterPath) != null)
                     {
                         RefreshLblPath();
-                        loadNavItem.Content = TranslationSource.T("Menu.LoadAnother");
                         EnableNavigationItems();
 
                         RootNavigation.ClearJournal();

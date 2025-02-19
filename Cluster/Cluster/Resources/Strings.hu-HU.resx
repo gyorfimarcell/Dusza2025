@@ -280,7 +280,7 @@
     <value>sikeresen törölve.</value>
   </data>
   <data name="Outsourcing.DeleteSuccess" xml:space="preserve">
-    <value>Kiszervezés és törlés sikeres</value>
+    <value>Kiszervezés és törlés sikeres!</value>
   </data>
   <data name="FilterPlaceholder" xml:space="preserve">
     <value>Szűrés...</value>
@@ -473,5 +473,92 @@
   </data>
   <data name="Logs.ExpandAll" xml:space="preserve">
     <value>Összes nyitása</value>
+  </data>
+  <data name="ProcessesPage.ComputerTooltip" xml:space="preserve">
+    <value>folyamat</value>
+  </data>
+  <data name="Optimize.Popup.Title" xml:space="preserve">
+    <value>Állítsa be a minimum és maximum kihasználtságát a számítógépnek!</value>
+  </data>
+  <data name="Optimize.Inactive" xml:space="preserve">
+    <value>Az inaktív folyamatok nem lesznek változtatva.</value>
+  </data>
+  <data name="Optimize.Minimum" xml:space="preserve">
+    <value>Minimum százalék</value>
+  </data>
+  <data name="Optimize.Maximum" xml:space="preserve">
+    <value>Minimum százalék</value>
+  </data>
+  <data name="Health.NotEnough" xml:space="preserve">
+    <value>A {0} programból nincs elég folyamat ({1} elvárt, {2} aktív, {3} inaktív)</value>
+  </data>
+  <data name="Health.TooMany" xml:space="preserve">
+    <value>A {0} programból túl sok folyamat van ({1} elvárt, {2} aktív, {3} inaktív)</value>
+  </data>
+  <data name="Health.Processor" xml:space="preserve">
+    <value>A {0} számítógépnek nincs elég processzor kapacitása ({1}/{2})</value>
+  </data>
+  <data name="Health.Memory" xml:space="preserve">
+    <value>A {0} számítógépnek nincs elég memória kapacitása ({1}/{2})</value>
+  </data>
+  <data name="HealthPage.NotFixable.Title" xml:space="preserve">
+    <value>A problémák nem megoldhatóak</value>
+  </data>
+  <data name="HealthPage.NotFixable.Text" xml:space="preserve">
+    <value>A problémák nem oldhatóak meg teljesen. Szeretné ennek ellenére is folytatni?</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Folytatás</value>
+  </data>
+  <data name="Errors.ComputerNameTaken" xml:space="preserve">
+    <value>Egy számítógép már használja ezt a nevet</value>
+  </data>
+  <data name="Errors.ComputerPositive" xml:space="preserve">
+    <value>A processzormagok száma és a memória pozitív kell hogy legyen.</value>
+  </data>
+  <data name="Errors.ComputerMoreProcessor" xml:space="preserve">
+    <value>A számítógépen futó folyamatok több processzor kapacitást igényelnek!</value>
+  </data>
+  <data name="Errors.ComputerMoreMemory" xml:space="preserve">
+    <value>A számítógépen futó folyamatok több memória kapacitást igényelnek!</value>
+  </data>
+  <data name="Computer.Delete.Text" xml:space="preserve">
+    <value>A törlés sikertelen, mivel ezen a számítógépen futnak programok. Ezek a folyamatok kiszervezhetőek más gépekre. Szeretné folytatni?</value>
+  </data>
+  <data name="Computer.Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Computer.Delete.Outsource" xml:space="preserve">
+    <value>Csak kiszervezés</value>
+  </data>
+  <data name="Errors.OutsourceNotEnoughSpace" xml:space="preserve">
+    <value>Nincs elég hely az összes program kiszervezéséhez. Szeretné folytatni?</value>
+  </data>
+  <data name="Errors.Outsource.Cancel" xml:space="preserve">
+    <value>Kiszervezés megszakítva.</value>
+  </data>
+  <data name="Errors.Outsource.Fail" xml:space="preserve">
+    <value>Kiszervezés sikertelen. Próbálja újra később.</value>
+  </data>
+  <data name="Outsourcing.Success" xml:space="preserve">
+    <value>Kiszervezés sikeres! A {0} számítógép most már biztonságosan törölhető.</value>
+  </data>
+  <data name="Outsourcing.PartialSuccess" xml:space="preserve">
+    <value>A lehető legtöbb folyamat ki lett szervezve! {0} folyamat maradt a(z) {1} számítógépen.</value>
+  </data>
+  <data name="Errors.OutsourcingOther" xml:space="preserve">
+    <value>Nincs elég erőforrás a többi gépen a kiszervezéshez.</value>
+  </data>
+  <data name="Errors.OutsourcingNone" xml:space="preserve">
+    <value>Nincsenek számítógépek vagy aktív folyamatok a kiszervezéshez!</value>
+  </data>
+  <data name="Errors.OptimizeCannotFit" xml:space="preserve">
+    <value>Vannak folyamatok amik egy számítógépre sem férnek. Szeretné ennek ellenére is optimalizáni?</value>
+  </data>
+  <data name="Optimize.Cancel" xml:space="preserve">
+    <value>Optimalizálás megszakítva.</value>
+  </data>
+  <data name="Errors.SpreadNone" xml:space="preserve">
+    <value>Nincsenek számítógépek vagy aktív folyamatok a szóráshoz!</value>
   </data>
 </root>

@@ -280,7 +280,7 @@
     <value>successfully deleted.</value>
   </data>
   <data name="Outsourcing.DeleteSuccess" xml:space="preserve">
-    <value>Outsourcing and deletion succeeded</value>
+    <value>Outsourcing and deletion succeeded!</value>
   </data>
   <data name="FilterPlaceholder" xml:space="preserve">
     <value>Filter...</value>
@@ -473,5 +473,92 @@
   </data>
   <data name="Logs.ExpandAll" xml:space="preserve">
     <value>Expand All</value>
+  </data>
+  <data name="ProcessesPage.ComputerTooltip" xml:space="preserve">
+    <value>processes</value>
+  </data>
+  <data name="Optimize.Popup.Title" xml:space="preserve">
+    <value>Set the optimal minimum and maximum usage percentage of a computer!</value>
+  </data>
+  <data name="Optimize.Inactive" xml:space="preserve">
+    <value>Any inactive process will remain untouched.</value>
+  </data>
+  <data name="Optimize.Minimum" xml:space="preserve">
+    <value>Minimum Percentage</value>
+  </data>
+  <data name="Optimize.Maximum" xml:space="preserve">
+    <value>Maximum Percentage</value>
+  </data>
+  <data name="Health.NotEnough" xml:space="preserve">
+    <value>{0} doesn't have enough processes ({1} wanted, {2} active, {3} inactive)</value>
+  </data>
+  <data name="Health.TooMany" xml:space="preserve">
+    <value>{0} has too many processes ({1} wanted, {2} active, {3} inactive)</value>
+  </data>
+  <data name="Health.Processor" xml:space="preserve">
+    <value>{0} doesn't have enough processor capacity ({1}/{2})</value>
+  </data>
+  <data name="Health.Memory" xml:space="preserve">
+    <value>{0} doesn't have enough memory capacity ({1}/{2})</value>
+  </data>
+  <data name="HealthPage.NotFixable.Title" xml:space="preserve">
+    <value>Problems not fixable</value>
+  </data>
+  <data name="HealthPage.NotFixable.Text" xml:space="preserve">
+    <value>The issues cannot be solved completely. Would you like to continue anyway?</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Errors.ComputerNameTaken" xml:space="preserve">
+    <value>A computer already uses this name</value>
+  </data>
+  <data name="Errors.ComputerPositive" xml:space="preserve">
+    <value>The amount of cpu cores and memory must be positive.</value>
+  </data>
+  <data name="Errors.ComputerMoreProcessor" xml:space="preserve">
+    <value>The processes running on this computer require more processor capacity!</value>
+  </data>
+  <data name="Errors.ComputerMoreMemory" xml:space="preserve">
+    <value>The processes running on this computer require more memory capacity!</value>
+  </data>
+  <data name="Computer.Delete.Text" xml:space="preserve">
+    <value>Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?</value>
+  </data>
+  <data name="Computer.Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Computer.Delete.Outsource" xml:space="preserve">
+    <value>Outsource only</value>
+  </data>
+  <data name="Errors.OutsourceNotEnoughSpace" xml:space="preserve">
+    <value>There's not enough space to completely outsource all processes. Continue anyway?</value>
+  </data>
+  <data name="Errors.Outsource.Cancel" xml:space="preserve">
+    <value>Outsourcing canceled.</value>
+  </data>
+  <data name="Errors.Outsource.Fail" xml:space="preserve">
+    <value>Outsourcing failed! Please try again later.</value>
+  </data>
+  <data name="Outsourcing.Success" xml:space="preserve">
+    <value>Outsourcing succeeded! You can delete now the '{0}' safely.</value>
+  </data>
+  <data name="Outsourcing.PartialSuccess" xml:space="preserve">
+    <value>Outsourced as many processes as possible! {0} processes remain on '{1}' computer.</value>
+  </data>
+  <data name="Errors.OutsourcingOther" xml:space="preserve">
+    <value>There's not enough resource on other computers to outsource.</value>
+  </data>
+  <data name="Errors.OutsourcingNone" xml:space="preserve">
+    <value>There are no computers or active processes to optimize!</value>
+  </data>
+  <data name="Errors.OptimizeCannotFit" xml:space="preserve">
+    <value>There were some processes that cannot fit any computers! Would you like to optimize anyway?</value>
+  </data>
+  <data name="Optimize.Cancel" xml:space="preserve">
+    <value>The optimization was cancelled.</value>
+  </data>
+  <data name="Errors.SpreadNone" xml:space="preserve">
+    <value>There are no computers or active processes to spread!</value>
   </data>
 </root>

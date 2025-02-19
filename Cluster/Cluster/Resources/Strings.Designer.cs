@@ -758,5 +758,179 @@ namespace Cluster.Resources {
                 return ResourceManager.GetString("Logs.ExpandAll", resourceCulture);
             }
         }
+        
+        public static string ProcessesPage_ComputerTooltip {
+            get {
+                return ResourceManager.GetString("ProcessesPage.ComputerTooltip", resourceCulture);
+            }
+        }
+        
+        public static string Optimize_Popup_Title {
+            get {
+                return ResourceManager.GetString("Optimize.Popup.Title", resourceCulture);
+            }
+        }
+        
+        public static string Optimize_Inactive {
+            get {
+                return ResourceManager.GetString("Optimize.Inactive", resourceCulture);
+            }
+        }
+        
+        public static string Optimize_Minimum {
+            get {
+                return ResourceManager.GetString("Optimize.Minimum", resourceCulture);
+            }
+        }
+        
+        public static string Optimize_Maximum {
+            get {
+                return ResourceManager.GetString("Optimize.Maximum", resourceCulture);
+            }
+        }
+        
+        public static string Health_NotEnough {
+            get {
+                return ResourceManager.GetString("Health.NotEnough", resourceCulture);
+            }
+        }
+        
+        public static string Health_TooMany {
+            get {
+                return ResourceManager.GetString("Health.TooMany", resourceCulture);
+            }
+        }
+        
+        public static string Health_Processor {
+            get {
+                return ResourceManager.GetString("Health.Processor", resourceCulture);
+            }
+        }
+        
+        public static string Health_Memory {
+            get {
+                return ResourceManager.GetString("Health.Memory", resourceCulture);
+            }
+        }
+        
+        public static string HealthPage_NotFixable_Title {
+            get {
+                return ResourceManager.GetString("HealthPage.NotFixable.Title", resourceCulture);
+            }
+        }
+        
+        public static string HealthPage_NotFixable_Text {
+            get {
+                return ResourceManager.GetString("HealthPage.NotFixable.Text", resourceCulture);
+            }
+        }
+        
+        public static string Continue {
+            get {
+                return ResourceManager.GetString("Continue", resourceCulture);
+            }
+        }
+        
+        public static string Errors_ComputerNameTaken {
+            get {
+                return ResourceManager.GetString("Errors.ComputerNameTaken", resourceCulture);
+            }
+        }
+        
+        public static string Errors_ComputerPositive {
+            get {
+                return ResourceManager.GetString("Errors.ComputerPositive", resourceCulture);
+            }
+        }
+        
+        public static string Errors_ComputerMoreProcessor {
+            get {
+                return ResourceManager.GetString("Errors.ComputerMoreProcessor", resourceCulture);
+            }
+        }
+        
+        public static string Errors_ComputerMoreMemory {
+            get {
+                return ResourceManager.GetString("Errors.ComputerMoreMemory", resourceCulture);
+            }
+        }
+        
+        public static string Computer_Delete_Text {
+            get {
+                return ResourceManager.GetString("Computer.Delete.Text", resourceCulture);
+            }
+        }
+        
+        public static string Computer_Delete {
+            get {
+                return ResourceManager.GetString("Computer.Delete", resourceCulture);
+            }
+        }
+        
+        public static string Computer_Delete_Outsource {
+            get {
+                return ResourceManager.GetString("Computer.Delete.Outsource", resourceCulture);
+            }
+        }
+        
+        public static string Errors_OutsourceNotEnoughSpace {
+            get {
+                return ResourceManager.GetString("Errors.OutsourceNotEnoughSpace", resourceCulture);
+            }
+        }
+        
+        public static string Errors_Outsource_Cancel {
+            get {
+                return ResourceManager.GetString("Errors.Outsource.Cancel", resourceCulture);
+            }
+        }
+        
+        public static string Errors_Outsource_Fail {
+            get {
+                return ResourceManager.GetString("Errors.Outsource.Fail", resourceCulture);
+            }
+        }
+        
+        public static string Outsourcing_Success {
+            get {
+                return ResourceManager.GetString("Outsourcing.Success", resourceCulture);
+            }
+        }
+        
+        public static string Outsourcing_PartialSuccess {
+            get {
+                return ResourceManager.GetString("Outsourcing.PartialSuccess", resourceCulture);
+            }
+        }
+        
+        public static string Errors_OutsourcingOther {
+            get {
+                return ResourceManager.GetString("Errors.OutsourcingOther", resourceCulture);
+            }
+        }
+        
+        public static string Errors_OutsourcingNone {
+            get {
+                return ResourceManager.GetString("Errors.OutsourcingNone", resourceCulture);
+            }
+        }
+        
+        public static string Errors_OptimizeCannotFit {
+            get {
+                return ResourceManager.GetString("Errors.OptimizeCannotFit", resourceCulture);
+            }
+        }
+        
+        public static string Optimize_Cancel {
+            get {
+                return ResourceManager.GetString("Optimize.Cancel", resourceCulture);
+            }
+        }
+        
+        public static string Errors_SpreadNone {
+            get {
+                return ResourceManager.GetString("Errors.SpreadNone", resourceCulture);
+            }
+        }
     }
 }
