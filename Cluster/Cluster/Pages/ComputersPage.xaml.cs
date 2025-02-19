@@ -96,6 +96,11 @@ public partial class ComputersPage : CustomPage
         _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);
     }
 
+    /// <summary>
+    /// Edit computer click event
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Edit_OnClick(object sender, RoutedEventArgs e)
     {
         e.Handled = true;

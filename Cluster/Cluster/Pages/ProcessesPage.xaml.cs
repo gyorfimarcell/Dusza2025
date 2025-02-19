@@ -56,6 +56,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Update chart values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MainWindow.DarkMode))
@@ -87,6 +92,10 @@ namespace Cluster
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Update the charts
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
         public void UpdateCharts()
         {
             ProcessesPageCharts data = new(icProcesses.Items.Cast<Process>());

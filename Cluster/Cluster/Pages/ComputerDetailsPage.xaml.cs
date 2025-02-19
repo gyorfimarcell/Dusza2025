@@ -47,6 +47,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         SetData(computer);
     }
 
+    /// <summary>
+    /// Changing values of the charts
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(MainWindow.DarkMode))
@@ -77,6 +82,9 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         chartsRow.Height = PageComputer.processes.Count != 0 ? new GridLength(175) : new GridLength(0);
     }
 
+    /// <summary>
+    /// Updating the charts
+    /// </summary>
     private void UpdateCharts()
     {
         ComputerDetailsPageCharts data = new(PageComputer);
@@ -87,6 +95,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         pieMemory.MaxValue = PageComputer.RamCapacity;
     }
 
+    /// <summary>
+    /// Editing computer click event
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Edit_OnClick(object sender, RoutedEventArgs e)
     {
         _window.RootNavigation.GoBack();

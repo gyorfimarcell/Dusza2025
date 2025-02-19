@@ -29,6 +29,11 @@ namespace Cluster
             Loaded += ModifyComputerPage_Loaded;
         }
 
+        /// <summary>
+        /// If page loaded get computer data and set it to the page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModifyComputerPage_Loaded(object sender, RoutedEventArgs e)
         {
             if (DataContext is not Computer computer)

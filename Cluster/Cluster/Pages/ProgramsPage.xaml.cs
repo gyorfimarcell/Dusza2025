@@ -40,6 +40,11 @@ namespace Cluster
             _window.PropertyChanged += _window_PropertyChanged;
         }
 
+        /// <summary>
+        /// Updates charts if window loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MainWindow.DarkMode))
@@ -91,6 +96,9 @@ namespace Cluster
             icPrograms.ItemsSource = filtered;
         }
 
+        /// <summary>
+        /// Updates the charts of the programs
+        /// </summary>
         private void UpdateCharts() {
             ProgramsPageCharts data = new(Programs);
 

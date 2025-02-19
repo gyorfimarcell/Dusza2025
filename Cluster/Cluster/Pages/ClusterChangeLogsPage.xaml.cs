@@ -30,6 +30,9 @@ namespace Cluster
             GenerateLogView();
         }
 
+        /// <summary>
+        /// Load all log files from the log directory.
+        /// </summary>
         private void LoadLogFiles()
         {
             string directoryPath = Log.GetLogDirectoryPath();
@@ -45,6 +48,10 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Expand or collapse all sub items of the main expander.
+        /// </summary>
+        /// <param name="mainExpander">The main expander</param>
         private void expandAllItem(Expander mainExpander)
         {
             bool isAllSubItemsExpanded = true;
@@ -72,6 +79,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Expand all sub items of the main expander.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void expandAll_Click(object sender, RoutedEventArgs e)
         {
             if(sender is Wpf.Ui.Controls.Button btn)
@@ -83,6 +95,9 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Generate the log view based on the log entries.
+        /// </summary>
         private void GenerateLogView()
         {
             stLogs.Children.Clear();
@@ -186,6 +201,12 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Get a card that is not expandable.
+        /// </summary>
+        /// <param name="headerTextList">The title of the card</param>
+        /// <param name="last">Is it the last element of the list</param>
+        /// <returns>The card which contains the title</returns>
         private Border GetUnexpandableCard(List<string> headerTextList, bool last)
         {
             Border cardContainer = new Border()
@@ -218,6 +239,11 @@ namespace Cluster
             return cardContainer;
         }
 
+        /// <summary>
+        /// Log type selection changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbLogTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedValue = cbLogTypes.SelectedValue.ToString();
@@ -232,11 +258,21 @@ namespace Cluster
             GenerateLogView();
         }
 
+        /// <summary>
+        /// Log detail selection changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbLogDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GenerateLogView();
         }
 
+        /// <summary>
+        /// Filter text changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             GenerateLogView();

@@ -61,6 +61,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Fixes the issues in the cluster
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FixIssues_Click(object sender, RoutedEventArgs e)
         {
             ClusterHealth.FixIssues();
