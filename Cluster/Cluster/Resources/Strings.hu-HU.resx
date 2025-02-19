@@ -561,4 +561,145 @@
   <data name="Errors.SpreadNone" xml:space="preserve">
     <value>Nincsenek számítógépek vagy aktív folyamatok a szóráshoz!</value>
   </data>
+  <data name="LogType.OpenProgram" xml:space="preserve">
+    <value>Program Megnyitás</value>
+  </data>
+  <data name="LogType.CloseProgram" xml:space="preserve">
+    <value>Program Bezárás</value>
+  </data>
+  <data name="LogType.LoadCluster" xml:space="preserve">
+    <value>Klaszter Betöltés</value>
+  </data>
+  <data name="LogType.AddComputer" xml:space="preserve">
+    <value>Számítógép hozzáadás</value>
+  </data>
+  <data name="LogType.DeleteComputer" xml:space="preserve">
+    <value>Számítógép Törlés</value>
+  </data>
+  <data name="LogType.ExportCSV" xml:space="preserve">
+    <value>CSV Exportálás</value>
+  </data>
+  <data name="LogType.AddProgram" xml:space="preserve">
+    <value>Program Hozzáadás</value>
+  </data>
+  <data name="LogType.RunProgramInstance" xml:space="preserve">
+    <value>Folyamat Indítás</value>
+  </data>
+  <data name="LogType.ShutdownProgramInstance" xml:space="preserve">
+    <value>Folyamat Leállítás</value>
+  </data>
+  <data name="LogType.ModifyProgram" xml:space="preserve">
+    <value>Program Módosítás</value>
+  </data>
+  <data name="LogType.ShutdownProgram" xml:space="preserve">
+    <value>Program Leállítás</value>
+  </data>
+  <data name="LogType.ClearProgramInstances" xml:space="preserve">
+    <value>Folyamatok Törlése</value>
+  </data>
+  <data name="LogType.MoveProgramInstance" xml:space="preserve">
+    <value>Folyamat Mozgatás</value>
+  </data>
+  <data name="LogType.OptimizeProgramInstances" xml:space="preserve">
+    <value>Folyamatok Optimalizálása</value>
+  </data>
+  <data name="LogType.ModifyComputer" xml:space="preserve">
+    <value>Számítógép Módosítás</value>
+  </data>
+  <data name="LogType.SpreadProgramInstances" xml:space="preserve">
+    <value>Folyamatok Szórása</value>
+  </data>
+  <data name="LogType.FixIssues" xml:space="preserve">
+    <value>Problémák Javítása</value>
+  </data>
+  <data name="LogType.ActivateProgramInstance" xml:space="preserve">
+    <value>Folyamat Aktiválás</value>
+  </data>
+  <data name="LogType.DeactivateProgramInstance" xml:space="preserve">
+    <value>Folyamat Deaktiválás</value>
+  </data>
+  <data name="LogType.GenerateCluster" xml:space="preserve">
+    <value>Klaszter Generálás</value>
+  </data>
+  <data name="LogDetail.Path" xml:space="preserve">
+    <value>Elérési Út</value>
+  </data>
+  <data name="LogDetail.Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="LogDetail.CPU" xml:space="preserve">
+    <value>Processzor</value>
+  </data>
+  <data name="LogDetail.Memory" xml:space="preserve">
+    <value>Memória</value>
+  </data>
+  <data name="LogDetail.Type" xml:space="preserve">
+    <value>Típus</value>
+  </data>
+  <data name="LogDetail.Active programs" xml:space="preserve">
+    <value>Aktív Programok</value>
+  </data>
+  <data name="LogDetail.Instance" xml:space="preserve">
+    <value>Folyamat</value>
+  </data>
+  <data name="LogDetail.Start" xml:space="preserve">
+    <value>Kezdés</value>
+  </data>
+  <data name="LogDetail.Active" xml:space="preserve">
+    <value>Aktív</value>
+  </data>
+  <data name="LogDetail.Computer" xml:space="preserve">
+    <value>Számítógép</value>
+  </data>
+  <data name="LogDetail.Instances" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="LogDetail.Process count" xml:space="preserve">
+    <value>Folyamatok száma</value>
+  </data>
+  <data name="LogDetail.Source computer" xml:space="preserve">
+    <value>Forrás számítógép</value>
+  </data>
+  <data name="LogDetail.Destination computer" xml:space="preserve">
+    <value>Cél számítógép</value>
+  </data>
+  <data name="LogDetail.Minimum Percent" xml:space="preserve">
+    <value>Minimum Százalék</value>
+  </data>
+  <data name="LogDetail.Maximum Percent" xml:space="preserve">
+    <value>Maximum Százalék</value>
+  </data>
+  <data name="LogDetail.Computers" xml:space="preserve">
+    <value>Számítógépek</value>
+  </data>
+  <data name="LogDetail.CPU Capacity" xml:space="preserve">
+    <value>Processzor Kapacitás</value>
+  </data>
+  <data name="LogDetail.Memory Capacity" xml:space="preserve">
+    <value>Memória Kapacitás</value>
+  </data>
+  <data name="LogDetail.CPU Spread Percent" xml:space="preserve">
+    <value>Processzor Szórás Százalék</value>
+  </data>
+  <data name="LogDetail.RAM Spread Percent" xml:space="preserve">
+    <value>Memória szórás százalék</value>
+  </data>
+  <data name="LogDetail.Processes" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="LogDetail.Processor Usage" xml:space="preserve">
+    <value>Processzor Használat</value>
+  </data>
+  <data name="LogDetail.Memory Usage" xml:space="preserve">
+    <value>Memória Használat</value>
+  </data>
+  <data name="LogDetail.Host Computer" xml:space="preserve">
+    <value>Számítógép</value>
+  </data>
+  <data name="LogDetail.Programtypes" xml:space="preserve">
+    <value>Programok</value>
+  </data>
+  <data name="LogDetail.Fixed Processes" xml:space="preserve">
+    <value>Javított Folyamatok</value>
+  </data>
 </root>

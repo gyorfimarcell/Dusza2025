@@ -561,4 +561,145 @@
   <data name="Errors.SpreadNone" xml:space="preserve">
     <value>There are no computers or active processes to spread!</value>
   </data>
+  <data name="LogType.OpenProgram" xml:space="preserve">
+    <value>Open Program</value>
+  </data>
+  <data name="LogType.CloseProgram" xml:space="preserve">
+    <value>Close Program</value>
+  </data>
+  <data name="LogType.LoadCluster" xml:space="preserve">
+    <value>Load Cluster</value>
+  </data>
+  <data name="LogType.AddComputer" xml:space="preserve">
+    <value>Add Computer</value>
+  </data>
+  <data name="LogType.DeleteComputer" xml:space="preserve">
+    <value>Delete Computer</value>
+  </data>
+  <data name="LogType.ExportCSV" xml:space="preserve">
+    <value>Export CSV</value>
+  </data>
+  <data name="LogType.AddProgram" xml:space="preserve">
+    <value>Add Program</value>
+  </data>
+  <data name="LogType.RunProgramInstance" xml:space="preserve">
+    <value>Run Process</value>
+  </data>
+  <data name="LogType.ShutdownProgramInstance" xml:space="preserve">
+    <value>Shutdown Process</value>
+  </data>
+  <data name="LogType.ModifyProgram" xml:space="preserve">
+    <value>Modify Program</value>
+  </data>
+  <data name="LogType.ShutdownProgram" xml:space="preserve">
+    <value>Shutdown Program</value>
+  </data>
+  <data name="LogType.ClearProgramInstances" xml:space="preserve">
+    <value>Clear Processes</value>
+  </data>
+  <data name="LogType.MoveProgramInstance" xml:space="preserve">
+    <value>Move Process</value>
+  </data>
+  <data name="LogType.OptimizeProgramInstances" xml:space="preserve">
+    <value>Optimize Processes</value>
+  </data>
+  <data name="LogType.ModifyComputer" xml:space="preserve">
+    <value>Modify Computer</value>
+  </data>
+  <data name="LogType.SpreadProgramInstances" xml:space="preserve">
+    <value>Spread Processes</value>
+  </data>
+  <data name="LogType.FixIssues" xml:space="preserve">
+    <value>Fix Issues</value>
+  </data>
+  <data name="LogType.ActivateProgramInstance" xml:space="preserve">
+    <value>Activate Process</value>
+  </data>
+  <data name="LogType.DeactivateProgramInstance" xml:space="preserve">
+    <value>Deactivate Process</value>
+  </data>
+  <data name="LogType.GenerateCluster" xml:space="preserve">
+    <value>Generate Cluster</value>
+  </data>
+  <data name="LogDetail.Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="LogDetail.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="LogDetail.CPU" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="LogDetail.Memory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="LogDetail.Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="LogDetail.Active programs" xml:space="preserve">
+    <value>Active Programs</value>
+  </data>
+  <data name="LogDetail.Instance" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="LogDetail.Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="LogDetail.Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="LogDetail.Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="LogDetail.Instances" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="LogDetail.Process count" xml:space="preserve">
+    <value>Process Count</value>
+  </data>
+  <data name="LogDetail.Source computer" xml:space="preserve">
+    <value>Source Computer</value>
+  </data>
+  <data name="LogDetail.Destination computer" xml:space="preserve">
+    <value>Destination Computer</value>
+  </data>
+  <data name="LogDetail.Minimum Percent" xml:space="preserve">
+    <value>Minimum Percent</value>
+  </data>
+  <data name="LogDetail.Maximum Percent" xml:space="preserve">
+    <value>Maximum Percent</value>
+  </data>
+  <data name="LogDetail.Computers" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="LogDetail.CPU Capacity" xml:space="preserve">
+    <value>Processor Capacity</value>
+  </data>
+  <data name="LogDetail.Memory Capacity" xml:space="preserve">
+    <value>Memory Capacity</value>
+  </data>
+  <data name="LogDetail.CPU Spread Percent" xml:space="preserve">
+    <value>Processor Spread Percent</value>
+  </data>
+  <data name="LogDetail.RAM Spread Percent" xml:space="preserve">
+    <value>Memory Spread Percent</value>
+  </data>
+  <data name="LogDetail.Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="LogDetail.Processor Usage" xml:space="preserve">
+    <value>Processor Usage</value>
+  </data>
+  <data name="LogDetail.Memory Usage" xml:space="preserve">
+    <value>Memory Usage</value>
+  </data>
+  <data name="LogDetail.Host Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="LogDetail.Programtypes" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="LogDetail.Fixed Processes" xml:space="preserve">
+    <value>Fixed Processes</value>
+  </data>
 </root>

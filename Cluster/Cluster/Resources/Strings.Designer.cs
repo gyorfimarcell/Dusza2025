@@ -932,5 +932,287 @@ namespace Cluster.Resources {
                 return ResourceManager.GetString("Errors.SpreadNone", resourceCulture);
             }
         }
+        
+        public static string LogType_OpenProgram {
+            get {
+                return ResourceManager.GetString("LogType.OpenProgram", resourceCulture);
+            }
+        }
+        
+        public static string LogType_CloseProgram {
+            get {
+                return ResourceManager.GetString("LogType.CloseProgram", resourceCulture);
+            }
+        }
+        
+        public static string LogType_LoadCluster {
+            get {
+                return ResourceManager.GetString("LogType.LoadCluster", resourceCulture);
+            }
+        }
+        
+        public static string LogType_AddComputer {
+            get {
+                return ResourceManager.GetString("LogType.AddComputer", resourceCulture);
+            }
+        }
+        
+        public static string LogType_DeleteComputer {
+            get {
+                return ResourceManager.GetString("LogType.DeleteComputer", resourceCulture);
+            }
+        }
+        
+        public static string LogType_ExportCSV {
+            get {
+                return ResourceManager.GetString("LogType.ExportCSV", resourceCulture);
+            }
+        }
+        
+        public static string LogType_AddProgram {
+            get {
+                return ResourceManager.GetString("LogType.AddProgram", resourceCulture);
+            }
+        }
+        
+        public static string LogType_RunProgramInstance {
+            get {
+                return ResourceManager.GetString("LogType.RunProgramInstance", resourceCulture);
+            }
+        }
+        
+        public static string LogType_ShutdownProgramInstance {
+            get {
+                return ResourceManager.GetString("LogType.ShutdownProgramInstance", resourceCulture);
+            }
+        }
+        
+        public static string LogType_ModifyProgram {
+            get {
+                return ResourceManager.GetString("LogType.ModifyProgram", resourceCulture);
+            }
+        }
+        
+        public static string LogType_ShutdownProgram {
+            get {
+                return ResourceManager.GetString("LogType.ShutdownProgram", resourceCulture);
+            }
+        }
+        
+        public static string LogType_ClearProgramInstances {
+            get {
+                return ResourceManager.GetString("LogType.ClearProgramInstances", resourceCulture);
+            }
+        }
+        
+        public static string LogType_MoveProgramInstance {
+            get {
+                return ResourceManager.GetString("LogType.MoveProgramInstance", resourceCulture);
+            }
+        }
+        
+        public static string LogType_OptimizeProgramInstances {
+            get {
+                return ResourceManager.GetString("LogType.OptimizeProgramInstances", resourceCulture);
+            }
+        }
+        
+        public static string LogType_ModifyComputer {
+            get {
+                return ResourceManager.GetString("LogType.ModifyComputer", resourceCulture);
+            }
+        }
+        
+        public static string LogType_SpreadProgramInstances {
+            get {
+                return ResourceManager.GetString("LogType.SpreadProgramInstances", resourceCulture);
+            }
+        }
+        
+        public static string LogType_FixIssues {
+            get {
+                return ResourceManager.GetString("LogType.FixIssues", resourceCulture);
+            }
+        }
+        
+        public static string LogType_ActivateProgramInstance {
+            get {
+                return ResourceManager.GetString("LogType.ActivateProgramInstance", resourceCulture);
+            }
+        }
+        
+        public static string LogType_DeactivateProgramInstance {
+            get {
+                return ResourceManager.GetString("LogType.DeactivateProgramInstance", resourceCulture);
+            }
+        }
+        
+        public static string LogType_GenerateCluster {
+            get {
+                return ResourceManager.GetString("LogType.GenerateCluster", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Path {
+            get {
+                return ResourceManager.GetString("LogDetail.Path", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Name {
+            get {
+                return ResourceManager.GetString("LogDetail.Name", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_CPU {
+            get {
+                return ResourceManager.GetString("LogDetail.CPU", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Memory {
+            get {
+                return ResourceManager.GetString("LogDetail.Memory", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Type {
+            get {
+                return ResourceManager.GetString("LogDetail.Type", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Active_programs {
+            get {
+                return ResourceManager.GetString("LogDetail.Active programs", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Instance {
+            get {
+                return ResourceManager.GetString("LogDetail.Instance", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Start {
+            get {
+                return ResourceManager.GetString("LogDetail.Start", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Active {
+            get {
+                return ResourceManager.GetString("LogDetail.Active", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Computer {
+            get {
+                return ResourceManager.GetString("LogDetail.Computer", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Instances {
+            get {
+                return ResourceManager.GetString("LogDetail.Instances", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Process_count {
+            get {
+                return ResourceManager.GetString("LogDetail.Process count", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Source_computer {
+            get {
+                return ResourceManager.GetString("LogDetail.Source computer", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Destination_computer {
+            get {
+                return ResourceManager.GetString("LogDetail.Destination computer", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Minimum_Percent {
+            get {
+                return ResourceManager.GetString("LogDetail.Minimum Percent", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Maximum_Percent {
+            get {
+                return ResourceManager.GetString("LogDetail.Maximum Percent", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Computers {
+            get {
+                return ResourceManager.GetString("LogDetail.Computers", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_CPU_Capacity {
+            get {
+                return ResourceManager.GetString("LogDetail.CPU Capacity", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Memory_Capacity {
+            get {
+                return ResourceManager.GetString("LogDetail.Memory Capacity", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_CPU_Spread_Percent {
+            get {
+                return ResourceManager.GetString("LogDetail.CPU Spread Percent", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_RAM_Spread_Percent {
+            get {
+                return ResourceManager.GetString("LogDetail.RAM Spread Percent", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Processes {
+            get {
+                return ResourceManager.GetString("LogDetail.Processes", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Processor_Usage {
+            get {
+                return ResourceManager.GetString("LogDetail.Processor Usage", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Memory_Usage {
+            get {
+                return ResourceManager.GetString("LogDetail.Memory Usage", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Host_Computer {
+            get {
+                return ResourceManager.GetString("LogDetail.Host Computer", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Programtypes {
+            get {
+                return ResourceManager.GetString("LogDetail.Programtypes", resourceCulture);
+            }
+        }
+        
+        public static string LogDetail_Fixed_Processes {
+            get {
+                return ResourceManager.GetString("LogDetail.Fixed Processes", resourceCulture);
+            }
+        }
     }
 }
