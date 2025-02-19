@@ -210,11 +210,6 @@ namespace Cluster
             Log.WriteLog([], LogType.CloseProgram);
         }
 
-        private void MenuItemTheme_Click(object sender, RoutedEventArgs e)
-        {
-            DarkMode = !DarkMode;
-        }
-
         private void LblPath_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (ClusterPath != "")

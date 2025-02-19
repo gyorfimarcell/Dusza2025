@@ -64,16 +64,23 @@
                         <ui:SymbolIcon Symbol="Apps24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-
                 <ui:NavigationViewItem Content="Cluster change logs"
                        TargetPageType="{x:Type local:ClusterChangeLogsPage}"
                        NavigationCacheMode="Disabled"
                        IsEnabled="False">
                     <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Home24" />
+                        <ui:SymbolIcon Symbol="GroupList24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Settings"
+                                       TargetPageType="{x:Type local:SettingsPage}"
+                                       NavigationCacheMode="Disabled">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="Settings24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
+            
             <ui:NavigationView.FooterMenuItems>
                 <ui:TextBlock HorizontalAlignment="Center"
                               Padding="0 12">
@@ -138,35 +145,11 @@
         <ui:TitleBar
             x:Name="TitleBar"
             Grid.Row="0"
+            Title="{Binding Title, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
             CloseWindowByDoubleClickOnIcon="True">
-                <ui:TitleBar.Icon>
-                    <ui:ImageIcon Source="pack://application:,,,/images/icon.ico"/>
-                </ui:TitleBar.Icon>
-            <ui:TitleBar.Header>
-                <StackPanel Orientation="Horizontal">
-                    <ui:TextBlock VerticalAlignment="Center"
-                                  FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ui:TitleBar }}"
-                                  Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
-                                  Margin="0 0 16 0"/>
-                    <Menu>
-                        <ui:MenuItem x:Name="MenuItemTheme"
-                                     Click="MenuItemTheme_Click">
-                            <ui:MenuItem.Style>
-                                <Style TargetType="ui:MenuItem">
-                                    <Style.Triggers>
-                                        <DataTrigger Value="True" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-                                            <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherSunny24}"/>
-                                        </DataTrigger>
-                                        <DataTrigger Value="False" Binding="{Binding DarkMode, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-                                            <Setter Property="Icon" Value="{ui:SymbolIcon Symbol=WeatherMoon24}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ui:MenuItem.Style>
-                        </ui:MenuItem>
-                    </Menu>
-                </StackPanel>
-            </ui:TitleBar.Header>
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/images/icon.ico"/>
+            </ui:TitleBar.Icon>
         </ui:TitleBar>
     </Grid>
 </ui:FluentWindow>

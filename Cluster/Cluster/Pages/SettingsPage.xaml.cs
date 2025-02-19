@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Cluster
+{
+    /// <summary>
+    /// Interaction logic for SettingsPage.xaml
+    /// </summary>
+    public partial class SettingsPage : CustomPage
+    {
+        public SettingsPage()
+        {
+            InitializeComponent();
+            tsDarkmode.IsChecked = _window.DarkMode;
+        }
+
+        private void tsDarkmode_Click(object sender, RoutedEventArgs e)
+        {
+            _window.DarkMode = tsDarkmode.IsChecked == true;
+        }
+    }
+}
