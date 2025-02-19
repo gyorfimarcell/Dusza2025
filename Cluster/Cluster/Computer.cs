@@ -192,7 +192,7 @@ namespace Cluster
         ///   Giving messagebox to the user to decide whether outsource the programs to other computers.
         /// </summary>
         /// <returns>If there is an error message it returns it otherwise returns null.</returns>
-        public string? OutSourcePrograms()
+        public List<string>? OutSourcePrograms()
         {
             MessageBox mgbox = new()
             {
