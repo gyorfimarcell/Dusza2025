@@ -162,6 +162,8 @@ namespace Cluster
                 }
             }
 
+            Log.WriteLog([rootPath, nbComputer.Value.ToString(), nbProgram.Value.ToString(), nbProcess.Value.ToString()], LogType.GenerateCluster);
+
             MainWindow.ClusterPath = rootPath;
             _window.RefreshLblPath();
             Log.WriteLog([rootPath], LogType.LoadCluster);
@@ -180,7 +182,7 @@ namespace Cluster
             if (ofd.ShowDialog() == true)
             {
                 chosenPath = ofd.FolderName;
-                lblPath.Content = chosenPath;
+                PathCard.Description = chosenPath;
             }
         }
     }

@@ -19,11 +19,13 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ClusterHealthPage.xaml
     /// </summary>
-    public partial class ClusterHealthPage : Page
+    public partial class ClusterHealthPage : CustomPage
     {
+        ClusterHealth health;
         public ClusterHealthPage()
         {
             InitializeComponent();
+            health = new(Computer.GetComputers(MainWindow.ClusterPath), ProgramType.ReadClusterFile(MainWindow.ClusterPath));
             Loaded += ClusterHealthPage_Loaded;
         }
 
@@ -34,12 +36,15 @@ namespace Cluster
         /// <param name="e"></param>
         private void ClusterHealthPage_Loaded(object sender, RoutedEventArgs e)
         {
-            ClusterHealth health = new(Computer.GetComputers(MainWindow.ClusterPath), ProgramType.ReadClusterFile(MainWindow.ClusterPath));
+            health = new(Computer.GetComputers(MainWindow.ClusterPath), ProgramType.ReadClusterFile(MainWindow.ClusterPath));
             if (health.Ok)
             {
+                //System.Windows.MessageBox.Show("OK");
                 HealthyInfobar.IsOpen = true;
+                spFixIssues.Visibility = Visibility.Hidden;
             }
             else {
+                spFixIssues.Visibility = Visibility.Visible;
                 foreach (string error in health.Errors)
                 {
                     InfoBar infoBar = new()
@@ -54,6 +59,16 @@ namespace Cluster
                     spErrors.Children.Add(infoBar);
                 }
             }
+        }
+
+        private void FixIssues_Click(object sender, RoutedEventArgs e)
+        {
+            ClusterHealth.FixIssues();
+            var clusterOk = spErrors.Children[0];
+            spErrors.Children.Clear();
+            spErrors.Children.Add(clusterOk);
+            ClusterHealthPage_Loaded(new(), new());
+            
         }
     }
 }

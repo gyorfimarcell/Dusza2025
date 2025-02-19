@@ -88,8 +88,6 @@
                           Grid.Column="2"
                           HorizontalAlignment="Center"
                           Text="Memory Usage"/>
-
-
         </Grid>
 
         <ui:TextBlock
@@ -100,22 +98,25 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
                     <controls:ProcessCard Process="{Binding Path=.}"
+                                          Margin="0 0 0 8"
                                           OnProcessShutdown="ProcessCard_OnProcessChange"
                                           OnProcessActivate="ProcessCard_OnProcessChange"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <ui:TextBlock FontTypography="Body"
-                      Text="This computer doesn't have any running processes.">
-            <ui:TextBlock.Style>
-                <Style TargetType="ui:TextBlock">
+        <controls:EmptyStatus Title="No processes"
+                              Description="This computer doesn't have any running processes."
+                              Icon="TextBulletListDismiss20"
+                              Margin="0 96 0 0">
+            <controls:EmptyStatus.Style>
+                <Style TargetType="controls:EmptyStatus">
                     <Style.Triggers>
                         <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icProcesses}">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </ui:TextBlock.Style>
-        </ui:TextBlock>
+            </controls:EmptyStatus.Style>
+        </controls:EmptyStatus>
     </StackPanel>
 </local:CustomPage>

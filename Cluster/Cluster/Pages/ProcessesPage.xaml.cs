@@ -48,7 +48,8 @@ namespace Cluster
         private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
         {
             LoadData();
-            if (DataContext != null && DataContext is string programName) {
+            if (DataContext != null && DataContext is string programName)
+            {
                 List<MenuItem> menuItems = GetProgramMenuItems();
                 menuItems.ForEach(x => x.IsChecked = x.Header.ToString() == programName);
                 FilterProcesses();
@@ -66,7 +67,7 @@ namespace Cluster
             }
         }
 
-            List<Process> Processes;
+        List<Process> Processes;
 
         ProcessesPageSort sort = ProcessesPageSort.Id;
         ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
@@ -75,17 +76,19 @@ namespace Cluster
         /// Load data from cluster and filter processes
         /// </summary>
         /// <param name="skipFilterReload">Deciding to reload the program menu item or not</param>
-        public void LoadData(bool skipFilterReload = false) {
+        public void LoadData(bool skipFilterReload = false) 
+        {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
             Processes = computers.SelectMany(x => x.processes).ToList();
 
-             if (!skipFilterReload) UpdateProgramsMenuItem(programs);
+            if (!skipFilterReload) UpdateProgramsMenuItem(programs);
             FilterProcesses();
         }
 
-        public void UpdateCharts() {
+        public void UpdateCharts()
+        {
             ProcessesPageCharts data = new(icProcesses.Items.Cast<Process>());
             barPrograms.Series = statusFilter switch
             {
@@ -106,7 +109,8 @@ namespace Cluster
         /// Update the program menu item
         /// </summary>
         /// <param name="programs">List of programs</param>
-        public void UpdateProgramsMenuItem(List<ProgramType> programs) {
+        public void UpdateProgramsMenuItem(List<ProgramType> programs) 
+        {
             menuItemPrograms.Items.Clear();
 
             MenuItem allItem = new MenuItem() { Header = "All", StaysOpenOnClick = true };
@@ -117,7 +121,8 @@ namespace Cluster
 
             foreach (ProgramType program in programs)
             {
-                MenuItem item = new MenuItem() {
+                MenuItem item = new MenuItem()
+                {
                     Header = program.ProgramName,
                     IsCheckable = true,
                     IsChecked = true,
@@ -128,15 +133,16 @@ namespace Cluster
             }
         }
 
-        internal enum ProcessesPageSort {
+        internal enum ProcessesPageSort
+        {
             Program,
             Id,
             ProcessorUsage,
             MemoryUsage,
             Start
         }
-        
-        internal enum  ProcessesPageStatus
+
+        internal enum ProcessesPageStatus
         {
             All,
             Active,
@@ -147,7 +153,8 @@ namespace Cluster
         /// Filter processes based on the selected program and filter text
         /// </summary>
         /// <exception cref="NotImplementedException">If filtering is not implemented</exception>
-        private void FilterProcesses() {
+        private void FilterProcesses() 
+        {
             List<string> programNames = GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
 
             IEnumerable<Process> filtered = Processes;
@@ -173,7 +180,7 @@ namespace Cluster
             };
 
             if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
-            
+
             List<Process> filteredList = filtered.ToList();
 
             icProcesses.ItemsSource = filteredList;
@@ -185,7 +192,8 @@ namespace Cluster
         /// Get the program menu items
         /// </summary>
         /// <returns>The list of menu items</returns>
-        private List<MenuItem> GetProgramMenuItems() {
+        private List<MenuItem> GetProgramMenuItems() 
+        {
             List<MenuItem> menuItems = [];
 
             foreach (var item in menuItemPrograms.Items)
@@ -243,11 +251,11 @@ namespace Cluster
             sfd.DefaultExt = "csv";
             if (sfd.ShowDialog() == true)
             {
-                string[] lines = ["Name;Computer;Status;ProcessorUsage;MemoryUsage", ..Processes.Select(x => x.GetCSVRow())];
+                string[] lines = ["Name;Computer;Status;ProcessorUsage;MemoryUsage", .. Processes.Select(x => x.GetCSVRow())];
                 File.WriteAllLines(sfd.FileName, lines);
                 _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
                     ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
-                Log.WriteLog(["Processes"], LogType.ExportCSV);
+                Log.WriteLog(["Processes", sfd.FileName], LogType.ExportCSV);
             }
         }
 
@@ -295,10 +303,10 @@ namespace Cluster
                     otherItem.FontWeight = FontWeights.Normal;
                 }
             }
-            
+
             MenuItem menuItem = (MenuItem)sender;
             menuItem.FontWeight = FontWeights.Bold;
-            
+
             sort = (ProcessesPageSort)Enum.Parse(typeof(ProcessesPageSort), (string)menuItem.Tag);
             FilterProcesses();
         }
@@ -327,10 +335,10 @@ namespace Cluster
                     otherItem.FontWeight = FontWeights.Normal;
                 }
             }
-            
+
             MenuItem menuItem = (MenuItem)sender;
             menuItem.FontWeight = FontWeights.Bold;
-            
+
             statusFilter = (ProcessesPageStatus)Enum.Parse(typeof(ProcessesPageStatus), (string)menuItem.Tag);
             FilterProcesses();
         }

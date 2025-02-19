@@ -86,7 +86,7 @@ namespace Cluster
         /// </summary>
         public void RefreshLblPath()
         {
-            lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+            lblPath.Text = Path.GetFileName(ClusterPath);
         }
 
         /// <summary>
@@ -125,6 +125,10 @@ namespace Cluster
                     .OrderByDescending(f => Path.GetFileNameWithoutExtension(f.FilePath))
                     .FirstOrDefault(f => File.ReadAllLines(f.FilePath).Any(x => x.StartsWith("LoadCluster")));
 
+                    if (latestFile == null)
+                    {
+                        return;
+                    }   
 
                     string[] clusterLines = File.ReadAllLines(latestFile.FilePath).Where(x => x.StartsWith("LoadCluster")).ToArray();
 
@@ -169,7 +173,7 @@ namespace Cluster
                 }
                 else
                 {
-                    lblPath.Content = $"Cluster: {Path.GetFileName(ClusterPath)}";
+                    lblPath.Text = Path.GetFileName(ClusterPath);
                     loadNavItem.Content = "Load another Cluster";
                     EnableNavigationItems();
 
@@ -246,6 +250,22 @@ namespace Cluster
         private void MenuItemTheme_Click(object sender, RoutedEventArgs e)
         {
             DarkMode = !DarkMode;
+        }
+
+        private void LblPath_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (ClusterPath != "")
+            {
+                System.Diagnostics.Process.Start("explorer.exe", ClusterPath);
+            }
+        }
+
+        private void LblPath_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key is Key.Enter or Key.Space && ClusterPath != "")
+            {
+                System.Diagnostics.Process.Start("explorer.exe", ClusterPath);
+            }
         }
     }
 }

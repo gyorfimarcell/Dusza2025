@@ -97,6 +97,8 @@ namespace Cluster
             barRequested.Series = data.RequestedSeries;
             barRequested.XAxes = data.RequestedXAxis;
             barRequested.YAxes = data.RequestedYAxis;
+
+            chartRow.Height = Programs.Count == 0 ? new GridLength(0) : new GridLength(150);
         }
 
         /// <summary>
@@ -161,9 +163,10 @@ namespace Cluster
             MessageBoxResult result = await messageBox.ShowDialogAsync();
             if (result == MessageBoxResult.Primary)
             {
+                string instancesCount = program.ActivePrograms.ToString();
                 if (ProgramType.ShutdownProgram(program))
                 { 
-                    Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}"], LogType.ShutdownProgram);
+                    Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}", instancesCount], LogType.ShutdownProgram);
                     _window.RootSnackbarService.Show(
                         "Success",
                         $"Program '{program.ProgramName}' successfully shut down!",

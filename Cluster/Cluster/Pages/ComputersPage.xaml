@@ -82,50 +82,77 @@
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
         <ItemsControl x:Name="icComputers"
-                      Grid.Row="0">
+                      Grid.Row="0"
+                      Focusable="False">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Computer}">
-                    <ui:CardControl
-                        Margin="4"
+                    <ui:CardAction
+                        Margin="0 0 0 8"
                         Padding="20,10,20,10"
                         Icon="{ui:SymbolIcon Server24}"
+                        IsChevronVisible="False"
                         Click="ComputerCard_OnClick">
-                        <ui:CardControl.Header>
-                            <StackPanel>
-                                <ui:TextBlock
-                                    Margin="0"
-                                    FontTypography="BodyStrong"
-                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                    Text="{Binding Name}" />
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="16" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <controls:UsageBar Grid.Column="0"
-                                                       Text="Processor"
-                                                       Current="{Binding ProcessorUsage}"
-                                                       Max="{Binding ProcessorCore}" />
-                                    <controls:UsageBar Grid.Column="2"
-                                                       Text="Memory"
-                                                       Current="{Binding MemoryUsage}"
-                                                       Max="{Binding RamCapacity}" />
-                                </Grid>
-                            </StackPanel>
-                        </ui:CardControl.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <ui:Button Appearance="Transparent"
-                                       Icon="{ui:SymbolIcon Edit24}"
-                                       Margin="0 0 4 0"
-                                       Click="Edit_OnClick"/>
-                            <ui:Button Appearance="Transparent"
-                                       Icon="{ui:SymbolIcon Delete24}"
-                                       Click="Delete_OnClick"/>
-                        </StackPanel>                        
-                    </ui:CardControl>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <ui:TextBlock Grid.ColumnSpan="2"
+                                Margin="0"
+                                FontTypography="BodyStrong"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="{Binding Name}" />
+                            
+                            <controls:UsageBar Grid.Column="0"
+                                               Grid.Row="1"
+                                               Text="Processor"
+                                               Current="{Binding ProcessorUsage}"
+                                               Max="{Binding ProcessorCore}"
+                                               Margin="0 0 16 0"/>
+                            <controls:UsageBar Grid.Column="1"
+                                               Grid.Row="1"
+                                               Text="Memory"
+                                               Current="{Binding MemoryUsage}"
+                                               Max="{Binding RamCapacity}"
+                                               Margin="0 0 16 0"/>
+                            
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Column="2"
+                                        Grid.RowSpan="2">
+                                <ui:Button Appearance="Transparent"
+                                           Icon="{ui:SymbolIcon Edit24}"
+                                           Margin="0 0 4 0"
+                                           Click="Edit_OnClick"/>
+                                <ui:Button Appearance="Transparent"
+                                           Icon="{ui:SymbolIcon Delete24}"
+                                           Click="Delete_OnClick"/>
+                            </StackPanel>   
+                        </Grid>
+                    </ui:CardAction>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <controls:EmptyStatus Title="No computers"
+                              Icon="TextBulletListDismiss20">
+            <controls:EmptyStatus.Style>
+                <Style TargetType="controls:EmptyStatus">
+                    <Setter Value="There are no computers matching this filter." Property="Description"/>
+                    <Style.Triggers>
+                        <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icComputers}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Value="" Binding="{Binding Text, ElementName=tbFilter}">
+                            <Setter Value="There are no computers in this cluster." Property="Description"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:EmptyStatus.Style>
+        </controls:EmptyStatus>
     </Grid>
 </local:CustomPage>

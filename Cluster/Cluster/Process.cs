@@ -115,7 +115,7 @@ namespace Cluster
         /// </summary>
         public void Shutdown() {
             File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
-            Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], LogType.ShutdownProgramInstance);
+            Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}", HostComputer.Name], LogType.ShutdownProgramInstance);
         }
 
         /// <summary>
@@ -124,6 +124,7 @@ namespace Cluster
         public void ToggleActive() {
             Active = !Active;
             Write($@"{MainWindow.ClusterPath}\{HostComputer.Name}");
+            Log.WriteLog([$"{FileName}", HostComputer.Name, $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], Active ? LogType.ActivateProgramInstance : LogType.DeactivateProgramInstance);
         }
     }
 }
