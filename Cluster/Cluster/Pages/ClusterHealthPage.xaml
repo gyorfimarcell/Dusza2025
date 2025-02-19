@@ -14,7 +14,7 @@
 
     <local:CustomPage.HeaderControls>
         <StackPanel x:Name="spFixIssues" Visibility="Hidden">
-            <ui:MenuItem Header="Fix issues"
+            <ui:MenuItem Header="{local:Translate HealthPage.Fix}"
                          Icon="{ui:SymbolIcon Wrench24}"
                          Click="FixIssues_Click"/>
         </StackPanel>
@@ -22,8 +22,8 @@
     <StackPanel x:Name="spErrors"
                Margin="48 16">
         <ui:InfoBar x:Name="HealthyInfobar"
-                    Title="Healthy"
-                    Message="No errors were detected in this cluster."
+                    Title="{local:Translate HealthPage.Healthy.Title}"
+                    Message="{local:Translate HealthPage.Healthy.Description}"
                     IsClosable="False"
                     Severity="Success"/>
     </StackPanel>

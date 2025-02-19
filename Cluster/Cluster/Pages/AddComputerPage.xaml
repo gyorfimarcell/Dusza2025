@@ -5,23 +5,24 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:controls="clr-namespace:Cluster.Controls"
+      xmlns:local="clr-namespace:Cluster"
       mc:Ignorable="d"
-      Title="New"
-      ui:NavigationView.HeaderContent="New"
+      Title="{local:Translate New}"
+      ui:NavigationView.HeaderContent="{local:Translate New}"
       d:DesignHeight="750"
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <StackPanel Margin="48 0">
-        <controls:CustomCard Title="Name"
-                             Description="A unique identifier for this computer."
+        <controls:CustomCard Title="{local:Translate AddComputerPage.Name.Title}"
+                             Description="{local:Translate AddComputerPage.Name.Description}"
                              Icon="{ui:SymbolIcon Tag20}"
                              Margin="0 0 0 12">
             <ui:TextBox x:Name="tbName"
                         PlaceholderText="my_computer"
                         MinWidth="250" />
         </controls:CustomCard>
-        <controls:CustomCard Title="Processor Capacity"
+        <controls:CustomCard Title="{local:Translate ProcessorCapacity}"
                              Icon="{ui:SymbolIcon DeveloperBoard24}"
                              Margin="0 0 0 12">
             <ui:NumberBox x:Name="nbProcessor"
@@ -31,7 +32,7 @@
                           SmallChange="1"
                           MinWidth="250" />
         </controls:CustomCard>
-        <controls:CustomCard Title="Memory Capacity"
+        <controls:CustomCard Title="{local:Translate MemoryCapacity}"
                              Icon="{ui:SymbolIcon Ram20}"
                              Margin="0 0 0 12">
             <ui:NumberBox x:Name="nbMemory"
@@ -46,7 +47,7 @@
                    Appearance="Primary"
                    HorizontalAlignment="Right"
                    MinWidth="300"
-                   Content="Add"
+                   Content="{local:Translate Add}"
                    Click="btnAdd_Click" />
     </StackPanel>
 </Page>

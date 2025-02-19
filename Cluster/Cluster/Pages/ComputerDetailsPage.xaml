@@ -16,10 +16,10 @@
                   ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <local:CustomPage.HeaderControls>
         <Menu FontSize="14">
-            <ui:MenuItem Header="Edit"
+            <ui:MenuItem Header="{local:Translate Edit}"
                          Icon="{ui:SymbolIcon Edit20}"
                          Click="Edit_OnClick"/>
-            <ui:MenuItem Header="Delete"
+            <ui:MenuItem Header="{local:Translate Delete}"
                          Icon="{ui:SymbolIcon Delete20}"
                          Click="Delete_OnClick"/>
         </Menu>
@@ -43,12 +43,12 @@
                           HorizontalAlignment="Center"
                           Text="{Binding ProcessesText, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}" />
             <controls:UsageBar Grid.Column="1"
-                               Text="Processor"
+                               Text="{local:Translate Processor}"
                                Current="{Binding ProcessorUsage}"
                                Max="{Binding ProcessorCore}"
                                Margin="8 0" />
             <controls:UsageBar Grid.Column="2"
-                               Text="Memory"
+                               Text="{local:Translate Memory}"
                                Current="{Binding MemoryUsage}"
                                Max="{Binding RamCapacity}"
                                Margin="8 0" />
@@ -59,7 +59,7 @@
                           VerticalAlignment="Stretch"/>
             <ui:TextBlock Grid.Row="3"
                           HorizontalAlignment="Center"
-                          Text="Programs"/>
+                          Text="{local:Translate Programs}"/>
 
 
             <lvc:PieChart x:Name="pieProcessor"
@@ -73,7 +73,7 @@
             <ui:TextBlock Grid.Row="3"
                           Grid.Column="1"
                           HorizontalAlignment="Center"
-                          Text="Processor Usage"/>
+                          Text="{local:Translate ProcessorUsage}"/>
 
 
             <lvc:PieChart x:Name="pieMemory"
@@ -87,12 +87,12 @@
             <ui:TextBlock Grid.Row="3"
                           Grid.Column="2"
                           HorizontalAlignment="Center"
-                          Text="Memory Usage"/>
+                          Text="{local:Translate MemoryUsage}"/>
         </Grid>
 
         <ui:TextBlock
             FontTypography="Subtitle"
-            Text="Processes" />
+            Text="{local:Translate Processes}" />
         <ItemsControl x:Name="icProcesses"
                       ItemsSource="{Binding PageComputer.processes, RelativeSource={RelativeSource AncestorType=local:ComputerDetailsPage}}">
             <ItemsControl.ItemTemplate>
@@ -104,8 +104,8 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <controls:EmptyStatus Title="No processes"
-                              Description="This computer doesn't have any running processes."
+        <controls:EmptyStatus Title="{local:Translate ComputerDetailsPage.Empty.Title}"
+                              Description="{local:Translate ComputerDetailsPage.Empty.Description}"
                               Icon="TextBulletListDismiss20"
                               Margin="0 96 0 0">
             <controls:EmptyStatus.Style>
