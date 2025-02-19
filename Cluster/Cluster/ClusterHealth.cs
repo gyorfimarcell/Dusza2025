@@ -36,7 +36,7 @@ namespace Cluster
                 }
 
                 //2. 
-                if (active > p.ActivePrograms)
+                if ((active + inactive) > p.ActivePrograms)
                 {
                     Errors.Add($"{p.ProgramName} has too many processes ({p.ActivePrograms} wanted, {active} active, {inactive} inactive)");
                 }
@@ -59,20 +59,30 @@ namespace Cluster
             }
         }
 
-        public static void FixIssues()
+        public static int FixIssues()
         {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
             List<Process> processes = computers.Aggregate(new List<Process>(), (list, computer) => [.. list, .. computer.processes]);
 
+            //Create a dictionary to store the missing processes, where the key is the program and the value is the number of missing processes
+            //If the value is positive, then there are missing processes, if the value is negative, then there are too many processes
             Dictionary<ProgramType, int> missingProcesses = new();
 
             //Collect data about missing processes in a dictionary
             foreach (ProgramType p in programs)
             {
                 int active = processes.Count(x => x.ProgramName == p.ProgramName && x.Active);
-                missingProcesses.Add(p, p.ActivePrograms - active);
+                int all = processes.Count(x => x.ProgramName == p.ProgramName);
+                if (p.ActivePrograms - active != 0)
+                {
+                    missingProcesses.Add(p, p.ActivePrograms - active);
+                }
+                else if (all - p.ActivePrograms > 0)
+                {
+                    missingProcesses.Add(p, p.ActivePrograms - all);
+                }
             }
 
             bool issuesFixable = true;
@@ -112,7 +122,7 @@ namespace Cluster
                         if (computer == null)
                         {
                             issuesFixable = false;
-                            break;
+                            continue;
                         }
                         Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory, true);
                         process.HostComputer = computer;
@@ -122,14 +132,14 @@ namespace Cluster
                 }
                 else
                 {
-                    //If there are too many processes, then deactivate them
-                    List<Process> activeProcesses = processes.Where(x => x.ProgramName == program.ProgramName && x.Active).ToList();
+                    //If there are too many processes, then delete them
+                    List<Process> overflowingPrograms = [.. processes.Where(x => x.ProgramName == program.ProgramName)];
                     for (int i = 0; i < Math.Abs(missingProcessNumber); i++)
                     {
-                        Process process = activeProcesses[i];
+                        Process process = overflowingPrograms[i];
                         int computerIndex = computers.FindIndex(x => x.Name == process.HostComputer.Name);
                         int processIndex = computers[computerIndex].processes.FindIndex(x => x.FileName == process.FileName);
-                        computers[computerIndex].processes[processIndex].Active = false;
+                        computers[computerIndex].processes.RemoveAt(processIndex);
                     }
                 }
             }
@@ -153,7 +163,7 @@ namespace Cluster
 
                 // Hit cancel
                 if (result != MessageBoxResult.Primary)
-                    return;
+                    return -1;
             }
 
             //Save the changes
@@ -174,7 +184,13 @@ namespace Cluster
                 process.Write(Path.Combine(MainWindow.ClusterPath, process.HostComputer.Name));
                 Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}", process.HostComputer.Name], LogType.RunProgramInstance);
             }
-            Log.WriteLog([$"{activeChangeProcesses.Count + newProcesses.Count}"], LogType.FixIssues);
+
+            //3. Remove processes
+            List<Process> removedProcesses = originalProcesses.Where(x => !computers.SelectMany(y => y.processes).Any(z => z.FileName == x.FileName)).ToList();
+            foreach (Process process in removedProcesses) {
+                process.Shutdown();
+            }
+            return activeChangeProcesses.Count + newProcesses.Count + removedProcesses.Count;
         }
     }
 }

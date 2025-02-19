@@ -43,7 +43,8 @@ namespace Cluster
                 HealthyInfobar.IsOpen = true;
                 spFixIssues.Visibility = Visibility.Hidden;
             }
-            else {
+            else
+            {
                 spFixIssues.Visibility = Visibility.Visible;
                 foreach (string error in health.Errors)
                 {
@@ -68,12 +69,26 @@ namespace Cluster
         /// <param name="e"></param>
         private void FixIssues_Click(object sender, RoutedEventArgs e)
         {
-            ClusterHealth.FixIssues();
-            var clusterOk = spErrors.Children[0];
-            spErrors.Children.Clear();
-            spErrors.Children.Add(clusterOk);
-            ClusterHealthPage_Loaded(new(), new());
-            
+            int allResCount = 0;
+            while (!health.Ok)
+            {
+                int res = ClusterHealth.FixIssues();
+                var clusterOk = spErrors.Children[0];
+                spErrors.Children.Clear();
+                spErrors.Children.Add(clusterOk);
+                ClusterHealthPage_Loaded(new(), new());
+
+                if (res == 0)
+                {
+                    _window.RootSnackbarService.Show("Error", "Failed to fix all errors :(", ControlAppearance.Danger,
+                            new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
+                    return;
+                }
+                allResCount += res;
+            }
+            Log.WriteLog([$"{allResCount}"], LogType.FixIssues);
+            _window.RootSnackbarService.Show("Success", $"All errors fixed ({allResCount} errors)",
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
         }
     }
 }
