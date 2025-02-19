@@ -31,7 +31,7 @@ namespace Cluster
                 }
 
                 //2. 
-                if (active > p.ActivePrograms)
+                if ((active + inactive) > p.ActivePrograms)
                 {
                     Errors.Add($"{p.ProgramName} has too many processes ({p.ActivePrograms} wanted, {active} active, {inactive} inactive)");
                 }
