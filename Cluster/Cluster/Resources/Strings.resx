@@ -132,4 +132,316 @@
   <data name="Settings.Title" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Window.Title" xml:space="preserve">
+    <value>Cluster Management</value>
+  </data>
+  <data name="Menu.Health" xml:space="preserve">
+    <value>Cluster Health</value>
+  </data>
+  <data name="Menu.Computers" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="Menu.Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="Menu.Programs" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="Menu.Logs" xml:space="preserve">
+    <value>Cluster Change Logs</value>
+  </data>
+  <data name="Menu.Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Menu.Path.Label" xml:space="preserve">
+    <value>Cluster: </value>
+  </data>
+  <data name="Menu.Path.None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Menu.Load" xml:space="preserve">
+    <value>Load Cluster</value>
+  </data>
+  <data name="Menu.Generate" xml:space="preserve">
+    <value>Generate Cluster</value>
+  </data>
+  <data name="Menu.LoadAnother" xml:space="preserve">
+    <value>Load Another Cluster</value>
+  </data>
+  <data name="Menu.Invalid.Title" xml:space="preserve">
+    <value>Invalid folder</value>
+  </data>
+  <data name="Menu.Invalid.Text" xml:space="preserve">
+    <value>The chosen folder doesn't contain a .klaszter file.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="StartPage.Title" xml:space="preserve">
+    <value>No Cluster Opened</value>
+  </data>
+  <data name="StartPage.Description" xml:space="preserve">
+    <value>Click here to select a folder</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="AddComputerPage.Name.Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AddComputerPage.Name.Description" xml:space="preserve">
+    <value>A unique identifier for this computer.</value>
+  </data>
+  <data name="ProcessorCapacity" xml:space="preserve">
+    <value>Processor Capacity</value>
+  </data>
+  <data name="MemoryCapacity" xml:space="preserve">
+    <value>Memory Capacity</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Errors.Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Errors.MissingFields" xml:space="preserve">
+    <value>You must fill out all fields!</value>
+  </data>
+  <data name="AddComputerPage.Success.Title" xml:space="preserve">
+    <value>Computer created</value>
+  </data>
+  <data name="AddComputerPage.Success.Text" xml:space="preserve">
+    <value>successfully created.</value>
+  </data>
+  <data name="AddProgramPage.Name.Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AddProgramPage.Name.Description" xml:space="preserve">
+    <value>A unique identifier for this program.</value>
+  </data>
+  <data name="AddProgramPage.Active.Title" xml:space="preserve">
+    <value>Active Processes</value>
+  </data>
+  <data name="AddProgramPage.Active.Description" xml:space="preserve">
+    <value>How many active processes should run in the cluster.</value>
+  </data>
+  <data name="ProcessorUsage" xml:space="preserve">
+    <value>Processor Usage</value>
+  </data>
+  <data name="MemoryUsage" xml:space="preserve">
+    <value>Memory Usage</value>
+  </data>
+  <data name="Errors.ProgramAlreadyExists" xml:space="preserve">
+    <value>This program already exists in the cluster!</value>
+  </data>
+  <data name="AddProgramPage.Success.Title" xml:space="preserve">
+    <value>Program created</value>
+  </data>
+  <data name="AddProgramPage.Success.Text" xml:space="preserve">
+    <value>successfully created.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Title" xml:space="preserve">
+    <value>No processes</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Description" xml:space="preserve">
+    <value>This computer doesn't have any running processes.</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="Memory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="ComputerDetailsPage.Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Title" xml:space="preserve">
+    <value>Computer deleted</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Text" xml:space="preserve">
+    <value>successfully deleted.</value>
+  </data>
+  <data name="Outsourcing.DeleteSuccess" xml:space="preserve">
+    <value>Outsourcing and deletion succeeded</value>
+  </data>
+  <data name="FilterPlaceholder" xml:space="preserve">
+    <value>Filter...</value>
+  </data>
+  <data name="ComputersPage.Sort.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ComputersPage.Sort.ProcessorPercent" xml:space="preserve">
+    <value>Processor Usage (%)</value>
+  </data>
+  <data name="ComputersPage.Sort.MemoryPercent" xml:space="preserve">
+    <value>Memory Usage (%)</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="ComputersPage.Menu.Optimize" xml:space="preserve">
+    <value>Optimize</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ComputersPage.Empty.Title" xml:space="preserve">
+    <value>No computers</value>
+  </data>
+  <data name="ComputersPage.Empty.EmptyText" xml:space="preserve">
+    <value>There are no computers in this cluster.</value>
+  </data>
+  <data name="ComputersPage.Empty.FilterText" xml:space="preserve">
+    <value>There are no computers matching this filter.</value>
+  </data>
+  <data name="Optimize.Title" xml:space="preserve">
+    <value>Set optimization values</value>
+  </data>
+  <data name="Optimize.Button" xml:space="preserve">
+    <value>Optimize</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Optimize.SpreadQuestion" xml:space="preserve">
+    <value>Optimizing cannot be done with the given values! Would you like to spread the processes equally?</value>
+  </data>
+  <data name="Optimize.Spread" xml:space="preserve">
+    <value>Spread</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Optimize.Spread.Success" xml:space="preserve">
+    <value>Processes were spread equally!</value>
+  </data>
+  <data name="Optimize.Success" xml:space="preserve">
+    <value>Optimization was successful!</value>
+  </data>
+  <data name="GeneratePage.ComputerCount" xml:space="preserve">
+    <value>Number of computers</value>
+  </data>
+  <data name="GeneratePage.ProgramCount" xml:space="preserve">
+    <value>Number of programs</value>
+  </data>
+  <data name="GeneratePage.ProcessCount" xml:space="preserve">
+    <value>Number of processes</value>
+  </data>
+  <data name="GeneratePage.Path" xml:space="preserve">
+    <value>Cluster path</value>
+  </data>
+  <data name="GeneratePage.Path.Choose" xml:space="preserve">
+    <value>Choose path</value>
+  </data>
+  <data name="GeneratePage.Generate" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ModifyComputerPage.Title" xml:space="preserve">
+    <value>Edit {0}</value>
+  </data>
+  <data name="ModifyComputerPage.Success.Text" xml:space="preserve">
+    <value>successfully modified.</value>
+  </data>
+  <data name="ModifyProgramPage.Title" xml:space="preserve">
+    <value>Edit {0}</value>
+  </data>
+  <data name="ModifyProgramPage.Success.Text" xml:space="preserve">
+    <value>successfully modified.</value>
+  </data>
+  <data name="NewInstancePage.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="NewInstancePage.Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="NewInstancePage.Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="Errors.NotEnoughResources" xml:space="preserve">
+    <value>This computer doesn't have enough resources!</value>
+  </data>
+  <data name="NewInstancePage.Success.Title" xml:space="preserve">
+    <value>Process started</value>
+  </data>
+  <data name="NewInstancePage.Success.Text" xml:space="preserve">
+    <value>Process '{0}' is now running on '{1}'.</value>
+  </data>
+  <data name="ProcessesPage.Status.Active" xml:space="preserve">
+    <value>Active only</value>
+  </data>
+  <data name="ProcessesPage.Status.Inactive" xml:space="preserve">
+    <value>Inactive only</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="ProcessesPage.Sort.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="ProcessesPage.Sort.Time" xml:space="preserve">
+    <value>Start time</value>
+  </data>
+  <data name="Computers" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="ProcessesPage.Empty.Title" xml:space="preserve">
+    <value>No processes</value>
+  </data>
+  <data name="ProcessesPage.Empty.Description" xml:space="preserve">
+    <value>There are no processes matching this filter.</value>
+  </data>
+  <data name="ProgramsPage.Sort.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ProgramsPage.Sort.Requested" xml:space="preserve">
+    <value>Requested processes</value>
+  </data>
+  <data name="ProgramsPage.Requested" xml:space="preserve">
+    <value>Requested</value>
+  </data>
+  <data name="ProgramsPage.CardRequested" xml:space="preserve">
+    <value>Requested {0} processes</value>
+  </data>
+  <data name="ProgramsPage.Empty.Title" xml:space="preserve">
+    <value>No programs</value>
+  </data>
+  <data name="ProgramsPage.Empty.FilterText" xml:space="preserve">
+    <value>There are no programs matching this filter.</value>
+  </data>
+  <data name="ProgramsPage.Empty.EmptyText" xml:space="preserve">
+    <value>There are no programs in this cluster.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Title" xml:space="preserve">
+    <value>Shut down {0}?</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Text" xml:space="preserve">
+    <value>This will shut down all {0} processes.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown" xml:space="preserve">
+    <value>Shutdown</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Success" xml:space="preserve">
+    <value>successfully shut down.</value>
+  </data>
 </root>

@@ -132,4 +132,316 @@
   <data name="Settings.Title" xml:space="preserve">
     <value>Beállítások</value>
   </data>
+  <data name="Window.Title" xml:space="preserve">
+    <value>Klaszter Kezelő</value>
+  </data>
+  <data name="Menu.Health" xml:space="preserve">
+    <value>Klaszter Állapot</value>
+  </data>
+  <data name="Menu.Computers" xml:space="preserve">
+    <value>Számítógépek</value>
+  </data>
+  <data name="Menu.Processes" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="Menu.Programs" xml:space="preserve">
+    <value>Programok</value>
+  </data>
+  <data name="Menu.Logs" xml:space="preserve">
+    <value>Klaszter Változtatási Naplók</value>
+  </data>
+  <data name="Menu.Settings" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="Menu.Path.Label" xml:space="preserve">
+    <value>Klaszter: </value>
+  </data>
+  <data name="Menu.Path.None" xml:space="preserve">
+    <value>Nincs</value>
+  </data>
+  <data name="Menu.Load" xml:space="preserve">
+    <value>Klaszter Betöltése</value>
+  </data>
+  <data name="Menu.Generate" xml:space="preserve">
+    <value>Klaszter Generálása</value>
+  </data>
+  <data name="Menu.LoadAnother" xml:space="preserve">
+    <value>Másik Klaszter Betöltése</value>
+  </data>
+  <data name="Menu.Invalid.Title" xml:space="preserve">
+    <value>Érvénytelen mappa</value>
+  </data>
+  <data name="Menu.Invalid.Text" xml:space="preserve">
+    <value>A kiválasztott mappa nem tartalmaz .klaszter fájlt.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Bezárás</value>
+  </data>
+  <data name="StartPage.Title" xml:space="preserve">
+    <value>Nincs Megnyitott Klaszter</value>
+  </data>
+  <data name="StartPage.Description" xml:space="preserve">
+    <value>Kattintson ide egy mappa kiválasztásához</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Új</value>
+  </data>
+  <data name="AddComputerPage.Name.Title" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="AddComputerPage.Name.Description" xml:space="preserve">
+    <value>Egy egyedi azonosító a számítógépnek.</value>
+  </data>
+  <data name="ProcessorCapacity" xml:space="preserve">
+    <value>Processzor Kapacitás</value>
+  </data>
+  <data name="MemoryCapacity" xml:space="preserve">
+    <value>Memória Kapacitás</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Hozzáadás</value>
+  </data>
+  <data name="Errors.Error" xml:space="preserve">
+    <value>Hiba</value>
+  </data>
+  <data name="Errors.MissingFields" xml:space="preserve">
+    <value>Az összes mező kitöltése kötelező!</value>
+  </data>
+  <data name="AddComputerPage.Success.Title" xml:space="preserve">
+    <value>Számítógép létrehozva</value>
+  </data>
+  <data name="AddComputerPage.Success.Text" xml:space="preserve">
+    <value>sikeresen létrehozva.</value>
+  </data>
+  <data name="AddProgramPage.Name.Title" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="AddProgramPage.Name.Description" xml:space="preserve">
+    <value>Egy egyedi azonosító a programnak.</value>
+  </data>
+  <data name="AddProgramPage.Active.Title" xml:space="preserve">
+    <value>Aktív Folyamatok</value>
+  </data>
+  <data name="AddProgramPage.Active.Description" xml:space="preserve">
+    <value>Mennyi aktív folyamat fusson a klaszteren.</value>
+  </data>
+  <data name="ProcessorUsage" xml:space="preserve">
+    <value>Processzor Használat</value>
+  </data>
+  <data name="MemoryUsage" xml:space="preserve">
+    <value>Memória Használat</value>
+  </data>
+  <data name="Errors.ProgramAlreadyExists" xml:space="preserve">
+    <value>Ez a program már létezik a klaszterben!</value>
+  </data>
+  <data name="AddProgramPage.Success.Title" xml:space="preserve">
+    <value>Program létrehozva</value>
+  </data>
+  <data name="AddProgramPage.Success.Text" xml:space="preserve">
+    <value>sikeresen létrehozva.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Szerkesztés</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programok</value>
+  </data>
+  <data name="Processes" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek folyamatok</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Description" xml:space="preserve">
+    <value>Ezen a számítógépen nincsenek futó folyamatok.</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Processzor</value>
+  </data>
+  <data name="Memory" xml:space="preserve">
+    <value>Memória</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktív</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inaktív</value>
+  </data>
+  <data name="ComputerDetailsPage.Processes" xml:space="preserve">
+    <value>Folyamat</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Title" xml:space="preserve">
+    <value>Számítógép törölve</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Text" xml:space="preserve">
+    <value>sikeresen törölve.</value>
+  </data>
+  <data name="Outsourcing.DeleteSuccess" xml:space="preserve">
+    <value>Kiszervezés és törlés sikeres</value>
+  </data>
+  <data name="FilterPlaceholder" xml:space="preserve">
+    <value>Szűrés...</value>
+  </data>
+  <data name="ComputersPage.Sort.Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="ComputersPage.Sort.ProcessorPercent" xml:space="preserve">
+    <value>Processzor Használat (%)</value>
+  </data>
+  <data name="ComputersPage.Sort.MemoryPercent" xml:space="preserve">
+    <value>Memória Használat (%)</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Csökkenő</value>
+  </data>
+  <data name="ComputersPage.Menu.Optimize" xml:space="preserve">
+    <value>Optimalizálás</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Exportálás</value>
+  </data>
+  <data name="ComputersPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek számítógépek</value>
+  </data>
+  <data name="ComputersPage.Empty.EmptyText" xml:space="preserve">
+    <value>Ebben a klaszterben nincsenek számítógépek.</value>
+  </data>
+  <data name="ComputersPage.Empty.FilterText" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő számítógépek.</value>
+  </data>
+  <data name="Optimize.Title" xml:space="preserve">
+    <value>Optimalizálási értékek megadása</value>
+  </data>
+  <data name="Optimize.Button" xml:space="preserve">
+    <value>Optimalizálás</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="Optimize.SpreadQuestion" xml:space="preserve">
+    <value>Ezekkel az értékekkel nem lehet optimalizálni. Szeretné egyenletesen elosztani a folyamatokat?</value>
+  </data>
+  <data name="Optimize.Spread" xml:space="preserve">
+    <value>Szórás</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Siker</value>
+  </data>
+  <data name="Optimize.Spread.Success" xml:space="preserve">
+    <value>A folyamatok egyenlően szét lettek szórva!</value>
+  </data>
+  <data name="Optimize.Success" xml:space="preserve">
+    <value>Az optimalizálás sikeres volt!</value>
+  </data>
+  <data name="GeneratePage.ComputerCount" xml:space="preserve">
+    <value>Számítógépek száma</value>
+  </data>
+  <data name="GeneratePage.ProgramCount" xml:space="preserve">
+    <value>Programok száma</value>
+  </data>
+  <data name="GeneratePage.ProcessCount" xml:space="preserve">
+    <value>Folyamatok száma</value>
+  </data>
+  <data name="GeneratePage.Path" xml:space="preserve">
+    <value>Klaszter elérési út</value>
+  </data>
+  <data name="GeneratePage.Path.Choose" xml:space="preserve">
+    <value>Elérési út kiválasztása</value>
+  </data>
+  <data name="GeneratePage.Generate" xml:space="preserve">
+    <value>Generálás</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Mentés</value>
+  </data>
+  <data name="ModifyComputerPage.Title" xml:space="preserve">
+    <value>{0} szerkesztése</value>
+  </data>
+  <data name="ModifyComputerPage.Success.Text" xml:space="preserve">
+    <value>sikeresen módosítva.</value>
+  </data>
+  <data name="ModifyProgramPage.Title" xml:space="preserve">
+    <value>{0} szerkesztése</value>
+  </data>
+  <data name="ModifyProgramPage.Success.Text" xml:space="preserve">
+    <value>sikeresen módosítva.</value>
+  </data>
+  <data name="NewInstancePage.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="NewInstancePage.Computer" xml:space="preserve">
+    <value>Számítógép</value>
+  </data>
+  <data name="NewInstancePage.Run" xml:space="preserve">
+    <value>Futtatás</value>
+  </data>
+  <data name="Errors.NotEnoughResources" xml:space="preserve">
+    <value>Ennek a számítógépnek nincs elég erőforrás!</value>
+  </data>
+  <data name="NewInstancePage.Success.Title" xml:space="preserve">
+    <value>Folyamat elindítva</value>
+  </data>
+  <data name="NewInstancePage.Success.Text" xml:space="preserve">
+    <value>Folyamat '{0}' elindítva a(z) '{1}' számítógépen.</value>
+  </data>
+  <data name="ProcessesPage.Status.Active" xml:space="preserve">
+    <value>Csak aktív</value>
+  </data>
+  <data name="ProcessesPage.Status.Inactive" xml:space="preserve">
+    <value>Csak inaktív</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Összes</value>
+  </data>
+  <data name="ProcessesPage.Sort.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="ProcessesPage.Sort.Time" xml:space="preserve">
+    <value>Indítási idő</value>
+  </data>
+  <data name="Computers" xml:space="preserve">
+    <value>Számítógépek</value>
+  </data>
+  <data name="ProcessesPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek folyamatok</value>
+  </data>
+  <data name="ProcessesPage.Empty.Description" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő folyamatok.</value>
+  </data>
+  <data name="ProgramsPage.Sort.Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="ProgramsPage.Sort.Requested" xml:space="preserve">
+    <value>Elvárt folyamatok</value>
+  </data>
+  <data name="ProgramsPage.Requested" xml:space="preserve">
+    <value>Elvárt</value>
+  </data>
+  <data name="ProgramsPage.CardRequested" xml:space="preserve">
+    <value>{0} elvárt folyamat</value>
+  </data>
+  <data name="ProgramsPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek programok</value>
+  </data>
+  <data name="ProgramsPage.Empty.FilterText" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő programok.</value>
+  </data>
+  <data name="ProgramsPage.Empty.EmptyText" xml:space="preserve">
+    <value>Ebben a klaszterben nincsenek programok.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Title" xml:space="preserve">
+    <value>{0} leállítása?</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Text" xml:space="preserve">
+    <value>Ez mind a {0} folyamatot leállítja.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown" xml:space="preserve">
+    <value>Leállítás</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Success" xml:space="preserve">
+    <value>sikeresen leállítva.</value>
+  </data>
 </root>

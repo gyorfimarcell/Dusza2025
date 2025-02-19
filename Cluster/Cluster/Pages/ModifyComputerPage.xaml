@@ -12,7 +12,7 @@
         ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
         ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
         <StackPanel Margin="48 0">
-            <controls:CustomCard Title="Processor Capacity"
+            <controls:CustomCard Title="{local:Translate ProcessorCapacity}"
                                  Icon="{ui:SymbolIcon DeveloperBoard24}"
                                  Margin="0 0 0 12">
                 <ui:NumberBox x:Name="nbProcessor"
@@ -22,7 +22,7 @@
                               SmallChange="1"
                               MinWidth="250" />
             </controls:CustomCard>
-            <controls:CustomCard Title="Memory Capacity"
+            <controls:CustomCard Title="{local:Translate MemoryCapacity}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Margin="0 0 0 12">
                 <ui:NumberBox x:Name="nbMemory"
@@ -37,7 +37,7 @@
                        Appearance="Primary"
                        HorizontalAlignment="Right"
                        MinWidth="300"
-                       Content="Save"
+                       Content="{local:Translate Save}"
                        Click="btnSave_Click" />
         </StackPanel>
 </local:CustomPage>

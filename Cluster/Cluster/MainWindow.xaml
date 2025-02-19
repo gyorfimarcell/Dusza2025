@@ -6,7 +6,7 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
         xmlns:local="clr-namespace:Cluster"
         mc:Ignorable="d"
-        Title="Cluster Management"
+        Title="{local:Translate Window.Title}"
         Height="750"
         Width="1200"
         MinHeight="750"
@@ -32,7 +32,7 @@
                 </Grid>
             </ui:NavigationView.Header>
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Cluster Health"
+                <ui:NavigationViewItem Content="{local:Translate Menu.Health}"
                        TargetPageType="{x:Type local:ClusterHealthPage}"
                        NavigationCacheMode="Disabled"
                        IsEnabled="False">
@@ -40,7 +40,7 @@
                         <ui:SymbolIcon Symbol="HeartPulse24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Computers"
+                <ui:NavigationViewItem Content="{local:Translate Menu.Computers}"
                                        TargetPageType="{x:Type local:ComputersPage}"
                                        NavigationCacheMode="Disabled"
                                        IsEnabled="False">
@@ -48,7 +48,7 @@
                         <ui:SymbolIcon Symbol="Server24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Processes"
+                <ui:NavigationViewItem Content="{local:Translate Menu.Processes}"
                        TargetPageType="{x:Type local:ProcessesPage}"
                        NavigationCacheMode="Disabled"
                        IsEnabled="False">
@@ -56,7 +56,7 @@
                         <ui:SymbolIcon Symbol="AppsList24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Programs"
+                <ui:NavigationViewItem Content="{local:Translate Menu.Programs}"
                                        TargetPageType="{x:Type local:ProgramsPage}"
                                        NavigationCacheMode="Disabled"
                                        IsEnabled="False">
@@ -64,7 +64,7 @@
                         <ui:SymbolIcon Symbol="Apps24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Cluster change logs"
+                <ui:NavigationViewItem Content="{local:Translate Menu.Logs}"
                        TargetPageType="{x:Type local:ClusterChangeLogsPage}"
                        NavigationCacheMode="Disabled"
                        IsEnabled="False">
@@ -72,7 +72,7 @@
                         <ui:SymbolIcon Symbol="GroupList24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Settings"
+                <ui:NavigationViewItem Content="{local:Translate Menu.Settings}"
                                        TargetPageType="{x:Type local:SettingsPage}"
                                        NavigationCacheMode="Disabled">
                     <ui:NavigationViewItem.Icon>
@@ -93,9 +93,9 @@
                             </Style.Triggers>
                         </Style>
                     </ui:TextBlock.Style>
-                    <Run FontWeight="Bold" Text="Cluster: "/>
+                    <Run FontWeight="Bold" Text="{local:Translate Menu.Path.Label}"/>
                     <Run x:Name="lblPath"
-                         Text="None"
+                         Text="{local:Translate Menu.Path.None}"
                          Focusable="True"
                          KeyUp="LblPath_OnKeyUp"
                          MouseLeftButtonUp="LblPath_OnMouseLeftButtonUp">
@@ -103,6 +103,9 @@
                             <Style TargetType="Run">
                                 <Style.Triggers>
                                     <Trigger Property="Text" Value="None">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="Nincs">
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </Trigger>
                                     <MultiTrigger>
@@ -119,7 +122,7 @@
                     </Run>
                 </ui:TextBlock>
                 <ui:NavigationViewItem x:Name="loadNavItem"
-                                       Content="Load cluster"
+                                       Content="{local:Translate Menu.Load}"
                                        Click="loadNavItem_Click">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Folder24" />
@@ -127,7 +130,7 @@
                 </ui:NavigationViewItem>
 
                 <ui:NavigationViewItem x:Name="generateClusterNavItem"
-                       Content="Generate cluster" TargetPageType="{x:Type local:GenerateClusterPage}">
+                       Content="{local:Translate Menu.Generate}" TargetPageType="{x:Type local:GenerateClusterPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Add24" />
                     </ui:NavigationViewItem.Icon>

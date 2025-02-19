@@ -38,7 +38,7 @@ namespace Cluster
             if (!Validate.ValidateFileName(tbProgramName.Text) || nbActive.Value == null || 
                 nbProcessor.Value == null || nbMemory.Value == null)
             {
-                _window.RootSnackbarService.Show("Error", "You must fill out all fields!", ControlAppearance.Danger,
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.MissingFields"), ControlAppearance.Danger,
                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
@@ -50,8 +50,8 @@ namespace Cluster
                 if (ProgramType.ReadClusterFile(path).Select(x => x.ProgramName).Contains(program.ProgramName))
                 {
                     _window.RootSnackbarService.Show(
-                        "Error",
-                        "This program already exists in the cluster!",
+                        TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.ProgramAlreadyExists"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
                         TimeSpan.FromSeconds(3)
@@ -68,7 +68,7 @@ namespace Cluster
             catch (Exception ex)
             {
                 _window.RootSnackbarService.Show(
-                    "Error",
+                    TranslationSource.T("Errors.Error"),
                     ex.Message,
                     ControlAppearance.Danger,
                     new SymbolIcon { Symbol = SymbolRegular.Warning24 },
@@ -82,8 +82,8 @@ namespace Cluster
             nbProcessor.Clear();
             nbMemory.Clear();
             _window.RootSnackbarService.Show(
-                "Success",
-                "Program added successfully!",
+                TranslationSource.T("AddProgramPage.Success.Title"),
+                $"'{program.ProgramName}' {TranslationSource.T("AddProgramPage.Success.Text")}",
                 ControlAppearance.Success,
                 new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
                 TimeSpan.FromSeconds(3)

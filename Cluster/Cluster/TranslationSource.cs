@@ -42,6 +42,20 @@ namespace Cluster
         public string this[string key]
             => _resourceManager.GetString(key, _currentCulture) ?? $"#{key}#";
 
+        public string WithParam(string key, params string[] vars)
+        {
+            string text = this[key];
+            for (int i = 0; i < vars.Length; i++)
+            {
+                foreach (string var in vars)
+                {
+                    text = text.Replace("{" + i + "}", vars[i]);
+                }
+            }
+
+            return text;
+        }
+
         public static string T(string key) => Instance[key];
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -72,6 +86,21 @@ namespace Cluster
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
             return binding.ProvideValue(serviceProvider);
+        }
+    }
+
+    public class TranslateStaticExtension : MarkupExtension
+    {
+        private string _key;
+
+        public TranslateStaticExtension(string key)
+        {
+            _key = key;
+        }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return TranslationSource.Instance[_key];
         }
     }
 }

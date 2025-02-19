@@ -121,11 +121,11 @@ public partial class ComputersPage : CustomPage
             string? error = computer.Delete();
             if (error != null)
             {
-                _window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), error, ControlAppearance.Danger,
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
                 return;
             }
-            _window.RootSnackbarService.Show("Computer deleted", $"Computer '{computer.Name}' successfully deleted.",
+            _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"), $"'{computer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
                 ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
         }
         LoadData();
@@ -168,12 +168,12 @@ public partial class ComputersPage : CustomPage
         OptimizeDialog optimizeDialog = new();
         MessageBox mgbox = new()
         {
-            Title = "Set Optimizing Values",
+            Title = TranslationSource.T("Optimize.Title"),
             Content = optimizeDialog,
             IsPrimaryButtonEnabled = true,
             IsSecondaryButtonEnabled = false,
-            PrimaryButtonText = "Optimize",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = TranslationSource.T("Optimize.Button"),
+            CloseButtonText = TranslationSource.T("Cancel"),
             Width = 500,
             MaxWidth = 500,
             MaxHeight = 1000
@@ -188,12 +188,12 @@ public partial class ComputersPage : CustomPage
         {
             mgbox = new()
             {
-                Title = "Error",
-                Content = "Optimizing cannot be done with the given values! Would you like to spread the processes equally?",
+                Title = TranslationSource.T("Errors.Error"),
+                Content = TranslationSource.T("Optimize.SpreadQuestion"),
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = false,
-                PrimaryButtonText = "Spread",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = TranslationSource.T("Optimize.Spread"),
+                CloseButtonText = TranslationSource.T("Cancel"),
             };
             result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
 
@@ -204,13 +204,13 @@ public partial class ComputersPage : CustomPage
             string? spreadRes = Computer.SpreadProcesses(1);
             if (spreadRes != null)
             {
-                window.RootSnackbarService.Show("Error", spreadRes, ControlAppearance.Danger,
+                window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), spreadRes, ControlAppearance.Danger,
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
             }
             else
             {
                 LoadData();
-                window.RootSnackbarService.Show("Success", "Processes were spread equally!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
+                window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Spread.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
             }
             return;
         }
@@ -218,13 +218,13 @@ public partial class ComputersPage : CustomPage
 
         if (optimizeRes != null)
         {
-            window.RootSnackbarService.Show("Error", optimizeRes, ControlAppearance.Danger,
+            window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), optimizeRes, ControlAppearance.Danger,
                 new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
             return;
         }
         Log.WriteLog([$"{optimizeDialog.Minimum}", $"{optimizeDialog.Maximum}", Computers.Count.ToString()], LogType.OptimizeProgramInstances);
         LoadData();
-        window.RootSnackbarService.Show("Success", "Optimization was successful!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
+        window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
     }
 
     private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)

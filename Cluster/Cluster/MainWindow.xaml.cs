@@ -134,7 +134,7 @@ namespace Cluster
                     if (ClusterPath != null && ProgramType.ReadClusterFile(ClusterPath) != null)
                     {
                         RefreshLblPath();
-                        loadNavItem.Content = "Load another Cluster";
+                        loadNavItem.Content = TranslationSource.T("Menu.LoadAnother");
                         EnableNavigationItems();
 
                         RootNavigation.ClearJournal();
@@ -157,13 +157,13 @@ namespace Cluster
                 List<ProgramType> programs = ProgramType.ReadClusterFile(ofd.FolderName);
                 if (programs == null)
                 {
-                    MessageBox msg = new() { Title = "Invalid folder", Content = "The chosen folder doesn't contain a .klaszter file." };
+                    MessageBox msg = new() { Title = TranslationSource.T("Menu.Invalid.Title"), Content = TranslationSource.T("Menu.Invalid.Text"), CloseButtonText = TranslationSource.T("Close") };
                     msg.ShowDialogAsync();
                 }
                 else
                 {
                     lblPath.Text = Path.GetFileName(ClusterPath);
-                    loadNavItem.Content = "Load another Cluster";
+                    loadNavItem.Content = TranslationSource.T("Menu.LoadAnother");
                     EnableNavigationItems();
 
                     RootNavigation.ClearJournal();
