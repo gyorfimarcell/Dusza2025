@@ -7,24 +7,23 @@
       xmlns:local="clr-namespace:Cluster"
       xmlns:controls="clr-namespace:Cluster.Controls"
       mc:Ignorable="d" 
-      Title="SettingsPage"
+      ui:NavigationView.HeaderContent="{local:Translate Settings.Title}"
       d:DesignHeight="750"
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
     <StackPanel Margin="48 0">
-        <controls:CustomCard Title="Language"
+        <controls:CustomCard Title="{local:Translate Settings.Language.Title}"
                          Icon="{ui:SymbolIcon Globe20}"
                          Margin="0 0 0 12">
             <ComboBox x:Name="cbLanguage"
-                      MinWidth="250"
-                      SelectedIndex="0">
-                <ComboBoxItem Content="Hungarian" Tag="hu-HU" />
-                <ComboBoxItem Content="English" Tag="en-US" />
+                      MinWidth="250">
+                <ComboBoxItem Content="{local:Translate Settings.Language.Hungarian}" Tag="hu-HU" />
+                <ComboBoxItem Content="{local:Translate Settings.Language.English}" Tag="en-US" />
             </ComboBox>
         </controls:CustomCard>
-        <controls:CustomCard Title="Dark mode"
+        <controls:CustomCard Title="{local:Translate Settings.Darkmode.Title}"
                          Icon="{ui:SymbolIcon WeatherMoon20}"
                          Margin="0 0 0 12">
             <ui:ToggleSwitch x:Name="tsDarkmode"

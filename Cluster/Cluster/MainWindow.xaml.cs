@@ -22,6 +22,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.Themes;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
+using System.Globalization;
 
 namespace Cluster
 {
@@ -61,7 +62,7 @@ namespace Cluster
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DarkMode)));
             }
         }
-        private const string SETTINGS_KEY = @"HKEY_CURRENT_USER\SOFTWARE\kibirodKolega\Cluster\";
+        public const string SETTINGS_KEY = @"HKEY_CURRENT_USER\SOFTWARE\kibirodKolega\Cluster\";
 
         private IEnumerable originalBreadcrumbs;
 
@@ -176,6 +177,15 @@ namespace Cluster
         {
             bool savedDarkMode = Registry.GetValue(SETTINGS_KEY, "darkMode", false) is string s && s == "True";
             DarkMode = savedDarkMode;
+
+            object? languageSetting = Registry.GetValue(SETTINGS_KEY, "language", "hu-HU");
+            if (languageSetting is string savedLanguage)
+            {
+                TranslationSource.Instance.CurrentCulture = new CultureInfo(savedLanguage);
+            }
+            else {
+                TranslationSource.Instance.CurrentCulture = new CultureInfo("hu-HU");
+            }
 
             RootNavigation.Navigated += RootNavigationOnNavigated;
 
