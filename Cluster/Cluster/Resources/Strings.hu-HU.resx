@@ -148,7 +148,7 @@
     <value>Programok</value>
   </data>
   <data name="Menu.Logs" xml:space="preserve">
-    <value>Klaszter Változtatási Naplók</value>
+    <value>Klaszter Naplók</value>
   </data>
   <data name="Menu.Settings" xml:space="preserve">
     <value>Beállítások</value>
@@ -443,5 +443,35 @@
   </data>
   <data name="ProgramsPage.Shutdown.Success" xml:space="preserve">
     <value>sikeresen leállítva.</value>
+  </data>
+  <data name="HealthPage.Fix" xml:space="preserve">
+    <value>Problémák javítása</value>
+  </data>
+  <data name="HealthPage.Healthy.Title" xml:space="preserve">
+    <value>Egészséges</value>
+  </data>
+  <data name="HealthPage.Healthy.Description" xml:space="preserve">
+    <value>Ebben a klaszterben nem található hiba.</value>
+  </data>
+  <data name="Errors.FixFail" xml:space="preserve">
+    <value>Nem sikerült minden hibát kijavítani</value>
+  </data>
+  <data name="HealthPage.Fixed" xml:space="preserve">
+    <value>Minden hiba kijavítva ({0} hiba)</value>
+  </data>
+  <data name="Logs.Empty" xml:space="preserve">
+    <value>Nincs megjeleníthető napló</value>
+  </data>
+  <data name="Logs.Empty.Text" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő naplófájlok.</value>
+  </data>
+  <data name="Logs.AllTypes" xml:space="preserve">
+    <value>Minden típus</value>
+  </data>
+  <data name="Logs.AllDetails" xml:space="preserve">
+    <value>Minden részlet</value>
+  </data>
+  <data name="Logs.ExpandAll" xml:space="preserve">
+    <value>Összes nyitása</value>
   </data>
 </root>

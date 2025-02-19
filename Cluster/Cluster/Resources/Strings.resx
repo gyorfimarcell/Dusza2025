@@ -148,7 +148,7 @@
     <value>Programs</value>
   </data>
   <data name="Menu.Logs" xml:space="preserve">
-    <value>Cluster Change Logs</value>
+    <value>Cluster Logs</value>
   </data>
   <data name="Menu.Settings" xml:space="preserve">
     <value>Settings</value>
@@ -443,5 +443,35 @@
   </data>
   <data name="ProgramsPage.Shutdown.Success" xml:space="preserve">
     <value>successfully shut down.</value>
+  </data>
+  <data name="HealthPage.Fix" xml:space="preserve">
+    <value>Fix issues</value>
+  </data>
+  <data name="HealthPage.Healthy.Title" xml:space="preserve">
+    <value>Healthy</value>
+  </data>
+  <data name="HealthPage.Healthy.Description" xml:space="preserve">
+    <value>No errors were detected in this cluster.</value>
+  </data>
+  <data name="Errors.FixFail" xml:space="preserve">
+    <value>Failed to fix all errors</value>
+  </data>
+  <data name="HealthPage.Fixed" xml:space="preserve">
+    <value>All errors fixed ({0} errors)</value>
+  </data>
+  <data name="Logs.Empty" xml:space="preserve">
+    <value>No logs to show</value>
+  </data>
+  <data name="Logs.Empty.Text" xml:space="preserve">
+    <value>There are no logs matching this filter.</value>
+  </data>
+  <data name="Logs.AllTypes" xml:space="preserve">
+    <value>All log types</value>
+  </data>
+  <data name="Logs.AllDetails" xml:space="preserve">
+    <value>All log details</value>
+  </data>
+  <data name="Logs.ExpandAll" xml:space="preserve">
+    <value>Expand All</value>
   </data>
 </root>

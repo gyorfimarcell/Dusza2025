@@ -13,8 +13,8 @@ namespace Cluster
     /// </summary>
     public partial class ClusterChangeLogsPage : CustomPage
     {
-        List<string> logTypeOptions = new[] { "All log types" }.Concat(Enum.GetNames(typeof(LogType))).ToList();
-        List<string> logDetailOptions = new[] { "All log details" }.Concat(Log.LogDataTypes.Values.SelectMany(v => v).Distinct()).ToList();
+        List<string> logTypeOptions = new[] { TranslationSource.T("Logs.AllTypes") }.Concat(Enum.GetNames(typeof(LogType))).ToList();
+        List<string> logDetailOptions = new[] { TranslationSource.T("Logs.AllDetails") }.Concat(Log.LogDataTypes.Values.SelectMany(v => v).Distinct()).ToList();
 
         private Dictionary<string, List<string>> logEntries = new();
 
@@ -99,7 +99,7 @@ namespace Cluster
 
                 Grid headerGrid = new Grid();
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) });
 
                 Wpf.Ui.Controls.TextBlock headerTextBlock = new Wpf.Ui.Controls.TextBlock
                 {
@@ -111,7 +111,7 @@ namespace Cluster
 
                 Wpf.Ui.Controls.Button headerButton = new Wpf.Ui.Controls.Button
                 {
-                    Content = "Expand All",
+                    Content = TranslationSource.T("Logs.ExpandAll"),
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center
                 };
@@ -223,7 +223,7 @@ namespace Cluster
             string selectedValue = cbLogTypes.SelectedValue.ToString();
             if (!string.IsNullOrEmpty(selectedValue) && cbLogTypes.SelectedIndex != 0) 
             {
-                cbLogDetails.ItemsSource = new[] { "All log details" }.Concat(logDetailOptions.Where(x => Log.LogDataTypes[Enum.Parse<LogType>(selectedValue)].Contains(x))).ToList();
+                cbLogDetails.ItemsSource = new[] { TranslationSource.T("Logs.AllDetails") }.Concat(logDetailOptions.Where(x => Log.LogDataTypes[Enum.Parse<LogType>(selectedValue)].Contains(x))).ToList();
                 cbLogDetails.SelectedIndex = 0;
             } else
             {

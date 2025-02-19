@@ -698,5 +698,65 @@ namespace Cluster.Resources {
                 return ResourceManager.GetString("ProgramsPage.Shutdown.Success", resourceCulture);
             }
         }
+        
+        public static string HealthPage_Fix {
+            get {
+                return ResourceManager.GetString("HealthPage.Fix", resourceCulture);
+            }
+        }
+        
+        public static string HealthPage_Healthy_Title {
+            get {
+                return ResourceManager.GetString("HealthPage.Healthy.Title", resourceCulture);
+            }
+        }
+        
+        public static string HealthPage_Healthy_Description {
+            get {
+                return ResourceManager.GetString("HealthPage.Healthy.Description", resourceCulture);
+            }
+        }
+        
+        public static string Errors_FixFail {
+            get {
+                return ResourceManager.GetString("Errors.FixFail", resourceCulture);
+            }
+        }
+        
+        public static string HealthPage_Fixed {
+            get {
+                return ResourceManager.GetString("HealthPage.Fixed", resourceCulture);
+            }
+        }
+        
+        public static string Logs_Empty {
+            get {
+                return ResourceManager.GetString("Logs.Empty", resourceCulture);
+            }
+        }
+        
+        public static string Logs_Empty_Text {
+            get {
+                return ResourceManager.GetString("Logs.Empty.Text", resourceCulture);
+            }
+        }
+        
+        public static string Logs_AllTypes {
+            get {
+                return ResourceManager.GetString("Logs.AllTypes", resourceCulture);
+            }
+        }
+        
+        public static string Logs_AllDetails {
+            get {
+                return ResourceManager.GetString("Logs.AllDetails", resourceCulture);
+            }
+        }
+        
+        public static string Logs_ExpandAll {
+            get {
+                return ResourceManager.GetString("Logs.ExpandAll", resourceCulture);
+            }
+        }
     }
 }
