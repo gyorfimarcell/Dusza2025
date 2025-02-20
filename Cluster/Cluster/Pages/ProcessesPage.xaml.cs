@@ -219,7 +219,7 @@ namespace Cluster
                 File.WriteAllLines(sfd.FileName, lines);
                 _window.RootSnackbarService.Show(TranslationSource.T("Export.Success.Title"),
                     TranslationSource.Instance.WithParam("Export.Success.Text", sfd.FileName),
-                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
                 Log.WriteLog(["Processes", sfd.FileName], LogType.ExportCSV);
             }
         }
