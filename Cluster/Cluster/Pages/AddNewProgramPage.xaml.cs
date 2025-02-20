@@ -35,33 +35,26 @@ namespace Cluster
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (txtProgramName.Text.Length < 1 ||
-                !int.TryParse(txtActivePrograms.Text, out int activePrograms) || activePrograms < 1 ||
-                !uint.TryParse(txtCpuMilliCore.Text, out uint cpuMilliCore) || cpuMilliCore < 1 ||
-                !uint.TryParse(txtMemory.Text, out uint memory) || memory < 1)
+            if (!Validate.ValidateFileName(tbProgramName.Text) || nbActive.Value == null || 
+                nbProcessor.Value == null || nbMemory.Value == null)
             {
-                _window.RootSnackbarService.Show(
-                    "Error",
-                    "Please fill out all the fields in proper format!",
-                    ControlAppearance.Danger,
-                    new SymbolIcon { Symbol = SymbolRegular.ErrorCircle24 },
-                    TimeSpan.FromSeconds(5)
-                );
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.MissingFields"), ControlAppearance.Danger,
+                   new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
 
-            ProgramType program = new(txtProgramName.Text, int.Parse(txtActivePrograms.Text), int.Parse(txtCpuMilliCore.Text), int.Parse(txtMemory.Text));
+            ProgramType program = new(tbProgramName.Text, (int)nbActive.Value, (int)nbProcessor.Value, (int)nbMemory.Value);
 
             try
             {
                 if (ProgramType.ReadClusterFile(path).Select(x => x.ProgramName).Contains(program.ProgramName))
                 {
                     _window.RootSnackbarService.Show(
-                        "Error",
-                        "This program already exists in the cluster!",
+                        TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.ProgramAlreadyExists"),
                         ControlAppearance.Danger,
-                        new SymbolIcon { Symbol = SymbolRegular.ErrorCircle24 },
-                        TimeSpan.FromSeconds(5)
+                        new SymbolIcon { Symbol = SymbolRegular.Warning24 },
+                        TimeSpan.FromSeconds(3)
                     );
 
                     return;
@@ -75,25 +68,28 @@ namespace Cluster
             catch (Exception ex)
             {
                 _window.RootSnackbarService.Show(
-                    "Error",
+                    TranslationSource.T("Errors.Error"),
                     ex.Message,
                     ControlAppearance.Danger,
-                    new SymbolIcon { Symbol = SymbolRegular.ErrorCircle24 },
-                    TimeSpan.FromSeconds(5)
+                    new SymbolIcon { Symbol = SymbolRegular.Warning24 },
+                    TimeSpan.FromSeconds(3)
                 );
 
                 return;
             }
-            txtProgramName.Text = txtProgramName.Text = txtActivePrograms.Text = txtCpuMilliCore.Text = txtMemory.Text = "";
+            tbProgramName.Clear();
+            nbActive.Clear();
+            nbProcessor.Clear();
+            nbMemory.Clear();
             _window.RootSnackbarService.Show(
-                "Success",
-                "Program added successfully!",
+                TranslationSource.T("AddProgramPage.Success.Title"),
+                $"'{program.ProgramName}' {TranslationSource.T("AddProgramPage.Success.Text")}",
                 ControlAppearance.Success,
-                new SymbolIcon { Symbol = SymbolRegular.Check24 },
-                TimeSpan.FromSeconds(5)
+                new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
+                TimeSpan.FromSeconds(3)
             );
 
-            txtProgramName.Focus();
+            tbProgramName.Focus();
 
         }
     }

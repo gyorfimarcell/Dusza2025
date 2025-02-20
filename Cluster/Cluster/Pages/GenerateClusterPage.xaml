@@ -1,0 +1,62 @@
+﻿<local:CustomPage x:Class="Cluster.GenerateClusterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Cluster" xmlns:controls="clr-namespace:Cluster.Controls"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="750"
+      d:DesignWidth="1200"
+      Title="GenerateClusterPage" 
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+    <StackPanel Margin="48 0">
+        <controls:CustomCard Title="{local:Translate GeneratePage.ComputerCount}"
+                     Icon="{ui:SymbolIcon Desktop24}"
+                     Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbComputer"
+                  MaxDecimalPlaces="0"
+                  Minimum="1"
+                  PlaceholderText="10"
+                  SmallChange="1"
+                  MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard Title="{local:Translate GeneratePage.ProgramCount}"
+                 Icon="{ui:SymbolIcon Apps24}"
+                 Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbProgram"
+              MaxDecimalPlaces="0"
+              Minimum="1"
+              PlaceholderText="5"
+              SmallChange="1"
+              MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard Title="{local:Translate GeneratePage.ProcessCount}"
+                 Icon="{ui:SymbolIcon Settings24}"
+                 Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbProcess"
+              MaxDecimalPlaces="0"
+              Minimum="1"
+              PlaceholderText="100"
+              SmallChange="1"
+              MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard x:Name="PathCard"
+                             Title="{local:Translate GeneratePage.Path}"
+                             Icon="{ui:SymbolIcon Folder24}"
+                             Margin="0 0 0 12">
+            <ui:Button x:Name="btnChoosePath"
+                       MinWidth="250"
+                       Content="{local:Translate GeneratePage.Path.Choose}"
+                       Click="btnChoosePath_Click"/>
+        </controls:CustomCard>
+
+        <ui:Button x:Name="btnGenerate"
+                   Appearance="Primary"
+                   HorizontalAlignment="Right"
+                   MinWidth="300"
+                   Content="{local:Translate GeneratePage.Generate}"
+                   Click="btnGenerate_Click" />
+    </StackPanel>
+</local:CustomPage>

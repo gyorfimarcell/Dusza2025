@@ -22,11 +22,44 @@ namespace Cluster
         ShutdownProgramInstance,
         ModifyProgram,
         ShutdownProgram,
-        ClearProramInstances,
-        OptimizeProgramInstances
+        ClearProgramInstances,
+        MoveProgramInstance,
+        OptimizeProgramInstances,
+        ModifyComputer,
+        SpreadProgramInstances,
+        FixIssues,
+        ActivateProgramInstance,
+        DeactivateProgramInstance,
+        GenerateCluster,
     }
-    public static class Log
+
+    public class Log
     {
+
+        public static Dictionary<LogType, List<string>> LogDataTypes = new()
+        {
+            { LogType.OpenProgram, new(){} },
+            { LogType.CloseProgram, new(){} },
+            { LogType.LoadCluster, new(){"Path"} },
+            { LogType.AddComputer, new(){"Name", "CPU", "Memory"} },
+            { LogType.DeleteComputer, new(){"Name", "CPU", "Memory"} },
+            { LogType.ExportCSV, new(){"Type", "Path"} },
+            { LogType.AddProgram, new(){"Name", "CPU", "Memory", "Active programs"} },
+            { LogType.RunProgramInstance, new(){ "Instance", "Start", "Active", "CPU", "Memory", "Computer" } },
+            { LogType.ShutdownProgramInstance, new(){"Instance", "Start", "Active", "CPU", "Memory", "Computer"} },
+            { LogType.ModifyProgram, new(){"Name", "CPU", "Memory", "Active programs"} },
+            { LogType.ShutdownProgram, new(){"Name", "CPU", "Memory", "Instances"}},
+            { LogType.ClearProgramInstances, new(){"Computer", "Process count"} },
+            { LogType.MoveProgramInstance, new(){ "Instance", "Source computer", "Destination computer"} },
+            { LogType.OptimizeProgramInstances, new(){ "Minimum Percent", "Maximum Percent", "Computers"} },
+            { LogType.ModifyComputer, new(){"Name", "CPU Capacity", "Memory Capacity"} },
+            { LogType.SpreadProgramInstances, new(){ "CPU Spread Percent", "RAM Spread Percent", "Computers", "Processes" } },
+            { LogType.FixIssues, new(){ "Fixed Processes" } },
+            { LogType.ActivateProgramInstance, new(){"Instance", "Start", "Active", "Processor Usage", "Memory Usage"} },
+            { LogType.DeactivateProgramInstance, new(){ "Instance", "Host Computer", "Active", "Processor Usage", "Memory Usage"} },
+            { LogType.GenerateCluster, new(){ "Path", "Computers", "Programtypes", "Processes" } }
+        };
+
         public static string GetLogDirectoryPath()
         {
             string logDirectoryPath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, "Logs");

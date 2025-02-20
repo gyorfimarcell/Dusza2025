@@ -26,27 +26,33 @@ namespace Cluster
 
         public static List<ProgramType> ReadClusterFile(string path)
         {
-            string[] files = Directory.GetFiles(path);
-            List<ProgramType> programs = new();
-            if (!files.Select(x => Path.GetFileName(x)).Contains(".klaszter"))
+            try
             {
+                string[] files = Directory.GetFiles(path);
+                List<ProgramType> programs = new();
+                if (!files.Select(x => Path.GetFileName(x)).Contains(".klaszter"))
+                {
+                    return null;
+                }
+                StreamReader sr = new(path + "\\.klaszter");
+                List<string> currentValues = new();
+                while (!sr.EndOfStream)
+                {
+                    currentValues.Add(sr.ReadLine());
+                    if (currentValues.Count() == 4)
+                    {
+                        ProgramType newProgram = new(currentValues[0], int.Parse(currentValues[1]), int.Parse(currentValues[2]), int.Parse(currentValues[3]));
+                        programs.Add(newProgram);
+                        currentValues.Clear();
+                    }
+                }
+                sr.Close();
+
+                return programs;
+            }
+            catch (Exception ex) {
                 return null;
             }
-            StreamReader sr = new(path + "\\.klaszter");
-            List<string> currentValues = new();
-            while (!sr.EndOfStream)
-            {
-                currentValues.Add(sr.ReadLine());
-                if (currentValues.Count() == 4)
-                {
-                    ProgramType newProgram = new(currentValues[0], int.Parse(currentValues[1]), int.Parse(currentValues[2]), int.Parse(currentValues[3]));
-                    programs.Add(newProgram);
-                    currentValues.Clear();
-                }
-            }
-            sr.Close();
-
-            return programs;
         }
 
         public void AddNewProgramToCluster(string path)
@@ -60,22 +66,25 @@ namespace Cluster
             return $"{program.ProgramName}\n{program.ActivePrograms}\n{program.CpuMilliCore}\n{program.Memory}\n";
         }
 
-        public static bool ShutdownProgram(string path, List<ProgramType> programs, string programName)
+        public static bool ShutdownProgram(ProgramType program)
         {
-            if(!programs.Select(x => x.ProgramName).Contains(programName)) { return false; }
-            List<ProgramType> newPrograms = programs.Where(x => x.ProgramName != programName).ToList();
+            List<ProgramType> programs = ReadClusterFile(MainWindow.ClusterPath);
+            int index = programs.FindIndex(x => x.ProgramName == program.ProgramName);
+            if(index == -1) { return false; }
+
+            programs.RemoveAt(index);
             string fileContent = "";
-            foreach (var program in newPrograms)
+            foreach (var p in programs)
             {
-                fileContent += ClusterFileLines(program);
+                fileContent += ClusterFileLines(p);
             }
-            File.WriteAllText(path + "/.klaszter", fileContent);
-            foreach (var directory in Directory.GetDirectories(path)) 
+            File.WriteAllText(MainWindow.ClusterPath + "/.klaszter", fileContent);
+            foreach (var directory in Directory.GetDirectories(MainWindow.ClusterPath)) 
             {
                 string[] directoryFiles = Directory.GetFiles(directory);
                 foreach (var file in directoryFiles)
                 {
-                    if (Path.GetFileName(file).Contains(programName))
+                    if (Path.GetFileName(file).Contains(program.ProgramName))
                     {
                         File.Delete(file);
                     }
@@ -84,19 +93,22 @@ namespace Cluster
             return true;
         }
 
-        public static bool ModifyProgram(string path, List<ProgramType> programs, string programName, List<string> values)
+        public static bool ModifyProgram(ProgramType program, int activePrograms, int processor, int memory)
         {
-            if (!programs.Select(x => x.ProgramName).Contains(programName)) { return false; }
-            List<ProgramType> newPrograms = programs;
-            newPrograms[programs.FindIndex(x => x.ProgramName == programName)].ActivePrograms = int.Parse(values[0]);
-            newPrograms[programs.FindIndex(x => x.ProgramName == programName)].CpuMilliCore = int.Parse(values[1]);
-            newPrograms[programs.FindIndex(x => x.ProgramName == programName)].Memory = int.Parse(values[2]);
+            List<ProgramType> programs = ReadClusterFile(MainWindow.ClusterPath);
+
+            int index = programs.FindIndex(x => x.ProgramName == program.ProgramName);
+            if (index == -1) { return false; }
+
+            programs[index].ActivePrograms = activePrograms;
+            programs[index].CpuMilliCore = processor;
+            programs[index].Memory = memory;
             string fileContent = "";
-            foreach (var program in newPrograms)
+            foreach (var p in programs)
             {
-                fileContent += ClusterFileLines(program);
+                fileContent += ClusterFileLines(p);
             }
-            File.WriteAllText(path + "/.klaszter", fileContent);
+            File.WriteAllText(MainWindow.ClusterPath + "/.klaszter", fileContent);
             return true;
         }
     }

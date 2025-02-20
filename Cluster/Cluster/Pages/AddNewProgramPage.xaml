@@ -5,43 +5,61 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:local="clr-namespace:Cluster"
+      xmlns:controls="clr-namespace:Cluster.Controls"
       mc:Ignorable="d" 
-      Title="New Program"
+      Title="{local:Translate New}"
+      ui:NavigationView.HeaderContent="{local:Translate New}"
       d:DesignHeight="750"
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+    <StackPanel Margin="48 0">
+        <controls:CustomCard Title="{local:Translate AddProgramPage.Name.Title}"
+                             Description="{local:Translate AddProgramPage.Name.Description}"
+                             Icon="{ui:SymbolIcon Tag20}"
+                             Margin="0 0 0 12">
+            <ui:TextBox x:Name="tbProgramName"
+                        PlaceholderText="my_program"
+                        MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard Title="{local:Translate AddProgramPage.Active.Title}"
+                             Description="{local:Translate AddProgramPage.Active.Description}"
+                             Icon="{ui:SymbolIcon Play24}"
+                             Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbActive"
+                          MaxDecimalPlaces="0"
+                          Minimum="1"
+                          PlaceholderText="10"
+                          SmallChange="1"
+                          MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard Title="{local:Translate ProcessorUsage}"
+                         Icon="{ui:SymbolIcon DeveloperBoard24}"
+                         Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbProcessor"
+                      MaxDecimalPlaces="0"
+                      Minimum="1"
+                      PlaceholderText="100"
+                      SmallChange="1"
+                      MinWidth="250" />
+        </controls:CustomCard>
+        <controls:CustomCard Title="{local:Translate MemoryUsage}"
+                         Icon="{ui:SymbolIcon Ram20}"
+                         Margin="0 0 0 12">
+            <ui:NumberBox x:Name="nbMemory"
+                      MaxDecimalPlaces="0"
+                      Minimum="1"
+                      PlaceholderText="100"
+                      SmallChange="1"
+                      MinWidth="250" />
+        </controls:CustomCard>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-            <TextBlock Text="New Program Name:" Margin="0 20 0 0" />
-            <TextBox x:Name="txtProgramName" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Margin="0 0 20 0">
-                    <TextBlock Text="Active Programs:" Margin="0 20 0 0" />
-                    <TextBox x:Name="txtActivePrograms" />
-                </StackPanel>
-                <StackPanel Grid.Column="1" Margin="10 0 10 0">
-                    <TextBlock Text="CPU Millicore:" Margin="0 20 0 0" />
-                    <TextBox x:Name="txtCpuMilliCore" />
-                </StackPanel>
-                <StackPanel Grid.Column="2" Margin="20 0 0 0">
-                    <TextBlock Text="Memory:" Margin="0 20 0 0" />
-                    <TextBox x:Name="txtMemory" />
-                </StackPanel>
-            </Grid>
-            <Button x:Name="btnSave" Content="Save" Margin="0 20 0 0" Click="btnSave_Click" />
-        </StackPanel>
-    </Grid>
+        <ui:Button x:Name="btnSave"
+               Appearance="Primary"
+               HorizontalAlignment="Right"
+               MinWidth="300"
+               Content="{local:Translate Add}"
+               Click="btnSave_Click" />
+    </StackPanel>
 </Page>

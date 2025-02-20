@@ -11,60 +11,65 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace Cluster
 {
     /// <summary>
     /// Interaction logic for ModifyProgram.xaml
     /// </summary>
-    public partial class ModifyProgramPage : Page
+    public partial class ModifyProgramPage : CustomPage
     {
-        List<ProgramType> programs = new List<ProgramType>();
-        string path = string.Empty;
+        ProgramType Program;
+
         public ModifyProgramPage()
         {
             InitializeComponent();
-            path = MainWindow.ClusterPath;
-            programs = ProgramType.ReadClusterFile(path);
-            lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
+
+            Loaded += ModifyProgramPage_Loaded;
         }
 
-        private void lbCurrentPrograms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ModifyProgramPage_Loaded(object sender, RoutedEventArgs e)
         {
-            btnModify.Visibility = lbCurrentPrograms.SelectedItem != null ? Visibility.Visible : Visibility.Hidden;
-        }
+            if (DataContext is not ProgramType program)
+            {
+                _window.RootNavigation.GoBack();
+                return;
+            }
 
-        private void btnModify_Click(object sender, RoutedEventArgs e)
-        {
-            stEdit.Visibility = Visibility.Visible;
-            ProgramType foundProgram = programs.First(x => x.ProgramName == lbCurrentPrograms.SelectedItem.ToString());
-            txtProgram.Text = foundProgram.ProgramName;
-            txtActivePrograms.Text = foundProgram.ActivePrograms.ToString();
-            txtCpuMilliCore.Text = foundProgram.CpuMilliCore.ToString();
-            txtMemory.Text = foundProgram.Memory.ToString();
+            Program = program;
+            ChangeTitle(TranslationSource.Instance.WithParam("ModifyProgramPage.Title", program.ProgramName));
+            nbActive.Value = Program.ActivePrograms;
+            nbProcessor.Value = Program.CpuMilliCore;
+            nbMemory.Value = Program.Memory;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            ProgramType foundProgram = programs.First(x => x.ProgramName == lbCurrentPrograms.SelectedItem.ToString());
-            if(!int.TryParse(txtActivePrograms.Text, out int result1) || !int.TryParse(txtCpuMilliCore.Text, out int result2) || !int.TryParse(txtMemory.Text, out int result3))
+            if(nbActive.Value == null || nbProcessor.Value == null || nbMemory.Value == null)
             {
-                MessageBox.Show("Please give numbers to all fields!");
-                return;
-            } else if(result1 < 0 || result2 < 0 || result3 < 0)
-            {
-                MessageBox.Show("Please give numbers greater than 0!");
+                _window.RootSnackbarService.Show(
+                        TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.MissingFields"),
+                        ControlAppearance.Danger,
+                        new SymbolIcon { Symbol = SymbolRegular.Warning24 },
+                        TimeSpan.FromSeconds(3)
+                    );
                 return;
             }
-            List<string> inputValues = new List<string>() { txtActivePrograms.Text, txtCpuMilliCore.Text, txtMemory.Text };
-            bool result = ProgramType.ModifyProgram(path, programs, foundProgram.ProgramName, inputValues);
+
+            bool result = ProgramType.ModifyProgram(Program, (int)nbActive.Value, (int)nbProcessor.Value, (int)nbMemory.Value);
             if (result)
             {
-                Log.WriteLog([foundProgram.ProgramName, $"{foundProgram.CpuMilliCore}", $"{foundProgram.Memory}", $"{foundProgram.ActivePrograms}"], LogType.ModifyProgram);
-                programs = ProgramType.ReadClusterFile(path);
-                lbCurrentPrograms.ItemsSource = programs.Select(x => x.ProgramName).ToList();
-                stEdit.Visibility = Visibility.Hidden;
-                MessageBox.Show("Program has been successfully modified!");
+                Log.WriteLog([Program.ProgramName, $"{nbProcessor.Value}", $"{nbMemory.Value}", $"{nbActive.Value}"], LogType.ModifyProgram);
+                _window.RootSnackbarService.Show(
+                    TranslationSource.T("Success"),
+                    $"'{Program.ProgramName}' {TranslationSource.T("ModifyProgramPage.Success.Text")}",
+                    ControlAppearance.Success,
+                    new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
+                    TimeSpan.FromSeconds(3)
+                );
+                _window.RootNavigation.Navigate(typeof(ProgramsPage));
             }
         }
     }

@@ -11,6 +11,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
+using Wpf.Ui.Controls;
 
 namespace Cluster
 {
@@ -19,6 +21,7 @@ namespace Cluster
     /// </summary>
     public partial class NewInstancePage : Page
     {
+        MainWindow _window;
         readonly string path;
         readonly List<ProgramType> instances;
 
@@ -26,6 +29,7 @@ namespace Cluster
         {
             InitializeComponent();
 
+            _window = (MainWindow)Application.Current.MainWindow!;
             path = MainWindow.ClusterPath;
 
             instances = ProgramType.ReadClusterFile(path).ToList();
@@ -37,7 +41,8 @@ namespace Cluster
         {
             if (cbComputer.SelectedIndex == -1 || cbProgram.SelectedIndex == -1)
             {
-                MessageBox.Show("Please fill out all the fields!");
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.MissingFields"), ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
 
@@ -50,14 +55,19 @@ namespace Cluster
 
             if (cpuUsage + program.CpuMilliCore > computer.ProcessorCore || memoryUsage + program.Memory > computer.RamCapacity)
             {
-                MessageBox.Show("This computer doesn't have enough resources!");
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.NotEnoughResources"), ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
 
-            Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory);
+            Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory, tsActive.IsChecked == true);
             process.Write(Path.Combine(path, computer.Name));
 
-            Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}"], LogType.RunProgramInstance);
+            _window.RootSnackbarService.Show(TranslationSource.T("NewInstancePage.Success.Title"),
+                TranslationSource.Instance.WithParam("NewInstancePage.Success.Text", process.FileName, computer.Name),
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+
+            Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}", computer.Name], LogType.RunProgramInstance);
         }
 
         private void cbProgram_SelectionChanged(object sender, SelectionChangedEventArgs e)

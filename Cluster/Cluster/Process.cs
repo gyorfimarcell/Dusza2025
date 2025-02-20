@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
+using System.Xml.Linq;
+using Path = System.IO.Path;
 
 namespace Cluster
 {
@@ -15,6 +19,16 @@ namespace Cluster
         public bool Active { get; set; }
         public int ProcessorUsage { get; set; }
         public int MemoryUsage { get; set; }
+        
+        Computer? _hostComputer = null;
+
+        public Computer HostComputer
+        {
+            get =>
+                _hostComputer ?? (_hostComputer = Computer.GetComputers(MainWindow.ClusterPath)
+                    .Find(x => x.processes.Any(x => x.FileName == this.FileName)));
+            set => _hostComputer = value;
+        }
 
         public Process(string path)
         {
@@ -29,11 +43,11 @@ namespace Cluster
             this.MemoryUsage = Convert.ToInt32(lines[3]);
         }
 
-        public Process(string programName, int processorUsage, int MemoryUsage) {
+        public Process(string programName, int processorUsage, int MemoryUsage, bool active) {
             this.ProgramName=programName;
             this.ProcessId = GenerateId();
             this.StartTime = DateTime.Now;
-            this.Active = true;
+            this.Active = active;
             this.ProcessorUsage = processorUsage;
             this.MemoryUsage = MemoryUsage;
         }
@@ -52,6 +66,11 @@ namespace Cluster
                 return String.Join("\n", lines);
             }
         }
+
+        public string GetCSVRow() {
+            string status = Active ? "Active" : "Inactive";
+            return $"{FileName};{HostComputer.Name};{status};{ProcessorUsage};{MemoryUsage}";
+    }
 
         public void Write(string folder) {
             File.WriteAllText(Path.Combine(folder, FileName), FileContent);
@@ -77,6 +96,28 @@ namespace Cluster
             }
 
             return id;
+        }
+
+        public void Shutdown() {
+            File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
+            Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}", HostComputer.Name], LogType.ShutdownProgramInstance);
+        }
+
+        public bool ToggleActive() {
+            if (Active == false)
+            {
+                Computer host = HostComputer;
+
+                if (host.ProcessorUsage + ProcessorUsage > host.ProcessorCore ||
+                    host.MemoryUsage + MemoryUsage > host.RamCapacity)
+                {
+                    return false;
+                }
+            }
+            Active = !Active;
+            Write($@"{MainWindow.ClusterPath}\{HostComputer.Name}");
+            Log.WriteLog([$"{FileName}", HostComputer.Name, $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], Active ? LogType.ActivateProgramInstance : LogType.DeactivateProgramInstance);
+            return true;
         }
     }
 }
