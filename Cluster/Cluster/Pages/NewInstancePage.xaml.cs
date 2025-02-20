@@ -53,7 +53,7 @@ namespace Cluster
             int cpuUsage = computer.processes.Where(x => x.Active).Sum(x => x.ProcessorUsage);
             int memoryUsage = computer.processes.Where(x => x.Active).Sum(x => x.MemoryUsage);
 
-            if (cpuUsage + program.CpuMilliCore > computer.ProcessorCore || memoryUsage + program.Memory > computer.RamCapacity)
+            if ((cpuUsage + program.CpuMilliCore > computer.ProcessorCore || memoryUsage + program.Memory > computer.RamCapacity) && tsActive.IsChecked == true)
             {
                 _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.NotEnoughResources"), ControlAppearance.Danger,
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
@@ -73,7 +73,17 @@ namespace Cluster
         private void cbProgram_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ProgramType program = instances.Find(x => x.ProgramName == cbProgram.SelectedItem.ToString());
-            cbComputer.ItemsSource = Computer.GetComputers(path).Where(x => x.HasEnoughCore(program.CpuMilliCore) && x.HasEnoughRam(program.Memory)).Select(x => x.Name);
+            cbComputer.ItemsSource = tsActive.IsChecked == true ? Computer.GetComputers(path).Where(x => x.HasEnoughCore(program.CpuMilliCore) && x.HasEnoughRam(program.Memory)).Select(x => x.Name) : Computer.GetComputers(path).Select(x => x.Name);
+        }
+
+        private void tsActive_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            if (cbProgram.SelectedIndex == -1)
+            {
+                return;
+            }
+            ProgramType program = instances.Find(x => x.ProgramName == cbProgram.SelectedItem.ToString());
+            cbComputer.ItemsSource = tsActive.IsChecked == true ? Computer.GetComputers(path).Where(x => x.HasEnoughCore(program.CpuMilliCore) && x.HasEnoughRam(program.Memory)).Select(x => x.Name) : Computer.GetComputers(path).Select(x => x.Name);
         }
     }
 }

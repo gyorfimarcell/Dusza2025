@@ -708,4 +708,13 @@
   <data name="Export.Success.Text" xml:space="preserve">
     <value>Fájl elmentve a '{0}' elérési útra.</value>
   </data>
+  <data name="GeneratePage.SpreadClusters" xml:space="preserve">
+    <value>Futattandó példányok szórása</value>
+  </data>
+  <data name="GeneratePage.Random" xml:space="preserve">
+    <value>Véletlenszerű</value>
+  </data>
+  <data name="GeneratePage.Consistent" xml:space="preserve">
+    <value>Egyenletes</value>
+  </data>
 </root>
