@@ -100,7 +100,7 @@ namespace Cluster
         {
             menuItemPrograms.Items.Clear();
 
-            MenuItem allItem = new MenuItem() { Header = "All", StaysOpenOnClick = true };
+            MenuItem allItem = new MenuItem() { Header = TranslationSource.T("All"), StaysOpenOnClick = true };
             allItem.Click += ProgramsAllClick;
             menuItemPrograms.Items.Add(allItem);
 
@@ -167,7 +167,7 @@ namespace Cluster
             List<Process> filteredList = filtered.ToList();
 
             icProcesses.ItemsSource = filteredList;
-            tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
+            tbCount.Text = $"{filteredList.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({filteredList.Count(x => x.Active)} {TranslationSource.T("Active")})";
             UpdateCharts();
         }
 

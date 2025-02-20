@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,8 +14,13 @@ namespace Cluster
     /// </summary>
     public partial class ClusterChangeLogsPage : CustomPage
     {
-        List<string> logTypeOptions = new[] { "All log types" }.Concat(Enum.GetNames(typeof(LogType))).ToList();
-        List<string> logDetailOptions = new[] { "All log details" }.Concat(Log.LogDataTypes.Values.SelectMany(v => v).Distinct()).ToList();
+        List<KeyValuePair<string, string>> logTypeOptions = [new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
+          ..(Enum.GetNames(typeof(LogType)).Select(x => new KeyValuePair<string, string>(x, TranslationSource.T("LogType." + x))))
+        ];
+
+        List<KeyValuePair<string, string>> logDetailOptions = [new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
+            ..(Log.LogDataTypes.Values.SelectMany(v => v).Distinct().Select(x => new KeyValuePair<string, string>(x, TranslationSource.T("LogDetail." + x))))
+        ];
 
         private Dictionary<string, List<string>> logEntries = new();
 
@@ -22,7 +28,13 @@ namespace Cluster
         {
             InitializeComponent();
             cbLogTypes.ItemsSource = logTypeOptions;
+            cbLogTypes.SelectedValuePath = "Key";
+            cbLogTypes.DisplayMemberPath = "Value";
+
             cbLogDetails.ItemsSource = logDetailOptions;
+            cbLogDetails.SelectedValuePath = "Key";
+            cbLogDetails.DisplayMemberPath = "Value";
+
             cbLogTypes.SelectedIndex = 0;
             cbLogDetails.SelectedIndex = 0;
 
@@ -99,7 +111,7 @@ namespace Cluster
 
                 Grid headerGrid = new Grid();
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
+                headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) });
 
                 Wpf.Ui.Controls.TextBlock headerTextBlock = new Wpf.Ui.Controls.TextBlock
                 {
@@ -111,7 +123,7 @@ namespace Cluster
 
                 Wpf.Ui.Controls.Button headerButton = new Wpf.Ui.Controls.Button
                 {
-                    Content = "Expand All",
+                    Content = TranslationSource.T("Logs.ExpandAll"),
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center
                 };
@@ -147,7 +159,7 @@ namespace Cluster
                         Log.LogDataTypes[type].Contains(cbLogDetails.SelectedValue.ToString()) && x.Contains(tbFilter.Text)))
                         continue;
 
-                    string headerText = $"{type} - {DateTime.ParseExact(lineData[1], "yyyy.MM.dd. HH:mm:ss", CultureInfo.InvariantCulture):HH:mm}";
+                    string headerText = $"{TranslationSource.T("LogType." + type)} - {DateTime.ParseExact(lineData[1], "yyyy.MM.dd. HH:mm:ss", CultureInfo.InvariantCulture):HH:mm}";
 
                     if (lineData.Length > 2)
                     {
@@ -164,7 +176,7 @@ namespace Cluster
 
                         for (int i = 0; i < lineData[2..].Length; i++)
                         {
-                            cardData.Add($"{Log.LogDataTypes[type][i]}: {lineData[i + 2]}");
+                            cardData.Add($"{TranslationSource.T("LogDetail." + Log.LogDataTypes[type][i])}: {lineData[i + 2]}");
                         }
 
                         subStackPanel.Children.Add(GetUnexpandableCard(cardData, true));
@@ -223,7 +235,10 @@ namespace Cluster
             string selectedValue = cbLogTypes.SelectedValue.ToString();
             if (!string.IsNullOrEmpty(selectedValue) && cbLogTypes.SelectedIndex != 0) 
             {
-                cbLogDetails.ItemsSource = new[] { "All log details" }.Concat(logDetailOptions.Where(x => Log.LogDataTypes[Enum.Parse<LogType>(selectedValue)].Contains(x))).ToList();
+                List<KeyValuePair<string, string>> filtered = [new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
+                    ..(logDetailOptions.Where(x => Log.LogDataTypes[Enum.Parse<LogType>(selectedValue)].Contains(x.Key)))
+                ];
+                cbLogDetails.ItemsSource = filtered;
                 cbLogDetails.SelectedIndex = 0;
             } else
             {

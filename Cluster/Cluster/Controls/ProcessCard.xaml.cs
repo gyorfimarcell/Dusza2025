@@ -83,7 +83,7 @@ namespace Cluster.Controls
                     host.MemoryUsage + Process.MemoryUsage > host.RamCapacity) {
 
                     MainWindow window = (MainWindow)Application.Current.MainWindow!;
-                    window.RootSnackbarService.Show("Error", $"Computer '{host.Name}' doesn't have enough resources!",
+                    window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.NotEnoughResources"),
                         ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                     return;
                 }
