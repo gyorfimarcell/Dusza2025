@@ -379,7 +379,7 @@
     <value>Futtatás</value>
   </data>
   <data name="Errors.NotEnoughResources" xml:space="preserve">
-    <value>Ennek a számítógépnek nincs elég erőforrás!</value>
+    <value>A gazdaszámítógépnek nincs elég erőforrása.</value>
   </data>
   <data name="NewInstancePage.Success.Title" xml:space="preserve">
     <value>Folyamat elindítva</value>
