@@ -42,6 +42,17 @@
               SmallChange="1"
               MinWidth="250" />
         </controls:CustomCard>
+
+        <controls:CustomCard x:Name="SpreadClusters"
+                     Title="{local:Translate GeneratePage.SpreadClusters}"
+                     Icon="{ui:SymbolIcon Settings24}"
+                     Margin="0 0 0 12">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton IsChecked="True" x:Name="rbConsistent" Content="{local:Translate GeneratePage.Consistent}" />
+                <RadioButton x:Name="rbRandom" Content="{local:Translate GeneratePage.Random}" />
+            </StackPanel>
+        </controls:CustomCard>
+
         <controls:CustomCard x:Name="PathCard"
                              Title="{local:Translate GeneratePage.Path}"
                              Icon="{ui:SymbolIcon Folder24}"
