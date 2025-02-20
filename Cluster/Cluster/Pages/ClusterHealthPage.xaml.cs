@@ -79,7 +79,7 @@ namespace Cluster
             Log.WriteLog([$"{allResCount}"], LogType.FixIssues);
             _window.RootSnackbarService.Show(TranslationSource.T("Success"),
                 TranslationSource.Instance.WithParam("HealthPage.Fixed", allResCount.ToString()),
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
         }
     }
 }
