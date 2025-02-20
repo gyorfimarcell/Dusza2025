@@ -1,6 +1,6 @@
 # A klaszter
 
-Ebben a feladatban a számítógépek mappaként, míg a futó folyamatok fájlként lesznek ábrázolva. Például a „klaszter1” mappa az alábbi tartalommal rendelkezik:
+A programban a számítógépek mappaként, míg a futó folyamatok fájlként lesznek ábrázolva. Például a „klaszter1” mappa az alábbi tartalommal rendelkezik:
 
 ```.
 ├── .klaszter
@@ -13,21 +13,23 @@ Ebben a feladatban a számítógépek mappaként, míg a futó folyamatok fájlk
 └── chrome-qwerty
 ```
 
-Ebben a klaszterben jelenleg két számítógép található: szamitogep1 és szamitogep2. Az első gépen egy chrome és egy word folyamat fut, míg a másodikon csak egy chrome. A .szamitogep_konfig fájlokat leszámítva minden fájl egy futó folyamatot jelöl, vagyis egy adott  program egy példányát. Egy mappát akkor tekintünk a klaszterhez tartozó számítógépnek, ha tartalmaz egy .szamitogep_konfig fájlt.
+Ebben a klaszterben jelenleg két számítógép található: szamitogep1 és szamitogep2. Az első gépen egy chrome és egy word folyamat fut, míg a másodikon csak egy chrome. A .szamitogep_konfig fájlokat leszámítva minden fájl egy futó folyamatot jelöl, vagyis egy adott program egy példányát. Egy mappát akkor tekintünk a klaszterhez tartozó számítógépnek, ha tartalmaz egy .szamitogep_konfig fájlt.
 
 ## Tulajdonságok
 
 A klaszteren elvárt futó folyamatokat a gyökérkönyvtárban található .klaszter fájl (adatbázisfájl) tartalmazza, az alábbi formátumban:
+
 ```
-chrome 
-2 
-100 
-200 
-word 
-1 
-150 
+chrome
+2
+100
+200
+word
+1
+150
 500
-``` 
+```
+
 A példa fájl azt mutatja, hogy a klaszteren a „chrome” programnak 2 „AKTÍV” példányban kell futnia, egyenként 100 millimag processzorral és 200 MB memóriával, valamint a „word” programnak 1 „AKTÍV” példányban 150 millimag processzorral és 100 MB memóriával.
 
 A fájl sorai tehát az alábbi információkat tartalmazzák minden program esetében:
@@ -38,27 +40,39 @@ A fájl sorai tehát az alábbi információkat tartalmazzák minden program ese
 
 A felhasználó legfőbb célja, hogy olyan állapotot érjen el a klaszteren, amelyben minden programból a megfelelő számú példány fut valamelyik számítógépen.
 
-
 ## Betöltés
 
 A program megynitása után több lehetőségünk van:
 
 1. Egy már jelenlegi klaszter kiválasztása
+   ![Meglévő klaszter betöltése](../img/felhasznaloi/klaszter/open-existing-cluster.png)<br>
 2. Új klaszter generálása
+   ![Új klaszter generálása menüpont](../img/felhasznaloi/klaszter/generate-cluster-menu.png)<br>
 
 ### Meglévő klaszter kiválasztzása
 
 Klaszter kiválasztása során figyelni kell arra, hogy a kiválasztott mappában szerepeljen a .klaszter file.<br>
 Amennyiben ennek nem teszünk eleget, arra a program figyelmeztetni fog minket:
+![Helytelen cluster](../img/felhasznaloi/klaszter/not-valid-cluster.png)<br>
 
 ### Új generálása
 
 Van lehetőségünk új klaszter generálására is, ahol a következőket kell megadni:
 
-1. Számítógépek száma
-2. Kívánt programok száma
-3. Futtandó folyamatok száma
-4. Klaszer generálásának helye
+<ol>
+   <li>Számítógépek száma</li>
+   <li>Kívánt programok száma</li>
+   <li>Futtatandó folyamatok száma</li>
+   <li>Folyamatok eloszlása:
+      <ul>
+         <li>Egyenletes: Minden programnak megközelítően ugyanannyi példányt kell futtatnia.</li>
+         <li>Véletlenszerű: A folyamatok száma a programok között véletlenszerűen fog szétosztódni.</li>
+      </ul>
+   </li>
+   <li>Klaszter generálásának helye</li>
+</ol>
+
+![Cluster generálása](../img/felhasznaloi/klaszter/generate-cluster.png)<br>
 
 Ezután a program a fentiek alapján legenerálja nekünk a megfelelő klasztert és igénybe vehetjük a program többi részét.
 
@@ -67,13 +81,19 @@ Ezután a program a fentiek alapján legenerálja nekünk a megfelelő klasztert
 A klaszter betöltődése után a klaszter jelenlegi állapotáról kapunk egy képet. Két lehetőség van:
 
 1. A klaszter állapota megfelelő
+   ![Cluster állapota megfelelő](../img/felhasznaloi/klaszter/cluster-health-healthy.png)<br>
 2. Nem felel meg a klaszter által megkövetelt követelményeknek
+   ![Cluster állapota nem megfelelő](../img/felhasznaloi/klaszter/cluster-health-unhealthy.png)<br>
 
 ## Helyreállítás
 
 Amennyiben a klaszter állapota nem megfelelő, lehetőség van a hibákat a programmal helyreállíttatni, és az állapot újra megfelelő lesz.
+![Cluster állapota nem megfelelő](../img/felhasznaloi/klaszter/cluster-solve-popup.png)<br>
+Amennyiben nem lehet a hibákat helyreállítani, a program javasolja a felhasználónak a napló megtekintését, hogy megnézze mik azok a cselekvések, ami akadályozza a cluster állapotának megfelelőségét.
+![Cluster állapota nem megoldható](../img/felhasznaloi/klaszter/cluster-solve-no.png)<br>
 
 ## Egyéb információk
 
 - A program megnyitása során, amennyiben a program a naplózási előzményekben talál egy már megnyitott klasztert, automatikusan azt fogja megnyitni.
 - A klaszter nevére kattintva a program megnyitja a fájlkezelőt a klaszter mappájának helyén, amennyiben nincs klaszter megnyitva, akkor csak simán a fájlkezelő nyílik meg.
+  ![Cluster megnyitása filekezelőben](../img/felhasznaloi/klaszter/open-cluster-explorer.png)<br>
