@@ -113,7 +113,7 @@ public partial class ComputersPage : CustomPage
                 res[1],
                 res[0],
                 controlAppearance,
-                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24),
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Checkmark24),
                 TimeSpan.FromSeconds(10));
         }
         else
@@ -126,7 +126,7 @@ public partial class ComputersPage : CustomPage
                 return;
             }
             _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"), $"'{computer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
         }
         LoadData();
     }
@@ -140,7 +140,8 @@ public partial class ComputersPage : CustomPage
         {
             string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", .. Computers.Select(x => x.CsvRow)];
             File.WriteAllLines(sfd.FileName, lines);
-            _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
+            _window.RootSnackbarService.Show(TranslationSource.T("Export.Success.Title"),
+                TranslationSource.Instance.WithParam("Export.Success.Text", sfd.FileName),
                 ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
             Log.WriteLog(["Computers", sfd.FileName], LogType.ExportCSV);
         }
@@ -210,7 +211,7 @@ public partial class ComputersPage : CustomPage
             else
             {
                 LoadData();
-                window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Spread.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
+                window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Spread.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
             }
             return;
         }
@@ -224,7 +225,7 @@ public partial class ComputersPage : CustomPage
         }
         Log.WriteLog([$"{optimizeDialog.Minimum}", $"{optimizeDialog.Maximum}", Computers.Count.ToString()], LogType.OptimizeProgramInstances);
         LoadData();
-        window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
+        window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
     }
 
     private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
