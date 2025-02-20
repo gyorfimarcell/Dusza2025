@@ -6,6 +6,7 @@
 Cluster/Cluster/Logs/
 
 .venv
+documentation/.venv
 
 # User-specific files
 *.suo
