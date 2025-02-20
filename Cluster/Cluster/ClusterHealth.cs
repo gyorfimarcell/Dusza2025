@@ -32,13 +32,13 @@ namespace Cluster
                 // 1. 
                 if (active < p.ActivePrograms)
                 {
-                    Errors.Add($"{p.ProgramName} doesn't have enough processes ({p.ActivePrograms} wanted, {active} active, {inactive} inactive)");
+                    Errors.Add(TranslationSource.Instance.WithParam("Health.NotEnough", p.ProgramName, p.ActivePrograms.ToString(), active.ToString(), inactive.ToString()));
                 }
 
                 //2. 
                 if ((active + inactive) > p.ActivePrograms)
                 {
-                    Errors.Add($"{p.ProgramName} has too many processes ({p.ActivePrograms} wanted, {active} active, {inactive} inactive)");
+                    Errors.Add(TranslationSource.Instance.WithParam("Health.TooMany", p.ProgramName, p.ActivePrograms.ToString(), active.ToString(), inactive.ToString()));
                 }
             }
 
@@ -50,11 +50,11 @@ namespace Cluster
 
                 if (processorUsage > c.ProcessorCore)
                 {
-                    Errors.Add($"{c.Name} doesn't have enough processor capacity ({processorUsage}/{c.ProcessorCore})");
+                    Errors.Add(TranslationSource.Instance.WithParam("Health.Processor", c.Name, processorUsage.ToString(), c.ProcessorCore.ToString()));
                 }
                 if (memoryUsage > c.RamCapacity)
                 {
-                    Errors.Add($"{c.Name} doesn't have enough memory capacity ({memoryUsage}/{c.RamCapacity})");
+                    Errors.Add(TranslationSource.Instance.WithParam("Health.Memory", c.Name, memoryUsage.ToString(), c.RamCapacity.ToString()));
                 }
             }
         }
@@ -149,12 +149,12 @@ namespace Cluster
                 //Show a message box that the issues are not fixable and if the user wants to continue anyway
                 MessageBox mgbox = new()
                 {
-                    Title = "Set Optimizing Values",
-                    Content = "The issues cannot be solved completely. Would you like to continue anyway?",
+                    Title = TranslationSource.T("HealthPage.NotFixable.Title"),
+                    Content = TranslationSource.T("HealthPage.NotFixable.Text"),
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = TranslationSource.T("Continue"),
+                    CloseButtonText = TranslationSource.T("Cancel"),
                     Width = 500,
                     MaxWidth = 500,
                     MaxHeight = 1000

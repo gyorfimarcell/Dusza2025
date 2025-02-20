@@ -51,7 +51,7 @@
                           Grid.Row="1"
                           Appearance="Secondary"
                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                          Text="{Binding StartTime }"
+                          Text="{Binding StartTime, StringFormat={}{0:yyyy. MM. dd. HH:ss} }"
                           TextWrapping="WrapWithOverflow" />
 
             <StackPanel Grid.Column="2"

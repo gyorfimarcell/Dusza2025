@@ -19,7 +19,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
     public Computer PageComputer { get; set; }
 
     public string ProcessesText =>
-        PageComputer == null ? "" : $"{PageComputer.processes.Count} processes ({PageComputer.processes.Count(x => x.Active)} active)";
+        PageComputer == null ? "" : $"{PageComputer.processes.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({PageComputer.processes.Count(x => x.Active)} {TranslationSource.T("Active")})";
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -132,10 +132,10 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                 res[1],
                 res[0],
                 controlAppearance,
-                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24),
-                TimeSpan.FromSeconds(3));
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Checkmark24),
+                TimeSpan.FromSeconds(10));
 
-            if (res[0].Contains("Outsourcing and deletion succeeded"))
+            if (res[0].Contains(TranslationSource.T("Outsourcing.DeleteSuccess")))
             {
                 _window.RootNavigation.GoBack();
                 return;
@@ -147,12 +147,12 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
             string? error = PageComputer.Delete();
             if (error != null)
             {
-                _window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
-                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), error, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
-            _window.RootSnackbarService.Show("Computer deleted", $"Computer '{PageComputer.Name}' successfully deleted.",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+            _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"), $"'{PageComputer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
             _window.RootNavigation.Navigate(typeof(ComputersPage));
         }
     }

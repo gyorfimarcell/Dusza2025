@@ -120,11 +120,11 @@ namespace Cluster
                 computerNames = GetComputers(Path).Select(x => x.Name).ToList();
             if (computerNames!.Contains(name))
             {
-                return "A computer already uses this name";
+                return TranslationSource.T("Errors.ComputerNameTaken");
             }
             if (cores < 1 || ram < 1)
             {
-                return "The amount of cpu cores and memory must be positive.";
+                return TranslationSource.T("Errors.ComputerPositive");
             }
 
             string dir = Directory.CreateDirectory($@"{Path}\{name}").FullName;
@@ -155,11 +155,11 @@ namespace Cluster
         {
             if (processor < ProcessorUsage)
             {
-                return "The processes running on this computer require more processor capacity!";
+                return TranslationSource.T("Errors.ComputerMoreProcessor");
             }
             if (memory < MemoryUsage)
             {
-                return "The processes running on this computer require more memory capacity!";
+                return TranslationSource.T("Errors.ComputerMoreMemory");
             }
 
             File.WriteAllLines($@"{MainWindow.ClusterPath}\{Name}\.szamitogep_konfig", [processor.ToString(), memory.ToString()]);
@@ -196,14 +196,14 @@ namespace Cluster
         {
             MessageBox mgbox = new()
             {
-                Title = "Error",
-                Content = "Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?",
+                Title = TranslationSource.T("Errors.Error"),
+                Content = TranslationSource.T("Computer.Delete.Text"),
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = true,
                 //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
-                PrimaryButtonText = "Delete",
-                SecondaryButtonText = "Outsource only",
-                CloseButtonText = "Cancel"
+                PrimaryButtonText = TranslationSource.T("Computer.Delete"),
+                SecondaryButtonText = TranslationSource.T("Computer.Delete.Outsource"),
+                CloseButtonText = TranslationSource.T("Cancel")
 
             };
 
@@ -221,19 +221,19 @@ namespace Cluster
                 deleteAsWell = false;
                 mgbox = new()
                 {
-                    Title = "Error",
-                    Content = "There's not enough space to completely outsource all processes. Continue anyway?",
+                    Title = TranslationSource.T("Errors.Error"),
+                    Content = TranslationSource.T("Errors.OutsourceNotEnoughSpace"),
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel"
+                    PrimaryButtonText = TranslationSource.T("Continue"),
+                    CloseButtonText = TranslationSource.T("Cancel")
 
                 };
 
                 result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
                 if (result != MessageBoxResult.Primary)
                 {
-                    return ["Outsourcing canceled.", "Info"];
+                    return [TranslationSource.T("Errors.Outsource.Cancel"), "Info"];
                 }
             }
 
@@ -241,7 +241,7 @@ namespace Cluster
             bool isSuccess = OutSource(forceOutSource: !canOutsource) == null;
             if (!isSuccess)
             {
-                return ["Outsourcing failed! Please try again later.", "Danger"];
+                return [TranslationSource.T("Errors.Outsource.Fail"), "Danger"];
             }
 
             List<Process> remainingProcesses = GetComputers(MainWindow.ClusterPath).Find(x => x.Name == Name).processes;
@@ -250,15 +250,15 @@ namespace Cluster
             if (deleteAsWell)
             {
                 string? res = Delete();
-                return res == null ? [@$"Outsourcing and deletion succeeded of the '{Name}' computer!", "Success"] : [res, "Danger"];
+                return res == null ? [TranslationSource.T("Outsourcing.DeleteSuccess"), "Success"] : [res, "Danger"];
             }
 
             if (!canOutsource)
             {
-                return [$@"Outsourced as many processes as possible! {remainingProcesses.Count} processes remain on '{Name}' computer.", "Info"];
+                return [TranslationSource.Instance.WithParam("Outsourcing.PartialSuccess", remainingProcesses.Count.ToString(), Name), "Info"];
             }
 
-            return [@$"Outsourcing succeeded! You can delete now the '{Name}' safely.", "Success"];
+            return [TranslationSource.Instance.WithParam("Outsourcing.Success", Name), "Success"];
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Cluster
                 {
                     if (forceOutSource)
                         continue;
-                    return "There's not enough resource on other computers to outsource.";
+                    return TranslationSource.T("Errors.OutsourcingOther");
                 }
 
                 try
@@ -368,7 +368,7 @@ namespace Cluster
             //Check if there are active processes and computers
             if (allActiveProcesses.Count == 0 || computers.Count == 0)
             {
-                return "There are no active processes to optimize or no computers!";
+                return TranslationSource.T("Errors.OutsourcingNone");
             }
 
             //Separate the active processes into two lists based on their resource usage
@@ -541,16 +541,16 @@ namespace Cluster
             {
                 MessageBox mgbox = new()
                 {
-                    Title = "Error",
-                    Content = "There were some processes that cannot fit any computers! Would you like to optimize anyway?",
+                    Title = TranslationSource.T("Errors.Error"),
+                    Content = TranslationSource.T("Errors.OptimizeCannotFit"),
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = TranslationSource.T("Continue"),
+                    CloseButtonText = TranslationSource.T("Cancel"),
                 };
                 MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
                 if (result != MessageBoxResult.Primary)
-                    return "The optimization was cancelled.";
+                    return TranslationSource.T("Optimize.Cancel");
             }
 
             ArrangeFiles(computers);
@@ -597,7 +597,7 @@ namespace Cluster
             //Check if there are active processes and computers
             if (allActiveProcesses.Count == 0 || computers.Count == 0)
             {
-                return "There are no active processes to spread or no computers!";
+                return TranslationSource.T("Errors.SpreadNone");
             }
 
             //Separate the active processes into two lists based on their resource usage
@@ -725,16 +725,16 @@ namespace Cluster
             {
                 MessageBox mgbox = new()
                 {
-                    Title = "Error",
-                    Content = "There were some processes that cannot fit any computers! Would you like to optimize anyway?",
+                    Title = TranslationSource.T("Errors.Error"),
+                    Content = TranslationSource.T("Errors.OptimizeCannotFit"),
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = TranslationSource.T("Continue"),
+                    CloseButtonText = TranslationSource.T("Cancel"),
                 };
                 MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
                 if (result != MessageBoxResult.Primary)
-                    return "The optimization was cancelled.";
+                    return TranslationSource.T("Optimize.Cancel");
             }
 
             ArrangeFiles(computers);

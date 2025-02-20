@@ -122,7 +122,7 @@ namespace Cluster
         {
             menuItemPrograms.Items.Clear();
 
-            MenuItem allItem = new MenuItem() { Header = "All", StaysOpenOnClick = true };
+            MenuItem allItem = new MenuItem() { Header = TranslationSource.T("All"), StaysOpenOnClick = true };
             allItem.Click += ProgramsAllClick;
             menuItemPrograms.Items.Add(allItem);
 
@@ -193,7 +193,7 @@ namespace Cluster
             List<Process> filteredList = filtered.ToList();
 
             icProcesses.ItemsSource = filteredList;
-            tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
+            tbCount.Text = $"{filteredList.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({filteredList.Count(x => x.Active)} {TranslationSource.T("Active")})";
             UpdateCharts();
         }
 
@@ -262,8 +262,9 @@ namespace Cluster
             {
                 string[] lines = ["Name;Computer;Status;ProcessorUsage;MemoryUsage", .. Processes.Select(x => x.GetCSVRow())];
                 File.WriteAllLines(sfd.FileName, lines);
-                _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
-                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+                _window.RootSnackbarService.Show(TranslationSource.T("Export.Success.Title"),
+                    TranslationSource.Instance.WithParam("Export.Success.Text", sfd.FileName),
+                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
                 Log.WriteLog(["Processes", sfd.FileName], LogType.ExportCSV);
             }
         }

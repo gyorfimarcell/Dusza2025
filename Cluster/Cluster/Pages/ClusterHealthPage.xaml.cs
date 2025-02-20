@@ -50,7 +50,7 @@ namespace Cluster
                 {
                     InfoBar infoBar = new()
                     {
-                        Title = "Error",
+                        Title = TranslationSource.T("Errors.Error"),
                         Message = error,
                         IsClosable = false,
                         Severity = InfoBarSeverity.Error,
@@ -80,15 +80,16 @@ namespace Cluster
 
                 if (res == 0)
                 {
-                    _window.RootSnackbarService.Show("Error", "Failed to fix all errors :(", ControlAppearance.Danger,
-                            new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
+                    _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.FixFail"), ControlAppearance.Danger,
+                            new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                     return;
                 }
                 allResCount += res;
             }
             Log.WriteLog([$"{allResCount}"], LogType.FixIssues);
-            _window.RootSnackbarService.Show("Success", $"All errors fixed ({allResCount} errors)",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
+            _window.RootSnackbarService.Show(TranslationSource.T("Success"),
+                TranslationSource.Instance.WithParam("HealthPage.Fixed", allResCount.ToString()),
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
         }
     }
 }

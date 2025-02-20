@@ -44,11 +44,11 @@ namespace Cluster
             if (nbComputer.Value == null || nbProgram.Value == null || nbProcess.Value == null || chosenPath == null)
             {
                 _window.RootSnackbarService.Show(
-                        "Error",
-                        "You must fill out all fields!",
+                        TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.MissingFields"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                 return;
             }
@@ -61,23 +61,58 @@ namespace Cluster
 
             int totalProcesses = Convert.ToInt32(nbProcess.Value);
             int numPrograms = Convert.ToInt32(nbProgram.Value);
-            int baseProcessCount = totalProcesses / numPrograms;
-            int remainingProcesses = totalProcesses % numPrograms;
 
-            for (int i = 0; i < numPrograms; i++)
+            if ((bool)rbConsistent.IsChecked)
             {
-                int extraProcess = (remainingProcesses > 0) ? 1 : 0;
-                remainingProcesses -= extraProcess;
-                int assignedProcesses = baseProcessCount + extraProcess;
+                int baseProcessCount = totalProcesses / numPrograms;
+                int remainingProcesses = totalProcesses % numPrograms;
+                for (int i = 0; i < numPrograms; i++)
+                {
+                    int extraProcess = (remainingProcesses > 0) ? 1 : 0;
+                    remainingProcesses -= extraProcess;
+                    int assignedProcesses = baseProcessCount + extraProcess;
 
-                clusterLines.AddRange(new List<string>() {
+                    clusterLines.AddRange(new List<string>() {
                     $"program{i + 1}",
                     assignedProcesses.ToString(),
                     (rnd.Next(10, 50) * 10).ToString(),
                     (rnd.Next(10, 50) * 10).ToString()
                 });
 
-                programInstances[$"program{i + 1}"] = assignedProcesses;
+                    programInstances[$"program{i + 1}"] = assignedProcesses;
+                }
+            }
+            else
+            {
+                int remainingProcesses = totalProcesses;
+                for (int i = 0; i < numPrograms; i++)
+                {
+                    int assignedProcesses;
+
+                    if (i == numPrograms - 1)
+                    {
+                        assignedProcesses = remainingProcesses;
+                    }
+                    else if (remainingProcesses <= numPrograms - i)
+                    {
+                        assignedProcesses = 1;
+                    }
+                    else
+                    {
+                        assignedProcesses = rnd.Next(1, remainingProcesses - (numPrograms - i - 1));
+                    }
+
+                    clusterLines.AddRange(new List<string>() {
+                        $"program{i + 1}",
+                        assignedProcesses.ToString(),
+                        (rnd.Next(10, 50) * 10).ToString(),
+                        (rnd.Next(10, 50) * 10).ToString()
+                    });
+
+                    programInstances[$"program{i + 1}"] = assignedProcesses;
+                    remainingProcesses -= assignedProcesses;
+                }
+
             }
 
             File.WriteAllLines(rootPath + "\\.klaszter", clusterLines);

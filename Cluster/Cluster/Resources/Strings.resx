@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Settings.Darkmode.Title" xml:space="preserve">
+    <value>Dark mode</value>
+  </data>
+  <data name="Settings.Language.English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Settings.Language.Hungarian" xml:space="preserve">
+    <value>Hungarian</value>
+  </data>
+  <data name="Settings.Language.Title" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings.Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Window.Title" xml:space="preserve">
+    <value>Cluster Management</value>
+  </data>
+  <data name="Menu.Health" xml:space="preserve">
+    <value>Cluster health</value>
+  </data>
+  <data name="Menu.Computers" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="Menu.Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="Menu.Programs" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="Menu.Logs" xml:space="preserve">
+    <value>Cluster logs</value>
+  </data>
+  <data name="Menu.Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Menu.Path.Label" xml:space="preserve">
+    <value>Cluster: </value>
+  </data>
+  <data name="Menu.Path.None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Menu.Load" xml:space="preserve">
+    <value>Load cluster</value>
+  </data>
+  <data name="Menu.Generate" xml:space="preserve">
+    <value>Generate cluster</value>
+  </data>
+  <data name="Menu.LoadAnother" xml:space="preserve">
+    <value>Load another cluster</value>
+  </data>
+  <data name="Menu.Invalid.Title" xml:space="preserve">
+    <value>Invalid folder</value>
+  </data>
+  <data name="Menu.Invalid.Text" xml:space="preserve">
+    <value>The chosen folder doesn't contain a .klaszter file.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="StartPage.Title" xml:space="preserve">
+    <value>No cluster open</value>
+  </data>
+  <data name="StartPage.Description" xml:space="preserve">
+    <value>Click here to select a folder</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="AddComputerPage.Name.Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AddComputerPage.Name.Description" xml:space="preserve">
+    <value>A unique identifier for this computer.</value>
+  </data>
+  <data name="ProcessorCapacity" xml:space="preserve">
+    <value>Processor capacity</value>
+  </data>
+  <data name="MemoryCapacity" xml:space="preserve">
+    <value>Memory capacity</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Errors.Error" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="Errors.MissingFields" xml:space="preserve">
+    <value>You must fill out all fields!</value>
+  </data>
+  <data name="AddComputerPage.Success.Title" xml:space="preserve">
+    <value>Computer created</value>
+  </data>
+  <data name="AddComputerPage.Success.Text" xml:space="preserve">
+    <value>successfully created.</value>
+  </data>
+  <data name="AddProgramPage.Name.Title" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AddProgramPage.Name.Description" xml:space="preserve">
+    <value>A unique identifier for this program.</value>
+  </data>
+  <data name="AddProgramPage.Active.Title" xml:space="preserve">
+    <value>Active processes</value>
+  </data>
+  <data name="AddProgramPage.Active.Description" xml:space="preserve">
+    <value>How many active processes should run in the cluster.</value>
+  </data>
+  <data name="ProcessorUsage" xml:space="preserve">
+    <value>Processor usage</value>
+  </data>
+  <data name="MemoryUsage" xml:space="preserve">
+    <value>Memory usage</value>
+  </data>
+  <data name="Errors.ProgramAlreadyExists" xml:space="preserve">
+    <value>This program already exists in the cluster!</value>
+  </data>
+  <data name="AddProgramPage.Success.Title" xml:space="preserve">
+    <value>Program created</value>
+  </data>
+  <data name="AddProgramPage.Success.Text" xml:space="preserve">
+    <value>successfully created.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Title" xml:space="preserve">
+    <value>No processes</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Description" xml:space="preserve">
+    <value>This computer doesn't have any running processes.</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="Memory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="ComputerDetailsPage.Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Title" xml:space="preserve">
+    <value>Computer deleted</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Text" xml:space="preserve">
+    <value>successfully deleted.</value>
+  </data>
+  <data name="Outsourcing.DeleteSuccess" xml:space="preserve">
+    <value>Outsourcing and deletion succeeded!</value>
+  </data>
+  <data name="FilterPlaceholder" xml:space="preserve">
+    <value>Filter...</value>
+  </data>
+  <data name="ComputersPage.Sort.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ComputersPage.Sort.ProcessorPercent" xml:space="preserve">
+    <value>Processor Usage (%)</value>
+  </data>
+  <data name="ComputersPage.Sort.MemoryPercent" xml:space="preserve">
+    <value>Memory Usage (%)</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="ComputersPage.Menu.Optimize" xml:space="preserve">
+    <value>Optimize</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ComputersPage.Empty.Title" xml:space="preserve">
+    <value>No computers</value>
+  </data>
+  <data name="ComputersPage.Empty.EmptyText" xml:space="preserve">
+    <value>There are no computers in this cluster.</value>
+  </data>
+  <data name="ComputersPage.Empty.FilterText" xml:space="preserve">
+    <value>There are no computers matching this filter.</value>
+  </data>
+  <data name="Optimize.Title" xml:space="preserve">
+    <value>Set optimization values</value>
+  </data>
+  <data name="Optimize.Button" xml:space="preserve">
+    <value>Optimize</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Optimize.SpreadQuestion" xml:space="preserve">
+    <value>Optimizing cannot be done with the given values! Would you like to spread the processes equally?</value>
+  </data>
+  <data name="Optimize.Spread" xml:space="preserve">
+    <value>Spread</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success!</value>
+  </data>
+  <data name="Optimize.Spread.Success" xml:space="preserve">
+    <value>Processes were spread equally!</value>
+  </data>
+  <data name="Optimize.Success" xml:space="preserve">
+    <value>Optimization was successful!</value>
+  </data>
+  <data name="GeneratePage.ComputerCount" xml:space="preserve">
+    <value>Number of computers</value>
+  </data>
+  <data name="GeneratePage.ProgramCount" xml:space="preserve">
+    <value>Number of programs</value>
+  </data>
+  <data name="GeneratePage.ProcessCount" xml:space="preserve">
+    <value>Number of processes</value>
+  </data>
+  <data name="GeneratePage.Path" xml:space="preserve">
+    <value>Cluster path</value>
+  </data>
+  <data name="GeneratePage.Path.Choose" xml:space="preserve">
+    <value>Choose path</value>
+  </data>
+  <data name="GeneratePage.Generate" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ModifyComputerPage.Title" xml:space="preserve">
+    <value>Edit {0}</value>
+  </data>
+  <data name="ModifyComputerPage.Success.Text" xml:space="preserve">
+    <value>successfully modified.</value>
+  </data>
+  <data name="ModifyProgramPage.Title" xml:space="preserve">
+    <value>Edit {0}</value>
+  </data>
+  <data name="ModifyProgramPage.Success.Text" xml:space="preserve">
+    <value>successfully modified.</value>
+  </data>
+  <data name="NewInstancePage.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="NewInstancePage.Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="NewInstancePage.Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="Errors.NotEnoughResources" xml:space="preserve">
+    <value>This computer doesn't have enough resources!</value>
+  </data>
+  <data name="NewInstancePage.Success.Title" xml:space="preserve">
+    <value>Process started</value>
+  </data>
+  <data name="NewInstancePage.Success.Text" xml:space="preserve">
+    <value>Process '{0}' is now running on '{1}'.</value>
+  </data>
+  <data name="ProcessesPage.Status.Active" xml:space="preserve">
+    <value>Active only</value>
+  </data>
+  <data name="ProcessesPage.Status.Inactive" xml:space="preserve">
+    <value>Inactive only</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="ProcessesPage.Sort.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="ProcessesPage.Sort.Time" xml:space="preserve">
+    <value>Start time</value>
+  </data>
+  <data name="Computers" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="ProcessesPage.Empty.Title" xml:space="preserve">
+    <value>No processes</value>
+  </data>
+  <data name="ProcessesPage.Empty.Description" xml:space="preserve">
+    <value>There are no processes matching this filter.</value>
+  </data>
+  <data name="ProgramsPage.Sort.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ProgramsPage.Sort.Requested" xml:space="preserve">
+    <value>Requested processes</value>
+  </data>
+  <data name="ProgramsPage.Requested" xml:space="preserve">
+    <value>Requested</value>
+  </data>
+  <data name="ProgramsPage.CardRequested" xml:space="preserve">
+    <value>Requested {0} processes</value>
+  </data>
+  <data name="ProgramsPage.Empty.Title" xml:space="preserve">
+    <value>No programs</value>
+  </data>
+  <data name="ProgramsPage.Empty.FilterText" xml:space="preserve">
+    <value>There are no programs matching this filter.</value>
+  </data>
+  <data name="ProgramsPage.Empty.EmptyText" xml:space="preserve">
+    <value>There are no programs in this cluster.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Title" xml:space="preserve">
+    <value>Shut down {0}?</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Text" xml:space="preserve">
+    <value>This will shut down all {0} processes.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown" xml:space="preserve">
+    <value>Shutdown</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Success" xml:space="preserve">
+    <value>successfully shut down.</value>
+  </data>
+  <data name="HealthPage.Fix" xml:space="preserve">
+    <value>Fix issues</value>
+  </data>
+  <data name="HealthPage.Healthy.Title" xml:space="preserve">
+    <value>Healthy</value>
+  </data>
+  <data name="HealthPage.Healthy.Description" xml:space="preserve">
+    <value>No errors were detected in this cluster.</value>
+  </data>
+  <data name="Errors.FixFail" xml:space="preserve">
+    <value>Failed to fix all errors. For more details, see the logs.</value>
+  </data>
+  <data name="HealthPage.Fixed" xml:space="preserve">
+    <value>All errors fixed ({0} errors)</value>
+  </data>
+  <data name="Logs.Empty" xml:space="preserve">
+    <value>No logs to show</value>
+  </data>
+  <data name="Logs.Empty.Text" xml:space="preserve">
+    <value>There are no logs matching this filter.</value>
+  </data>
+  <data name="Logs.AllTypes" xml:space="preserve">
+    <value>All log types</value>
+  </data>
+  <data name="Logs.AllDetails" xml:space="preserve">
+    <value>All log details</value>
+  </data>
+  <data name="Logs.ExpandAll" xml:space="preserve">
+    <value>Expand all</value>
+  </data>
+  <data name="ProcessesPage.ComputerTooltip" xml:space="preserve">
+    <value>processes</value>
+  </data>
+  <data name="Optimize.Popup.Title" xml:space="preserve">
+    <value>Set the optimal minimum and maximum usage percentage of the computers!</value>
+  </data>
+  <data name="Optimize.Inactive" xml:space="preserve">
+    <value>Any inactive process will remain untouched.</value>
+  </data>
+  <data name="Optimize.Minimum" xml:space="preserve">
+    <value>Minimum percentage</value>
+  </data>
+  <data name="Optimize.Maximum" xml:space="preserve">
+    <value>Maximum percentage</value>
+  </data>
+  <data name="Health.NotEnough" xml:space="preserve">
+    <value>{0} doesn't have enough processes ({1} wanted, {2} active, {3} inactive)</value>
+  </data>
+  <data name="Health.TooMany" xml:space="preserve">
+    <value>{0} has too many processes ({1} wanted, {2} active, {3} inactive)</value>
+  </data>
+  <data name="Health.Processor" xml:space="preserve">
+    <value>{0} doesn't have enough processor capacity ({1}/{2})</value>
+  </data>
+  <data name="Health.Memory" xml:space="preserve">
+    <value>{0} doesn't have enough memory capacity ({1}/{2})</value>
+  </data>
+  <data name="HealthPage.NotFixable.Title" xml:space="preserve">
+    <value>Problems not fixable</value>
+  </data>
+  <data name="HealthPage.NotFixable.Text" xml:space="preserve">
+    <value>The issues cannot be solved completely. Would you like to continue anyway?</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Errors.ComputerNameTaken" xml:space="preserve">
+    <value>A computer already uses this name</value>
+  </data>
+  <data name="Errors.ComputerPositive" xml:space="preserve">
+    <value>The amount of cpu cores and memory must be positive.</value>
+  </data>
+  <data name="Errors.ComputerMoreProcessor" xml:space="preserve">
+    <value>The processes running on this computer require more processor capacity!</value>
+  </data>
+  <data name="Errors.ComputerMoreMemory" xml:space="preserve">
+    <value>The processes running on this computer require more memory capacity!</value>
+  </data>
+  <data name="Computer.Delete.Text" xml:space="preserve">
+    <value>Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?</value>
+  </data>
+  <data name="Computer.Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Computer.Delete.Outsource" xml:space="preserve">
+    <value>Outsource only</value>
+  </data>
+  <data name="Errors.OutsourceNotEnoughSpace" xml:space="preserve">
+    <value>There's not enough space to completely outsource all processes. Continue anyway?</value>
+  </data>
+  <data name="Errors.Outsource.Cancel" xml:space="preserve">
+    <value>Outsourcing canceled.</value>
+  </data>
+  <data name="Errors.Outsource.Fail" xml:space="preserve">
+    <value>Outsourcing failed! Please try again later.</value>
+  </data>
+  <data name="Outsourcing.Success" xml:space="preserve">
+    <value>Outsourcing succeeded! You can delete now the '{0}' safely.</value>
+  </data>
+  <data name="Outsourcing.PartialSuccess" xml:space="preserve">
+    <value>Outsourced as many processes as possible! {0} processes remain on '{1}' computer.</value>
+  </data>
+  <data name="Errors.OutsourcingOther" xml:space="preserve">
+    <value>There's not enough resource on other computers to outsource.</value>
+  </data>
+  <data name="Errors.OutsourcingNone" xml:space="preserve">
+    <value>There are no computers or active processes to optimize!</value>
+  </data>
+  <data name="Errors.OptimizeCannotFit" xml:space="preserve">
+    <value>There were some processes that cannot fit any computers! Would you like to optimize anyway?</value>
+  </data>
+  <data name="Optimize.Cancel" xml:space="preserve">
+    <value>The optimization was cancelled.</value>
+  </data>
+  <data name="Errors.SpreadNone" xml:space="preserve">
+    <value>There are no computers or active processes to spread!</value>
+  </data>
+  <data name="LogType.OpenProgram" xml:space="preserve">
+    <value>Open program</value>
+  </data>
+  <data name="LogType.CloseProgram" xml:space="preserve">
+    <value>Close program</value>
+  </data>
+  <data name="LogType.LoadCluster" xml:space="preserve">
+    <value>Load cluster</value>
+  </data>
+  <data name="LogType.AddComputer" xml:space="preserve">
+    <value>Add computer</value>
+  </data>
+  <data name="LogType.DeleteComputer" xml:space="preserve">
+    <value>Delete computer</value>
+  </data>
+  <data name="LogType.ExportCSV" xml:space="preserve">
+    <value>Export CSV</value>
+  </data>
+  <data name="LogType.AddProgram" xml:space="preserve">
+    <value>Add program</value>
+  </data>
+  <data name="LogType.RunProgramInstance" xml:space="preserve">
+    <value>Run process</value>
+  </data>
+  <data name="LogType.ShutdownProgramInstance" xml:space="preserve">
+    <value>Shutdown process</value>
+  </data>
+  <data name="LogType.ModifyProgram" xml:space="preserve">
+    <value>Modify program</value>
+  </data>
+  <data name="LogType.ShutdownProgram" xml:space="preserve">
+    <value>Shutdown program</value>
+  </data>
+  <data name="LogType.ClearProgramInstances" xml:space="preserve">
+    <value>Clear processes</value>
+  </data>
+  <data name="LogType.MoveProgramInstance" xml:space="preserve">
+    <value>Move process</value>
+  </data>
+  <data name="LogType.OptimizeProgramInstances" xml:space="preserve">
+    <value>Optimize processes</value>
+  </data>
+  <data name="LogType.ModifyComputer" xml:space="preserve">
+    <value>Modify computer</value>
+  </data>
+  <data name="LogType.SpreadProgramInstances" xml:space="preserve">
+    <value>Spread processes</value>
+  </data>
+  <data name="LogType.FixIssues" xml:space="preserve">
+    <value>Fix issues</value>
+  </data>
+  <data name="LogType.ActivateProgramInstance" xml:space="preserve">
+    <value>Activate process</value>
+  </data>
+  <data name="LogType.DeactivateProgramInstance" xml:space="preserve">
+    <value>Deactivate process</value>
+  </data>
+  <data name="LogType.GenerateCluster" xml:space="preserve">
+    <value>Generate cluster</value>
+  </data>
+  <data name="LogDetail.Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="LogDetail.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="LogDetail.CPU" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="LogDetail.Memory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="LogDetail.Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="LogDetail.Active programs" xml:space="preserve">
+    <value>Active programs</value>
+  </data>
+  <data name="LogDetail.Instance" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="LogDetail.Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="LogDetail.Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="LogDetail.Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="LogDetail.Instances" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="LogDetail.Process count" xml:space="preserve">
+    <value>Process count</value>
+  </data>
+  <data name="LogDetail.Source computer" xml:space="preserve">
+    <value>Source computer</value>
+  </data>
+  <data name="LogDetail.Destination computer" xml:space="preserve">
+    <value>Destination Computer</value>
+  </data>
+  <data name="LogDetail.Minimum Percent" xml:space="preserve">
+    <value>Minimum percent</value>
+  </data>
+  <data name="LogDetail.Maximum Percent" xml:space="preserve">
+    <value>Maximum percent</value>
+  </data>
+  <data name="LogDetail.Computers" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="LogDetail.CPU Capacity" xml:space="preserve">
+    <value>Processor capacity</value>
+  </data>
+  <data name="LogDetail.Memory Capacity" xml:space="preserve">
+    <value>Memory capacity</value>
+  </data>
+  <data name="LogDetail.CPU Spread Percent" xml:space="preserve">
+    <value>Processor spread percent</value>
+  </data>
+  <data name="LogDetail.RAM Spread Percent" xml:space="preserve">
+    <value>Memory spread percent</value>
+  </data>
+  <data name="LogDetail.Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="LogDetail.Processor Usage" xml:space="preserve">
+    <value>Processor usage</value>
+  </data>
+  <data name="LogDetail.Memory Usage" xml:space="preserve">
+    <value>Memory usage</value>
+  </data>
+  <data name="LogDetail.Host Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="LogDetail.Programtypes" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="LogDetail.Fixed Processes" xml:space="preserve">
+    <value>Fixed processes</value>
+  </data>
+  <data name="Export.Success.Title" xml:space="preserve">
+    <value>Export complete</value>
+  </data>
+  <data name="Export.Success.Text" xml:space="preserve">
+    <value>File saved to '{0}'.</value>
+  </data>
+  <data name="GeneratePage.SpreadClusters" xml:space="preserve">
+    <value>Spreading number of instances</value>
+  </data>
+  <data name="GeneratePage.Random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="GeneratePage.Consistent" xml:space="preserve">
+    <value>Consistent</value>
+  </data>
+  <data name="GeneratePage.SpreadClusters" xml:space="preserve">
+    <value>Spreading number of instances</value>
+  </data>
+  <data name="GeneratePage.Random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="GeneratePage.Consistent" xml:space="preserve">
+    <value>Consistent</value>
+  </data>
+</root>

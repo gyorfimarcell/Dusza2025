@@ -161,9 +161,10 @@ namespace Cluster
 
             MessageBox messageBox = new MessageBox()
             {
-                Title = $"Shut down {program.ProgramName}?",
-                Content = $"This will shut down all {processCount} processes.",
-                PrimaryButtonText = "Shutdown",
+                Title = TranslationSource.Instance.WithParam("ProgramsPage.Shutdown.Title", program.ProgramName),
+                Content = TranslationSource.Instance.WithParam("ProgramsPage.Shutdown.Text", processCount.ToString()),
+                PrimaryButtonText = TranslationSource.T("ProgramsPage.Shutdown"),
+                CloseButtonText = TranslationSource.T("Cancel"),
                 PrimaryButtonAppearance = ControlAppearance.Danger,
             };
 
@@ -176,11 +177,11 @@ namespace Cluster
                 { 
                     Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}", instancesCount], LogType.ShutdownProgram);
                     _window.RootSnackbarService.Show(
-                        "Success",
-                        $"Program '{program.ProgramName}' successfully shut down!",
+                        TranslationSource.T("Success"),
+                        $"'{program.ProgramName}' {TranslationSource.T("ProgramsPage.Shutdown.Success")}",
                         ControlAppearance.Success,
                         new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                     LoadData();
                 }

@@ -41,8 +41,8 @@ namespace Cluster
         {
             if (tbName.Text == "" || nbProcessor.Value == null || nbMemory.Value == null)
             {
-                window.RootSnackbarService.Show("Error", "You must fill out all fields!", ControlAppearance.Danger,
-                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.MissingFields"), ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
 
@@ -52,13 +52,13 @@ namespace Cluster
             string? error = Computer.AddComputer(path, tbName.Text, processor, memory);
             if (error != null)
             {
-                window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
-                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), error, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
             }
             else
             {
-                window.RootSnackbarService.Show("Computer created", $"Computer '{tbName.Text}' successfully created.",
-                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+                window.RootSnackbarService.Show(TranslationSource.T("AddComputerPage.Success.Title"), $"'{tbName.Text}' {TranslationSource.T("AddComputerPage.Success.Text")}",
+                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
 
                 Log.WriteLog([tbName.Text, $"{processor}", $"{memory}"], LogType.AddComputer);
 

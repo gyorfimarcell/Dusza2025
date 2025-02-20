@@ -7,29 +7,31 @@
       xmlns:local="clr-namespace:Cluster" xmlns:controls="clr-namespace:Cluster.Controls"
       mc:Ignorable="d"
       Title="New Instance"
-      ui:NavigationView.HeaderContent="New"
+      ui:NavigationView.HeaderContent="{local:Translate New}"
       d:DesignHeight="750"
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <StackPanel Margin="48 0">
-        <controls:CustomCard Title="Program"
+        <controls:CustomCard Title="{local:Translate NewInstancePage.Program}"
                          Icon="{ui:SymbolIcon Apps20 }"
                          Margin="0 0 0 12">
             <ComboBox x:Name="cbProgram"
                       MinWidth="250"
                       SelectionChanged="cbProgram_SelectionChanged"/>
         </controls:CustomCard>
-        <controls:CustomCard Title="Computer"
+        <controls:CustomCard Title="{local:Translate NewInstancePage.Computer}"
                          Icon="{ui:SymbolIcon Server20}"
                          Margin="0 0 0 12">
             <ComboBox x:Name="cbComputer"
                       MinWidth="250"/>
         </controls:CustomCard>
-        <controls:CustomCard Title="Active"
+        <controls:CustomCard Title="{local:Translate Active}"
                  Icon="{ui:SymbolIcon VideoPlayPause20}"
                  Margin="0 0 0 12">
             <ui:ToggleSwitch x:Name="tsActive"
+                             Checked="tsActive_CheckChanged"
+                             Unchecked="tsActive_CheckChanged"
                              IsChecked="True"/>
         </controls:CustomCard>
 
@@ -37,7 +39,7 @@
                Appearance="Primary"
                HorizontalAlignment="Right"
                MinWidth="300"
-               Content="Run"
+               Content="{local:Translate NewInstancePage.Run}"
                Click="btnAdd_Click" />
     </StackPanel>
 </Page>

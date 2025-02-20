@@ -121,10 +121,21 @@ namespace Cluster
         /// <summary>
         /// Toggles the active state of the process
         /// </summary>
-        public void ToggleActive() {
+        public bool ToggleActive() {
+            if (Active == false)
+            {
+                Computer host = HostComputer;
+
+                if (host.ProcessorUsage + ProcessorUsage > host.ProcessorCore ||
+                    host.MemoryUsage + MemoryUsage > host.RamCapacity)
+                {
+                    return false;
+                }
+            }
             Active = !Active;
             Write($@"{MainWindow.ClusterPath}\{HostComputer.Name}");
             Log.WriteLog([$"{FileName}", HostComputer.Name, $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], Active ? LogType.ActivateProgramInstance : LogType.DeactivateProgramInstance);
+            return true;
         }
     }
 }

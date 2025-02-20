@@ -43,7 +43,7 @@ namespace Cluster
             }
 
             Program = program;
-            ChangeTitle($"Edit {Program.ProgramName}");
+            ChangeTitle(TranslationSource.Instance.WithParam("ModifyProgramPage.Title", program.ProgramName));
             nbActive.Value = Program.ActivePrograms;
             nbProcessor.Value = Program.CpuMilliCore;
             nbMemory.Value = Program.Memory;
@@ -59,11 +59,11 @@ namespace Cluster
             if(nbActive.Value == null || nbProcessor.Value == null || nbMemory.Value == null)
             {
                 _window.RootSnackbarService.Show(
-                        "Error",
-                        "You must fill out all fields!",
+                        TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.MissingFields"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                 return;
             }
@@ -73,11 +73,11 @@ namespace Cluster
             {
                 Log.WriteLog([Program.ProgramName, $"{nbProcessor.Value}", $"{nbMemory.Value}", $"{nbActive.Value}"], LogType.ModifyProgram);
                 _window.RootSnackbarService.Show(
-                    "Success",
-                    $"Program '{Program.ProgramName}' successfully modified!",
+                    TranslationSource.T("Success"),
+                    $"'{Program.ProgramName}' {TranslationSource.T("ModifyProgramPage.Success.Text")}",
                     ControlAppearance.Success,
                     new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
-                    TimeSpan.FromSeconds(3)
+                    TimeSpan.FromSeconds(10)
                 );
                 _window.RootNavigation.Navigate(typeof(ProgramsPage));
             }
