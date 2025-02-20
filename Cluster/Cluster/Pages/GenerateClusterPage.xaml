@@ -12,7 +12,7 @@
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <StackPanel Margin="48 0">
-        <controls:CustomCard Title="Number of computers"
+        <controls:CustomCard Title="{local:Translate GeneratePage.ComputerCount}"
                      Icon="{ui:SymbolIcon Desktop24}"
                      Margin="0 0 0 12">
             <ui:NumberBox x:Name="nbComputer"
@@ -22,7 +22,7 @@
                   SmallChange="1"
                   MinWidth="250" />
         </controls:CustomCard>
-        <controls:CustomCard Title="Number of programs"
+        <controls:CustomCard Title="{local:Translate GeneratePage.ProgramCount}"
                  Icon="{ui:SymbolIcon Apps24}"
                  Margin="0 0 0 12">
             <ui:NumberBox x:Name="nbProgram"
@@ -32,7 +32,7 @@
               SmallChange="1"
               MinWidth="250" />
         </controls:CustomCard>
-        <controls:CustomCard Title="Number of processes"
+        <controls:CustomCard Title="{local:Translate GeneratePage.ProcessCount}"
                  Icon="{ui:SymbolIcon Settings24}"
                  Margin="0 0 0 12">
             <ui:NumberBox x:Name="nbProcess"
@@ -43,18 +43,20 @@
               MinWidth="250" />
         </controls:CustomCard>
         <controls:CustomCard x:Name="PathCard"
-                             Title="Cluster Path"
+                             Title="{local:Translate GeneratePage.Path}"
                              Icon="{ui:SymbolIcon Folder24}"
                              Margin="0 0 0 12">
             <ui:Button x:Name="btnChoosePath"
                        MinWidth="250"
-                       Click="btnChoosePath_Click">Choose Path</ui:Button>
+                       Content="{local:Translate GeneratePage.Path.Choose}"
+                       Click="btnChoosePath_Click"/>
         </controls:CustomCard>
 
         <ui:Button x:Name="btnGenerate"
                    Appearance="Primary"
                    HorizontalAlignment="Right"
                    MinWidth="300"
-                   Content="Generate" Click="btnGenerate_Click" />
+                   Content="{local:Translate GeneratePage.Generate}"
+                   Click="btnGenerate_Click" />
     </StackPanel>
 </local:CustomPage>

@@ -16,7 +16,7 @@
         <StackPanel Orientation="Horizontal">
             <ui:TextBox x:Name="tbFilter"
                         VerticalAlignment="Center"
-                        PlaceholderText="Filter..."
+                        PlaceholderText="{local:Translate FilterPlaceholder}"
                         Icon="{ui:SymbolIcon Search20}"
                         Width="200"
                         Margin="0 0 4 0"
@@ -24,57 +24,57 @@
             <Menu FontSize="14">
                 <ui:MenuItem x:Name="MenuItemSort"
                              Icon="{ui:SymbolIcon ArrowSort20}">
-                    <ui:MenuItem Header="Name"
+                    <ui:MenuItem Header="{local:Translate ComputersPage.Sort.Name}"
                                  Icon="{ui:SymbolIcon Tag20}"
                                  Tag="0"
                                  FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage"
+                    <ui:MenuItem Header="{local:Translate ProcessorUsage}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="1"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage (%)"
+                    <ui:MenuItem Header="{local:Translate ComputersPage.Sort.ProcessorPercent}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="2"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Capacity"
+                    <ui:MenuItem Header="{local:Translate ProcessorCapacity}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="3"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage"
+                    <ui:MenuItem Header="{local:Translate MemoryUsage}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="4"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage (%)"
+                    <ui:MenuItem Header="{local:Translate ComputersPage.Sort.MemoryPercent}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="5"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Capacity"
+                    <ui:MenuItem Header="{local:Translate MemoryCapacity}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="6"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <Separator/>
                     <ui:MenuItem x:Name="MenuItemSortOrder"
-                                 Header="Descending"
+                                 Header="{local:Translate Descending}"
                                  IsCheckable="True"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSortOrder_Click"/>
                 </ui:MenuItem>
                 <Separator/>
-                <ui:MenuItem Header="Optimize"
+                <ui:MenuItem Header="{local:Translate ComputersPage.Menu.Optimize}"
                 Icon="{ui:SymbolIcon ArrowTrendingSettings20}"
                 Click="MenuItemOptimize_Click"/>
-                <ui:MenuItem Header="Export"
+                <ui:MenuItem Header="{local:Translate Export}"
                  Icon="{ui:SymbolIcon Share20}"
                  Click="MenuItemExport_Click"/>
-                <ui:MenuItem Header="New"
+                <ui:MenuItem Header="{local:Translate New}"
                  Icon="{ui:SymbolIcon Add20}"
                  Click="MenuItemNew_OnClick"/>
             </Menu>
@@ -111,13 +111,13 @@
                             
                             <controls:UsageBar Grid.Column="0"
                                                Grid.Row="1"
-                                               Text="Processor"
+                                               Text="{local:Translate Processor}"
                                                Current="{Binding ProcessorUsage}"
                                                Max="{Binding ProcessorCore}"
                                                Margin="0 0 16 0"/>
                             <controls:UsageBar Grid.Column="1"
                                                Grid.Row="1"
-                                               Text="Memory"
+                                               Text="{local:Translate Memory}"
                                                Current="{Binding MemoryUsage}"
                                                Max="{Binding RamCapacity}"
                                                Margin="0 0 16 0"/>
@@ -138,17 +138,17 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <controls:EmptyStatus Title="No computers"
+        <controls:EmptyStatus Title="{local:Translate ComputersPage.Empty.Title}"
                               Icon="TextBulletListDismiss20">
             <controls:EmptyStatus.Style>
                 <Style TargetType="controls:EmptyStatus">
-                    <Setter Value="There are no computers matching this filter." Property="Description"/>
+                    <Setter Value="{local:Translate ComputersPage.Empty.FilterText}" Property="Description"/>
                     <Style.Triggers>
                         <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icComputers}">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Value="" Binding="{Binding Text, ElementName=tbFilter}">
-                            <Setter Value="There are no computers in this cluster." Property="Description"/>
+                            <Setter Value="{local:Translate ComputersPage.Empty.EmptyText}" Property="Description"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

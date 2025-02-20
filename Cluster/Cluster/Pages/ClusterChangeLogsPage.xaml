@@ -18,7 +18,7 @@
             <ComboBox x:Name="cbLogDetails" Margin="0 0 10 0" SelectionChanged="cbLogDetails_SelectionChanged" />
             <ui:TextBox x:Name="tbFilter"
                     VerticalAlignment="Center"
-                    PlaceholderText="Filter..."
+                    PlaceholderText="{local:Translate FilterPlaceholder}"
                     Icon="{ui:SymbolIcon Search20}"
                     Width="200"
                     Margin="0 0 10 0"
@@ -27,11 +27,11 @@
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
         <StackPanel x:Name="stLogs"></StackPanel>
-        <controls:EmptyStatus Title="No logs to show"
+        <controls:EmptyStatus Title="{local:Translate Logs.Empty}"
                       Icon="TextBulletListDismiss20" x:Name="showStatus" Visibility="Hidden">
             <controls:EmptyStatus.Style>
                 <Style TargetType="controls:EmptyStatus">
-                    <Setter Value="There are no logs matching this filter." Property="Description"/>
+                    <Setter Value="{local:Translate Logs.Empty.Text}" Property="Description"/>
                 </Style>
             </controls:EmptyStatus.Style>
         </controls:EmptyStatus>

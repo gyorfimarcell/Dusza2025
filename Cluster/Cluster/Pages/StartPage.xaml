@@ -7,14 +7,13 @@
       xmlns:local="clr-namespace:Cluster"
       xmlns:controls="clr-namespace:Cluster.Controls"
       mc:Ignorable="d"
-      Title="Shutdown Program"
       d:DesignHeight="750"
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
-      <controls:EmptyStatus Title="No Cluster Opened"
-                            Description="Click here to select a folder"
+      <controls:EmptyStatus Title="{local:Translate StartPage.Title}"
+                            Description="{local:Translate StartPage.Description}"
                             Icon="Folder48"
                             Margin="0 0 0 128"
                             Click="EmptyStatus_OnClick"/>

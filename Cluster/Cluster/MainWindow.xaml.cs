@@ -22,6 +22,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.Themes;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
+using System.Globalization;
 
 namespace Cluster
 {
@@ -61,7 +62,7 @@ namespace Cluster
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DarkMode)));
             }
         }
-        private const string SETTINGS_KEY = @"HKEY_CURRENT_USER\SOFTWARE\kibirodKolega\Cluster\";
+        public const string SETTINGS_KEY = @"HKEY_CURRENT_USER\SOFTWARE\kibirodKolega\Cluster\";
 
         private IEnumerable originalBreadcrumbs;
 
@@ -84,6 +85,7 @@ namespace Cluster
         public void RefreshLblPath()
         {
             lblPath.Text = Path.GetFileName(ClusterPath);
+            loadNavItem.Content = TranslationSource.T("Menu.LoadAnother");
         }
 
         public void EnableNavigationItems()
@@ -133,7 +135,6 @@ namespace Cluster
                     if (ClusterPath != null && ProgramType.ReadClusterFile(ClusterPath) != null)
                     {
                         RefreshLblPath();
-                        loadNavItem.Content = "Load another Cluster";
                         EnableNavigationItems();
 
                         RootNavigation.ClearJournal();
@@ -156,13 +157,13 @@ namespace Cluster
                 List<ProgramType> programs = ProgramType.ReadClusterFile(ofd.FolderName);
                 if (programs == null)
                 {
-                    MessageBox msg = new() { Title = "Invalid folder", Content = "The chosen folder doesn't contain a .klaszter file." };
+                    MessageBox msg = new() { Title = TranslationSource.T("Menu.Invalid.Title"), Content = TranslationSource.T("Menu.Invalid.Text"), CloseButtonText = TranslationSource.T("Close") };
                     msg.ShowDialogAsync();
                 }
                 else
                 {
                     lblPath.Text = Path.GetFileName(ClusterPath);
-                    loadNavItem.Content = "Load another Cluster";
+                    loadNavItem.Content = TranslationSource.T("Menu.LoadAnother");
                     EnableNavigationItems();
 
                     RootNavigation.ClearJournal();
@@ -176,6 +177,15 @@ namespace Cluster
         {
             bool savedDarkMode = Registry.GetValue(SETTINGS_KEY, "darkMode", false) is string s && s == "True";
             DarkMode = savedDarkMode;
+
+            object? languageSetting = Registry.GetValue(SETTINGS_KEY, "language", "hu-HU");
+            if (languageSetting is string savedLanguage)
+            {
+                TranslationSource.Instance.CurrentCulture = new CultureInfo(savedLanguage);
+            }
+            else {
+                TranslationSource.Instance.CurrentCulture = new CultureInfo("hu-HU");
+            }
 
             RootNavigation.Navigated += RootNavigationOnNavigated;
 
@@ -208,11 +218,6 @@ namespace Cluster
         private void FluentWindow_Closed(object sender, EventArgs e)
         {
             Log.WriteLog([], LogType.CloseProgram);
-        }
-
-        private void MenuItemTheme_Click(object sender, RoutedEventArgs e)
-        {
-            DarkMode = !DarkMode;
         }
 
         private void LblPath_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

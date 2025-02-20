@@ -28,7 +28,7 @@ namespace Cluster.ChartModels
 
 
             ProgramsActiveSeries = new ColumnSeries<int> {
-                Name = "Active",
+                Name = TranslationSource.T("Active"),
                 Values = programGroups.Select(x => x.Count(y => y.Active)).ToList(),
                 Fill = new SolidColorPaint(SKColors.LimeGreen),
                 Rx = 2,
@@ -36,7 +36,7 @@ namespace Cluster.ChartModels
             };
             ProgramInactiveSeries = new ColumnSeries<int>
             {
-                Name = "Inactive",
+                Name = TranslationSource.T("Inactive"),
                 Values = programGroups.Select(x => x.Count(y => !y.Active)).ToList(),
                 Fill = new SolidColorPaint(SKColors.Red),
                 Rx = 2,
@@ -54,7 +54,7 @@ namespace Cluster.ChartModels
                 Values = [x.Count()],
                 Name = x.Key,
                 InnerRadius = 30,
-                ToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue} processes"
+                ToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue} {TranslationSource.T("ProcessesPage.ComputerTooltip")}"
             }).ToList();
         }
     }

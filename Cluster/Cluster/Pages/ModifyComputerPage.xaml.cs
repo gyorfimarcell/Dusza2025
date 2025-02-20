@@ -38,7 +38,7 @@ namespace Cluster
             }
 
             PageComputer = computer;
-            ChangeTitle($"Edit {PageComputer.Name}");
+            ChangeTitle(TranslationSource.Instance.WithParam("ModifyComputerPage.Title", PageComputer.Name));
 
             nbProcessor.Value = PageComputer.ProcessorCore;
             nbMemory.Value = PageComputer.RamCapacity;
@@ -49,8 +49,8 @@ namespace Cluster
             if(nbProcessor.Value == null || nbMemory.Value == null)
             {
                 _window.RootSnackbarService.Show(
-                        "Error",
-                        "You must fill out all fields!",
+                        TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.MissingFields"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
                         TimeSpan.FromSeconds(3)
@@ -63,8 +63,8 @@ namespace Cluster
             {
                 Log.WriteLog([PageComputer.Name, $"{nbProcessor.Value}", $"{nbMemory.Value}"], LogType.ModifyComputer);
                 _window.RootSnackbarService.Show(
-                    "Success",
-                    $"Computer '{PageComputer.Name}' successfully modified!",
+                    TranslationSource.T("Success"),
+                    $"'{PageComputer.Name}' {TranslationSource.T("ModifyComputerPage.Success.Text")}",
                     ControlAppearance.Success,
                     new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
                     TimeSpan.FromSeconds(3)
@@ -74,7 +74,7 @@ namespace Cluster
             else
             {
                 _window.RootSnackbarService.Show(
-                    "Error",
+                    TranslationSource.T("Errors.Error"),
                     result,
                     ControlAppearance.Danger,
                     new SymbolIcon { Symbol = SymbolRegular.Warning24 },
