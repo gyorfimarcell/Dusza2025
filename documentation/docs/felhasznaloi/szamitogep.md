@@ -65,7 +65,7 @@ Ez amennyiben nem lehetséges a program felajánlja azt a lehetőséget, hogy mi
 
 A számítógép részletesebb információinak megtekintéséhez rá kell kattintani a megfelelőre. Ezután látható a számítógépen futó folyamatok száma (aktív és inaktív), a számítógép leterheltsége, valamint különféle grafikonok. A grafikonok azt mutatják meg, hogy milyen eloszlásban mennyi program fut, valamint hogy az egyes programok milyen eloszlásban terhelik processzor és memória szintjén egyaránt a számítógépeket.
 
-Továbbiakban lehetőség van itt is a számítógép törlésére, amire ugyan az érvényes, mint a <a href="#tehermentesites-es-torles">fent</a> leírtakban.
+Továbbiakban lehetőség van itt is a számítógép törlésére, amire ugyan az érvényes, mint a [fent](#tehermentesites-es-torles) leírtakban.
 
 Lehet még a számítógépet szerkeszteni is, ahol a processzor és a memória kapacitását lehet állítani. Fontos megjegyeznivaló, hogy mind a processzor és mind a memóriakapacitásnak nagyobbnak kell lennie, mint az akutális leterheltség, ha ennek nem teszünk eleget, a program nem fogja engedélyezni a szerkesztést.
 
