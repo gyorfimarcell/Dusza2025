@@ -136,7 +136,7 @@
     <value>Cluster Management</value>
   </data>
   <data name="Menu.Health" xml:space="preserve">
-    <value>Cluster Health</value>
+    <value>Cluster health</value>
   </data>
   <data name="Menu.Computers" xml:space="preserve">
     <value>Computers</value>
@@ -148,7 +148,7 @@
     <value>Programs</value>
   </data>
   <data name="Menu.Logs" xml:space="preserve">
-    <value>Cluster Logs</value>
+    <value>Cluster logs</value>
   </data>
   <data name="Menu.Settings" xml:space="preserve">
     <value>Settings</value>
@@ -160,13 +160,13 @@
     <value>None</value>
   </data>
   <data name="Menu.Load" xml:space="preserve">
-    <value>Load Cluster</value>
+    <value>Load cluster</value>
   </data>
   <data name="Menu.Generate" xml:space="preserve">
-    <value>Generate Cluster</value>
+    <value>Generate cluster</value>
   </data>
   <data name="Menu.LoadAnother" xml:space="preserve">
-    <value>Load Another Cluster</value>
+    <value>Load another cluster</value>
   </data>
   <data name="Menu.Invalid.Title" xml:space="preserve">
     <value>Invalid folder</value>
@@ -178,7 +178,7 @@
     <value>Close</value>
   </data>
   <data name="StartPage.Title" xml:space="preserve">
-    <value>No Cluster Opened</value>
+    <value>No cluster open</value>
   </data>
   <data name="StartPage.Description" xml:space="preserve">
     <value>Click here to select a folder</value>
@@ -193,16 +193,16 @@
     <value>A unique identifier for this computer.</value>
   </data>
   <data name="ProcessorCapacity" xml:space="preserve">
-    <value>Processor Capacity</value>
+    <value>Processor capacity</value>
   </data>
   <data name="MemoryCapacity" xml:space="preserve">
-    <value>Memory Capacity</value>
+    <value>Memory capacity</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="Errors.Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Error!</value>
   </data>
   <data name="Errors.MissingFields" xml:space="preserve">
     <value>You must fill out all fields!</value>
@@ -220,16 +220,16 @@
     <value>A unique identifier for this program.</value>
   </data>
   <data name="AddProgramPage.Active.Title" xml:space="preserve">
-    <value>Active Processes</value>
+    <value>Active processes</value>
   </data>
   <data name="AddProgramPage.Active.Description" xml:space="preserve">
     <value>How many active processes should run in the cluster.</value>
   </data>
   <data name="ProcessorUsage" xml:space="preserve">
-    <value>Processor Usage</value>
+    <value>Processor usage</value>
   </data>
   <data name="MemoryUsage" xml:space="preserve">
-    <value>Memory Usage</value>
+    <value>Memory usage</value>
   </data>
   <data name="Errors.ProgramAlreadyExists" xml:space="preserve">
     <value>This program already exists in the cluster!</value>
@@ -328,7 +328,7 @@
     <value>Spread</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Success</value>
+    <value>Success!</value>
   </data>
   <data name="Optimize.Spread.Success" xml:space="preserve">
     <value>Processes were spread equally!</value>
@@ -454,7 +454,7 @@
     <value>No errors were detected in this cluster.</value>
   </data>
   <data name="Errors.FixFail" xml:space="preserve">
-    <value>Failed to fix all errors</value>
+    <value>Failed to fix all errors. For more details, see the logs.</value>
   </data>
   <data name="HealthPage.Fixed" xml:space="preserve">
     <value>All errors fixed ({0} errors)</value>
@@ -472,22 +472,22 @@
     <value>All log details</value>
   </data>
   <data name="Logs.ExpandAll" xml:space="preserve">
-    <value>Expand All</value>
+    <value>Expand all</value>
   </data>
   <data name="ProcessesPage.ComputerTooltip" xml:space="preserve">
     <value>processes</value>
   </data>
   <data name="Optimize.Popup.Title" xml:space="preserve">
-    <value>Set the optimal minimum and maximum usage percentage of a computer!</value>
+    <value>Set the optimal minimum and maximum usage percentage of the computers!</value>
   </data>
   <data name="Optimize.Inactive" xml:space="preserve">
     <value>Any inactive process will remain untouched.</value>
   </data>
   <data name="Optimize.Minimum" xml:space="preserve">
-    <value>Minimum Percentage</value>
+    <value>Minimum percentage</value>
   </data>
   <data name="Optimize.Maximum" xml:space="preserve">
-    <value>Maximum Percentage</value>
+    <value>Maximum percentage</value>
   </data>
   <data name="Health.NotEnough" xml:space="preserve">
     <value>{0} doesn't have enough processes ({1} wanted, {2} active, {3} inactive)</value>
@@ -562,64 +562,64 @@
     <value>There are no computers or active processes to spread!</value>
   </data>
   <data name="LogType.OpenProgram" xml:space="preserve">
-    <value>Open Program</value>
+    <value>Open program</value>
   </data>
   <data name="LogType.CloseProgram" xml:space="preserve">
-    <value>Close Program</value>
+    <value>Close program</value>
   </data>
   <data name="LogType.LoadCluster" xml:space="preserve">
-    <value>Load Cluster</value>
+    <value>Load cluster</value>
   </data>
   <data name="LogType.AddComputer" xml:space="preserve">
-    <value>Add Computer</value>
+    <value>Add computer</value>
   </data>
   <data name="LogType.DeleteComputer" xml:space="preserve">
-    <value>Delete Computer</value>
+    <value>Delete computer</value>
   </data>
   <data name="LogType.ExportCSV" xml:space="preserve">
     <value>Export CSV</value>
   </data>
   <data name="LogType.AddProgram" xml:space="preserve">
-    <value>Add Program</value>
+    <value>Add program</value>
   </data>
   <data name="LogType.RunProgramInstance" xml:space="preserve">
-    <value>Run Process</value>
+    <value>Run process</value>
   </data>
   <data name="LogType.ShutdownProgramInstance" xml:space="preserve">
-    <value>Shutdown Process</value>
+    <value>Shutdown process</value>
   </data>
   <data name="LogType.ModifyProgram" xml:space="preserve">
-    <value>Modify Program</value>
+    <value>Modify program</value>
   </data>
   <data name="LogType.ShutdownProgram" xml:space="preserve">
-    <value>Shutdown Program</value>
+    <value>Shutdown program</value>
   </data>
   <data name="LogType.ClearProgramInstances" xml:space="preserve">
-    <value>Clear Processes</value>
+    <value>Clear processes</value>
   </data>
   <data name="LogType.MoveProgramInstance" xml:space="preserve">
-    <value>Move Process</value>
+    <value>Move process</value>
   </data>
   <data name="LogType.OptimizeProgramInstances" xml:space="preserve">
-    <value>Optimize Processes</value>
+    <value>Optimize processes</value>
   </data>
   <data name="LogType.ModifyComputer" xml:space="preserve">
-    <value>Modify Computer</value>
+    <value>Modify computer</value>
   </data>
   <data name="LogType.SpreadProgramInstances" xml:space="preserve">
-    <value>Spread Processes</value>
+    <value>Spread processes</value>
   </data>
   <data name="LogType.FixIssues" xml:space="preserve">
-    <value>Fix Issues</value>
+    <value>Fix issues</value>
   </data>
   <data name="LogType.ActivateProgramInstance" xml:space="preserve">
-    <value>Activate Process</value>
+    <value>Activate process</value>
   </data>
   <data name="LogType.DeactivateProgramInstance" xml:space="preserve">
-    <value>Deactivate Process</value>
+    <value>Deactivate process</value>
   </data>
   <data name="LogType.GenerateCluster" xml:space="preserve">
-    <value>Generate Cluster</value>
+    <value>Generate cluster</value>
   </data>
   <data name="LogDetail.Path" xml:space="preserve">
     <value>Path</value>
@@ -637,7 +637,7 @@
     <value>Type</value>
   </data>
   <data name="LogDetail.Active programs" xml:space="preserve">
-    <value>Active Programs</value>
+    <value>Active programs</value>
   </data>
   <data name="LogDetail.Instance" xml:space="preserve">
     <value>Process</value>
@@ -655,43 +655,43 @@
     <value>Processes</value>
   </data>
   <data name="LogDetail.Process count" xml:space="preserve">
-    <value>Process Count</value>
+    <value>Process count</value>
   </data>
   <data name="LogDetail.Source computer" xml:space="preserve">
-    <value>Source Computer</value>
+    <value>Source computer</value>
   </data>
   <data name="LogDetail.Destination computer" xml:space="preserve">
     <value>Destination Computer</value>
   </data>
   <data name="LogDetail.Minimum Percent" xml:space="preserve">
-    <value>Minimum Percent</value>
+    <value>Minimum percent</value>
   </data>
   <data name="LogDetail.Maximum Percent" xml:space="preserve">
-    <value>Maximum Percent</value>
+    <value>Maximum percent</value>
   </data>
   <data name="LogDetail.Computers" xml:space="preserve">
     <value>Computers</value>
   </data>
   <data name="LogDetail.CPU Capacity" xml:space="preserve">
-    <value>Processor Capacity</value>
+    <value>Processor capacity</value>
   </data>
   <data name="LogDetail.Memory Capacity" xml:space="preserve">
-    <value>Memory Capacity</value>
+    <value>Memory capacity</value>
   </data>
   <data name="LogDetail.CPU Spread Percent" xml:space="preserve">
-    <value>Processor Spread Percent</value>
+    <value>Processor spread percent</value>
   </data>
   <data name="LogDetail.RAM Spread Percent" xml:space="preserve">
-    <value>Memory Spread Percent</value>
+    <value>Memory spread percent</value>
   </data>
   <data name="LogDetail.Processes" xml:space="preserve">
     <value>Processes</value>
   </data>
   <data name="LogDetail.Processor Usage" xml:space="preserve">
-    <value>Processor Usage</value>
+    <value>Processor usage</value>
   </data>
   <data name="LogDetail.Memory Usage" xml:space="preserve">
-    <value>Memory Usage</value>
+    <value>Memory usage</value>
   </data>
   <data name="LogDetail.Host Computer" xml:space="preserve">
     <value>Computer</value>
@@ -700,6 +700,21 @@
     <value>Programs</value>
   </data>
   <data name="LogDetail.Fixed Processes" xml:space="preserve">
-    <value>Fixed Processes</value>
+    <value>Fixed processes</value>
+  </data>
+  <data name="Export.Success.Title" xml:space="preserve">
+    <value>Export complete</value>
+  </data>
+  <data name="Export.Success.Text" xml:space="preserve">
+    <value>File saved to '{0}'.</value>
+  </data>
+  <data name="GeneratePage.SpreadClusters" xml:space="preserve">
+    <value>Spreading number of instances</value>
+  </data>
+  <data name="GeneratePage.Random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="GeneratePage.Consistent" xml:space="preserve">
+    <value>Consistent</value>
   </data>
 </root>
