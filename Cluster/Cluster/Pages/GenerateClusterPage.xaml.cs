@@ -43,7 +43,7 @@ namespace Cluster
                         TranslationSource.T("Errors.MissingFields"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                 return;
             }

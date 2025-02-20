@@ -71,7 +71,7 @@ namespace Cluster
                 if (res == 0)
                 {
                     _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.FixFail"), ControlAppearance.Danger,
-                            new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(5));
+                            new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                     return;
                 }
                 allResCount += res;
@@ -79,7 +79,7 @@ namespace Cluster
             Log.WriteLog([$"{allResCount}"], LogType.FixIssues);
             _window.RootSnackbarService.Show(TranslationSource.T("Success"),
                 TranslationSource.Instance.WithParam("HealthPage.Fixed", allResCount.ToString()),
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(5));
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
         }
     }
 }

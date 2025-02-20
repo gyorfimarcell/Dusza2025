@@ -146,7 +146,7 @@ namespace Cluster
                         $"'{program.ProgramName}' {TranslationSource.T("ProgramsPage.Shutdown.Success")}",
                         ControlAppearance.Success,
                         new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                     LoadData();
                 }

@@ -42,7 +42,7 @@ namespace Cluster
             if (cbComputer.SelectedIndex == -1 || cbProgram.SelectedIndex == -1)
             {
                 _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.MissingFields"), ControlAppearance.Danger,
-                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
 
@@ -56,7 +56,7 @@ namespace Cluster
             if (cpuUsage + program.CpuMilliCore > computer.ProcessorCore || memoryUsage + program.Memory > computer.RamCapacity)
             {
                 _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.NotEnoughResources"), ControlAppearance.Danger,
-                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
 
@@ -65,7 +65,7 @@ namespace Cluster
 
             _window.RootSnackbarService.Show(TranslationSource.T("NewInstancePage.Success.Title"),
                 TranslationSource.Instance.WithParam("NewInstancePage.Success.Text", process.FileName, computer.Name),
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
 
             Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}", computer.Name], LogType.RunProgramInstance);
         }

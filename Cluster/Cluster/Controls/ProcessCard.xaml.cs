@@ -82,7 +82,7 @@ namespace Cluster.Controls
             {
                 MainWindow window = (MainWindow)Application.Current.MainWindow!;
                 window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.NotEnoughResources"),
-                    ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                    ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
             if (OnProcessActivate == null) return;
