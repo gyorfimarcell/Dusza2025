@@ -1,6 +1,6 @@
 # A klaszter
 
-A feladat során a számítógépeket mappák, a futó folyamatokat pedig fájlok fogják szimbolizálni. Például a klaszter1 mappa tartalma a következő:
+Ebben a feladatban a számítógépek mappaként, míg a futó folyamatok fájlként lesznek ábrázolva. Például a „klaszter1” mappa az alábbi tartalommal rendelkezik:
 
 ```.
 ├── .klaszter
@@ -13,36 +13,35 @@ A feladat során a számítógépeket mappák, a futó folyamatokat pedig fájlo
 └── chrome-qwerty
 ```
 
-Ebben az esetben a klaszterünkhöz jelenleg 2 darab számítógép tartozik: szamitogep1 és szamitogep2. Az elsőn fut egy chrome és egy word programpéldány (vagyis folyamat), a másodikon pedig csupán egy chrome. A .szamitogep_konfig fájloktól eltekintve tehát a fájlok létezése azt jelenti, hogy egy folyamat (vagyis egy konkrét programból egy példány) éppen fut az adott számítógépen. Egy mappát pedig akkor tartunk a klaszterhez tartozó számítógépnek, amennyiben létezik benne a .szamitogep_konfig fájl.
+Ebben a klaszterben jelenleg két számítógép található: szamitogep1 és szamitogep2. Az első gépen egy chrome és egy word folyamat fut, míg a másodikon csak egy chrome. A .szamitogep_konfig fájlokat leszámítva minden fájl egy futó folyamatot jelöl, vagyis egy adott  program egy példányát. Egy mappát akkor tekintünk a klaszterhez tartozó számítógépnek, ha tartalmaz egy .szamitogep_konfig fájlt.
 
 ## Tulajdonságok
 
-A futó folyamat egy konkrét programból futó példányt jelent. A klaszteren fuƩatandó
-folyamatokat fájlként reprezentáljuk, melyek a fent említeƩ mappákban helyezkednek el
-például az alábbi módon:
-
-```.
-├── chrome-asdefg
-└── word-jklbnm
+A klaszteren elvárt futó folyamatokat a gyökérkönyvtárban található .klaszter fájl (adatbázisfájl) tartalmazza, az alábbi formátumban:
 ```
+chrome 
+2 
+100 
+200 
+word 
+1 
+150 
+500
+``` 
+A példa fájl azt mutatja, hogy a klaszteren a „chrome” programnak 2 „AKTÍV” példányban kell futnia, egyenként 100 millimag processzorral és 200 MB memóriával, valamint a „word” programnak 1 „AKTÍV” példányban 150 millimag processzorral és 100 MB memóriával.
 
-A fájlok és elhelyezkedésük tehát azt szimbolizálják, hogy az adoƩ folyamatok mely számítógépen futnak. Fontos kiemelni, hogy egy program több példányban is futhat a klaszteren akár 1 számítógépen (mappában) is. Egy folyamat neve programnev>- random 6 karakter> melynek egyedinek kell lennie az egész klaszteren. Az ehhez tartozó fájl tartalmazza a folyamat adatait. Például:
+A fájl sorai tehát az alábbi információkat tartalmazzák minden program esetében:
 
-```
-2024-10-27 07:15:45
-AKTÍV
-100
-100
-```
+- a program neve,
+- a kívánt példányszám,
+- az egyes példányokhoz szükséges processzor- és memóriakapacitás.
 
-Az első sorban az adott folyamat indításának pontos ideje található yyyy.mm.dd hh:mm:ss
-formátumban. Ezt követően a folyamat állapota, mely az „AKTÍV” és „INAKTÍV” szavak valamelyike
-aszerint, hogy a folyamat éppen rendeltetésszerűén működik-e vagy sem. A 3. és 4. sorban a
-folyamat által aktuálisan használt processzor és memória erőforrás található.
+A felhasználó legfőbb célja, hogy olyan állapotot érjen el a klaszteren, amelyben minden programból a megfelelő számú példány fut valamelyik számítógépen.
+
 
 ## Betöltés
 
-A program megynitása után több lehetőságünk van:
+A program megynitása után több lehetőségünk van:
 
 1. Egy már jelenlegi klaszter kiválasztása
 2. Új klaszter generálása
@@ -72,7 +71,7 @@ A klaszter betöltődése után a klaszter jelenlegi állapotáról kapunk egy k
 
 ## Helyreállítás
 
-Amennyiben a klaszter állapota nem megfelelő, lehetőség van a hibákat a programmal helyreállítani, és az állapot újra megfelelő lesz.
+Amennyiben a klaszter állapota nem megfelelő, lehetőség van a hibákat a programmal helyreállíttatni, és az állapot újra megfelelő lesz.
 
 ## Egyéb információk
 
