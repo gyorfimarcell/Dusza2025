@@ -5,20 +5,16 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:local="clr-namespace:Cluster"
+      xmlns:controls="clr-namespace:Cluster.Controls"
       mc:Ignorable="d"
-      Title="Shutdown Program"
       d:DesignHeight="750"
       d:DesignWidth="1200"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
-    <StackPanel x:Name="spStart"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Margin="0,0,0,128"
-                MouseLeftButtonUp="spStart_MouseLeftButtonUp">
-        <ui:SymbolIcon Symbol="Folder48" FontSize="128"/>
-        <TextBlock
-               FontSize="64">To start, load a cluster.</TextBlock>
-    </StackPanel>
+      <controls:EmptyStatus Title="{local:Translate StartPage.Title}"
+                            Description="{local:Translate StartPage.Description}"
+                            Icon="Folder48"
+                            Margin="0 0 0 128"
+                            Click="EmptyStatus_OnClick"/>
 </Page>

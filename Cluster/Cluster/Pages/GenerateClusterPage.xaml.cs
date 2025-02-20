@@ -39,11 +39,11 @@ namespace Cluster
             if (nbComputer.Value == null || nbProgram.Value == null || nbProcess.Value == null || chosenPath == null)
             {
                 _window.RootSnackbarService.Show(
-                        "Error",
-                        "You must fill out all fields!",
+                        TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.MissingFields"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                 return;
             }
@@ -157,6 +157,8 @@ namespace Cluster
                 }
             }
 
+            Log.WriteLog([rootPath, nbComputer.Value.ToString(), nbProgram.Value.ToString(), nbProcess.Value.ToString()], LogType.GenerateCluster);
+
             MainWindow.ClusterPath = rootPath;
             _window.RefreshLblPath();
             Log.WriteLog([rootPath], LogType.LoadCluster);
@@ -171,7 +173,7 @@ namespace Cluster
             if (ofd.ShowDialog() == true)
             {
                 chosenPath = ofd.FolderName;
-                lblPath.Content = chosenPath;
+                PathCard.Description = chosenPath;
             }
         }
     }

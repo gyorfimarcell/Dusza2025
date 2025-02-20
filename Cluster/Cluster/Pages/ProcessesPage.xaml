@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:local="clr-namespace:Cluster" xmlns:controls="clr-namespace:Cluster.Controls"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      xmlns:local="clr-namespace:Cluster" xmlns:controls="clr-namespace:Cluster.Controls" xmlns:visualelements="clr-namespace:LiveChartsCore.SkiaSharpView.VisualElements;assembly=LiveChartsCore.SkiaSharpView"
                   mc:Ignorable="d" 
       Title="Processes"
       d:DesignHeight="750"
@@ -15,7 +16,7 @@
         <StackPanel Orientation="Horizontal">
             <ui:TextBox x:Name="tbFilter"
                         VerticalAlignment="Center"
-                        PlaceholderText="Filter..."
+                        PlaceholderText="{local:Translate FilterPlaceholder}"
                         Icon="{ui:SymbolIcon Search20}"
                         Width="200"
                         Margin="0 0 4 0"
@@ -27,18 +28,18 @@
                 <ui:MenuItem x:Name="MenuItemStatus"
                              Icon="{ui:SymbolIcon VideoPlayPause20}"
                              StaysOpenOnClick="True">
-                    <ui:MenuItem Header="All"
+                    <ui:MenuItem Header="{local:Translate All}"
                                  Icon="{ui:SymbolIcon VideoPlayPause20}"
                                  Tag="0"
                                  FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemStatus_Click"/>
-                    <ui:MenuItem Header="Active only"
+                    <ui:MenuItem Header="{local:Translate ProcessesPage.Status.Active}"
                                  Icon="{ui:SymbolIcon Play20}"
                                  Tag="1"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemStatus_Click"/>
-                    <ui:MenuItem Header="Inactive only"
+                    <ui:MenuItem Header="{local:Translate ProcessesPage.Status.Inactive}"
                                  Icon="{ui:SymbolIcon Pause20}"
                                  Tag="2"
                                  StaysOpenOnClick="True"
@@ -46,7 +47,7 @@
                 </ui:MenuItem>
                 <ui:MenuItem x:Name="MenuItemSort"
                              Icon="{ui:SymbolIcon ArrowSort20}">
-                    <ui:MenuItem Header="Program"
+                    <ui:MenuItem Header="{local:Translate ProcessesPage.Sort.Program}"
                                  Icon="{ui:SymbolIcon Apps20}"
                                  Tag="0"
                                  StaysOpenOnClick="True"
@@ -57,33 +58,33 @@
                                  FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage"
+                    <ui:MenuItem Header="{local:Translate ProcessorUsage}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="2"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage"
+                    <ui:MenuItem Header="{local:Translate MemoryUsage}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="3"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Start time"
+                    <ui:MenuItem Header="{local:Translate ProcessesPage.Sort.Time}"
                                  Icon="{ui:SymbolIcon Clock20}"
-                                 Tag="3"
+                                 Tag="4"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <Separator/>
                     <ui:MenuItem x:Name="MenuItemSortOrder"
-                                  Header="Descending"
+                                  Header="{local:Translate Descending}"
                                   IsCheckable="True"
                                   StaysOpenOnClick="True"
                                   Click="MenuItemSortOrder_Click"/>
                 </ui:MenuItem>
                 <Separator/>
-                <ui:MenuItem Header="Export"
+                <ui:MenuItem Header="{local:Translate Export}"
                              Icon="{ui:SymbolIcon Share20}"
                              Click="MenuItemExport_Click"/>
-                <ui:MenuItem Header="New"
+                <ui:MenuItem Header="{local:Translate New}"
                              Icon="{ui:SymbolIcon Add20}"
                              Click="MenuItemNew_Click"/>
             </Menu>
@@ -92,15 +93,43 @@
     <Grid Margin="46 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition x:Name="chartsRow" Height="250"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
         <ui:TextBlock x:Name="tbCount"
+                      Grid.ColumnSpan="2"
                       FontTypography="Body"
                       Margin="0 0 0 4"/>
 
+        <lvc:CartesianChart x:Name="barPrograms"
+                            Grid.Row="1"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch">
+            <lvc:CartesianChart.Title>
+                <visualelements:LabelVisual Text="{local:TranslateStatic Programs}"/>
+            </lvc:CartesianChart.Title>
+        </lvc:CartesianChart>
+
+        <lvc:PieChart x:Name="pieComputers"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      Height="200"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Stretch">
+            <lvc:PieChart.Title>
+                <visualelements:LabelVisual Text="{local:TranslateStatic Computers}"/>
+            </lvc:PieChart.Title>
+        </lvc:PieChart>
+
         <ItemsControl x:Name="icProcesses"
-                  Grid.Row="1">
+                      Grid.Row="2"
+                      Grid.ColumnSpan="2"
+                      Focusable="False">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Process}">
                     <controls:ProcessCard Process="{Binding Path=.}"
@@ -111,5 +140,20 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <controls:EmptyStatus Title="{local:Translate ProcessesPage.Empty.Title}"
+                              Description="{local:Translate ProcessesPage.Empty.Description}"
+                              Icon="TextBulletListDismiss20"
+                              Grid.Row="2"
+                              Grid.ColumnSpan="2">
+            <controls:EmptyStatus.Style>
+                <Style TargetType="controls:EmptyStatus">
+                    <Style.Triggers>
+                        <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icProcesses}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:EmptyStatus.Style>
+        </controls:EmptyStatus>
     </Grid>
 </local:CustomPage>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,20 +76,15 @@ namespace Cluster.Controls
 
         private void btnActivate_Click(object sender, RoutedEventArgs e)
         {
-            if (Process.Active == false) {
-                Computer host = Process.HostComputer;
-
-                if (host.ProcessorUsage + Process.ProcessorUsage > host.ProcessorCore ||
-                    host.MemoryUsage + Process.MemoryUsage > host.RamCapacity) {
-
-                    MainWindow window = (MainWindow)Application.Current.MainWindow!;
-                    window.RootSnackbarService.Show("Error", $"Computer '{host.Name}' doesn't have enough resources!",
-                        ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
-                    return;
-                }
+            
+            bool res = Process.ToggleActive();
+            if (!res)
+            {
+                MainWindow window = (MainWindow)Application.Current.MainWindow!;
+                window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.NotEnoughResources"),
+                    ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
+                return;
             }
-            Process.ToggleActive();
-
             if (OnProcessActivate == null) return;
             OnProcessActivate(this, new());
         }

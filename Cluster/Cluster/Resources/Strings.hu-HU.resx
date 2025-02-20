@@ -1,0 +1,705 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Settings.Darkmode.Title" xml:space="preserve">
+    <value>Sötét mód</value>
+  </data>
+  <data name="Settings.Language.English" xml:space="preserve">
+    <value>Angol</value>
+  </data>
+  <data name="Settings.Language.Hungarian" xml:space="preserve">
+    <value>Magyar</value>
+  </data>
+  <data name="Settings.Language.Title" xml:space="preserve">
+    <value>Nyelv</value>
+  </data>
+  <data name="Settings.Title" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="Window.Title" xml:space="preserve">
+    <value>Klaszter Kezelő</value>
+  </data>
+  <data name="Menu.Health" xml:space="preserve">
+    <value>Klaszter Állapot</value>
+  </data>
+  <data name="Menu.Computers" xml:space="preserve">
+    <value>Számítógépek</value>
+  </data>
+  <data name="Menu.Processes" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="Menu.Programs" xml:space="preserve">
+    <value>Programok</value>
+  </data>
+  <data name="Menu.Logs" xml:space="preserve">
+    <value>Klaszter Naplók</value>
+  </data>
+  <data name="Menu.Settings" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="Menu.Path.Label" xml:space="preserve">
+    <value>Klaszter: </value>
+  </data>
+  <data name="Menu.Path.None" xml:space="preserve">
+    <value>Nincs</value>
+  </data>
+  <data name="Menu.Load" xml:space="preserve">
+    <value>Klaszter Betöltése</value>
+  </data>
+  <data name="Menu.Generate" xml:space="preserve">
+    <value>Klaszter Generálása</value>
+  </data>
+  <data name="Menu.LoadAnother" xml:space="preserve">
+    <value>Másik Klaszter Betöltése</value>
+  </data>
+  <data name="Menu.Invalid.Title" xml:space="preserve">
+    <value>Érvénytelen mappa</value>
+  </data>
+  <data name="Menu.Invalid.Text" xml:space="preserve">
+    <value>A kiválasztott mappa nem tartalmaz .klaszter fájlt.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Bezárás</value>
+  </data>
+  <data name="StartPage.Title" xml:space="preserve">
+    <value>Nincs Megnyitott Klaszter</value>
+  </data>
+  <data name="StartPage.Description" xml:space="preserve">
+    <value>Kattintson ide egy mappa kiválasztásához</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Új</value>
+  </data>
+  <data name="AddComputerPage.Name.Title" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="AddComputerPage.Name.Description" xml:space="preserve">
+    <value>Egy egyedi azonosító a számítógépnek.</value>
+  </data>
+  <data name="ProcessorCapacity" xml:space="preserve">
+    <value>Processzor Kapacitás</value>
+  </data>
+  <data name="MemoryCapacity" xml:space="preserve">
+    <value>Memória Kapacitás</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Hozzáadás</value>
+  </data>
+  <data name="Errors.Error" xml:space="preserve">
+    <value>Hiba</value>
+  </data>
+  <data name="Errors.MissingFields" xml:space="preserve">
+    <value>Az összes mező kitöltése kötelező!</value>
+  </data>
+  <data name="AddComputerPage.Success.Title" xml:space="preserve">
+    <value>Számítógép létrehozva</value>
+  </data>
+  <data name="AddComputerPage.Success.Text" xml:space="preserve">
+    <value>sikeresen létrehozva.</value>
+  </data>
+  <data name="AddProgramPage.Name.Title" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="AddProgramPage.Name.Description" xml:space="preserve">
+    <value>Egy egyedi azonosító a programnak.</value>
+  </data>
+  <data name="AddProgramPage.Active.Title" xml:space="preserve">
+    <value>Aktív Folyamatok</value>
+  </data>
+  <data name="AddProgramPage.Active.Description" xml:space="preserve">
+    <value>Mennyi aktív folyamat fusson a klaszteren.</value>
+  </data>
+  <data name="ProcessorUsage" xml:space="preserve">
+    <value>Processzor Használat</value>
+  </data>
+  <data name="MemoryUsage" xml:space="preserve">
+    <value>Memória Használat</value>
+  </data>
+  <data name="Errors.ProgramAlreadyExists" xml:space="preserve">
+    <value>Ez a program már létezik a klaszterben!</value>
+  </data>
+  <data name="AddProgramPage.Success.Title" xml:space="preserve">
+    <value>Program létrehozva</value>
+  </data>
+  <data name="AddProgramPage.Success.Text" xml:space="preserve">
+    <value>sikeresen létrehozva.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Szerkesztés</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programok</value>
+  </data>
+  <data name="Processes" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek folyamatok</value>
+  </data>
+  <data name="ComputerDetailsPage.Empty.Description" xml:space="preserve">
+    <value>Ezen a számítógépen nincsenek futó folyamatok.</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Processzor</value>
+  </data>
+  <data name="Memory" xml:space="preserve">
+    <value>Memória</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktív</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inaktív</value>
+  </data>
+  <data name="ComputerDetailsPage.Processes" xml:space="preserve">
+    <value>Folyamat</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Title" xml:space="preserve">
+    <value>Számítógép törölve</value>
+  </data>
+  <data name="ComputerDetailsPage.DeleteSuccess.Text" xml:space="preserve">
+    <value>sikeresen törölve.</value>
+  </data>
+  <data name="Outsourcing.DeleteSuccess" xml:space="preserve">
+    <value>Kiszervezés és törlés sikeres!</value>
+  </data>
+  <data name="FilterPlaceholder" xml:space="preserve">
+    <value>Szűrés...</value>
+  </data>
+  <data name="ComputersPage.Sort.Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="ComputersPage.Sort.ProcessorPercent" xml:space="preserve">
+    <value>Processzor Használat (%)</value>
+  </data>
+  <data name="ComputersPage.Sort.MemoryPercent" xml:space="preserve">
+    <value>Memória Használat (%)</value>
+  </data>
+  <data name="Descending" xml:space="preserve">
+    <value>Csökkenő</value>
+  </data>
+  <data name="ComputersPage.Menu.Optimize" xml:space="preserve">
+    <value>Optimalizálás</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Exportálás</value>
+  </data>
+  <data name="ComputersPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek számítógépek</value>
+  </data>
+  <data name="ComputersPage.Empty.EmptyText" xml:space="preserve">
+    <value>Ebben a klaszterben nincsenek számítógépek.</value>
+  </data>
+  <data name="ComputersPage.Empty.FilterText" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő számítógépek.</value>
+  </data>
+  <data name="Optimize.Title" xml:space="preserve">
+    <value>Optimalizálási értékek megadása</value>
+  </data>
+  <data name="Optimize.Button" xml:space="preserve">
+    <value>Optimalizálás</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="Optimize.SpreadQuestion" xml:space="preserve">
+    <value>Ezekkel az értékekkel nem lehet optimalizálni. Szeretné egyenletesen elosztani a folyamatokat?</value>
+  </data>
+  <data name="Optimize.Spread" xml:space="preserve">
+    <value>Szórás</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Siker</value>
+  </data>
+  <data name="Optimize.Spread.Success" xml:space="preserve">
+    <value>A folyamatok egyenlően szét lettek szórva!</value>
+  </data>
+  <data name="Optimize.Success" xml:space="preserve">
+    <value>Az optimalizálás sikeres volt!</value>
+  </data>
+  <data name="GeneratePage.ComputerCount" xml:space="preserve">
+    <value>Számítógépek száma</value>
+  </data>
+  <data name="GeneratePage.ProgramCount" xml:space="preserve">
+    <value>Programok száma</value>
+  </data>
+  <data name="GeneratePage.ProcessCount" xml:space="preserve">
+    <value>Folyamatok száma</value>
+  </data>
+  <data name="GeneratePage.Path" xml:space="preserve">
+    <value>Klaszter elérési út</value>
+  </data>
+  <data name="GeneratePage.Path.Choose" xml:space="preserve">
+    <value>Elérési út kiválasztása</value>
+  </data>
+  <data name="GeneratePage.Generate" xml:space="preserve">
+    <value>Generálás</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Mentés</value>
+  </data>
+  <data name="ModifyComputerPage.Title" xml:space="preserve">
+    <value>{0} szerkesztése</value>
+  </data>
+  <data name="ModifyComputerPage.Success.Text" xml:space="preserve">
+    <value>sikeresen módosítva.</value>
+  </data>
+  <data name="ModifyProgramPage.Title" xml:space="preserve">
+    <value>{0} szerkesztése</value>
+  </data>
+  <data name="ModifyProgramPage.Success.Text" xml:space="preserve">
+    <value>sikeresen módosítva.</value>
+  </data>
+  <data name="NewInstancePage.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="NewInstancePage.Computer" xml:space="preserve">
+    <value>Számítógép</value>
+  </data>
+  <data name="NewInstancePage.Run" xml:space="preserve">
+    <value>Futtatás</value>
+  </data>
+  <data name="Errors.NotEnoughResources" xml:space="preserve">
+    <value>Ennek a számítógépnek nincs elég erőforrás!</value>
+  </data>
+  <data name="NewInstancePage.Success.Title" xml:space="preserve">
+    <value>Folyamat elindítva</value>
+  </data>
+  <data name="NewInstancePage.Success.Text" xml:space="preserve">
+    <value>Folyamat '{0}' elindítva a(z) '{1}' számítógépen.</value>
+  </data>
+  <data name="ProcessesPage.Status.Active" xml:space="preserve">
+    <value>Csak aktív</value>
+  </data>
+  <data name="ProcessesPage.Status.Inactive" xml:space="preserve">
+    <value>Csak inaktív</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Összes</value>
+  </data>
+  <data name="ProcessesPage.Sort.Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="ProcessesPage.Sort.Time" xml:space="preserve">
+    <value>Indítási idő</value>
+  </data>
+  <data name="Computers" xml:space="preserve">
+    <value>Számítógépek</value>
+  </data>
+  <data name="ProcessesPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek folyamatok</value>
+  </data>
+  <data name="ProcessesPage.Empty.Description" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő folyamatok.</value>
+  </data>
+  <data name="ProgramsPage.Sort.Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="ProgramsPage.Sort.Requested" xml:space="preserve">
+    <value>Elvárt folyamatok</value>
+  </data>
+  <data name="ProgramsPage.Requested" xml:space="preserve">
+    <value>Elvárt</value>
+  </data>
+  <data name="ProgramsPage.CardRequested" xml:space="preserve">
+    <value>{0} elvárt folyamat</value>
+  </data>
+  <data name="ProgramsPage.Empty.Title" xml:space="preserve">
+    <value>Nincsenek programok</value>
+  </data>
+  <data name="ProgramsPage.Empty.FilterText" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő programok.</value>
+  </data>
+  <data name="ProgramsPage.Empty.EmptyText" xml:space="preserve">
+    <value>Ebben a klaszterben nincsenek programok.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Title" xml:space="preserve">
+    <value>{0} leállítása?</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Text" xml:space="preserve">
+    <value>Ez mind a {0} folyamatot leállítja.</value>
+  </data>
+  <data name="ProgramsPage.Shutdown" xml:space="preserve">
+    <value>Leállítás</value>
+  </data>
+  <data name="ProgramsPage.Shutdown.Success" xml:space="preserve">
+    <value>sikeresen leállítva.</value>
+  </data>
+  <data name="HealthPage.Fix" xml:space="preserve">
+    <value>Problémák javítása</value>
+  </data>
+  <data name="HealthPage.Healthy.Title" xml:space="preserve">
+    <value>Egészséges</value>
+  </data>
+  <data name="HealthPage.Healthy.Description" xml:space="preserve">
+    <value>Ebben a klaszterben nem található hiba.</value>
+  </data>
+  <data name="Errors.FixFail" xml:space="preserve">
+    <value>Nem sikerült minden hibát kijavítani</value>
+  </data>
+  <data name="HealthPage.Fixed" xml:space="preserve">
+    <value>Minden hiba kijavítva ({0} hiba)</value>
+  </data>
+  <data name="Logs.Empty" xml:space="preserve">
+    <value>Nincs megjeleníthető napló</value>
+  </data>
+  <data name="Logs.Empty.Text" xml:space="preserve">
+    <value>Nincsenek ennek a szűrőnek megfelelő naplófájlok.</value>
+  </data>
+  <data name="Logs.AllTypes" xml:space="preserve">
+    <value>Minden típus</value>
+  </data>
+  <data name="Logs.AllDetails" xml:space="preserve">
+    <value>Minden részlet</value>
+  </data>
+  <data name="Logs.ExpandAll" xml:space="preserve">
+    <value>Összes nyitása</value>
+  </data>
+  <data name="ProcessesPage.ComputerTooltip" xml:space="preserve">
+    <value>folyamat</value>
+  </data>
+  <data name="Optimize.Popup.Title" xml:space="preserve">
+    <value>Állítsa be a minimum és maximum kihasználtságát a számítógépnek!</value>
+  </data>
+  <data name="Optimize.Inactive" xml:space="preserve">
+    <value>Az inaktív folyamatok nem lesznek változtatva.</value>
+  </data>
+  <data name="Optimize.Minimum" xml:space="preserve">
+    <value>Minimum százalék</value>
+  </data>
+  <data name="Optimize.Maximum" xml:space="preserve">
+    <value>Minimum százalék</value>
+  </data>
+  <data name="Health.NotEnough" xml:space="preserve">
+    <value>A {0} programból nincs elég folyamat ({1} elvárt, {2} aktív, {3} inaktív)</value>
+  </data>
+  <data name="Health.TooMany" xml:space="preserve">
+    <value>A {0} programból túl sok folyamat van ({1} elvárt, {2} aktív, {3} inaktív)</value>
+  </data>
+  <data name="Health.Processor" xml:space="preserve">
+    <value>A {0} számítógépnek nincs elég processzor kapacitása ({1}/{2})</value>
+  </data>
+  <data name="Health.Memory" xml:space="preserve">
+    <value>A {0} számítógépnek nincs elég memória kapacitása ({1}/{2})</value>
+  </data>
+  <data name="HealthPage.NotFixable.Title" xml:space="preserve">
+    <value>A problémák nem megoldhatóak</value>
+  </data>
+  <data name="HealthPage.NotFixable.Text" xml:space="preserve">
+    <value>A problémák nem oldhatóak meg teljesen. Szeretné ennek ellenére is folytatni?</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Folytatás</value>
+  </data>
+  <data name="Errors.ComputerNameTaken" xml:space="preserve">
+    <value>Egy számítógép már használja ezt a nevet</value>
+  </data>
+  <data name="Errors.ComputerPositive" xml:space="preserve">
+    <value>A processzormagok száma és a memória pozitív kell hogy legyen.</value>
+  </data>
+  <data name="Errors.ComputerMoreProcessor" xml:space="preserve">
+    <value>A számítógépen futó folyamatok több processzor kapacitást igényelnek!</value>
+  </data>
+  <data name="Errors.ComputerMoreMemory" xml:space="preserve">
+    <value>A számítógépen futó folyamatok több memória kapacitást igényelnek!</value>
+  </data>
+  <data name="Computer.Delete.Text" xml:space="preserve">
+    <value>A törlés sikertelen, mivel ezen a számítógépen futnak programok. Ezek a folyamatok kiszervezhetőek más gépekre. Szeretné folytatni?</value>
+  </data>
+  <data name="Computer.Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Computer.Delete.Outsource" xml:space="preserve">
+    <value>Csak kiszervezés</value>
+  </data>
+  <data name="Errors.OutsourceNotEnoughSpace" xml:space="preserve">
+    <value>Nincs elég hely az összes program kiszervezéséhez. Szeretné folytatni?</value>
+  </data>
+  <data name="Errors.Outsource.Cancel" xml:space="preserve">
+    <value>Kiszervezés megszakítva.</value>
+  </data>
+  <data name="Errors.Outsource.Fail" xml:space="preserve">
+    <value>Kiszervezés sikertelen. Próbálja újra később.</value>
+  </data>
+  <data name="Outsourcing.Success" xml:space="preserve">
+    <value>Kiszervezés sikeres! A {0} számítógép most már biztonságosan törölhető.</value>
+  </data>
+  <data name="Outsourcing.PartialSuccess" xml:space="preserve">
+    <value>A lehető legtöbb folyamat ki lett szervezve! {0} folyamat maradt a(z) {1} számítógépen.</value>
+  </data>
+  <data name="Errors.OutsourcingOther" xml:space="preserve">
+    <value>Nincs elég erőforrás a többi gépen a kiszervezéshez.</value>
+  </data>
+  <data name="Errors.OutsourcingNone" xml:space="preserve">
+    <value>Nincsenek számítógépek vagy aktív folyamatok a kiszervezéshez!</value>
+  </data>
+  <data name="Errors.OptimizeCannotFit" xml:space="preserve">
+    <value>Vannak folyamatok amik egy számítógépre sem férnek. Szeretné ennek ellenére is optimalizáni?</value>
+  </data>
+  <data name="Optimize.Cancel" xml:space="preserve">
+    <value>Optimalizálás megszakítva.</value>
+  </data>
+  <data name="Errors.SpreadNone" xml:space="preserve">
+    <value>Nincsenek számítógépek vagy aktív folyamatok a szóráshoz!</value>
+  </data>
+  <data name="LogType.OpenProgram" xml:space="preserve">
+    <value>Program Megnyitás</value>
+  </data>
+  <data name="LogType.CloseProgram" xml:space="preserve">
+    <value>Program Bezárás</value>
+  </data>
+  <data name="LogType.LoadCluster" xml:space="preserve">
+    <value>Klaszter Betöltés</value>
+  </data>
+  <data name="LogType.AddComputer" xml:space="preserve">
+    <value>Számítógép hozzáadás</value>
+  </data>
+  <data name="LogType.DeleteComputer" xml:space="preserve">
+    <value>Számítógép Törlés</value>
+  </data>
+  <data name="LogType.ExportCSV" xml:space="preserve">
+    <value>CSV Exportálás</value>
+  </data>
+  <data name="LogType.AddProgram" xml:space="preserve">
+    <value>Program Hozzáadás</value>
+  </data>
+  <data name="LogType.RunProgramInstance" xml:space="preserve">
+    <value>Folyamat Indítás</value>
+  </data>
+  <data name="LogType.ShutdownProgramInstance" xml:space="preserve">
+    <value>Folyamat Leállítás</value>
+  </data>
+  <data name="LogType.ModifyProgram" xml:space="preserve">
+    <value>Program Módosítás</value>
+  </data>
+  <data name="LogType.ShutdownProgram" xml:space="preserve">
+    <value>Program Leállítás</value>
+  </data>
+  <data name="LogType.ClearProgramInstances" xml:space="preserve">
+    <value>Folyamatok Törlése</value>
+  </data>
+  <data name="LogType.MoveProgramInstance" xml:space="preserve">
+    <value>Folyamat Mozgatás</value>
+  </data>
+  <data name="LogType.OptimizeProgramInstances" xml:space="preserve">
+    <value>Folyamatok Optimalizálása</value>
+  </data>
+  <data name="LogType.ModifyComputer" xml:space="preserve">
+    <value>Számítógép Módosítás</value>
+  </data>
+  <data name="LogType.SpreadProgramInstances" xml:space="preserve">
+    <value>Folyamatok Szórása</value>
+  </data>
+  <data name="LogType.FixIssues" xml:space="preserve">
+    <value>Problémák Javítása</value>
+  </data>
+  <data name="LogType.ActivateProgramInstance" xml:space="preserve">
+    <value>Folyamat Aktiválás</value>
+  </data>
+  <data name="LogType.DeactivateProgramInstance" xml:space="preserve">
+    <value>Folyamat Deaktiválás</value>
+  </data>
+  <data name="LogType.GenerateCluster" xml:space="preserve">
+    <value>Klaszter Generálás</value>
+  </data>
+  <data name="LogDetail.Path" xml:space="preserve">
+    <value>Elérési Út</value>
+  </data>
+  <data name="LogDetail.Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
+  <data name="LogDetail.CPU" xml:space="preserve">
+    <value>Processzor</value>
+  </data>
+  <data name="LogDetail.Memory" xml:space="preserve">
+    <value>Memória</value>
+  </data>
+  <data name="LogDetail.Type" xml:space="preserve">
+    <value>Típus</value>
+  </data>
+  <data name="LogDetail.Active programs" xml:space="preserve">
+    <value>Aktív Programok</value>
+  </data>
+  <data name="LogDetail.Instance" xml:space="preserve">
+    <value>Folyamat</value>
+  </data>
+  <data name="LogDetail.Start" xml:space="preserve">
+    <value>Kezdés</value>
+  </data>
+  <data name="LogDetail.Active" xml:space="preserve">
+    <value>Aktív</value>
+  </data>
+  <data name="LogDetail.Computer" xml:space="preserve">
+    <value>Számítógép</value>
+  </data>
+  <data name="LogDetail.Instances" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="LogDetail.Process count" xml:space="preserve">
+    <value>Folyamatok száma</value>
+  </data>
+  <data name="LogDetail.Source computer" xml:space="preserve">
+    <value>Forrás számítógép</value>
+  </data>
+  <data name="LogDetail.Destination computer" xml:space="preserve">
+    <value>Cél számítógép</value>
+  </data>
+  <data name="LogDetail.Minimum Percent" xml:space="preserve">
+    <value>Minimum Százalék</value>
+  </data>
+  <data name="LogDetail.Maximum Percent" xml:space="preserve">
+    <value>Maximum Százalék</value>
+  </data>
+  <data name="LogDetail.Computers" xml:space="preserve">
+    <value>Számítógépek</value>
+  </data>
+  <data name="LogDetail.CPU Capacity" xml:space="preserve">
+    <value>Processzor Kapacitás</value>
+  </data>
+  <data name="LogDetail.Memory Capacity" xml:space="preserve">
+    <value>Memória Kapacitás</value>
+  </data>
+  <data name="LogDetail.CPU Spread Percent" xml:space="preserve">
+    <value>Processzor Szórás Százalék</value>
+  </data>
+  <data name="LogDetail.RAM Spread Percent" xml:space="preserve">
+    <value>Memória szórás százalék</value>
+  </data>
+  <data name="LogDetail.Processes" xml:space="preserve">
+    <value>Folyamatok</value>
+  </data>
+  <data name="LogDetail.Processor Usage" xml:space="preserve">
+    <value>Processzor Használat</value>
+  </data>
+  <data name="LogDetail.Memory Usage" xml:space="preserve">
+    <value>Memória Használat</value>
+  </data>
+  <data name="LogDetail.Host Computer" xml:space="preserve">
+    <value>Számítógép</value>
+  </data>
+  <data name="LogDetail.Programtypes" xml:space="preserve">
+    <value>Programok</value>
+  </data>
+  <data name="LogDetail.Fixed Processes" xml:space="preserve">
+    <value>Javított Folyamatok</value>
+  </data>
+</root>

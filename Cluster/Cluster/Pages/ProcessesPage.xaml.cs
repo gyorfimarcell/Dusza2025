@@ -1,4 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using Cluster.ChartModels;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,15 +37,28 @@ namespace Cluster
             InitializeComponent();
 
             Loaded += ProcessesPage_Loaded;
+            _window.PropertyChanged += _window_PropertyChanged;
         }
 
         private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
         {
             LoadData();
-            if (DataContext != null && DataContext is string programName) {
+            if (DataContext != null && DataContext is string programName)
+            {
                 List<MenuItem> menuItems = GetProgramMenuItems();
                 menuItems.ForEach(x => x.IsChecked = x.Header.ToString() == programName);
                 FilterProcesses();
+            }
+        }
+
+        private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindow.DarkMode))
+            {
+                barPrograms.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+                barPrograms.LegendTextPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+
+                pieComputers.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
             }
         }
 
@@ -50,20 +67,40 @@ namespace Cluster
         ProcessesPageSort sort = ProcessesPageSort.Id;
         ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
 
-        public void LoadData(bool skipFilterReload = false) {
+        public void LoadData(bool skipFilterReload = false)
+        {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
 
             Processes = computers.SelectMany(x => x.processes).ToList();
 
-             if (!skipFilterReload) UpdateProgramsMenuItem(programs);
+            if (!skipFilterReload) UpdateProgramsMenuItem(programs);
             FilterProcesses();
         }
 
-        public void UpdateProgramsMenuItem(List<ProgramType> programs) {
+        public void UpdateCharts()
+        {
+            ProcessesPageCharts data = new(icProcesses.Items.Cast<Process>());
+            barPrograms.Series = statusFilter switch
+            {
+                ProcessesPageStatus.All => [data.ProgramsActiveSeries, data.ProgramInactiveSeries],
+                ProcessesPageStatus.Active => [data.ProgramsActiveSeries],
+                ProcessesPageStatus.Inactive => [data.ProgramInactiveSeries],
+                _ => throw new NotImplementedException()
+            };
+            barPrograms.LegendPosition = statusFilter == ProcessesPageStatus.All ? LiveChartsCore.Measure.LegendPosition.Bottom : LiveChartsCore.Measure.LegendPosition.Hidden;
+            barPrograms.XAxes = data.ProgramsAxes;
+            barPrograms.YAxes = data.ProgramsYAxes;
+            pieComputers.Series = data.ComputersSeries;
+
+            chartsRow.Height = icProcesses.Items.Count != 0 ? new GridLength(250) : new GridLength(0);
+        }
+
+        public void UpdateProgramsMenuItem(List<ProgramType> programs)
+        {
             menuItemPrograms.Items.Clear();
 
-            MenuItem allItem = new MenuItem() { Header = "All", StaysOpenOnClick = true };
+            MenuItem allItem = new MenuItem() { Header = TranslationSource.T("All"), StaysOpenOnClick = true };
             allItem.Click += ProgramsAllClick;
             menuItemPrograms.Items.Add(allItem);
 
@@ -71,7 +108,8 @@ namespace Cluster
 
             foreach (ProgramType program in programs)
             {
-                MenuItem item = new MenuItem() {
+                MenuItem item = new MenuItem()
+                {
                     Header = program.ProgramName,
                     IsCheckable = true,
                     IsChecked = true,
@@ -82,22 +120,24 @@ namespace Cluster
             }
         }
 
-        internal enum ProcessesPageSort {
+        internal enum ProcessesPageSort
+        {
             Program,
             Id,
             ProcessorUsage,
             MemoryUsage,
             Start
         }
-        
-        internal enum  ProcessesPageStatus
+
+        internal enum ProcessesPageStatus
         {
             All,
             Active,
             Inactive,
         }
 
-        private void FilterProcesses() {
+        private void FilterProcesses()
+        {
             List<string> programNames = GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
 
             IEnumerable<Process> filtered = Processes;
@@ -123,14 +163,16 @@ namespace Cluster
             };
 
             if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
-            
+
             List<Process> filteredList = filtered.ToList();
 
             icProcesses.ItemsSource = filteredList;
-            tbCount.Text = $"{filteredList.Count} processes ({filteredList.Count(x => x.Active)} active)";
+            tbCount.Text = $"{filteredList.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({filteredList.Count(x => x.Active)} {TranslationSource.T("Active")})";
+            UpdateCharts();
         }
 
-        private List<MenuItem> GetProgramMenuItems() {
+        private List<MenuItem> GetProgramMenuItems()
+        {
             List<MenuItem> menuItems = [];
 
             foreach (var item in menuItemPrograms.Items)
@@ -173,11 +215,11 @@ namespace Cluster
             sfd.DefaultExt = "csv";
             if (sfd.ShowDialog() == true)
             {
-                string[] lines = ["Name;Computer;Status;ProcessorUsage;MemoryUsage", ..Processes.Select(x => x.GetCSVRow())];
+                string[] lines = ["Name;Computer;Status;ProcessorUsage;MemoryUsage", .. Processes.Select(x => x.GetCSVRow())];
                 File.WriteAllLines(sfd.FileName, lines);
                 _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
-                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
-                Log.WriteLog(["Processes"], LogType.ExportCSV);
+                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
+                Log.WriteLog(["Processes", sfd.FileName], LogType.ExportCSV);
             }
         }
 
@@ -205,10 +247,10 @@ namespace Cluster
                     otherItem.FontWeight = FontWeights.Normal;
                 }
             }
-            
+
             MenuItem menuItem = (MenuItem)sender;
             menuItem.FontWeight = FontWeights.Bold;
-            
+
             sort = (ProcessesPageSort)Enum.Parse(typeof(ProcessesPageSort), (string)menuItem.Tag);
             FilterProcesses();
         }
@@ -227,10 +269,10 @@ namespace Cluster
                     otherItem.FontWeight = FontWeights.Normal;
                 }
             }
-            
+
             MenuItem menuItem = (MenuItem)sender;
             menuItem.FontWeight = FontWeights.Bold;
-            
+
             statusFilter = (ProcessesPageStatus)Enum.Parse(typeof(ProcessesPageStatus), (string)menuItem.Tag);
             FilterProcesses();
         }

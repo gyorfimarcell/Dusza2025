@@ -16,7 +16,7 @@
         <StackPanel Orientation="Horizontal">
             <ui:TextBox x:Name="tbFilter"
                         VerticalAlignment="Center"
-                        PlaceholderText="Filter..."
+                        PlaceholderText="{local:Translate FilterPlaceholder}"
                         Icon="{ui:SymbolIcon Search20}"
                         Width="200"
                         Margin="0 0 4 0"
@@ -24,57 +24,57 @@
             <Menu FontSize="14">
                 <ui:MenuItem x:Name="MenuItemSort"
                              Icon="{ui:SymbolIcon ArrowSort20}">
-                    <ui:MenuItem Header="Name"
+                    <ui:MenuItem Header="{local:Translate ComputersPage.Sort.Name}"
                                  Icon="{ui:SymbolIcon Tag20}"
                                  Tag="0"
                                  FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage"
+                    <ui:MenuItem Header="{local:Translate ProcessorUsage}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="1"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage (%)"
+                    <ui:MenuItem Header="{local:Translate ComputersPage.Sort.ProcessorPercent}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="2"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Capacity"
+                    <ui:MenuItem Header="{local:Translate ProcessorCapacity}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="3"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage"
+                    <ui:MenuItem Header="{local:Translate MemoryUsage}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="4"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage (%)"
+                    <ui:MenuItem Header="{local:Translate ComputersPage.Sort.MemoryPercent}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="5"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Capacity"
+                    <ui:MenuItem Header="{local:Translate MemoryCapacity}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="6"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <Separator/>
                     <ui:MenuItem x:Name="MenuItemSortOrder"
-                                 Header="Descending"
+                                 Header="{local:Translate Descending}"
                                  IsCheckable="True"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSortOrder_Click"/>
                 </ui:MenuItem>
                 <Separator/>
-                <ui:MenuItem Header="Optimize"
+                <ui:MenuItem Header="{local:Translate ComputersPage.Menu.Optimize}"
                 Icon="{ui:SymbolIcon ArrowTrendingSettings20}"
                 Click="MenuItemOptimize_Click"/>
-                <ui:MenuItem Header="Export"
+                <ui:MenuItem Header="{local:Translate Export}"
                  Icon="{ui:SymbolIcon Share20}"
                  Click="MenuItemExport_Click"/>
-                <ui:MenuItem Header="New"
+                <ui:MenuItem Header="{local:Translate New}"
                  Icon="{ui:SymbolIcon Add20}"
                  Click="MenuItemNew_OnClick"/>
             </Menu>
@@ -82,44 +82,77 @@
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
         <ItemsControl x:Name="icComputers"
-                      Grid.Row="0">
+                      Grid.Row="0"
+                      Focusable="False">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Computer}">
-                    <ui:CardControl
-                        Margin="4"
+                    <ui:CardAction
+                        Margin="0 0 0 8"
                         Padding="20,10,20,10"
                         Icon="{ui:SymbolIcon Server24}"
+                        IsChevronVisible="False"
                         Click="ComputerCard_OnClick">
-                        <ui:CardControl.Header>
-                            <StackPanel>
-                                <ui:TextBlock
-                                    Margin="0"
-                                    FontTypography="BodyStrong"
-                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                    Text="{Binding Name}" />
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="16" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <controls:UsageBar Grid.Column="0"
-                                                       Text="Processor"
-                                                       Current="{Binding ProcessorUsage}"
-                                                       Max="{Binding ProcessorCore}" />
-                                    <controls:UsageBar Grid.Column="2"
-                                                       Text="Memory"
-                                                       Current="{Binding MemoryUsage}"
-                                                       Max="{Binding RamCapacity}" />
-                                </Grid>
-                            </StackPanel>
-                        </ui:CardControl.Header>
-                        <ui:Button Appearance="Transparent"
-                                   Icon="{ui:SymbolIcon Delete24}"
-                                   Click="Delete_OnClick"/>
-                    </ui:CardControl>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <ui:TextBlock Grid.ColumnSpan="2"
+                                Margin="0"
+                                FontTypography="BodyStrong"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="{Binding Name}" />
+                            
+                            <controls:UsageBar Grid.Column="0"
+                                               Grid.Row="1"
+                                               Text="{local:Translate Processor}"
+                                               Current="{Binding ProcessorUsage}"
+                                               Max="{Binding ProcessorCore}"
+                                               Margin="0 0 16 0"/>
+                            <controls:UsageBar Grid.Column="1"
+                                               Grid.Row="1"
+                                               Text="{local:Translate Memory}"
+                                               Current="{Binding MemoryUsage}"
+                                               Max="{Binding RamCapacity}"
+                                               Margin="0 0 16 0"/>
+                            
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Column="2"
+                                        Grid.RowSpan="2">
+                                <ui:Button Appearance="Transparent"
+                                           Icon="{ui:SymbolIcon Edit24}"
+                                           Margin="0 0 4 0"
+                                           Click="Edit_OnClick"/>
+                                <ui:Button Appearance="Transparent"
+                                           Icon="{ui:SymbolIcon Delete24}"
+                                           Click="Delete_OnClick"/>
+                            </StackPanel>   
+                        </Grid>
+                    </ui:CardAction>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <controls:EmptyStatus Title="{local:Translate ComputersPage.Empty.Title}"
+                              Icon="TextBulletListDismiss20">
+            <controls:EmptyStatus.Style>
+                <Style TargetType="controls:EmptyStatus">
+                    <Setter Value="{local:Translate ComputersPage.Empty.FilterText}" Property="Description"/>
+                    <Style.Triggers>
+                        <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icComputers}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Value="" Binding="{Binding Text, ElementName=tbFilter}">
+                            <Setter Value="{local:Translate ComputersPage.Empty.EmptyText}" Property="Description"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:EmptyStatus.Style>
+        </controls:EmptyStatus>
     </Grid>
 </local:CustomPage>

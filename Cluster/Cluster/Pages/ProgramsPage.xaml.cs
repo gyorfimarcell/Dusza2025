@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Cluster.ChartModels;
+using LiveChartsCore;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,12 +36,24 @@ namespace Cluster
         {
             InitializeComponent();
             LoadData();
+
+            _window.PropertyChanged += _window_PropertyChanged;
+        }
+
+        private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindow.DarkMode))
+            {
+                barRequested.CoreChart.Update(new ChartUpdateParams { IsAutomaticUpdate = false, Throttling = false });
+                barRequested.LegendTextPaint = (SolidColorPaint?)LiveCharts.DefaultSettings.LegendTextPaint;
+            }
         }
 
         public void LoadData()
         {
             Programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
             UpdateFiltering();
+            UpdateCharts();
         }
 
         internal enum ProgramsPageSort
@@ -66,6 +82,16 @@ namespace Cluster
             if (MenuItemSortOrder.IsChecked) filtered = filtered.Reverse();
 
             icPrograms.ItemsSource = filtered;
+        }
+
+        private void UpdateCharts() {
+            ProgramsPageCharts data = new(Programs);
+
+            barRequested.Series = data.RequestedSeries;
+            barRequested.XAxes = data.RequestedXAxis;
+            barRequested.YAxes = data.RequestedYAxis;
+
+            chartRow.Height = Programs.Count == 0 ? new GridLength(0) : new GridLength(150);
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
@@ -100,9 +126,10 @@ namespace Cluster
 
             MessageBox messageBox = new MessageBox()
             {
-                Title = $"Shut down {program.ProgramName}?",
-                Content = $"This will shut down all {processCount} processes.",
-                PrimaryButtonText = "Shutdown",
+                Title = TranslationSource.Instance.WithParam("ProgramsPage.Shutdown.Title", program.ProgramName),
+                Content = TranslationSource.Instance.WithParam("ProgramsPage.Shutdown.Text", processCount.ToString()),
+                PrimaryButtonText = TranslationSource.T("ProgramsPage.Shutdown"),
+                CloseButtonText = TranslationSource.T("Cancel"),
                 PrimaryButtonAppearance = ControlAppearance.Danger,
             };
 
@@ -110,15 +137,16 @@ namespace Cluster
             MessageBoxResult result = await messageBox.ShowDialogAsync();
             if (result == MessageBoxResult.Primary)
             {
+                string instancesCount = program.ActivePrograms.ToString();
                 if (ProgramType.ShutdownProgram(program))
                 { 
-                    Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}"], LogType.ShutdownProgram);
+                    Log.WriteLog([program.ProgramName, $"{program.CpuMilliCore}", $"{program.Memory}", instancesCount], LogType.ShutdownProgram);
                     _window.RootSnackbarService.Show(
-                        "Success",
-                        $"Program '{program.ProgramName}' successfully shut down!",
+                        TranslationSource.T("Success"),
+                        $"'{program.ProgramName}' {TranslationSource.T("ProgramsPage.Shutdown.Success")}",
                         ControlAppearance.Success,
                         new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                     LoadData();
                 }

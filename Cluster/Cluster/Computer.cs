@@ -18,6 +18,7 @@ using System.Numerics;
 using File = System.IO.File;
 using System.Xml.Linq;
 using System.Windows.Documents;
+using Cluster.Controls;
 
 namespace Cluster
 {
@@ -89,11 +90,11 @@ namespace Cluster
                 computerNames = GetComputers(Path).Select(x => x.Name).ToList();
             if (computerNames!.Contains(name))
             {
-                return "A computer already uses this name";
+                return TranslationSource.T("Errors.ComputerNameTaken");
             }
             if (cores < 1 || ram < 1)
             {
-                return "The amount of cpu cores and memory must be positive.";
+                return TranslationSource.T("Errors.ComputerPositive");
             }
 
             string dir = Directory.CreateDirectory($@"{Path}\{name}").FullName;
@@ -116,6 +117,21 @@ namespace Cluster
             return null;
         }
 
+        public string? Modify(int processor, int memory)
+        {
+            if (processor < ProcessorUsage)
+            {
+                return TranslationSource.T("Errors.ComputerMoreProcessor");
+            }
+            if (memory < MemoryUsage)
+            {
+                return TranslationSource.T("Errors.ComputerMoreMemory");
+            }
+
+            File.WriteAllLines($@"{MainWindow.ClusterPath}\{Name}\.szamitogep_konfig", [processor.ToString(), memory.ToString()]);
+            return null;
+        }
+
         public bool CanOutSourcePrograms(string? path = null)
         {
             List<Computer> computers = GetComputers(path ?? MainWindow.ClusterPath)
@@ -133,60 +149,98 @@ namespace Cluster
             return true;
         }
 
-        public string? OutSourcePrograms()
+        public List<string>? OutSourcePrograms()
         {
-            if (CanOutSourcePrograms())
+            MessageBox mgbox = new()
             {
-                MessageBox mgbox = new()
+                Title = TranslationSource.T("Errors.Error"),
+                Content = TranslationSource.T("Computer.Delete.Text"),
+                IsPrimaryButtonEnabled = true,
+                IsSecondaryButtonEnabled = true,
+                //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
+                PrimaryButtonText = TranslationSource.T("Computer.Delete"),
+                SecondaryButtonText = TranslationSource.T("Computer.Delete.Outsource"),
+                CloseButtonText = TranslationSource.T("Cancel")
+
+            };
+
+            MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+
+            if (result != MessageBoxResult.Primary && result != MessageBoxResult.Secondary)
+                return null;
+
+            bool deleteAsWell = result == MessageBoxResult.Primary;
+
+            bool canOutsource = CanOutSourcePrograms();
+            if (!canOutsource)
+            {
+                //return "Outsourcing isn't possible. Shut down all the programs before deleting the computer!";
+                deleteAsWell = false;
+                mgbox = new()
                 {
-                    Title = "Error",
-                    Content = "Deletion failed as this computer is running programs, but they can be outsourced to other machines. Would you like to proceed?",
+                    Title = TranslationSource.T("Errors.Error"),
+                    Content = TranslationSource.T("Errors.OutsourceNotEnoughSpace"),
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    //Background = new SolidColorBrush(Color.FromRgb(244, 66, 54)),
-                    PrimaryButtonText = "Yes",
-                    CloseButtonText = "Cancel"
+                    PrimaryButtonText = TranslationSource.T("Continue"),
+                    CloseButtonText = TranslationSource.T("Cancel")
 
                 };
-                MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
-                if (result == MessageBoxResult.Primary)
-                {
-                    int processesCount = processes.Count;
-                    bool isSuccess = OutSource() == null;
-                    if (!isSuccess)
-                    {
-                        return "Outsourcing failed! Please try again later.";
-                    }
-                    Log.WriteLog([Name, $"{processesCount}"], LogType.ClearProgramInstances);
-                    return null;
 
+                result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+                if (result != MessageBoxResult.Primary)
+                {
+                    return [TranslationSource.T("Errors.Outsource.Cancel"), "Info"];
                 }
-                return string.Empty;
             }
-            return "Outsourcing isn't possible. Shut down all the programs before deleting the computer!";
+
+            int processesCount = processes.Count;
+            bool isSuccess = OutSource(forceOutSource: !canOutsource) == null;
+            if (!isSuccess)
+            {
+                return [TranslationSource.T("Errors.Outsource.Fail"), "Danger"];
+            }
+
+            List<Process> remainingProcesses = GetComputers(MainWindow.ClusterPath).Find(x => x.Name == Name).processes;
+            Log.WriteLog([Name, $"{processesCount - remainingProcesses.Count}"], LogType.ClearProgramInstances);
+
+            if (deleteAsWell)
+            {
+                string? res = Delete();
+                return res == null ? [TranslationSource.T("Outsourcing.DeleteSuccess"), "Success"] : [res, "Danger"];
+            }
+
+            if (!canOutsource)
+            {
+                return [TranslationSource.Instance.WithParam("Outsourcing.PartialSuccess", remainingProcesses.Count.ToString(), Name), "Info"];
+            }
+
+            return [TranslationSource.Instance.WithParam("Outsourcing.Success", Name), "Success"];
         }
 
-        private string? OutSource(string? path = null)
+        private string? OutSource(string? path = null, bool forceOutSource = false)
         {
             path = path ?? MainWindow.ClusterPath;
-            List<Computer> computers = GetComputers(path)
-                .Where(x => x.Name != Name).ToList();
-            foreach (var process in processes)
+            List<Computer> computers = GetComputers(path).Where(x => x.Name != Name)
+                .OrderByDescending(x => (x.ProcessorCore - x.ProcessorUsage + (x.RamCapacity - x.MemoryUsage)) / 2.0).ToList();
+            List<Process> orderedProcesses = processes.OrderBy(x => (x.ProcessorUsage + x.MemoryUsage) / 2.0).ToList();
+
+            foreach (Process process in orderedProcesses)
             {
                 Computer? capable = computers.FirstOrDefault(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage));
                 if (capable == null)
                 {
-                    return "There's not enough resource on other computers to outsource.";
+                    if (forceOutSource)
+                        continue;
+                    return TranslationSource.T("Errors.OutsourcingOther");
                 }
 
                 try
                 {
-                    //File.Move(Path.Combine(path, Name, process.FileName), Path.Combine(path, capable.Name, process.FileName));
                     MoveProcess(process.FileName, this, capable);
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
                     return ex.Message;
                 }
 
@@ -248,6 +302,12 @@ namespace Cluster
             return canOptimize;
         }
 
+        /// <summary>
+        ///   Optimizes the computers in the cluster folder.
+        /// </summary>
+        /// <param name="min">Minimum running percent</param>
+        /// <param name="max">Maximum running percent</param>
+        /// <returns>Error mesaage if any error occures, otherwise false</returns>
         public static string? OptimizeComputers(int min, int max)
         {
             //Save the computers and their active processes in lists
@@ -260,22 +320,7 @@ namespace Cluster
             //Check if there are active processes and computers
             if (allActiveProcesses.Count == 0 || computers.Count == 0)
             {
-                return "There are no active processes to optimize or no computers!";
-            }
-
-            //First round: Add one active process to each computer if possible
-            for (int i = 0; i < allActiveProcesses.Count; i++)
-            {
-                if (i >= computers.Count)
-                    break;
-                computers[i].processes.Add(allActiveProcesses[i]);
-            }
-
-            //Check if there are as many active processes as computers
-            if (allActiveProcesses.Count <= computers.Count)
-            {
-                ArrangeFiles(computers);
-                return null;
+                return TranslationSource.T("Errors.OutsourcingNone");
             }
 
             //Separate the active processes into two lists based on their resource usage
@@ -448,16 +493,16 @@ namespace Cluster
             {
                 MessageBox mgbox = new()
                 {
-                    Title = "Error",
-                    Content = "There were some processes that cannot fit any computers! Would you like to optimize anyway?",
+                    Title = TranslationSource.T("Errors.Error"),
+                    Content = TranslationSource.T("Errors.OptimizeCannotFit"),
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = TranslationSource.T("Continue"),
+                    CloseButtonText = TranslationSource.T("Cancel"),
                 };
                 MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
                 if (result != MessageBoxResult.Primary)
-                    return "The optimization was cancelled.";
+                    return TranslationSource.T("Optimize.Cancel");
             }
 
             ArrangeFiles(computers);
@@ -504,22 +549,7 @@ namespace Cluster
             //Check if there are active processes and computers
             if (allActiveProcesses.Count == 0 || computers.Count == 0)
             {
-                return "There are no active processes to spread or no computers!";
-            }
-
-            //First round: Add one active process to each computer if possible
-            for (int i = 0; i < allActiveProcesses.Count; i++)
-            {
-                if (i >= computers.Count)
-                    break;
-                computers[i].processes.Add(allActiveProcesses[i]);
-            }
-
-            //Check if there are as many active processes as computers
-            if (allActiveProcesses.Count <= computers.Count)
-            {
-                ArrangeFiles(computers);
-                return null;
+                return TranslationSource.T("Errors.SpreadNone");
             }
 
             //Separate the active processes into two lists based on their resource usage
@@ -617,12 +647,14 @@ namespace Cluster
             for (int i = remainingProcesses.Count - 1; i >= 0; i--)
             {
                 Process process = remainingProcesses[i];
+
+                //Find the computer, that if we add a new process to it, the percent of the usage moves the least
                 Computer? leastLoaded = computers
                     .Where(x => x.HasEnoughCore(process.ProcessorUsage) && x.HasEnoughRam(process.MemoryUsage))
                     .MinBy(x =>
                     {
-                        int ramPercent = Convert.ToInt32(Math.Round(x.MemoryUsage * 100.0 / x.RamCapacity));
-                        int cpuPercent = Convert.ToInt32(Math.Round(x.ProcessorUsage * 100.0 / x.ProcessorCore));
+                        int ramPercent = Convert.ToInt32(Math.Round((x.MemoryUsage + process.MemoryUsage) * 100.0 / x.RamCapacity));
+                        int cpuPercent = Convert.ToInt32(Math.Round((x.ProcessorUsage + process.ProcessorUsage) * 100.0 / x.ProcessorCore));
                         return (cpuPercent + ramPercent) / 2.0;
                     })!;
 
@@ -645,19 +677,22 @@ namespace Cluster
             {
                 MessageBox mgbox = new()
                 {
-                    Title = "Error",
-                    Content = "There were some processes that cannot fit any computers! Would you like to optimize anyway?",
+                    Title = TranslationSource.T("Errors.Error"),
+                    Content = TranslationSource.T("Errors.OptimizeCannotFit"),
                     IsPrimaryButtonEnabled = true,
                     IsSecondaryButtonEnabled = false,
-                    PrimaryButtonText = "Continue",
-                    CloseButtonText = "Cancel",
+                    PrimaryButtonText = TranslationSource.T("Continue"),
+                    CloseButtonText = TranslationSource.T("Cancel"),
                 };
                 MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
                 if (result != MessageBoxResult.Primary)
-                    return "The optimization was cancelled.";
+                    return TranslationSource.T("Optimize.Cancel");
             }
 
             ArrangeFiles(computers);
+
+            string processCount = allActiveProcesses.Count.ToString();
+            Log.WriteLog([$"{equalSpreadCpuPercent}", $"{equalSpreadRamPercent}", computers.Count.ToString(), processCount.ToString()], LogType.SpreadProgramInstances);
 
             return null;
         }

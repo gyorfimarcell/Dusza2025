@@ -73,10 +73,20 @@ public partial class ComputersPage : CustomPage
 
     private void ComputerCard_OnClick(object sender, RoutedEventArgs e)
     {
-        CardControl cardControl = (CardControl)sender;
+        CardAction cardControl = (CardAction)sender;
         Computer computer = (Computer)cardControl.DataContext;
 
         _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);
+    }
+
+    private void Edit_OnClick(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+
+        Button button = (Button)sender;
+        Computer computer = (Computer)button.DataContext;
+
+        _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyComputerPage), computer);
     }
 
     private void Delete_OnClick(object sender, RoutedEventArgs e)
@@ -88,30 +98,35 @@ public partial class ComputersPage : CustomPage
 
         if (computer.processes.Count > 0)
         {
-            string? res = computer.OutSourcePrograms();
-            if (res != null)
-            {
-                if (res.Length == 0)
-                    return;
-
-                _window.RootSnackbarService.Show("Error", res, ControlAppearance.Danger,
-                        new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+            List<string>? res = computer.OutSourcePrograms();
+            if (res == null)
                 return;
+
+            ControlAppearance controlAppearance = ControlAppearance.Success;
+
+            if (Enum.TryParse(res[1], out ControlAppearance parsedAppearance))
+            {
+                controlAppearance = parsedAppearance;
             }
-            _window.RootSnackbarService.Show("Success", @$"Outsourcing succeed! You can delete now the '{computer.Name}' safely.", ControlAppearance.Success,
-                        new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+
+            _window.RootSnackbarService.Show(
+                res[1],
+                res[0],
+                controlAppearance,
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24),
+                TimeSpan.FromSeconds(10));
         }
         else
         {
             string? error = computer.Delete();
             if (error != null)
             {
-                _window.RootSnackbarService.Show("Error", error, ControlAppearance.Danger,
-                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), error, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
-            _window.RootSnackbarService.Show("Computer deleted", $"Computer '{computer.Name}' successfully deleted.",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+            _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"), $"'{computer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
         }
         LoadData();
     }
@@ -126,8 +141,8 @@ public partial class ComputersPage : CustomPage
             string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", .. Computers.Select(x => x.CsvRow)];
             File.WriteAllLines(sfd.FileName, lines);
             _window.RootSnackbarService.Show("Export complete", $"File saved to '{sfd.FileName}'",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
-            Log.WriteLog(["Computers"], LogType.ExportCSV);
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
+            Log.WriteLog(["Computers", sfd.FileName], LogType.ExportCSV);
         }
     }
 
@@ -153,12 +168,12 @@ public partial class ComputersPage : CustomPage
         OptimizeDialog optimizeDialog = new();
         MessageBox mgbox = new()
         {
-            Title = "Set Optimizing Values",
+            Title = TranslationSource.T("Optimize.Title"),
             Content = optimizeDialog,
             IsPrimaryButtonEnabled = true,
             IsSecondaryButtonEnabled = false,
-            PrimaryButtonText = "Optimize",
-            CloseButtonText = "Cancel",
+            PrimaryButtonText = TranslationSource.T("Optimize.Button"),
+            CloseButtonText = TranslationSource.T("Cancel"),
             Width = 500,
             MaxWidth = 500,
             MaxHeight = 1000
@@ -173,12 +188,12 @@ public partial class ComputersPage : CustomPage
         {
             mgbox = new()
             {
-                Title = "Error",
-                Content = "Optimizing cannot be done with the given values! Would you like to spread the processes equally?",
+                Title = TranslationSource.T("Errors.Error"),
+                Content = TranslationSource.T("Optimize.SpreadQuestion"),
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = false,
-                PrimaryButtonText = "Spread",
-                CloseButtonText = "Cancel",
+                PrimaryButtonText = TranslationSource.T("Optimize.Spread"),
+                CloseButtonText = TranslationSource.T("Cancel"),
             };
             result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
 
@@ -189,13 +204,13 @@ public partial class ComputersPage : CustomPage
             string? spreadRes = Computer.SpreadProcesses(1);
             if (spreadRes != null)
             {
-                window.RootSnackbarService.Show("Error", spreadRes, ControlAppearance.Danger,
-                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), spreadRes, ControlAppearance.Danger,
+                    new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
             }
             else
             {
                 LoadData();
-                window.RootSnackbarService.Show("Success", "Processes were spread equally!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+                window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Spread.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
             }
             return;
         }
@@ -203,12 +218,13 @@ public partial class ComputersPage : CustomPage
 
         if (optimizeRes != null)
         {
-            window.RootSnackbarService.Show("Error", optimizeRes, ControlAppearance.Danger,
-                new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+            window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), optimizeRes, ControlAppearance.Danger,
+                new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
             return;
         }
+        Log.WriteLog([$"{optimizeDialog.Minimum}", $"{optimizeDialog.Maximum}", Computers.Count.ToString()], LogType.OptimizeProgramInstances);
         LoadData();
-        window.RootSnackbarService.Show("Success", "Optimization was successful!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(3));
+        window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
     }
 
     private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
@@ -220,5 +236,4 @@ public partial class ComputersPage : CustomPage
     {
         UpdateFiltering();
     }
-
 }

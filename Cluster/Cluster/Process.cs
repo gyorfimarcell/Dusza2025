@@ -100,12 +100,24 @@ namespace Cluster
 
         public void Shutdown() {
             File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
-            Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], LogType.ShutdownProgramInstance);
+            Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}", HostComputer.Name], LogType.ShutdownProgramInstance);
         }
 
-        public void ToggleActive() {
+        public bool ToggleActive() {
+            if (Active == false)
+            {
+                Computer host = HostComputer;
+
+                if (host.ProcessorUsage + ProcessorUsage > host.ProcessorCore ||
+                    host.MemoryUsage + MemoryUsage > host.RamCapacity)
+                {
+                    return false;
+                }
+            }
             Active = !Active;
             Write($@"{MainWindow.ClusterPath}\{HostComputer.Name}");
+            Log.WriteLog([$"{FileName}", HostComputer.Name, $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], Active ? LogType.ActivateProgramInstance : LogType.DeactivateProgramInstance);
+            return true;
         }
     }
 }
