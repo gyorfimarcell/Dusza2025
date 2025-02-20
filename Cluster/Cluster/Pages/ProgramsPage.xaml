@@ -18,7 +18,7 @@
         <StackPanel Orientation="Horizontal">
             <ui:TextBox x:Name="tbFilter"
                         VerticalAlignment="Center"
-                        PlaceholderText="Filter..."
+                        PlaceholderText="{local:Translate FilterPlaceholder}"
                         Icon="{ui:SymbolIcon Search20}"
                         Width="200"
                         Margin="0 0 4 0"
@@ -26,36 +26,36 @@
             <Menu FontSize="14">
                 <ui:MenuItem x:Name="MenuItemSort"
                              Icon="{ui:SymbolIcon ArrowSort20}">
-                    <ui:MenuItem Header="Name"
+                    <ui:MenuItem Header="{local:Translate ProgramsPage.Sort.Name}"
                                  Icon="{ui:SymbolIcon Tag20}"
                                  Tag="0"
                                  FontWeight="Bold"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Requested processes"
+                    <ui:MenuItem Header="{local:Translate ProgramsPage.Sort.Requested}"
                                  Icon="{ui:SymbolIcon Play20}"
                                  Tag="1"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Processor Usage"
+                    <ui:MenuItem Header="{local:Translate ProcessorUsage}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="2"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
-                    <ui:MenuItem Header="Memory Usage"
+                    <ui:MenuItem Header="{local:Translate MemoryUsage}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="3"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSort_Click"/>
                     <Separator/>
                     <ui:MenuItem x:Name="MenuItemSortOrder"
-                                 Header="Descending"
+                                 Header="{local:Translate Descending}"
                                  IsCheckable="True"
                                  StaysOpenOnClick="True"
                                  Click="MenuItemSortOrder_Click"/>
                 </ui:MenuItem>
                 <Separator/>
-                <ui:MenuItem Header="New"
+                <ui:MenuItem Header="{local:Translate New}"
              Icon="{ui:SymbolIcon Add20}"
              Click="MenuItemNew_Click"/>
             </Menu>
@@ -74,7 +74,7 @@
                             TooltipPosition="Hidden"
                             EasingFunction="{x:Null}">
             <lvc:CartesianChart.Title>
-                <visualelements:LabelVisual Text="Requested"/>
+                <visualelements:LabelVisual Text="{local:TranslateStatic ProgramsPage.Requested}"/>
             </lvc:CartesianChart.Title>
         </lvc:CartesianChart>
 
@@ -107,7 +107,7 @@
                                           Grid.Row="1"
                                           Appearance="Secondary"
                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                          Text="{Binding ActivePrograms, StringFormat={}Requested {0} processes}"
+                                          Text="{Binding ActivePrograms, StringFormat={local:TranslateStatic ProgramsPage.CardRequested}}"
                                           TextWrapping="WrapWithOverflow" />
 
                             <StackPanel Grid.Column="1"
@@ -144,18 +144,18 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <controls:EmptyStatus Title="No programs"
+        <controls:EmptyStatus Title="{local:Translate ProgramsPage.Empty.Title}"
                               Icon="TextBulletListDismiss20"
                               Grid.Row="1">
             <controls:EmptyStatus.Style>
                 <Style TargetType="controls:EmptyStatus">
-                    <Setter Value="There are no programs matching this filter." Property="Description"/>
+                    <Setter Value="{local:Translate ProgramsPage.Empty.FilterText}" Property="Description"/>
                     <Style.Triggers>
                         <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icPrograms}">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Value="" Binding="{Binding Text, ElementName=tbFilter}">
-                            <Setter Value="There are no programs in this cluster." Property="Description"/>
+                            <Setter Value="{local:Translate ProgramsPage.Empty.EmptyText}" Property="Description"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

@@ -41,7 +41,7 @@ namespace Cluster
         {
             if (cbComputer.SelectedIndex == -1 || cbProgram.SelectedIndex == -1)
             {
-                _window.RootSnackbarService.Show("Error", "You must fill out all fields!", ControlAppearance.Danger,
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.MissingFields"), ControlAppearance.Danger,
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
@@ -55,7 +55,7 @@ namespace Cluster
 
             if (cpuUsage + program.CpuMilliCore > computer.ProcessorCore || memoryUsage + program.Memory > computer.RamCapacity)
             {
-                _window.RootSnackbarService.Show("Error", "This computer doesn't have enough resources!", ControlAppearance.Danger,
+                _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.NotEnoughResources"), ControlAppearance.Danger,
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
                 return;
             }
@@ -63,8 +63,9 @@ namespace Cluster
             Process process = new(program.ProgramName, program.CpuMilliCore, program.Memory, tsActive.IsChecked == true);
             process.Write(Path.Combine(path, computer.Name));
 
-            _window.RootSnackbarService.Show("Process started", $"Process '{process.FileName}' is now running on '{computer.Name}'.",
-                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
+            _window.RootSnackbarService.Show(TranslationSource.T("NewInstancePage.Success.Title"),
+                TranslationSource.Instance.WithParam("NewInstancePage.Success.Text", process.FileName, computer.Name),
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(3));
 
             Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}", computer.Name], LogType.RunProgramInstance);
         }
