@@ -262,6 +262,11 @@ namespace Cluster
             DarkMode = !DarkMode;
         }
 
+        /// <summary>
+        /// Opening file explorer at the cluster path with mouse
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LblPath_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (ClusterPath != "")
@@ -270,6 +275,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Opening file explorer at the cluster path with keyboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LblPath_OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key is Key.Enter or Key.Space && ClusterPath != "")

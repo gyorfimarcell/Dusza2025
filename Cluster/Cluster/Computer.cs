@@ -151,6 +151,12 @@ namespace Cluster
             return null;
         }
 
+        /// <summary>
+        ///  Modifies the computer's processor and memory.
+        /// </summary>
+        /// <param name="processor">The capacity of processor</param>
+        /// <param name="memory">The capacity of memory</param>
+        /// <returns>If there is an error message it returns it, otherwise it will be null returned</returns>
         public string? Modify(int processor, int memory)
         {
             if (processor < ProcessorUsage)

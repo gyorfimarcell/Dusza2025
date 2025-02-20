@@ -36,6 +36,9 @@ namespace Cluster
     public class Log
     {
 
+        /// <summary>
+        /// Fields of the logs
+        /// </summary>
         public static Dictionary<LogType, List<string>> LogDataTypes = new()
         {
             { LogType.OpenProgram, new(){} },

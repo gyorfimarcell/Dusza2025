@@ -59,6 +59,10 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Fix the issues in the cluster
+        /// </summary>
+        /// <returns>The number of changed processes</returns>
         public static int FixIssues()
         {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
