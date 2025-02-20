@@ -19,7 +19,7 @@ nav:
       - "fejlesztoi/futtatas.md"
       - "fejlesztoi/szerkezet.md"
       - "fejlesztoi/technologiak.md"
-      - "fejlesztoi/dokumentáció.md"
+      - "fejlesztoi/dokumentacio.md"
 
 theme:
   name: material
