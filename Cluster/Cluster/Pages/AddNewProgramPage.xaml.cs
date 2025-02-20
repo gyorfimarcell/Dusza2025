@@ -39,7 +39,7 @@ namespace Cluster
                 nbProcessor.Value == null || nbMemory.Value == null)
             {
                 _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.MissingFields"), ControlAppearance.Danger,
-                   new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(3));
+                   new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace Cluster
                         TranslationSource.T("Errors.ProgramAlreadyExists"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
 
                     return;
@@ -72,7 +72,7 @@ namespace Cluster
                     ex.Message,
                     ControlAppearance.Danger,
                     new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                    TimeSpan.FromSeconds(3)
+                    TimeSpan.FromSeconds(10)
                 );
 
                 return;
@@ -86,7 +86,7 @@ namespace Cluster
                 $"'{program.ProgramName}' {TranslationSource.T("AddProgramPage.Success.Text")}",
                 ControlAppearance.Success,
                 new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
-                TimeSpan.FromSeconds(3)
+                TimeSpan.FromSeconds(10)
             );
 
             tbProgramName.Focus();

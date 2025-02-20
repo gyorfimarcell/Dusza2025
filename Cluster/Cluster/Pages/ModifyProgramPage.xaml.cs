@@ -53,7 +53,7 @@ namespace Cluster
                         TranslationSource.T("Errors.MissingFields"),
                         ControlAppearance.Danger,
                         new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                        TimeSpan.FromSeconds(3)
+                        TimeSpan.FromSeconds(10)
                     );
                 return;
             }
@@ -67,7 +67,7 @@ namespace Cluster
                     $"'{Program.ProgramName}' {TranslationSource.T("ModifyProgramPage.Success.Text")}",
                     ControlAppearance.Success,
                     new SymbolIcon { Symbol = SymbolRegular.Checkmark24 },
-                    TimeSpan.FromSeconds(3)
+                    TimeSpan.FromSeconds(10)
                 );
                 _window.RootNavigation.Navigate(typeof(ProgramsPage));
             }
