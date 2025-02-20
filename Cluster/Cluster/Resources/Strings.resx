@@ -202,7 +202,7 @@
     <value>Add</value>
   </data>
   <data name="Errors.Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Error!</value>
   </data>
   <data name="Errors.MissingFields" xml:space="preserve">
     <value>You must fill out all fields!</value>
@@ -328,7 +328,7 @@
     <value>Spread</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Success</value>
+    <value>Success!</value>
   </data>
   <data name="Optimize.Spread.Success" xml:space="preserve">
     <value>Processes were spread equally!</value>
@@ -454,7 +454,7 @@
     <value>No errors were detected in this cluster.</value>
   </data>
   <data name="Errors.FixFail" xml:space="preserve">
-    <value>Failed to fix all errors</value>
+    <value>Failed to fix all errors. For more details, see the logs.</value>
   </data>
   <data name="HealthPage.Fixed" xml:space="preserve">
     <value>All errors fixed ({0} errors)</value>
@@ -478,7 +478,7 @@
     <value>processes</value>
   </data>
   <data name="Optimize.Popup.Title" xml:space="preserve">
-    <value>Set the optimal minimum and maximum usage percentage of a computer!</value>
+    <value>Set the optimal minimum and maximum usage percentage of the computers!</value>
   </data>
   <data name="Optimize.Inactive" xml:space="preserve">
     <value>Any inactive process will remain untouched.</value>
@@ -701,5 +701,11 @@
   </data>
   <data name="LogDetail.Fixed Processes" xml:space="preserve">
     <value>Fixed Processes</value>
+  </data>
+  <data name="Export.Success.Title" xml:space="preserve">
+    <value>Export complete</value>
+  </data>
+  <data name="Export.Success.Text" xml:space="preserve">
+    <value>File saved to '{0}'.</value>
   </data>
 </root>

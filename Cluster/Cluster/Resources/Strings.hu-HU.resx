@@ -202,7 +202,7 @@
     <value>Hozzáadás</value>
   </data>
   <data name="Errors.Error" xml:space="preserve">
-    <value>Hiba</value>
+    <value>Hiba!</value>
   </data>
   <data name="Errors.MissingFields" xml:space="preserve">
     <value>Az összes mező kitöltése kötelező!</value>
@@ -328,7 +328,7 @@
     <value>Szórás</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Siker</value>
+    <value>Siker!</value>
   </data>
   <data name="Optimize.Spread.Success" xml:space="preserve">
     <value>A folyamatok egyenlően szét lettek szórva!</value>
@@ -436,7 +436,7 @@
     <value>{0} leállítása?</value>
   </data>
   <data name="ProgramsPage.Shutdown.Text" xml:space="preserve">
-    <value>Ez mind a {0} folyamatot leállítja.</value>
+    <value>Ez mind a(z) {0} folyamatot leállítja.</value>
   </data>
   <data name="ProgramsPage.Shutdown" xml:space="preserve">
     <value>Leállítás</value>
@@ -454,7 +454,7 @@
     <value>Ebben a klaszterben nem található hiba.</value>
   </data>
   <data name="Errors.FixFail" xml:space="preserve">
-    <value>Nem sikerült minden hibát kijavítani</value>
+    <value>Nem sikerült minden hibát kijavítani. További részletekért tekintse meg a naplót.</value>
   </data>
   <data name="HealthPage.Fixed" xml:space="preserve">
     <value>Minden hiba kijavítva ({0} hiba)</value>
@@ -478,7 +478,7 @@
     <value>folyamat</value>
   </data>
   <data name="Optimize.Popup.Title" xml:space="preserve">
-    <value>Állítsa be a minimum és maximum kihasználtságát a számítógépnek!</value>
+    <value>Állítsa be a minimum és maximum kihasználtságát a számítógépeknek!</value>
   </data>
   <data name="Optimize.Inactive" xml:space="preserve">
     <value>Az inaktív folyamatok nem lesznek változtatva.</value>
@@ -701,5 +701,11 @@
   </data>
   <data name="LogDetail.Fixed Processes" xml:space="preserve">
     <value>Javított Folyamatok</value>
+  </data>
+  <data name="Export.Success.Title" xml:space="preserve">
+    <value>Exportálás sikeres</value>
+  </data>
+  <data name="Export.Success.Text" xml:space="preserve">
+    <value>Fájl elmentve a '{0}' elérési útra.</value>
   </data>
 </root>
