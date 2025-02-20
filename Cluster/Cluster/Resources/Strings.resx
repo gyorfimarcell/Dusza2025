@@ -717,4 +717,13 @@
   <data name="GeneratePage.Consistent" xml:space="preserve">
     <value>Consistent</value>
   </data>
+  <data name="GeneratePage.SpreadClusters" xml:space="preserve">
+    <value>Spreading number of instances</value>
+  </data>
+  <data name="GeneratePage.Random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="GeneratePage.Consistent" xml:space="preserve">
+    <value>Consistent</value>
+  </data>
 </root>
