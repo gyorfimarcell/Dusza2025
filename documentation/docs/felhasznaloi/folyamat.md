@@ -2,7 +2,7 @@
 
 A futó programok egy-egy példányát egy-egy folyamat jelenti. A klaszteren lévő folyamatokat fájlokként tároljuk, melyek különböző mappákban találhatók. Például:
 
-*`*screenshot*`*<br>
+![Folyamatfájlok](../img/felhasznaloi/folyamat/processfiles.png)<br>
 
 Ezek a fájlok a folyamatok futásának helyét mutatják, azaz azt, hogy mely gépeken zajlanak. Fontos, hogy egy adott program több példányban is futtatható egy [számítógépen](szamitogep.md) (mappában) a klaszteren belül.<br>
 A fájlok neve a következő formátumban jelenik meg: `<programnev> - <random 6 karakter>`, és minden névnek egyedinek kell lennie a klaszteren. Az egyes fájlok tartalmazzák a folyamat aktuális adatait, például:
@@ -18,7 +18,7 @@ Az első sor a folyamat indításának pontos időpontját jelzi, `yyyy.mm.dd hh
 
 ## Részletek
 A `Folyamatok` fülre kattintva megtekinthetjük a programpéldányokat a betöltött klaszteren. Itt egy dupla oszlopdiagram szemlélteti, hogy az `AKTÍV` és `INAKTÍV` folyamatok száma hogyan oszlik meg, így könnyen áttekinthető, hogy a klaszteren belül hogy alakul programok állapotának megoszlása. Ezen kívül egy kördiagram ábrázolja, hogy melyik [számítógépen](szamitogep.md) <b>hány folyamat fut</b>, segítve a rendszer terheltségének vizualizálását. <br>
-*`*screenshot*`* <br>
+![Folyamatok oldal](../img/felhasznaloi/folyamat/frontpage.png)<br>
 A grafikonok alatt kártyák jelennek meg, amelyek a különböző folyamatokat mutatják, <b>részletes információkkal</b>. A jobb felső sarokban található [szűrőeszközök](#szures-es-rendezes) lehetővé teszik a gyors keresést, míg az [új folyamat](#uj-futtatasa) futtatása gomb segít egy új folyamat elindításában a klaszteren.
 
 ## Erőforrásigény
@@ -47,7 +47,7 @@ AKTÍV
 
 Jelen esetben a folyamat éppen `AKTÍV`, erőforrást emészt fel.<br><br>
 Az állapot <b>folyamatonként állítható</b>, ezt a folyamat mellett lévő `[Play]/[Pause]` gombbal tehetjük meg.<br>
-*`*screenshot*`*<br>
+![Folyamat aktiválása/deaktiválása](../img/felhasznaloi/folyamat/process-playpause.png)<br>
 Egy folyamatot azonban csak akkor aktiválható, ha a gazdagépen van elég erőforrás annak aktiválására, egyébként hibát dob.<br>
 *`*screenshot*`*<br>
 
