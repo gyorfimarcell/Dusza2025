@@ -49,25 +49,26 @@ Jelen esetben a folyamat éppen `AKTÍV`, erőforrást emészt fel.<br><br>
 Az állapot <b>folyamatonként állítható</b>, ezt a folyamat mellett lévő `[Play]/[Pause]` gombbal tehetjük meg.<br>
 ![Folyamat aktiválása/deaktiválása](../img/felhasznaloi/folyamat/process-playpause.png)<br>
 Egy folyamatot azonban csak akkor aktiválható, ha a gazdagépen van elég erőforrás annak aktiválására, egyébként hibát dob.<br>
-*`*screenshot*`*<br>
+![Hibaüzenet aktiváláskor](../img/felhasznaloi/folyamat/cannot-activate-process.png)<br>
 
 ## Szűrés és rendezés
 
 A folyamatok kilistázásakor lehetőség van különböző szűrők és rendezésfajták alkalmazására, amelyek segítenek a keresett információk gyorsabb megtalálásában.
 ### Szűrés
 A szűrés végezhető <b>[programtípusok](program.md) szerint</b>, lehetővé téve, hogy csak a kívánt típusú alkalmazások jelenjenek meg. Ezen kívül az <b>[állapot](#allapot) szerinti</b> szűrés is elérhető, így könnyen megtalálhatók az aktív vagy inaktív folyamatok. Egy szövegmező segítségével <b>név alapján</b> is szűrhetjük a listát, így gyorsan rátalálhatunk egy adott folyamatra.<br>
-*`*screenshot*`*
+![Szűrés programtípus alapján](../img/felhasznaloi/folyamat/filter-processes-by-programtype.png)
+![Szűrés állapot alapján](../img/felhasznaloi/folyamat/filter-processes-by-status.png)
 
 ### Rendezés
 A lista rendezhető többféle szempont szerint, például programtípus, azonosító (ID), memória- és processzorhasználat, valamint indítási idő szerint, akár növekvő, akár csökkenő sorrendben, hogy a legfontosabb vagy leginkább releváns adatokat könnyen át lehessen tekinteni.<br>
-*`*screenshot*`*
+![Folyamatok rendezése](../img/felhasznaloi/folyamat/orderby-processes.png)
 
 ## Exportálás
 
 Lehetőség van az aktuálisan betöltött klaszterben lévő folyamatok adatainak exportálására CSV formátumban, amely egyszerűsíti az adatok későbbi elemzését és tárolását. Ezt a `Folyamatok` fülnél a jobb felső sarokban lévő `[Exportálás]` gombbal lehet megtenni.<br>
-*`*screenshot*`* <br>
+![Export gomb](../img/felhasznaloi/folyamat/exportCSV-processes.png) <br>
 Az exportált fájlban minden egyes sor egy-egy folyamat adatait tartalmazza, amelyek a következő információkat tartalmazzák: a folyamat neve (Name), a [számítógép](szamitogep.md), ahol fut (Computer), az állapot (Status), a processzorhasználat (ProcessorUsage) és a memóriahasználat (MemoryUsage). Az exportálás előtt meg kell adni a kívánt elérési utat, ahová a fájl el lesz mentve. <br>
-*`*screenshot*`*
+![Export fájl szerkezete](../img/felhasznaloi/folyamat/CSV-processes.png)
 
 ## Új futtatása
 
