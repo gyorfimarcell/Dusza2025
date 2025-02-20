@@ -56,11 +56,11 @@ namespace Cluster
 
             int totalProcesses = Convert.ToInt32(nbProcess.Value);
             int numPrograms = Convert.ToInt32(nbProgram.Value);
-            int baseProcessCount = totalProcesses / numPrograms;
-            int remainingProcesses = totalProcesses % numPrograms;
 
             if ((bool)rbConsistent.IsChecked)
             {
+                int baseProcessCount = totalProcesses / numPrograms;
+                int remainingProcesses = totalProcesses % numPrograms;
                 for (int i = 0; i < numPrograms; i++)
                 {
                     int extraProcess = (remainingProcesses > 0) ? 1 : 0;
@@ -79,34 +79,35 @@ namespace Cluster
             }
             else
             {
-                List<int> distribution = new List<int>(new int[numPrograms]);
-                for (int i = 0; i < totalProcesses; i++)
-                {
-                    int index = rnd.Next(numPrograms);
-                    distribution[index]++;
-                }
-
-                for (int i = 0; i < numPrograms / 3; i++)
-                {
-                    int index = rnd.Next(numPrograms);
-                    int boost = rnd.Next(1, totalProcesses / numPrograms + 2);
-                    if (distribution[index] + boost <= totalProcesses)
-                    {
-                        distribution[index] += boost;
-                    }
-                }
-
+                int remainingProcesses = totalProcesses;
                 for (int i = 0; i < numPrograms; i++)
                 {
+                    int assignedProcesses;
+
+                    if (i == numPrograms - 1)
+                    {
+                        assignedProcesses = remainingProcesses;
+                    }
+                    else if (remainingProcesses <= numPrograms - i)
+                    {
+                        assignedProcesses = 1;
+                    }
+                    else
+                    {
+                        assignedProcesses = rnd.Next(1, remainingProcesses - (numPrograms - i - 1));
+                    }
+
                     clusterLines.AddRange(new List<string>() {
                         $"program{i + 1}",
-                        distribution[i].ToString(),
+                        assignedProcesses.ToString(),
                         (rnd.Next(10, 50) * 10).ToString(),
                         (rnd.Next(10, 50) * 10).ToString()
                     });
 
-                    programInstances[$"program{i + 1}"] = distribution[i];
+                    programInstances[$"program{i + 1}"] = assignedProcesses;
+                    remainingProcesses -= assignedProcesses;
                 }
+
             }
 
             File.WriteAllLines(rootPath + "\\.klaszter", clusterLines);
