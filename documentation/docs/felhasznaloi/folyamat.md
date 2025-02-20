@@ -73,7 +73,8 @@ Az exportált fájlban minden egyes sor egy-egy folyamat adatait tartalmazza, am
 ## Új futtatása
 
 Új folyamatot indítani a `Folyamatok` fül jobb felső sarkában található `[Új]` gombbal lehet. A gomb megnyomásakor egy felugró oldal jelenik meg, ahol meg kell adni a <b>program típusát</b>, a <b>[számítógépet](szamitogep.md)</b>, ahol a folyamat futni fog, valamint annak <b>[állapotát](#allapot)</b>. <br>
-*`*screenshot*`* <br>
+![Export gomb](../img/felhasznaloi/folyamat/run-new-process.png) <br>
+![Export gomb](../img/felhasznaloi/folyamat/run-new-process-page.png) <br>
 Amikor a [programtípust](program.md) választjuk ki, és a folyamat aktív állapotot kap, a rendszer automatikusan ellenőrzi, hogy mely [számítógépek](szamitogep.md) erőforrásai elegendőek-e a folyamat futtatásához, és csak ezeket engedi kiválasztani. Ha a folyamat inaktív állapotot kap, akkor az erőforrások nem befolyásolják a választást. <br>
 *`*screenshot*`* <br>
 A `[Futtatás]` gombra kattintva, ha a megadott adatok helyesek, a rendszer végrehajtja a műveletet és elindítja az új folyamatot.
