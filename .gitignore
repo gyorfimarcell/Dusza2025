@@ -7,6 +7,7 @@ Cluster/Cluster/Logs/
 
 .venv
 documentation/.venv
+test_clusters
 
 # User-specific files
 *.suo
