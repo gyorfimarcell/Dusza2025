@@ -107,7 +107,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                 res[1],
                 res[0],
                 controlAppearance,
-                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Check24),
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Checkmark24),
                 TimeSpan.FromSeconds(10));
 
             if (res[0].Contains(TranslationSource.T("Outsourcing.DeleteSuccess")))
@@ -127,7 +127,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                 return;
             }
             _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"), $"'{PageComputer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
-                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Check24), TimeSpan.FromSeconds(10));
+                ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
             _window.RootNavigation.Navigate(typeof(ComputersPage));
         }
     }
