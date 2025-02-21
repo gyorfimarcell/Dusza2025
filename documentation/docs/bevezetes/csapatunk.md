@@ -1,6 +1,6 @@
 # A csapatunk
 
-A **Kibirod, kolega?** csapat a debreceni _DSZC Mechwart András Gépipari és Informatikai Technikum_ 13.B és 13.C osztályos tanulóiból áll.
+A **"Kibirod, kolega?"** csapat a debreceni _DSZC Mechwart András Gépipari és Informatikai Technikum_ 13.B és 13.C osztályos tanulóiból áll.
 
 ## Pálóczi Imre
 
