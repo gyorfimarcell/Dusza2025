@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using Wpf.Ui.Controls;
 
 namespace Cluster
 {
@@ -75,6 +77,14 @@ namespace Cluster
                 {
                     isAllSubItemsExpanded = false;
                     break;
+                }
+            }
+            if (mainExpander.Content is StackPanel sp)
+            {
+                Wpf.Ui.Controls.Button btn = sp.Children.OfType<Wpf.Ui.Controls.Button>().FirstOrDefault();
+                if (btn != null)
+                {
+                    btn.Content = isAllSubItemsExpanded ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
                 }
             }
 
@@ -208,6 +218,33 @@ namespace Cluster
                     expander.Content = stackPanel;
                     stLogs.Children.Add(expander);
                 }
+
+                expander.Collapsed += (sender, e) =>
+                {
+                    bool isAllSubItemsExpanded = true;
+                    foreach (object? child in ((StackPanel)expander.Content).Children)
+                    {
+                        if (child is Expander { IsExpanded: false })
+                        {
+                            isAllSubItemsExpanded = false;
+                            break;
+                        }
+                    }
+                    headerButton.Content = isAllSubItemsExpanded ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
+                };
+                expander.Expanded += (sender, e) =>
+                {
+                    bool isAllSubItemsExpanded = true;
+                    foreach (object? child in ((StackPanel)expander.Content).Children)
+                    {
+                        if (child is Expander { IsExpanded: false })
+                        {
+                            isAllSubItemsExpanded = false;
+                            break;
+                        }
+                    }
+                    headerButton.Content = isAllSubItemsExpanded ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
+                };
 
                 showStatus.Visibility = stLogs.Children.Count > 0 ? Visibility.Hidden : Visibility.Visible;
             }

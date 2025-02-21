@@ -71,7 +71,7 @@ namespace Cluster
             dialogService.SetDialogHost(RootContentDialog);
 
             Loaded += MainWindow_Loaded;
-            Log.WriteLog([], LogType.OpenProgram);
+            Log.WriteLog([], LogType.OpenApplication);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Cluster
         /// <param name="e"></param>
         private void FluentWindow_Closed(object sender, EventArgs e)
         {
-            Log.WriteLog([], LogType.CloseProgram);
+            Log.WriteLog([], LogType.CloseApplication);
         }
 
         /// <summary>

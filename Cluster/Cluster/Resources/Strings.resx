@@ -561,11 +561,11 @@
   <data name="Errors.SpreadNone" xml:space="preserve">
     <value>There are no computers or active processes to spread!</value>
   </data>
-  <data name="LogType.OpenProgram" xml:space="preserve">
-    <value>Open program</value>
+  <data name="LogType.OpenApplication" xml:space="preserve">
+    <value>Open application</value>
   </data>
-  <data name="LogType.CloseProgram" xml:space="preserve">
-    <value>Close program</value>
+  <data name="LogType.CloseApplication" xml:space="preserve">
+    <value>Close application</value>
   </data>
   <data name="LogType.LoadCluster" xml:space="preserve">
     <value>Load cluster</value>
@@ -716,5 +716,8 @@
   </data>
   <data name="GeneratePage.Consistent" xml:space="preserve">
     <value>Consistent</value>
+  </data>
+  <data name="Logs.CollapseAll" xml:space="preserve">
+    <value>Collapse all</value>
   </data>
 </root>
