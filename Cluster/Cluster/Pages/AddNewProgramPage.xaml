@@ -1,12 +1,12 @@
 ﻿<Page x:Class="Cluster.AddNewProgramPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:local="clr-namespace:Cluster"
       xmlns:controls="clr-namespace:Cluster.Controls"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       Title="{local:Translate New}"
       ui:NavigationView.HeaderContent="{local:Translate New}"
       d:DesignHeight="750"
@@ -35,31 +35,31 @@
                           MinWidth="250" />
         </controls:CustomCard>
         <controls:CustomCard Title="{local:Translate ProcessorUsage}"
-                         Icon="{ui:SymbolIcon DeveloperBoard24}"
-                         Margin="0 0 0 12">
+                             Icon="{ui:SymbolIcon DeveloperBoard24}"
+                             Margin="0 0 0 12">
             <ui:NumberBox x:Name="nbProcessor"
-                      MaxDecimalPlaces="0"
-                      Minimum="1"
-                      PlaceholderText="100"
-                      SmallChange="1"
-                      MinWidth="250" />
+                          MaxDecimalPlaces="0"
+                          Minimum="1"
+                          PlaceholderText="100"
+                          SmallChange="1"
+                          MinWidth="250" />
         </controls:CustomCard>
         <controls:CustomCard Title="{local:Translate MemoryUsage}"
-                         Icon="{ui:SymbolIcon Ram20}"
-                         Margin="0 0 0 12">
+                             Icon="{ui:SymbolIcon Ram20}"
+                             Margin="0 0 0 12">
             <ui:NumberBox x:Name="nbMemory"
-                      MaxDecimalPlaces="0"
-                      Minimum="1"
-                      PlaceholderText="100"
-                      SmallChange="1"
-                      MinWidth="250" />
+                          MaxDecimalPlaces="0"
+                          Minimum="1"
+                          PlaceholderText="100"
+                          SmallChange="1"
+                          MinWidth="250" />
         </controls:CustomCard>
 
-        <ui:Button x:Name="btnSave"
-               Appearance="Primary"
-               HorizontalAlignment="Right"
-               MinWidth="300"
-               Content="{local:Translate Add}"
-               Click="btnSave_Click" />
+        <ui:Button
+            Appearance="Primary"
+            HorizontalAlignment="Right"
+            MinWidth="300"
+            Content="{local:Translate Add}"
+            Click="btnSave_Click" />
     </StackPanel>
 </Page>

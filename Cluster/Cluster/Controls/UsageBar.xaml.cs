@@ -1,11 +1,8 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
+﻿using System.Windows;
 
 namespace Cluster.Controls;
 
-public partial class UsageBar : UserControl
+public partial class UsageBar
 {
     public UsageBar()
     {
@@ -22,7 +19,8 @@ public partial class UsageBar : UserControl
     }
 
     public static readonly DependencyProperty CurrentProperty =
-        DependencyProperty.Register(nameof(Current), typeof(int), typeof(UsageBar), new PropertyMetadata(0, new PropertyChangedCallback(OnNumChanged)));
+        DependencyProperty.Register(nameof(Current), typeof(int), typeof(UsageBar),
+            new PropertyMetadata(0, OnNumChanged));
 
     public int Current
     {
@@ -31,7 +29,8 @@ public partial class UsageBar : UserControl
     }
 
     public static readonly DependencyProperty MaxProperty =
-        DependencyProperty.Register(nameof(Max), typeof(int), typeof(UsageBar), new PropertyMetadata(100, new PropertyChangedCallback(OnNumChanged)));
+        DependencyProperty.Register(nameof(Max), typeof(int), typeof(UsageBar),
+            new PropertyMetadata(100, OnNumChanged));
 
     public int Max
     {
@@ -41,12 +40,10 @@ public partial class UsageBar : UserControl
 
     private static void OnNumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        var testControl = d as UsageBar;
-        if (testControl != null)
+        if (d is UsageBar testControl)
         {
             testControl.Percent = $"({testControl.Current / (double)testControl.Max * 100:f0}%)";
         }
-
     }
 
     public static readonly DependencyProperty PercentProperty =
