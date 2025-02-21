@@ -15,8 +15,8 @@ Itt lehetőségünk van az egyes fájlok tartalmát részleteiben listázni, nap
 
 A rendszer a következő eseményeket naplózza:
 
-- **OpenApplication:** *Egy [program](program.md) megnyitása*
-- **CloseApplication:** *Egy [program](program.md) bezárása*
+- **OpenApplication:** *Az alkalmazás megnyitása*
+- **CloseApplication:** *Az alkalmazás bezárása*
 - **LoadCluster:** *A [klaszter](klaszter.md) betöltése*
 - **AddComputer:** *Új [számítógép](szamitogep.md) hozzáadása*
 - **DeleteComputer:** *[Számítógép](szamitogep.md) törlése*
@@ -66,4 +66,4 @@ A következő példában olyan naplóadatokat keresünk, amelyek egy olyan folya
 
 - A naplófájl automatikusan generálódik a rendszer indulásakor, és folyamatosan frissül az eseményekkel.
 - Akár több, mint **10.000 soros** naplófájlt is tud kezelni az oldal, viszont ez a rendszer lassulásához vezethet. Ezt az értéket az optimalizáskor hamar elérhetjük.
-- **Érdekesség:** Vannak olyan naplóadatok, amelyek nem tartalmaznak egyéb információkat, így azoknál nem lehet specifikus információkra szűrni (pl. Applikáció megnyitás)
+- **Érdekesség:** Vannak olyan naplóadatok, amelyek nem tartalmaznak egyéb információkat, így azoknál nem lehet specifikus információkra szűrni (pl. Alkalmazás megnyitás)
