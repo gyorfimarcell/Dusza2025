@@ -6,7 +6,7 @@ A program a `Cluster.exe` fájl futtatásával indítható. A forráskód megtek
 
 ## Dokumentáció
 
-A programunk dokumentációja [webes formában](https://gyorfimarcell.github.io/dusza2025) érhető el.
+A programunk dokumentációja [webes formában](https://gyorfimarcell.github.io/Dusza2025) érhető el.
 
 !!! info "Offline dokumentáció"
 
