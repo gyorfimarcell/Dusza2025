@@ -108,14 +108,17 @@ namespace Cluster
         /// <summary>
         /// Shuts down the process
         /// </summary>
-        public void Shutdown()
-        {
-            File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
-            Log.WriteLog(
-            [
-                $"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}",
-                HostComputer.Name
-            ], LogType.ShutdownProgramInstance);
+        public string? Shutdown() {
+            try
+            {
+                File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
+                Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}", HostComputer.Name], LogType.ShutdownProgramInstance);
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            return null;
         }
 
         /// <summary>
