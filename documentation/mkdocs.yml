@@ -26,8 +26,8 @@ nav:
 theme:
   name: material
   language: hu
-  icon:
-    logo: material/server
+  logo: img/icon.png
+  favicon: img/icon.png
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
