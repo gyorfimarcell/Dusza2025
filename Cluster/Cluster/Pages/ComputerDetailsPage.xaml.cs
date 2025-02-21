@@ -1,25 +1,21 @@
+using System.ComponentModel;
+using System.Windows;
 using Cluster.ChartModels;
+using LiveChartsCore;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore;
-using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using System.Xml.Linq;
 using Wpf.Ui.Controls;
 
 namespace Cluster;
 
-public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
+public partial class ComputerDetailsPage : INotifyPropertyChanged
 {
-    public Computer PageComputer { get; set; }
+    public Computer PageComputer { get; set; } = null!;
 
     public string ProcessesText =>
-        PageComputer == null ? "" : $"{PageComputer.processes.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({PageComputer.processes.Count(x => x.Active)} {TranslationSource.T("Active")})";
+        PageComputer == null
+            ? ""
+            : $"{PageComputer.processes.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({PageComputer.processes.Count(x => x.Active)} {TranslationSource.T("Active")})";
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -52,7 +48,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void _window_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(MainWindow.DarkMode))
         {
@@ -121,7 +117,7 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
             if (res == null)
                 return;
 
-            ControlAppearance controlAppearance = ControlAppearance.Success;
+            var controlAppearance = ControlAppearance.Success;
 
             if (Enum.TryParse(res[1], out ControlAppearance parsedAppearance))
             {
@@ -132,7 +128,9 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                 res[1],
                 res[0],
                 controlAppearance,
-                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Checkmark24),
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger
+                    ? SymbolRegular.Warning24
+                    : SymbolRegular.Checkmark24),
                 TimeSpan.FromSeconds(10));
 
             if (res[0].Contains(TranslationSource.T("Outsourcing.DeleteSuccess")))
@@ -140,7 +138,8 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                 _window.RootNavigation.GoBack();
                 return;
             }
-            SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name));
+
+            SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name)!);
         }
         else
         {
@@ -151,7 +150,9 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
-            _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"), $"'{PageComputer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
+
+            _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"),
+                $"'{PageComputer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
                 ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
             _window.RootNavigation.Navigate(typeof(ComputersPage));
         }
@@ -164,6 +165,6 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
     /// <param name="e"></param>
     private void ProcessCard_OnProcessChange(object sender, EventArgs e)
     {
-        SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name));
+        SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name)!);
     }
 }

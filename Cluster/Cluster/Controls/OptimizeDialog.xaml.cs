@@ -1,37 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cluster.Controls
 {
     /// <summary>
     /// Interaction logic for OptimizeDialog.xaml
     /// </summary>
-    public partial class OptimizeDialog : UserControl
+    public partial class OptimizeDialog
     {
-        string path;
-        MainWindow window;
-
         public int Minimum { get; private set; }
         public int Maximum { get; private set; }
+
         public OptimizeDialog()
         {
             InitializeComponent();
 
-            path = MainWindow.ClusterPath;
-            window = (MainWindow)Application.Current.MainWindow!;
             sliMaximumPercentage.ValueChanged += volume_ValueChanged;
             sliMinimumPercentage.ValueChanged += volume_ValueChanged;
 
@@ -41,28 +24,23 @@ namespace Cluster.Controls
 
         private void volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> args)
         {
-            Slider slider = (Slider)sender;
-            double value = (double)slider.Value;
+            var slider = (Slider)sender;
+            double value = slider.Value;
 
-            if (slider.Name == "sliMinimumPercentage")
+            switch (slider.Name)
             {
-                txtMinimumPercentage.Text = value.ToString() + " %";
-                sliMaximumPercentage.Minimum = value;
+                case "sliMinimumPercentage":
+                    txtMinimumPercentage.Text = value + " %";
+                    sliMaximumPercentage.Minimum = value;
+                    break;
+                case "sliMaximumPercentage":
+                    txtMaximumPercentage.Text = value + " %";
+                    sliMinimumPercentage.Maximum = value;
+                    break;
             }
 
-            else if (slider.Name == "sliMaximumPercentage")
-            {
-                txtMaximumPercentage.Text = value.ToString() + " %";
-                sliMinimumPercentage.Maximum = value;
-            }
             Minimum = (int)sliMinimumPercentage.Value;
             Maximum = (int)sliMaximumPercentage.Value;
-
-
-            //sp.Children.OfType<StackPanel>().ToList()
-            //    .SelectMany(x => x.Children.OfType<TextBlock>().Select(x => (Run)x.Inlines.FirstInline))
-            //    .ToList()[slider.Name == "txtMinimumPercentage" ? 0 : 1].Text = value.ToString();
-
         }
     }
 }

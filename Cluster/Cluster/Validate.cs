@@ -1,15 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Cluster
 {
-    public class Validate
+    public static class Validate
     {
-
         /// <summary>
         /// Validates the computer object
         /// </summary>
@@ -44,8 +38,6 @@ namespace Cluster
             if (string.IsNullOrEmpty(process.ProgramName))
                 return false;
             if (string.IsNullOrEmpty(process.ProcessId))
-                return false;
-            if (process.StartTime == null)
                 return false;
             if (process.ProcessorUsage < 0)
                 return false;
@@ -86,10 +78,7 @@ namespace Cluster
                 .ForEach(x => fileName = fileName.Replace(x, ""));
 
             new List<string> { "CON", "PRN", "AUX", "NUL", "COM1–COM9", "LPT1–LPT9" }
-            .ForEach(x =>
-            {
-                fileName = fileName == x ? "" : fileName;
-            });
+                .ForEach(x => { fileName = fileName == x ? "" : fileName; });
 
             if (string.IsNullOrEmpty(fileName))
                 return false;
@@ -99,6 +88,5 @@ namespace Cluster
                 return false;
             return true;
         }
-
     }
 }

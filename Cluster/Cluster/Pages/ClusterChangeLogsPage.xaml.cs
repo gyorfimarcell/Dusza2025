@@ -1,28 +1,30 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using Wpf.Ui.Controls;
 
 namespace Cluster
 {
     /// <summary>
     /// Interaction logic for ClusterChangeLogsPage.xaml
     /// </summary>
-    public partial class ClusterChangeLogsPage : CustomPage
+    public partial class ClusterChangeLogsPage
     {
-        List<KeyValuePair<string, string>> logTypeOptions = [new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
-          ..(Enum.GetNames(typeof(LogType)).Select(x => new KeyValuePair<string, string>(x, TranslationSource.T("LogType." + x))))
+        private readonly List<KeyValuePair<string, string>> logTypeOptions =
+        [
+            new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
+            ..(Enum.GetNames(typeof(LogType))
+                .Select(x => new KeyValuePair<string, string>(x, TranslationSource.T("LogType." + x))))
         ];
 
-        List<KeyValuePair<string, string>> logDetailOptions = [new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
-            ..(Log.LogDataTypes.Values.SelectMany(v => v).Distinct().Select(x => new KeyValuePair<string, string>(x, TranslationSource.T("LogDetail." + x))))
+        private readonly List<KeyValuePair<string, string>> logDetailOptions =
+        [
+            new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
+            ..(Log.LogDataTypes.Values.SelectMany(v => v).Distinct().Select(x =>
+                new KeyValuePair<string, string>(x, TranslationSource.T("LogDetail." + x))))
         ];
 
-        private Dictionary<string, List<string>> logEntries = new();
+        private readonly Dictionary<string, List<string>> logEntries = new();
 
         public ClusterChangeLogsPage()
         {
@@ -55,7 +57,7 @@ namespace Cluster
 
             foreach (string file in files)
             {
-                string fileName = System.IO.Path.GetFileName(file);
+                string fileName = Path.GetFileName(file);
                 logEntries[fileName] = File.ReadAllLines(file).ToList();
             }
         }
@@ -64,25 +66,21 @@ namespace Cluster
         /// Expand or collapse all sub items of the main expander.
         /// </summary>
         /// <param name="mainExpander">The main expander</param>
-        private void expandAllItem(Expander mainExpander)
+        private static void expandAllItem(Expander mainExpander)
         {
             bool isAllSubItemsExpanded = true;
-            foreach (var child in ((StackPanel)mainExpander.Content).Children)
+            foreach (object? child in ((StackPanel)mainExpander.Content).Children)
             {
-                if (child is Expander subExpander && !subExpander.IsExpanded)
+                if (child is Expander { IsExpanded: false })
                 {
                     isAllSubItemsExpanded = false;
                     break;
                 }
             }
 
-            mainExpander.IsExpanded = !mainExpander.IsExpanded;
+            mainExpander.IsExpanded = !mainExpander.IsExpanded || !isAllSubItemsExpanded;
 
-            if(!isAllSubItemsExpanded)
-            {
-                mainExpander.IsExpanded = true;
-            }
-            foreach (var child in ((StackPanel)mainExpander.Content).Children)
+            foreach (object? child in ((StackPanel)mainExpander.Content).Children)
             {
                 if (child is Expander subExpander)
                 {
@@ -96,14 +94,11 @@ namespace Cluster
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void expandAll_Click(object sender, RoutedEventArgs e)
+        private static void expandAll_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is Wpf.Ui.Controls.Button btn)
+            if (sender is Wpf.Ui.Controls.Button { Parent: Grid grid })
             {
-                if(btn.Parent is Grid grid)
-                {
-                    expandAllItem(grid.Parent as Expander);
-                }
+                expandAllItem((grid.Parent as Expander)!);
             }
         }
 
@@ -114,17 +109,17 @@ namespace Cluster
         {
             stLogs.Children.Clear();
 
-            foreach (var entry in logEntries)
+            foreach (KeyValuePair<string, List<string>> entry in logEntries)
             {
                 string fileName = entry.Key;
                 List<string> lines = entry.Value;
 
-                Expander expander = new Expander
+                var expander = new Expander
                 {
                     Margin = new Thickness(5)
                 };
 
-                Grid headerGrid = new Grid();
+                var headerGrid = new Grid();
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) });
 
@@ -136,7 +131,7 @@ namespace Cluster
                 };
                 Grid.SetColumn(headerTextBlock, 0);
 
-                Wpf.Ui.Controls.Button headerButton = new Wpf.Ui.Controls.Button
+                var headerButton = new Wpf.Ui.Controls.Button
                 {
                     Content = TranslationSource.T("Logs.ExpandAll"),
                     HorizontalAlignment = HorizontalAlignment.Center,
@@ -150,31 +145,34 @@ namespace Cluster
 
                 expander.Header = headerGrid;
 
-                StackPanel stackPanel = new StackPanel();
+                var stackPanel = new StackPanel();
 
                 for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
                 {
-                    string? line = lines[lineIndex];
+                    string line = lines[lineIndex];
                     bool last = lineIndex == lines.Count - 1;
 
                     string[] lineData = line.Replace("\n", "").Split(" - ");
                     if (lineData.Length < 2) continue;
 
-                    LogType type;
-                    bool success = Enum.TryParse(lineData[0], true, out type);
+                    bool success = Enum.TryParse(lineData[0], true, out LogType type);
                     if (!success) continue;
 
                     if (cbLogTypes.SelectedIndex != 0 && type.ToString() != cbLogTypes.SelectedValue.ToString())
                         continue;
 
-                    if (cbLogDetails.SelectedIndex == 0 && !string.IsNullOrEmpty(tbFilter.Text) && !lineData[2..].Any(x => x.Contains(tbFilter.Text)))
+                    if (cbLogDetails.SelectedIndex == 0 && !string.IsNullOrEmpty(tbFilter.Text) &&
+                        !lineData[2..].Any(x => x.Contains(tbFilter.Text)))
                         continue;
 
-                    if (cbLogDetails.SelectedIndex != 0 && !string.IsNullOrEmpty(tbFilter.Text) && !lineData[2..].Any(x =>
-                        Log.LogDataTypes[type].Contains(cbLogDetails.SelectedValue.ToString()) && x.Contains(tbFilter.Text)))
+                    if (cbLogDetails.SelectedIndex != 0 && !string.IsNullOrEmpty(tbFilter.Text) && !lineData[2..].Any(
+                            x =>
+                                Log.LogDataTypes[type].Contains(cbLogDetails.SelectedValue.ToString()!) &&
+                                x.Contains(tbFilter.Text)))
                         continue;
 
-                    string headerText = $"{TranslationSource.T("LogType." + type)} - {DateTime.ParseExact(lineData[1], "yyyy.MM.dd. HH:mm:ss", CultureInfo.InvariantCulture):HH:mm}";
+                    var headerText =
+                        $"{TranslationSource.T("LogType." + type)} - {DateTime.ParseExact(lineData[1], "yyyy.MM.dd. HH:mm:ss", CultureInfo.InvariantCulture):HH:mm}";
 
                     if (lineData.Length > 2)
                     {
@@ -186,12 +184,13 @@ namespace Cluster
                         subExpander.SetResourceReference(Control.BorderBrushProperty, "ControlStrokeColorDefaultBrush");
                         stackPanel.Children.Add(subExpander);
 
-                        StackPanel subStackPanel = new StackPanel();
+                        var subStackPanel = new StackPanel();
                         List<string> cardData = new();
 
                         for (int i = 0; i < lineData[2..].Length; i++)
                         {
-                            cardData.Add($"{TranslationSource.T("LogDetail." + Log.LogDataTypes[type][i])}: {lineData[i + 2]}");
+                            cardData.Add(
+                                $"{TranslationSource.T("LogDetail." + Log.LogDataTypes[type][i])}: {lineData[i + 2]}");
                         }
 
                         subStackPanel.Children.Add(GetUnexpandableCard(cardData, true));
@@ -199,16 +198,17 @@ namespace Cluster
                     }
                     else
                     {
-                        Border card = GetUnexpandableCard(new() { headerText }, last);
+                        Border card = GetUnexpandableCard([headerText], last);
                         stackPanel.Children.Add(card);
                     }
                 }
 
-                if(stackPanel.Children.Count != 0) 
+                if (stackPanel.Children.Count != 0)
                 {
                     expander.Content = stackPanel;
                     stLogs.Children.Add(expander);
                 }
+
                 showStatus.Visibility = stLogs.Children.Count > 0 ? Visibility.Hidden : Visibility.Visible;
             }
         }
@@ -221,7 +221,7 @@ namespace Cluster
         /// <returns>The card which contains the title</returns>
         private Border GetUnexpandableCard(List<string> headerTextList, bool last)
         {
-            Border cardContainer = new Border()
+            var cardContainer = new Border()
             {
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(5),
@@ -236,7 +236,7 @@ namespace Cluster
 
             foreach (string headerText in headerTextList)
             {
-                Wpf.Ui.Controls.TextBlock headerTextBlock = new Wpf.Ui.Controls.TextBlock()
+                var headerTextBlock = new Wpf.Ui.Controls.TextBlock()
                 {
                     Text = headerText,
                     Padding = new Thickness(5),
@@ -258,18 +258,23 @@ namespace Cluster
         /// <param name="e"></param>
         private void cbLogTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selectedValue = cbLogTypes.SelectedValue.ToString();
-            if (!string.IsNullOrEmpty(selectedValue) && cbLogTypes.SelectedIndex != 0) 
+            var selectedValue = cbLogTypes.SelectedValue.ToString()!;
+            if (!string.IsNullOrEmpty(selectedValue) && cbLogTypes.SelectedIndex != 0)
             {
-                List<KeyValuePair<string, string>> filtered = [new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
-                    ..(logDetailOptions.Where(x => Log.LogDataTypes[Enum.Parse<LogType>(selectedValue)].Contains(x.Key)))
+                List<KeyValuePair<string, string>> filtered =
+                [
+                    new(TranslationSource.T("Logs.AllTypes"), TranslationSource.T("Logs.AllTypes")),
+                    ..(logDetailOptions.Where(x =>
+                        Log.LogDataTypes[Enum.Parse<LogType>(selectedValue)].Contains(x.Key)))
                 ];
                 cbLogDetails.ItemsSource = filtered;
                 cbLogDetails.SelectedIndex = 0;
-            } else
+            }
+            else
             {
                 cbLogDetails.ItemsSource = logDetailOptions;
             }
+
             GenerateLogView();
         }
 

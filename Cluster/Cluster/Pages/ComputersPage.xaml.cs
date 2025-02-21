@@ -1,11 +1,8 @@
-﻿using Cluster.Controls;
-using Microsoft.Win32;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
+using Cluster.Controls;
+using Microsoft.Win32;
 using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
@@ -14,9 +11,10 @@ using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 
 namespace Cluster;
 
-public partial class ComputersPage : CustomPage
+public partial class ComputersPage
 {
-    public List<Computer> Computers;
+    private List<Computer> Computers;
+
     public ComputersPage()
     {
         InitializeComponent();
@@ -24,7 +22,8 @@ public partial class ComputersPage : CustomPage
         Computers = [];
         LoadData();
     }
-    ComputersPageSort sort = ComputersPageSort.Name;
+
+    private ComputersPageSort sort = ComputersPageSort.Name;
 
     /// <summary>
     /// Loading the computers of the cluster
@@ -54,13 +53,15 @@ public partial class ComputersPage : CustomPage
     {
         IEnumerable<Computer> filtered = [.. Computers];
 
-        filtered = filtered.Where(x => tbFilter.Text == "" || x.Name.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
+        filtered = filtered.Where(x =>
+            tbFilter.Text == "" || x.Name.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
 
         filtered = sort switch
         {
             ComputersPageSort.Name => filtered.OrderBy(x => x.Name),
             ComputersPageSort.ProcessorUsage => filtered.OrderBy(x => x.ProcessorUsage),
-            ComputersPageSort.ProcessorUsagePercent => filtered.OrderBy(x => x.ProcessorUsage / (double)x.ProcessorCore),
+            ComputersPageSort.ProcessorUsagePercent =>
+                filtered.OrderBy(x => x.ProcessorUsage / (double)x.ProcessorCore),
             ComputersPageSort.ProcessorCapacity => filtered.OrderBy(x => x.ProcessorCore),
             ComputersPageSort.MemoryUsage => filtered.OrderBy(x => x.MemoryUsage),
             ComputersPageSort.MemoryUsagePercent => filtered.OrderBy(x => x.MemoryUsage / (double)x.RamCapacity),
@@ -90,8 +91,8 @@ public partial class ComputersPage : CustomPage
     /// <param name="e"></param>
     private void ComputerCard_OnClick(object sender, RoutedEventArgs e)
     {
-        CardAction cardControl = (CardAction)sender;
-        Computer computer = (Computer)cardControl.DataContext;
+        var cardControl = (CardAction)sender;
+        var computer = (Computer)cardControl.DataContext;
 
         _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);
     }
@@ -120,8 +121,8 @@ public partial class ComputersPage : CustomPage
     {
         e.Handled = true;
 
-        Button button = (Button)sender;
-        Computer computer = (Computer)button.DataContext;
+        var button = (Button)sender;
+        var computer = (Computer)button.DataContext;
 
         if (computer.processes.Count > 0)
         {
@@ -140,7 +141,9 @@ public partial class ComputersPage : CustomPage
                 res[1],
                 res[0],
                 controlAppearance,
-                new SymbolIcon(controlAppearance == ControlAppearance.Danger ? SymbolRegular.Warning24 : SymbolRegular.Checkmark24),
+                new SymbolIcon(controlAppearance == ControlAppearance.Danger
+                    ? SymbolRegular.Warning24
+                    : SymbolRegular.Checkmark24),
                 TimeSpan.FromSeconds(10));
         }
         else
@@ -152,9 +155,12 @@ public partial class ComputersPage : CustomPage
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                 return;
             }
-            _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"), $"'{computer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
+
+            _window.RootSnackbarService.Show(TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Title"),
+                $"'{computer.Name}' {TranslationSource.T("ComputerDetailsPage.DeleteSuccess.Text")}",
                 ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
         }
+
         LoadData();
     }
 
@@ -165,12 +171,17 @@ public partial class ComputersPage : CustomPage
     /// <param name="e"></param>
     private void MenuItemExport_Click(object sender, RoutedEventArgs e)
     {
-        SaveFileDialog sfd = new SaveFileDialog();
-        sfd.Filter = "CSV Files | *.csv";
-        sfd.DefaultExt = "csv";
+        var sfd = new SaveFileDialog
+        {
+            Filter = "CSV Files | *.csv",
+            DefaultExt = "csv"
+        };
         if (sfd.ShowDialog() == true)
         {
-            string[] lines = ["Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", .. Computers.Select(x => x.CsvRow)];
+            string[] lines =
+            [
+                "Name;ProcessorCapacity;ProcessorUsage;MemoryCapacity;MemoryUsage", .. Computers.Select(x => x.CsvRow)
+            ];
             File.WriteAllLines(sfd.FileName, lines);
             _window.RootSnackbarService.Show(TranslationSource.T("Export.Success.Title"),
                 TranslationSource.Instance.WithParam("Export.Success.Text", sfd.FileName),
@@ -188,13 +199,13 @@ public partial class ComputersPage : CustomPage
     {
         foreach (object item in MenuItemSort.Items)
         {
-            if (item is MenuItem otherItem && otherItem.Tag != null)
+            if (item is MenuItem { Tag: not null } otherItem)
             {
                 otherItem.FontWeight = FontWeights.Normal;
             }
         }
 
-        MenuItem menuItem = (MenuItem)sender;
+        var menuItem = (MenuItem)sender;
         menuItem.FontWeight = FontWeights.Bold;
 
         sort = (ComputersPageSort)Enum.Parse(typeof(ComputersPageSort), (string)menuItem.Tag);
@@ -208,9 +219,9 @@ public partial class ComputersPage : CustomPage
     /// <param name="e"></param>
     private void MenuItemOptimize_Click(object sender, RoutedEventArgs e)
     {
-        MainWindow window = (MainWindow)Application.Current.MainWindow!;
+        var window = (MainWindow)Application.Current.MainWindow!;
         OptimizeDialog optimizeDialog = new();
-        MessageBox mgbox = new()
+        MessageBox msgBox = new()
         {
             Title = TranslationSource.T("Optimize.Title"),
             Content = optimizeDialog,
@@ -222,7 +233,7 @@ public partial class ComputersPage : CustomPage
             MaxWidth = 500,
             MaxHeight = 1000
         };
-        MessageBoxResult result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+        MessageBoxResult result = msgBox.ShowDialogAsync().GetAwaiter().GetResult();
 
         // Hit cancel
         if (result != MessageBoxResult.Primary)
@@ -230,7 +241,7 @@ public partial class ComputersPage : CustomPage
 
         if (!Computer.CanOptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum))
         {
-            mgbox = new()
+            msgBox = new MessageBox
             {
                 Title = TranslationSource.T("Errors.Error"),
                 Content = TranslationSource.T("Optimize.SpreadQuestion"),
@@ -239,7 +250,7 @@ public partial class ComputersPage : CustomPage
                 PrimaryButtonText = TranslationSource.T("Optimize.Spread"),
                 CloseButtonText = TranslationSource.T("Cancel"),
             };
-            result = mgbox.ShowDialogAsync().GetAwaiter().GetResult();
+            result = msgBox.ShowDialogAsync().GetAwaiter().GetResult();
 
             // Hit cancel
             if (result != MessageBoxResult.Primary)
@@ -248,16 +259,21 @@ public partial class ComputersPage : CustomPage
             string? spreadRes = Computer.SpreadProcesses(1);
             if (spreadRes != null)
             {
-                window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), spreadRes, ControlAppearance.Danger,
+                window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), spreadRes,
+                    ControlAppearance.Danger,
                     new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
             }
             else
             {
                 LoadData();
-                window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Spread.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
+                window.RootSnackbarService.Show(TranslationSource.T("Success"),
+                    TranslationSource.T("Optimize.Spread.Success"), ControlAppearance.Success,
+                    new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
             }
+
             return;
         }
+
         string? optimizeRes = Computer.OptimizeComputers(optimizeDialog.Minimum, optimizeDialog.Maximum);
 
         if (optimizeRes != null)
@@ -266,9 +282,12 @@ public partial class ComputersPage : CustomPage
                 new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
             return;
         }
-        Log.WriteLog([$"{optimizeDialog.Minimum}", $"{optimizeDialog.Maximum}", Computers.Count.ToString()], LogType.OptimizeProgramInstances);
+
+        Log.WriteLog([$"{optimizeDialog.Minimum}", $"{optimizeDialog.Maximum}", Computers.Count.ToString()],
+            LogType.OptimizeProgramInstances);
         LoadData();
-        window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
+        window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Success"),
+            ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
     }
 
     /// <summary>

@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Wpf.Ui.Controls;
 
 namespace Cluster
@@ -19,13 +6,15 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ClusterHealthPage.xaml
     /// </summary>
-    public partial class ClusterHealthPage : CustomPage
+    public partial class ClusterHealthPage
     {
-        ClusterHealth health;
+        private ClusterHealth health;
+
         public ClusterHealthPage()
         {
             InitializeComponent();
-            health = new(Computer.GetComputers(MainWindow.ClusterPath), ProgramType.ReadClusterFile(MainWindow.ClusterPath));
+            health = new ClusterHealth(Computer.GetComputers(MainWindow.ClusterPath),
+                ProgramType.ReadClusterFile(MainWindow.ClusterPath));
             Loaded += ClusterHealthPage_Loaded;
         }
 
@@ -36,10 +25,10 @@ namespace Cluster
         /// <param name="e"></param>
         private void ClusterHealthPage_Loaded(object sender, RoutedEventArgs e)
         {
-            health = new(Computer.GetComputers(MainWindow.ClusterPath), ProgramType.ReadClusterFile(MainWindow.ClusterPath));
+            health = new(Computer.GetComputers(MainWindow.ClusterPath),
+                ProgramType.ReadClusterFile(MainWindow.ClusterPath));
             if (health.Ok)
             {
-                //System.Windows.MessageBox.Show("OK");
                 HealthyInfobar.IsOpen = true;
                 spFixIssues.Visibility = Visibility.Hidden;
             }
@@ -73,19 +62,22 @@ namespace Cluster
             while (!health.Ok)
             {
                 int res = ClusterHealth.FixIssues();
-                var clusterOk = spErrors.Children[0];
+                UIElement? clusterOk = spErrors.Children[0];
                 spErrors.Children.Clear();
                 spErrors.Children.Add(clusterOk);
                 ClusterHealthPage_Loaded(new(), new());
 
                 if (res == 0)
                 {
-                    _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"), TranslationSource.T("Errors.FixFail"), ControlAppearance.Danger,
-                            new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
+                    _window.RootSnackbarService.Show(TranslationSource.T("Errors.Error"),
+                        TranslationSource.T("Errors.FixFail"), ControlAppearance.Danger,
+                        new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
                     return;
                 }
+
                 allResCount += res;
             }
+
             Log.WriteLog([$"{allResCount}"], LogType.FixIssues);
             _window.RootSnackbarService.Show(TranslationSource.T("Success"),
                 TranslationSource.Instance.WithParam("HealthPage.Fixed", allResCount.ToString()),

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
@@ -13,18 +8,17 @@ namespace Cluster
 {
     public class TranslationSource : INotifyPropertyChanged
     {
-        private static readonly TranslationSource _instance = new TranslationSource();
         private readonly ResourceManager _resourceManager;
         private CultureInfo _currentCulture;
 
-        public static TranslationSource Instance => _instance;
+        public static TranslationSource Instance { get; } = new();
 
         public CultureInfo CurrentCulture
         {
             get => _currentCulture;
             set
             {
-                if (_currentCulture != value)
+                if (!Equals(_currentCulture, value))
                 {
                     _currentCulture = value;
                     CultureInfo.CurrentUICulture = value;
@@ -47,10 +41,7 @@ namespace Cluster
             string text = this[key];
             for (int i = 0; i < vars.Length; i++)
             {
-                foreach (string var in vars)
-                {
-                    text = text.Replace("{" + i + "}", vars[i]);
-                }
+                text = text.Replace("{" + i + "}", vars[i]);
             }
 
             return text;
@@ -68,18 +59,11 @@ namespace Cluster
         }
     }
 
-    public class TranslateExtension : MarkupExtension
+    public class TranslateExtension(string key) : MarkupExtension
     {
-        private string _key;
-
-        public TranslateExtension(string key)
-        {
-            _key = key;
-        }
-
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            var binding = new Binding($"[{_key}]")
+            var binding = new Binding($"[{key}]")
             {
                 Source = TranslationSource.Instance,
                 Mode = BindingMode.OneWay,
@@ -89,18 +73,11 @@ namespace Cluster
         }
     }
 
-    public class TranslateStaticExtension : MarkupExtension
+    public class TranslateStaticExtension(string key) : MarkupExtension
     {
-        private string _key;
-
-        public TranslateStaticExtension(string key)
-        {
-            _key = key;
-        }
-
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return TranslationSource.Instance[_key];
+            return TranslationSource.Instance[key];
         }
     }
 }

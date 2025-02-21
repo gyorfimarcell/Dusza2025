@@ -1,69 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
-using System.Xml.Linq;
+﻿using System.IO;
 using Path = System.IO.Path;
 
 namespace Cluster
 {
     public class Process
     {
-        public string ProgramName { get; set; }
-        public string ProcessId { get; set; }
-        public DateTime StartTime { get; set; }
+        public string ProgramName { get; }
+        public string ProcessId { get; }
+        public DateTime StartTime { get; }
         public bool Active { get; set; }
-        public int ProcessorUsage { get; set; }
-        public int MemoryUsage { get; set; }
-        
-        Computer? _hostComputer = null;
+        public int ProcessorUsage { get; }
+        public int MemoryUsage { get; }
+
+        private Computer? _hostComputer;
 
         public Computer HostComputer
         {
             get =>
-                _hostComputer ?? (_hostComputer = Computer.GetComputers(MainWindow.ClusterPath)
-                    .Find(x => x.processes.Any(x => x.FileName == this.FileName)));
-            set => _hostComputer = value;
+                (_hostComputer ??= Computer.GetComputers(MainWindow.ClusterPath)
+                    .Find(x => x.processes.Any(y => y.FileName == this.FileName)))!;
+            init => _hostComputer = value;
         }
 
         public Process(string path)
         {
             string filename = Path.GetFileName(path);
-            this.ProgramName = filename.Split('-')[0];
-            this.ProcessId = filename.Split("-")[1];
+            ProgramName = filename.Split('-')[0];
+            ProcessId = filename.Split("-")[1];
 
             string[] lines = File.ReadAllLines(path);
-            this.StartTime = DateTime.Parse(lines[0]);
-            this.Active = lines[1] == "AKTÍV";
-            this.ProcessorUsage = Convert.ToInt32(lines[2]);
-            this.MemoryUsage = Convert.ToInt32(lines[3]);
+            StartTime = DateTime.Parse(lines[0]);
+            Active = lines[1] == "AKTÍV";
+            ProcessorUsage = Convert.ToInt32(lines[2]);
+            MemoryUsage = Convert.ToInt32(lines[3]);
         }
 
-        public Process(string programName, int processorUsage, int MemoryUsage, bool active) {
-            this.ProgramName=programName;
-            this.ProcessId = GenerateId();
-            this.StartTime = DateTime.Now;
-            this.Active = active;
-            this.ProcessorUsage = processorUsage;
+        public Process(string programName, int processorUsage, int MemoryUsage, bool active)
+        {
+            ProgramName = programName;
+            ProcessId = GenerateId();
+            StartTime = DateTime.Now;
+            Active = active;
+            ProcessorUsage = processorUsage;
             this.MemoryUsage = MemoryUsage;
         }
 
-
         public string FileName => $"{ProgramName}-{ProcessId}";
-        public string FileContent
+
+        private string FileContent
         {
             get
             {
-                List<string> lines = new();
-                lines.Add($"{StartTime.Year}-{StartTime.Month.ToString().PadLeft(2, '0')}-{StartTime.Day.ToString().PadLeft(2, '0')} {StartTime.Hour.ToString().PadLeft(2, '0')}:{StartTime.Minute.ToString().PadLeft(2, '0')}:{StartTime.Second.ToString().PadLeft(2, '0')}");
-                lines.Add(Active ? "AKTÍV" : "INAKTÍV");
-                lines.Add(ProcessorUsage.ToString());
-                lines.Add(MemoryUsage.ToString());
-                return String.Join("\n", lines);
+                List<string> lines =
+                [
+                    $"{StartTime.Year}-{StartTime.Month.ToString().PadLeft(2, '0')}-{StartTime.Day.ToString().PadLeft(2, '0')} {StartTime.Hour.ToString().PadLeft(2, '0')}:{StartTime.Minute.ToString().PadLeft(2, '0')}:{StartTime.Second.ToString().PadLeft(2, '0')}",
+                    Active ? "AKTÍV" : "INAKTÍV", ProcessorUsage.ToString(), MemoryUsage.ToString()
+                ];
+                return string.Join("\n", lines);
             }
         }
 
@@ -71,7 +64,8 @@ namespace Cluster
         /// Returns a CSV row of the process
         /// </summary>
         /// <returns>CSV row</returns>
-        public string GetCSVRow() {
+        public string GetCSVRow()
+        {
             string status = Active ? "Active" : "Inactive";
             return $"{FileName};{HostComputer.Name};{status};{ProcessorUsage};{MemoryUsage}";
         }
@@ -80,7 +74,8 @@ namespace Cluster
         /// Writes the process to a file
         /// </summary>
         /// <param name="folder">The path of the computer folder</param>
-        public void Write(string folder) {
+        public void Write(string folder)
+        {
             File.WriteAllText(Path.Combine(folder, FileName), FileContent);
         }
 
@@ -92,7 +87,7 @@ namespace Cluster
         {
             Random r = new();
 
-            string id = "";
+            var id = "";
 
             for (int i = 0; i < 6; i++)
             {
@@ -113,15 +108,21 @@ namespace Cluster
         /// <summary>
         /// Shuts down the process
         /// </summary>
-        public void Shutdown() {
+        public void Shutdown()
+        {
             File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
-            Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}", HostComputer.Name], LogType.ShutdownProgramInstance);
+            Log.WriteLog(
+            [
+                $"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}",
+                HostComputer.Name
+            ], LogType.ShutdownProgramInstance);
         }
 
         /// <summary>
         /// Toggles the active state of the process
         /// </summary>
-        public bool ToggleActive() {
+        public bool ToggleActive()
+        {
             if (Active == false)
             {
                 Computer host = HostComputer;
@@ -132,9 +133,11 @@ namespace Cluster
                     return false;
                 }
             }
+
             Active = !Active;
             Write($@"{MainWindow.ClusterPath}\{HostComputer.Name}");
-            Log.WriteLog([$"{FileName}", HostComputer.Name, $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"], Active ? LogType.ActivateProgramInstance : LogType.DeactivateProgramInstance);
+            Log.WriteLog([$"{FileName}", HostComputer.Name, $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}"],
+                Active ? LogType.ActivateProgramInstance : LogType.DeactivateProgramInstance);
             return true;
         }
     }

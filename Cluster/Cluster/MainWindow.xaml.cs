@@ -1,28 +1,18 @@
 using System.Collections;
-using Cluster.Pages;
-using Microsoft.Win32;
+using System.ComponentModel;
+using System.Globalization;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.Themes;
+using Microsoft.Win32;
+using SkiaSharp;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
-using System.Windows.Media.Media3D;
-using System.ComponentModel;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.Themes;
-using SkiaSharp;
-using LiveChartsCore.SkiaSharpView.Painting;
-using System.Globalization;
 
 namespace Cluster
 {
@@ -32,23 +22,24 @@ namespace Cluster
     public partial class MainWindow : INotifyPropertyChanged
     {
         public static string ClusterPath { get; set; } = "";
-        
-        public SnackbarService RootSnackbarService { get; private set; }
-        public readonly ContentDialogService _dialogService;
 
-        private bool _darkMode = false;
+        public SnackbarService RootSnackbarService { get; private set; }
+
+        private bool _darkMode;
+
         public bool DarkMode
         {
-            get => _darkMode; set
+            get => _darkMode;
+            set
             {
                 _darkMode = value;
 
                 Wpf.Ui.Appearance.ApplicationThemeManager.Apply(
                     _darkMode ? Wpf.Ui.Appearance.ApplicationTheme.Dark : Wpf.Ui.Appearance.ApplicationTheme.Light,
-                    WindowBackdropType.None,
-                    true
+                    WindowBackdropType.None
                 );
-                LiveCharts.Configure(config => {
+                LiveCharts.Configure(config =>
+                {
                     if (_darkMode) config.AddDarkTheme(theme => theme.Colors = ColorPalletes.MaterialDesign500);
                     else
                     {
@@ -62,22 +53,23 @@ namespace Cluster
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DarkMode)));
             }
         }
+
         public const string SETTINGS_KEY = @"HKEY_CURRENT_USER\SOFTWARE\kibirodKolega\Cluster\";
 
-        private IEnumerable originalBreadcrumbs;
+        private IEnumerable originalBreadcrumbs = null!;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public MainWindow()
         {
             InitializeComponent();
-            
+
             RootSnackbarService = new SnackbarService();
             RootSnackbarService.SetSnackbarPresenter(RootSnackbarPresenter);
 
-            _dialogService = new ContentDialogService();
-            _dialogService.SetDialogHost(RootContentDialog);
-            
+            var dialogService = new ContentDialogService();
+            dialogService.SetDialogHost(RootContentDialog);
+
             Loaded += MainWindow_Loaded;
             Log.WriteLog([], LogType.OpenProgram);
         }
@@ -96,13 +88,9 @@ namespace Cluster
         /// </summary>
         public void EnableNavigationItems()
         {
-            foreach (var item in RootNavigation.MenuItems)
+            foreach (object? item in RootNavigation.MenuItems)
             {
-                if (item is NavigationViewItem)
-                {
-                    NavigationViewItem navItem = (NavigationViewItem)item;
-                    if (!navItem.IsEnabled) navItem.IsEnabled = true;
-                }
+                if (item is NavigationViewItem { IsEnabled: false } navItem) navItem.IsEnabled = true;
             }
         }
 
@@ -120,21 +108,22 @@ namespace Cluster
                 if (files != null)
                 {
                     var latestFile = files.Select(file => new
-                    {
-                        FilePath = file,
-                    })
-                    .Where(f => f.FilePath != null)
-                    .OrderByDescending(f => Path.GetFileNameWithoutExtension(f.FilePath))
-                    .FirstOrDefault(f => File.ReadAllLines(f.FilePath).Any(x => x.StartsWith("LoadCluster")));
+                        {
+                            FilePath = file,
+                        })
+                        .Where(f => f.FilePath != null)
+                        .OrderByDescending(f => Path.GetFileNameWithoutExtension(f.FilePath))
+                        .FirstOrDefault(f => File.ReadAllLines(f.FilePath).Any(x => x.StartsWith("LoadCluster")));
 
                     if (latestFile == null)
                     {
                         return;
-                    }   
+                    }
 
-                    string[] clusterLines = File.ReadAllLines(latestFile.FilePath).Where(x => x.StartsWith("LoadCluster")).ToArray();
+                    string[] clusterLines = File.ReadAllLines(latestFile.FilePath)
+                        .Where(x => x.StartsWith("LoadCluster")).ToArray();
 
-                    if (clusterLines.Length == 0) 
+                    if (clusterLines.Length == 0)
                     {
                         return;
                     }
@@ -149,10 +138,10 @@ namespace Cluster
                         RootNavigation.ClearJournal();
                         RootNavigation.Navigate(typeof(ClusterHealthPage));
                         Log.WriteLog([ClusterPath], LogType.LoadCluster);
-                    } 
+                    }
                     else
                     {
-                        ClusterPath = null;
+                        ClusterPath = "";
                     }
                 }
             }
@@ -161,15 +150,21 @@ namespace Cluster
         /// <summary>
         /// Opens a dialog to select a cluster folder
         /// </summary>
-        public void OpenClusterSelectionDialog() {
-            OpenFolderDialog ofd = new OpenFolderDialog();
+        public void OpenClusterSelectionDialog()
+        {
+            var ofd = new OpenFolderDialog();
             if (ofd.ShowDialog() == true)
             {
                 ClusterPath = ofd.FolderName;
                 List<ProgramType> programs = ProgramType.ReadClusterFile(ofd.FolderName);
                 if (programs == null)
                 {
-                    MessageBox msg = new() { Title = TranslationSource.T("Menu.Invalid.Title"), Content = TranslationSource.T("Menu.Invalid.Text"), CloseButtonText = TranslationSource.T("Close") };
+                    MessageBox msg = new()
+                    {
+                        Title = TranslationSource.T("Menu.Invalid.Title"),
+                        Content = TranslationSource.T("Menu.Invalid.Text"),
+                        CloseButtonText = TranslationSource.T("Close")
+                    };
                     msg.ShowDialogAsync();
                 }
                 else
@@ -192,7 +187,7 @@ namespace Cluster
         /// <param name="e"></param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            bool savedDarkMode = Registry.GetValue(SETTINGS_KEY, "darkMode", false) is string s && s == "True";
+            bool savedDarkMode = Registry.GetValue(SETTINGS_KEY, "darkMode", false) is "True";
             DarkMode = savedDarkMode;
 
             object? languageSetting = Registry.GetValue(SETTINGS_KEY, "language", "hu-HU");
@@ -200,14 +195,15 @@ namespace Cluster
             {
                 TranslationSource.Instance.CurrentCulture = new CultureInfo(savedLanguage);
             }
-            else {
+            else
+            {
                 TranslationSource.Instance.CurrentCulture = new CultureInfo("hu-HU");
             }
 
             RootNavigation.Navigated += RootNavigationOnNavigated;
 
             originalBreadcrumbs = BreadcrumbBar.ItemsSource;
-            
+
             RootNavigation.Navigate(typeof(StartPage));
             RootNavigation.ClearJournal();
             LoadLastOpenedCluster();
@@ -221,7 +217,7 @@ namespace Cluster
         private void RootNavigationOnNavigated(NavigationView sender, NavigatedEventArgs args)
         {
             BreadcrumbBar.ItemsSource = originalBreadcrumbs;
-            
+
             if (args.Page is CustomPage page && page.HeaderControls.Any())
             {
                 icHeaderControls.ItemsSource = page.HeaderControls;
@@ -250,16 +246,6 @@ namespace Cluster
         private void FluentWindow_Closed(object sender, EventArgs e)
         {
             Log.WriteLog([], LogType.CloseProgram);
-        }
-
-        /// <summary>
-        /// Switches between light and dark mode
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItemTheme_Click(object sender, RoutedEventArgs e)
-        {
-            DarkMode = !DarkMode;
         }
 
         /// <summary>

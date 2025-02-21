@@ -1,36 +1,20 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32;
 using Wpf.Ui.Controls;
-using System.IO;
-using Path = System.IO.Path;
 using Directory = System.IO.Directory;
-using System.Security.Cryptography;
 
 namespace Cluster
 {
     /// <summary>
     /// Interaction logic for GenerateClusterPage.xaml
     /// </summary>
-    public partial class GenerateClusterPage : CustomPage
+    public partial class GenerateClusterPage
     {
-        string chosenPath;
-        MainWindow _window;
+        private string chosenPath = null!;
+
         public GenerateClusterPage()
         {
-            _window = (MainWindow)Application.Current.MainWindow!;
             InitializeComponent();
         }
 
@@ -44,12 +28,12 @@ namespace Cluster
             if (nbComputer.Value == null || nbProgram.Value == null || nbProcess.Value == null || chosenPath == null)
             {
                 _window.RootSnackbarService.Show(
-                        TranslationSource.T("Errors.Error"),
-                        TranslationSource.T("Errors.MissingFields"),
-                        ControlAppearance.Danger,
-                        new SymbolIcon { Symbol = SymbolRegular.Warning24 },
-                        TimeSpan.FromSeconds(10)
-                    );
+                    TranslationSource.T("Errors.Error"),
+                    TranslationSource.T("Errors.MissingFields"),
+                    ControlAppearance.Danger,
+                    new SymbolIcon { Symbol = SymbolRegular.Warning24 },
+                    TimeSpan.FromSeconds(10)
+                );
                 return;
             }
 
@@ -62,7 +46,7 @@ namespace Cluster
             int totalProcesses = Convert.ToInt32(nbProcess.Value);
             int numPrograms = Convert.ToInt32(nbProgram.Value);
 
-            if ((bool)rbConsistent.IsChecked)
+            if ((bool)rbConsistent.IsChecked!)
             {
                 int baseProcessCount = totalProcesses / numPrograms;
                 int remainingProcesses = totalProcesses % numPrograms;
@@ -72,12 +56,13 @@ namespace Cluster
                     remainingProcesses -= extraProcess;
                     int assignedProcesses = baseProcessCount + extraProcess;
 
-                    clusterLines.AddRange(new List<string>() {
-                    $"program{i + 1}",
-                    assignedProcesses.ToString(),
-                    (rnd.Next(10, 50) * 10).ToString(),
-                    (rnd.Next(10, 50) * 10).ToString()
-                });
+                    clusterLines.AddRange(new List<string>()
+                    {
+                        $"program{i + 1}",
+                        assignedProcesses.ToString(),
+                        (rnd.Next(10, 50) * 10).ToString(),
+                        (rnd.Next(10, 50) * 10).ToString()
+                    });
 
                     programInstances[$"program{i + 1}"] = assignedProcesses;
                 }
@@ -102,7 +87,8 @@ namespace Cluster
                         assignedProcesses = rnd.Next(1, remainingProcesses - (numPrograms - i - 1));
                     }
 
-                    clusterLines.AddRange(new List<string>() {
+                    clusterLines.AddRange(new List<string>()
+                    {
                         $"program{i + 1}",
                         assignedProcesses.ToString(),
                         (rnd.Next(10, 50) * 10).ToString(),
@@ -112,7 +98,6 @@ namespace Cluster
                     programInstances[$"program{i + 1}"] = assignedProcesses;
                     remainingProcesses -= assignedProcesses;
                 }
-
             }
 
             File.WriteAllLines(rootPath + "\\.klaszter", clusterLines);
@@ -138,14 +123,14 @@ namespace Cluster
             List<ProgramType> programs = ProgramType.ReadClusterFile(rootPath);
 
             int computerIndex = 0;
-            foreach (var programEntry in programInstances)
+            foreach (KeyValuePair<string, int> programEntry in programInstances)
             {
                 string programName = programEntry.Key;
                 int instances = programEntry.Value;
 
                 for (int i = 0; i < instances; i++)
                 {
-                    ProgramType program = programs.Find(p => p.ProgramName == programName);
+                    ProgramType program = programs.Find(p => p.ProgramName == programName)!;
                     if (program == null) continue;
 
                     bool assigned = false;
@@ -159,7 +144,9 @@ namespace Cluster
                             string filePath = $"{computerDir}\\{programName}-{Process.GenerateId()}";
                             File.WriteAllLines(filePath, new List<string>
                             {
-                                new DateTime(2020, 1, 1).AddDays(rnd.Next(0, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays)).ToString(),
+                                new DateTime(2020, 1, 1)
+                                    .AddDays(rnd.Next(0, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays))
+                                    .ToString(),
                                 "AKTÍV",
                                 program.CpuMilliCore.ToString(),
                                 program.Memory.ToString()
@@ -174,7 +161,8 @@ namespace Cluster
                         {
                             computerIndex = (computerIndex + 1) % Convert.ToInt32(nbComputer.Value);
 
-                            if (computerIndex == 0 && !computerResources.Any(c => c["CPU"] >= program.CpuMilliCore && c["Memory"] >= program.Memory))
+                            if (computerIndex == 0 && !computerResources.Any(c =>
+                                    c["CPU"] >= program.CpuMilliCore && c["Memory"] >= program.Memory))
                             {
                                 isInactive = true;
                                 assigned = true;
@@ -188,7 +176,9 @@ namespace Cluster
                         string filePath = $"{computerDir}\\{programName}-{Process.GenerateId()}";
                         File.WriteAllLines(filePath, new List<string>
                         {
-                            new DateTime(2020, 1, 1).AddDays(rnd.Next(0, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays)).ToString(),
+                            new DateTime(2020, 1, 1)
+                                .AddDays(rnd.Next(0, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays))
+                                .ToString(),
                             "INAKTÍV",
                             program.CpuMilliCore.ToString(),
                             program.Memory.ToString()
@@ -197,7 +187,9 @@ namespace Cluster
                 }
             }
 
-            Log.WriteLog([rootPath, nbComputer.Value.ToString(), nbProgram.Value.ToString(), nbProcess.Value.ToString()], LogType.GenerateCluster);
+            Log.WriteLog(
+                [rootPath, nbComputer.Value.ToString()!, nbProgram.Value.ToString()!, nbProcess.Value.ToString()!],
+                LogType.GenerateCluster);
 
             MainWindow.ClusterPath = rootPath;
             _window.RefreshLblPath();
