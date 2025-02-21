@@ -1,28 +1,12 @@
-﻿using Cluster.ChartModels;
-using LiveChartsCore.Kernel;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore;
-using Microsoft.Win32;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Wpf.Ui.Appearance;
+using Cluster.ChartModels;
+using LiveChartsCore;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Painting;
+using Microsoft.Win32;
 using Wpf.Ui.Controls;
-using static Cluster.ProgramsPage;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
 
 namespace Cluster
@@ -30,7 +14,7 @@ namespace Cluster
     /// <summary>
     /// Interaction logic for ProgramInstancesPage.xaml
     /// </summary>
-    public partial class ProcessesPage : CustomPage
+    public partial class ProcessesPage
     {
         public ProcessesPage()
         {
@@ -40,10 +24,15 @@ namespace Cluster
             _window.PropertyChanged += _window_PropertyChanged;
         }
 
+        /// <summary>
+        /// Load data and filter processes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProcessesPage_Loaded(object sender, RoutedEventArgs e)
         {
             LoadData();
-            if (DataContext != null && DataContext is string programName)
+            if (DataContext is string programName)
             {
                 List<MenuItem> menuItems = GetProgramMenuItems();
                 menuItems.ForEach(x => x.IsChecked = x.Header.ToString() == programName);
@@ -51,6 +40,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Update chart values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MainWindow.DarkMode))
@@ -62,12 +56,16 @@ namespace Cluster
             }
         }
 
-        List<Process> Processes;
+        List<Process> Processes = null!;
 
         ProcessesPageSort sort = ProcessesPageSort.Id;
         ProcessesPageStatus statusFilter = ProcessesPageStatus.All;
 
-        public void LoadData(bool skipFilterReload = false)
+        /// <summary>
+        /// Load data from cluster and filter processes
+        /// </summary>
+        /// <param name="skipFilterReload">Deciding to reload the program menu item or not</param>
+        private void LoadData(bool skipFilterReload = false)
         {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);
             List<ProgramType> programs = ProgramType.ReadClusterFile(MainWindow.ClusterPath);
@@ -78,7 +76,11 @@ namespace Cluster
             FilterProcesses();
         }
 
-        public void UpdateCharts()
+        /// <summary>
+        /// Update the charts
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateCharts()
         {
             ProcessesPageCharts data = new(icProcesses.Items.Cast<Process>());
             barPrograms.Series = statusFilter switch
@@ -88,7 +90,9 @@ namespace Cluster
                 ProcessesPageStatus.Inactive => [data.ProgramInactiveSeries],
                 _ => throw new NotImplementedException()
             };
-            barPrograms.LegendPosition = statusFilter == ProcessesPageStatus.All ? LiveChartsCore.Measure.LegendPosition.Bottom : LiveChartsCore.Measure.LegendPosition.Hidden;
+            barPrograms.LegendPosition = statusFilter == ProcessesPageStatus.All
+                ? LiveChartsCore.Measure.LegendPosition.Bottom
+                : LiveChartsCore.Measure.LegendPosition.Hidden;
             barPrograms.XAxes = data.ProgramsAxes;
             barPrograms.YAxes = data.ProgramsYAxes;
             pieComputers.Series = data.ComputersSeries;
@@ -96,7 +100,11 @@ namespace Cluster
             chartsRow.Height = icProcesses.Items.Count != 0 ? new GridLength(250) : new GridLength(0);
         }
 
-        public void UpdateProgramsMenuItem(List<ProgramType> programs)
+        /// <summary>
+        /// Update the program menu item
+        /// </summary>
+        /// <param name="programs">List of programs</param>
+        private void UpdateProgramsMenuItem(List<ProgramType> programs)
         {
             menuItemPrograms.Items.Clear();
 
@@ -108,7 +116,7 @@ namespace Cluster
 
             foreach (ProgramType program in programs)
             {
-                MenuItem item = new MenuItem()
+                var item = new MenuItem()
                 {
                     Header = program.ProgramName,
                     IsCheckable = true,
@@ -136,13 +144,19 @@ namespace Cluster
             Inactive,
         }
 
+        /// <summary>
+        /// Filter processes based on the selected program and filter text
+        /// </summary>
+        /// <exception cref="NotImplementedException">If filtering is not implemented</exception>
         private void FilterProcesses()
         {
-            List<string> programNames = GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
+            List<string> programNames =
+                GetProgramMenuItems().Where(x => x.IsChecked).Select(x => (string)x.Header).ToList();
 
             IEnumerable<Process> filtered = Processes;
             filtered = filtered.Where(x => programNames.Contains(x.ProgramName)).ToList();
-            filtered = filtered.Where(x => x.FileName.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
+            filtered = filtered.Where(x =>
+                x.FileName.Contains(tbFilter.Text, StringComparison.InvariantCultureIgnoreCase));
 
             filtered = statusFilter switch
             {
@@ -167,17 +181,22 @@ namespace Cluster
             List<Process> filteredList = filtered.ToList();
 
             icProcesses.ItemsSource = filteredList;
-            tbCount.Text = $"{filteredList.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({filteredList.Count(x => x.Active)} {TranslationSource.T("Active")})";
+            tbCount.Text =
+                $"{filteredList.Count} {TranslationSource.T("ComputerDetailsPage.Processes")} ({filteredList.Count(x => x.Active)} {TranslationSource.T("Active")})";
             UpdateCharts();
         }
 
+        /// <summary>
+        /// Get the program menu items
+        /// </summary>
+        /// <returns>The list of menu items</returns>
         private List<MenuItem> GetProgramMenuItems()
         {
             List<MenuItem> menuItems = [];
 
-            foreach (var item in menuItemPrograms.Items)
+            foreach (object? item in menuItemPrograms.Items)
             {
-                if (item is MenuItem menuItem && menuItem.IsCheckable)
+                if (item is MenuItem { IsCheckable: true } menuItem)
                 {
                     menuItems.Add(menuItem);
                 }
@@ -186,12 +205,21 @@ namespace Cluster
             return menuItems;
         }
 
+        /// <summary>
+        /// Program checked event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProgramChecked(object sender, RoutedEventArgs e)
         {
-            List<MenuItem> menuItems = GetProgramMenuItems();
             FilterProcesses();
         }
 
+        /// <summary>
+        /// All programs clicked event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProgramsAllClick(object sender, RoutedEventArgs e)
         {
             List<MenuItem> menuItems = GetProgramMenuItems();
@@ -208,14 +236,22 @@ namespace Cluster
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Export the processes to a CSV file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemExport_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "CSV Files | *.csv";
-            sfd.DefaultExt = "csv";
+            var sfd = new SaveFileDialog
+            {
+                Filter = "CSV Files | *.csv",
+                DefaultExt = "csv"
+            };
             if (sfd.ShowDialog() == true)
             {
-                string[] lines = ["Name;Computer;Status;ProcessorUsage;MemoryUsage", .. Processes.Select(x => x.GetCSVRow())];
+                string[] lines =
+                    ["Name;Computer;Status;ProcessorUsage;MemoryUsage", .. Processes.Select(x => x.GetCSVRow())];
                 File.WriteAllLines(sfd.FileName, lines);
                 _window.RootSnackbarService.Show(TranslationSource.T("Export.Success.Title"),
                     TranslationSource.Instance.WithParam("Export.Success.Text", sfd.FileName),
@@ -224,54 +260,84 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Navigate to the new instance page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
             _window.RootNavigation.NavigateWithHierarchy(typeof(NewInstancePage));
         }
 
+        /// <summary>
+        /// Load the data when a process is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProcessCard_OnProcessChange(object sender, EventArgs e)
         {
             LoadData(true);
         }
 
+        /// <summary>
+        /// Filter the processes based on the filter text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Sort the processes based on the selected menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSort_Click(object sender, RoutedEventArgs e)
         {
             foreach (object item in MenuItemSort.Items)
             {
-                if (item is MenuItem otherItem && otherItem.Tag != null)
+                if (item is MenuItem { Tag: not null } otherItem)
                 {
                     otherItem.FontWeight = FontWeights.Normal;
                 }
             }
 
-            MenuItem menuItem = (MenuItem)sender;
+            var menuItem = (MenuItem)sender;
             menuItem.FontWeight = FontWeights.Bold;
 
             sort = (ProcessesPageSort)Enum.Parse(typeof(ProcessesPageSort), (string)menuItem.Tag);
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Sort the processes based on the selected menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
         {
             FilterProcesses();
         }
 
+        /// <summary>
+        /// Filter the processes based on the selected status
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemStatus_Click(object sender, RoutedEventArgs e)
         {
             foreach (object item in MenuItemStatus.Items)
             {
-                if (item is MenuItem otherItem && otherItem.Tag != null)
+                if (item is MenuItem { Tag: not null } otherItem)
                 {
                     otherItem.FontWeight = FontWeights.Normal;
                 }
             }
 
-            MenuItem menuItem = (MenuItem)sender;
+            var menuItem = (MenuItem)sender;
             menuItem.FontWeight = FontWeights.Bold;
 
             statusFilter = (ProcessesPageStatus)Enum.Parse(typeof(ProcessesPageStatus), (string)menuItem.Tag);

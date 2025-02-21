@@ -1,19 +1,19 @@
 ﻿<local:CustomPage x:Class="Cluster.ProgramsPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
-      xmlns:local="clr-namespace:Cluster"
-      xmlns:visualelements="clr-namespace:LiveChartsCore.SkiaSharpView.VisualElements;assembly=LiveChartsCore.SkiaSharpView"
-      xmlns:controls="clr-namespace:Cluster.Controls"
-      mc:Ignorable="d"
-      Title="Programs"
-      d:DesignHeight="750"
-      d:DesignWidth="1200"
-      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                  xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+                  xmlns:local="clr-namespace:Cluster"
+                  xmlns:visualelements="clr-namespace:LiveChartsCore.SkiaSharpView.VisualElements;assembly=LiveChartsCore.SkiaSharpView"
+                  xmlns:controls="clr-namespace:Cluster.Controls"
+                  mc:Ignorable="d"
+                  Title="Programs"
+                  d:DesignHeight="750"
+                  d:DesignWidth="1200"
+                  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+                  ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <local:CustomPage.HeaderControls>
         <StackPanel Orientation="Horizontal">
             <ui:TextBox x:Name="tbFilter"
@@ -22,7 +22,7 @@
                         Icon="{ui:SymbolIcon Search20}"
                         Width="200"
                         Margin="0 0 4 0"
-                        TextChanged="tbFilter_TextChanged"/>
+                        TextChanged="tbFilter_TextChanged" />
             <Menu FontSize="14">
                 <ui:MenuItem x:Name="MenuItemSort"
                              Icon="{ui:SymbolIcon ArrowSort20}">
@@ -31,40 +31,40 @@
                                  Tag="0"
                                  FontWeight="Bold"
                                  StaysOpenOnClick="True"
-                                 Click="MenuItemSort_Click"/>
+                                 Click="MenuItemSort_Click" />
                     <ui:MenuItem Header="{local:Translate ProgramsPage.Sort.Requested}"
                                  Icon="{ui:SymbolIcon Play20}"
                                  Tag="1"
                                  StaysOpenOnClick="True"
-                                 Click="MenuItemSort_Click"/>
+                                 Click="MenuItemSort_Click" />
                     <ui:MenuItem Header="{local:Translate ProcessorUsage}"
                                  Icon="{ui:SymbolIcon DeveloperBoard20}"
                                  Tag="2"
                                  StaysOpenOnClick="True"
-                                 Click="MenuItemSort_Click"/>
+                                 Click="MenuItemSort_Click" />
                     <ui:MenuItem Header="{local:Translate MemoryUsage}"
                                  Icon="{ui:SymbolIcon Ram20}"
                                  Tag="3"
                                  StaysOpenOnClick="True"
-                                 Click="MenuItemSort_Click"/>
-                    <Separator/>
+                                 Click="MenuItemSort_Click" />
+                    <Separator />
                     <ui:MenuItem x:Name="MenuItemSortOrder"
                                  Header="{local:Translate Descending}"
                                  IsCheckable="True"
                                  StaysOpenOnClick="True"
-                                 Click="MenuItemSortOrder_Click"/>
+                                 Click="MenuItemSortOrder_Click" />
                 </ui:MenuItem>
-                <Separator/>
+                <Separator />
                 <ui:MenuItem Header="{local:Translate New}"
-             Icon="{ui:SymbolIcon Add20}"
-             Click="MenuItemNew_Click"/>
+                             Icon="{ui:SymbolIcon Add20}"
+                             Click="MenuItemNew_Click" />
             </Menu>
         </StackPanel>
     </local:CustomPage.HeaderControls>
     <Grid Margin="46 0">
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="chartRow" Height="150"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition x:Name="chartRow" Height="150" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <lvc:CartesianChart x:Name="barRequested"
@@ -74,13 +74,13 @@
                             TooltipPosition="Hidden"
                             EasingFunction="{x:Null}">
             <lvc:CartesianChart.Title>
-                <visualelements:LabelVisual Text="{local:TranslateStatic ProgramsPage.Requested}"/>
+                <visualelements:LabelVisual Text="{local:TranslateStatic ProgramsPage.Requested}" />
             </lvc:CartesianChart.Title>
         </lvc:CartesianChart>
 
         <ItemsControl x:Name="icPrograms"
-              Grid.Row="1"
-              Focusable="False">
+                      Grid.Row="1"
+                      Focusable="False">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ProgramType}">
                     <ui:CardAction Margin="0 0 0 8"
@@ -93,8 +93,8 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
                             <ui:TextBlock Grid.Column="0"
@@ -113,17 +113,17 @@
                             <StackPanel Grid.Column="1"
                                         Orientation="Horizontal">
                                 <ui:SymbolIcon Symbol="DeveloperBoard20"
-                                               Margin="0 0 4 0"/>
+                                               Margin="0 0 4 0" />
                                 <ui:TextBlock Appearance="Secondary"
-                                              Text="{Binding CpuMilliCore}"/>
+                                              Text="{Binding CpuMilliCore}" />
                             </StackPanel>
                             <StackPanel Grid.Column="1"
                                         Grid.Row="1"
                                         Orientation="Horizontal">
                                 <ui:SymbolIcon Symbol="Ram20"
-                                               Margin="0 0 4 0"/>
+                                               Margin="0 0 4 0" />
                                 <ui:TextBlock Appearance="Secondary"
-                                              Text="{Binding Memory}"/>
+                                              Text="{Binding Memory}" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal"
@@ -133,11 +133,11 @@
                                            Appearance="Transparent"
                                            Icon="{ui:SymbolIcon Edit24}"
                                            Margin="0 0 4 0"
-                                           Click="btnEdit_Click"/>
+                                           Click="btnEdit_Click" />
                                 <ui:Button x:Name="btnShutdown"
                                            Appearance="Transparent"
                                            Icon="{ui:SymbolIcon Power24}"
-                                           Click="btnShutdown_Click"/>
+                                           Click="btnShutdown_Click" />
                             </StackPanel>
                         </Grid>
                     </ui:CardAction>
@@ -149,13 +149,13 @@
                               Grid.Row="1">
             <controls:EmptyStatus.Style>
                 <Style TargetType="controls:EmptyStatus">
-                    <Setter Value="{local:Translate ProgramsPage.Empty.FilterText}" Property="Description"/>
+                    <Setter Value="{local:Translate ProgramsPage.Empty.FilterText}" Property="Description" />
                     <Style.Triggers>
                         <DataTrigger Value="True" Binding="{Binding HasItems, ElementName=icPrograms}">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Value="" Binding="{Binding Text, ElementName=tbFilter}">
-                            <Setter Value="{local:Translate ProgramsPage.Empty.EmptyText}" Property="Description"/>
+                            <Setter Value="{local:Translate ProgramsPage.Empty.EmptyText}" Property="Description" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

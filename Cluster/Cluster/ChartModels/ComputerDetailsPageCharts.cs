@@ -4,30 +4,25 @@ using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Extensions;
 using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cluster.ChartModels
 {
-    class ComputerDetailsPageCharts
+    internal class ComputerDetailsPageCharts
     {
-        public IEnumerable<ISeries> ProgramsSeries { get; set; }
-        public IEnumerable<ISeries> ProcessorSeries { get; set; }
-        public IEnumerable<ISeries> MemorySeries { get; set; }
+        public IEnumerable<ISeries> ProgramsSeries { get; }
+        public IEnumerable<ISeries> ProcessorSeries { get; }
+        public IEnumerable<ISeries> MemorySeries { get; }
 
-        public ComputerDetailsPageCharts(Computer computer) {
+        public ComputerDetailsPageCharts(Computer computer)
+        {
             ProgramsSeries = computer.processes.GroupBy(x => x.ProgramName).OrderBy(x => x.Key)
-            .Select(x => new PieSeries<int> {
-                Values = [x.Count()],
-                Name = x.Key
-            }).ToList();
+                .Select(x => new PieSeries<int>
+                {
+                    Values = [x.Count()],
+                    Name = x.Key
+                }).ToList();
 
-            IEnumerable<Process> activeProcesses = computer.processes.Where(x => x.Active);
+            List<Process> activeProcesses = computer.processes.Where(x => x.Active).ToList();
 
             ProcessorSeries = GaugeGenerator.BuildAngularGaugeSections(activeProcesses.Select(x => new GaugeItem(
                 x.ProcessorUsage, s => FormatGaugeItem(s, x.FileName)

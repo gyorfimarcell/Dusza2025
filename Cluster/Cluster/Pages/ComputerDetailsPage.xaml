@@ -6,7 +6,7 @@
                   xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                   xmlns:local="clr-namespace:Cluster"
-                  xmlns:controls="clr-namespace:Cluster.Controls" xmlns:visualelements="clr-namespace:LiveChartsCore.SkiaSharpView.VisualElements;assembly=LiveChartsCore.SkiaSharpView"
+                  xmlns:controls="clr-namespace:Cluster.Controls"
                   mc:Ignorable="d"
                   Title="ComputerDetailsPage"
                   ui:NavigationView.HeaderContent="temp"
@@ -18,10 +18,10 @@
         <Menu FontSize="14">
             <ui:MenuItem Header="{local:Translate Edit}"
                          Icon="{ui:SymbolIcon Edit20}"
-                         Click="Edit_OnClick"/>
+                         Click="Edit_OnClick" />
             <ui:MenuItem Header="{local:Translate Delete}"
                          Icon="{ui:SymbolIcon Delete20}"
-                         Click="Delete_OnClick"/>
+                         Click="Delete_OnClick" />
         </Menu>
     </local:CustomPage.HeaderControls>
     <StackPanel Margin="48 0">
@@ -33,10 +33,10 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="16"/>
-                <RowDefinition x:Name="chartsRow" Height="175"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition />
+                <RowDefinition Height="16" />
+                <RowDefinition x:Name="chartsRow" Height="175" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <ui:TextBlock FontTypography="Body"
                           VerticalAlignment="Center"
@@ -56,10 +56,10 @@
             <lvc:PieChart x:Name="piePrograms"
                           Grid.Row="2"
                           HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"/>
+                          VerticalAlignment="Stretch" />
             <ui:TextBlock Grid.Row="3"
                           HorizontalAlignment="Center"
-                          Text="{local:Translate Programs}"/>
+                          Text="{local:Translate Programs}" />
 
 
             <lvc:PieChart x:Name="pieProcessor"
@@ -69,11 +69,11 @@
                           VerticalAlignment="Stretch"
                           InitialRotation="-225"
                           MaxAngle="270"
-                          Margin="0 20 0 0"/>
+                          Margin="0 20 0 0" />
             <ui:TextBlock Grid.Row="3"
                           Grid.Column="1"
                           HorizontalAlignment="Center"
-                          Text="{local:Translate ProcessorUsage}"/>
+                          Text="{local:Translate ProcessorUsage}" />
 
 
             <lvc:PieChart x:Name="pieMemory"
@@ -83,11 +83,11 @@
                           VerticalAlignment="Stretch"
                           InitialRotation="-225"
                           MaxAngle="270"
-                          Margin="0 20 0 0"/>
+                          Margin="0 20 0 0" />
             <ui:TextBlock Grid.Row="3"
                           Grid.Column="2"
                           HorizontalAlignment="Center"
-                          Text="{local:Translate MemoryUsage}"/>
+                          Text="{local:Translate MemoryUsage}" />
         </Grid>
 
         <ui:TextBlock
@@ -100,7 +100,7 @@
                     <controls:ProcessCard Process="{Binding Path=.}"
                                           Margin="0 0 0 8"
                                           OnProcessShutdown="ProcessCard_OnProcessChange"
-                                          OnProcessActivate="ProcessCard_OnProcessChange"/>
+                                          OnProcessActivate="ProcessCard_OnProcessChange" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

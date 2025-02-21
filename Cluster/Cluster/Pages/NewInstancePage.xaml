@@ -14,32 +14,32 @@
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <StackPanel Margin="48 0">
         <controls:CustomCard Title="{local:Translate NewInstancePage.Program}"
-                         Icon="{ui:SymbolIcon Apps20 }"
-                         Margin="0 0 0 12">
+                             Icon="{ui:SymbolIcon Apps20 }"
+                             Margin="0 0 0 12">
             <ComboBox x:Name="cbProgram"
                       MinWidth="250"
-                      SelectionChanged="cbProgram_SelectionChanged"/>
+                      SelectionChanged="cbProgram_SelectionChanged" />
         </controls:CustomCard>
         <controls:CustomCard Title="{local:Translate NewInstancePage.Computer}"
-                         Icon="{ui:SymbolIcon Server20}"
-                         Margin="0 0 0 12">
+                             Icon="{ui:SymbolIcon Server20}"
+                             Margin="0 0 0 12">
             <ComboBox x:Name="cbComputer"
-                      MinWidth="250"/>
+                      MinWidth="250" />
         </controls:CustomCard>
         <controls:CustomCard Title="{local:Translate Active}"
-                 Icon="{ui:SymbolIcon VideoPlayPause20}"
-                 Margin="0 0 0 12">
+                             Icon="{ui:SymbolIcon VideoPlayPause20}"
+                             Margin="0 0 0 12">
             <ui:ToggleSwitch x:Name="tsActive"
                              Checked="tsActive_CheckChanged"
                              Unchecked="tsActive_CheckChanged"
-                             IsChecked="True"/>
+                             IsChecked="True" />
         </controls:CustomCard>
 
-        <ui:Button x:Name="btnAdd"
-               Appearance="Primary"
-               HorizontalAlignment="Right"
-               MinWidth="300"
-               Content="{local:Translate NewInstancePage.Run}"
-               Click="btnAdd_Click" />
+        <ui:Button
+            Appearance="Primary"
+            HorizontalAlignment="Right"
+            MinWidth="300"
+            Content="{local:Translate NewInstancePage.Run}"
+            Click="btnAdd_Click" />
     </StackPanel>
 </Page>
