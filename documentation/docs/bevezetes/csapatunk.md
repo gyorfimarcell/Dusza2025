@@ -8,7 +8,9 @@ TODO
 
 ## Géczi Kornél
 
-TODO
+Már kiskorom óta foglalkozom programozással. Ha van szabadidőm, akkor szeretek utazni vagy dartsot nézni. Ezen kívül nagy érdeklődéssel vagyok a német nyelv és kultúra iránt.
+
+Feladataim közé tartozott a klaszter betöltésének és generálásának a folyamata, a naplózási adatok megjelenítése, felhasználói dokumentáció megírásának egy része.
 
 ## Györfi Marcell
 
