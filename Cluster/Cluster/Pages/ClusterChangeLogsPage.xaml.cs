@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Wpf.Ui.Controls;
 
 namespace Cluster
 {
@@ -148,7 +149,14 @@ namespace Cluster
                 headerGrid.Children.Add(headerButton);
 
                 expander.Header = headerGrid;
-
+                expander.Collapsed += (sender, e) =>
+                {
+                   headerButton.Content = TranslationSource.T("Logs.ExpandAll");
+                };
+                expander.Expanded += (sender, e) =>
+                {
+                    headerButton.Content = TranslationSource.T("Logs.CollapseAll");
+                };
                 var stackPanel = new StackPanel();
 
                 for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
