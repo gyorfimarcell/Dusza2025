@@ -32,24 +32,11 @@
                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                     Text="{TemplateBinding Title }"
                                     TextWrapping="WrapWithOverflow" />
-                                <ui:TextBlock
+                                <ui:TextBlock x:Name="desc"
                                     Appearance="Secondary"
                                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                     Text="{TemplateBinding Description }"
-                                    TextWrapping="WrapWithOverflow">
-                                    <ui:TextBlock.Style>
-                                        <Style TargetType="{x:Type ui:TextBlock}">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                            <Style.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding Description, RelativeSource={RelativeSource AncestorType=local:CustomCard} }"
-                                                    Value="{x:Null}">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ui:TextBlock.Style>
-                                </ui:TextBlock>
+                                    TextWrapping="WrapWithOverflow"/>
                             </StackPanel>
 
                             <ContentPresenter Grid.Column="2"

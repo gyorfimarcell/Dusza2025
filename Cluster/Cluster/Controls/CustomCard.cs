@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Markup;
 using Wpf.Ui.Controls;
+using TextBlock = Wpf.Ui.Controls.TextBlock;
 
 namespace Cluster.Controls;
 
@@ -11,6 +12,20 @@ public class CustomCard : Control
     static CustomCard()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomCard), new FrameworkPropertyMetadata(typeof(CustomCard)));
+    }
+    
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+
+        if (Description == null)
+        {
+            var descriptionElement = GetTemplateChild("desc");
+            if (descriptionElement is TextBlock descriptionTextBlock)
+            {
+                descriptionTextBlock.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 
     public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon),
@@ -34,9 +49,9 @@ public class CustomCard : Control
     public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(nameof(Description),
         typeof(string), typeof(CustomCard), new PropertyMetadata(default(string)));
 
-    public string Description
+    public string? Description
     {
-        get => (string)GetValue(DescriptionProperty);
+        get => (string?)GetValue(DescriptionProperty);
         set => SetValue(DescriptionProperty, value);
     }
 

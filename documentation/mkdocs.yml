@@ -1,11 +1,13 @@
-site_name: Kibirod, kolega Dokumentáció
-site_url: https://konlll.github.io/dusza2025/
+site_url: https://gyorfimarcell.github.io/dusza2025/
+site_name: "\"Kibirod, kolega?\" Dokumentáció"
 
 nav:
   - Kezdőlap: "index.md"
   - Bevezetés:
       - "bevezetes/programrol.md"
-      - "bevezetes/licenszek.md"
+      - "bevezetes/feladat.md"
+      - "bevezetes/csapatunk.md"
+      - "bevezetes/beadott.md"
   - Felhasználói dokumentáció:
       - "felhasznaloi/mukodes.md"
       - "felhasznaloi/klaszter.md"
@@ -24,8 +26,8 @@ nav:
 theme:
   name: material
   language: hu
-  icon:
-    logo: material/server
+  logo: img/icon.png
+  favicon: img/icon.png
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
@@ -51,7 +53,7 @@ theme:
 
 extra:
   generator: false
-copyright: Copyright &copy; 2025 Kibirod, kolega
+copyright: Copyright &copy; 2025 Kibirod, kolega?
 
 plugins:
   - search:
@@ -64,3 +66,6 @@ markdown_extensions:
   - admonition
   - toc
   - tables
+
+extra_css:
+  - style.css
