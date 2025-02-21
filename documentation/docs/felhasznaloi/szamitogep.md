@@ -110,4 +110,7 @@ Végső soron lehet még a már számítógépen futó folyamatokat leállítani
 
 ## Egyéb információk
 
-Mind a listában, és mind a részletek oldalon megtekinthető a gép aktuális terheltsége százalékos értékben is.
+- Mind a listában, és mind a részletek oldalon megtekinthető a gép aktuális terheltsége százalékos értékben is.
+- Ha sok folyamatot futtatunk egy számítógépen (nem túlterhelve annak erőforrásait), akkor lassulás észlelhető. Ezt le is teszteltük több, mint 10.000 folyamattal. Ezek betöltése együttesen kb. 14 GB memóriát igényelt.
+
+![Egyszerre sok folyamat futtatása](../img/felhasznaloi/szamitogep/extrem-ertekek.png)
