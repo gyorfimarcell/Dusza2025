@@ -1,5 +1,5 @@
-site_name: Kibirod, kolega Dokumentáció
 site_url: https://konlll.github.io/dusza2025/
+site_name: "\"Kibirod, kolega?\" Dokumentáció"
 
 nav:
   - Kezdőlap: "index.md"
