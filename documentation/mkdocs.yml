@@ -5,7 +5,8 @@ nav:
   - Kezdőlap: "index.md"
   - Bevezetés:
       - "bevezetes/programrol.md"
-      - "bevezetes/licenszek.md"
+      - "bevezetes/feladat.md"
+      - "bevezetes/csapatunk.md"
   - Felhasználói dokumentáció:
       - "felhasznaloi/mukodes.md"
       - "felhasznaloi/klaszter.md"
@@ -51,7 +52,7 @@ theme:
 
 extra:
   generator: false
-copyright: Copyright &copy; 2025 Kibirod, kolega
+copyright: Copyright &copy; 2025 Kibirod, kolega?
 
 plugins:
   - search:
