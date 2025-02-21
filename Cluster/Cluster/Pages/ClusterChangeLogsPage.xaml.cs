@@ -221,16 +221,7 @@ namespace Cluster
 
                 expander.Collapsed += (sender, e) =>
                 {
-                    bool isAllSubItemsExpanded = true;
-                    foreach (object? child in ((StackPanel)expander.Content).Children)
-                    {
-                        if (child is Expander { IsExpanded: false })
-                        {
-                            isAllSubItemsExpanded = false;
-                            break;
-                        }
-                    }
-                    headerButton.Content = isAllSubItemsExpanded ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
+                    headerButton.Content = TranslationSource.T("Logs.ExpandAll");
                 };
                 expander.Expanded += (sender, e) =>
                 {
