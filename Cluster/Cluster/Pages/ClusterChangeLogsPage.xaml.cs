@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Controls;
@@ -76,6 +77,14 @@ namespace Cluster
                 {
                     isAllSubItemsExpanded = false;
                     break;
+                }
+            }
+            if (mainExpander.Content is StackPanel sp)
+            {
+                Wpf.Ui.Controls.Button btn = sp.Children.OfType<Wpf.Ui.Controls.Button>().FirstOrDefault();
+                if (btn != null)
+                {
+                    btn.Content = isAllSubItemsExpanded ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
                 }
             }
 
