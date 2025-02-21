@@ -4,7 +4,9 @@ A **Kibirod, kolega?** csapat a debreceni _DSZC Mechwart András Gépipari és I
 
 ## Pálóczi Imre
 
-TODO
+Kíváncsi és kreatív ember vagyok, akit lenyűgöz a programozás és a nyelvek sokszínűsége. Szívesen fejlesztem magam új technológiák és kifejezések felfedezésével, miközben az olvasás segít elmélyülni különböző világokban és gondolatokban. Németország a következő állomás tanulás szempontjából.
+
+Személy szerint a klaszter hibáinak automatikus javításáért felelek, valamint a naplózás logikáját is és valósítottam meg. Minden, ami algoritmus, - gondolhatunk itt az optimalizációra vagy a kiszervezésre - , az én hatásköröm volt.
 
 ## Géczi Kornél
 
