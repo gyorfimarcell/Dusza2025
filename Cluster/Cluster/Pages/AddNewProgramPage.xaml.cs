@@ -33,6 +33,11 @@ namespace Cluster
             _window = (MainWindow)Application.Current.MainWindow!;
         }
 
+        /// <summary>
+        /// Saves the new program to the cluster.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (!Validate.ValidateFileName(tbProgramName.Text) || nbActive.Value == null || 

@@ -28,6 +28,12 @@ namespace Cluster
         {
         }
 
+        /// <summary>
+        ///    Creates a new computer with the given parameters.
+        /// </summary>
+        /// <param name="name">Name of the computer</param>
+        /// <param name="processorCore">Amount of processor core</param>
+        /// <param name="ramCapacity">Amount of RAM capacity</param>
         public Computer(string name, int processorCore, int ramCapacity)
         {
             Name = name;
@@ -47,16 +53,31 @@ namespace Cluster
         public string CsvRow => $"{Name};{ProcessorCore};{ProcessorUsage};{RamCapacity};{MemoryUsage}";
 
 
+        /// <summary>
+        ///   Checks if the computer has enough RAM to run a program.
+        /// </summary>
+        /// <param name="ram">Amount of RAM</param>
+        /// <returns>Has the computer enough ram to run a program</returns>
         public bool HasEnoughRam(int ram)
         {
             return ram <= RamCapacity - MemoryUsage;
         }
 
+        /// <summary>
+        ///  Checks if the computer has enough core to run a program.
+        /// </summary>
+        /// <param name="cores">Amount of processor cores</param>
+        /// <returns>Has the computer enough cores to run a program</returns>
         public bool HasEnoughCore(int cores)
         {
             return cores <= ProcessorCore - ProcessorUsage;
         }
 
+        /// <summary>
+        ///   Gets the computers from the given cluster path.
+        /// </summary>
+        /// <param name="Path">Path of the cluster</param>
+        /// <returns>List of computers in the cluster</returns>
         public static List<Computer> GetComputers(string Path)
         {
             List<Computer> computers = new List<Computer>();
@@ -84,6 +105,15 @@ namespace Cluster
             return computers;
         }
 
+        /// <summary>
+        ///   Adds a new computer to the cluster.
+        /// </summary>
+        /// <param name="Path">The path of the cluster</param>
+        /// <param name="name">The name of the computer</param>
+        /// <param name="cores">Processor cores of the computer</param>
+        /// <param name="ram">RAM of the computer</param>
+        /// <param name="computerNames">Already given computer names to check if the name is already exists</param>
+        /// <returns>If there is an error message it returns it otherwise returns null.</returns>
         public static string? AddComputer(string Path, string name, int cores, int ram, List<string>? computerNames = null)
         {
             if (computerNames == null)
@@ -103,6 +133,10 @@ namespace Cluster
             return null;
         }
 
+        /// <summary>
+        ///   Deletes the computer from the cluster.
+        /// </summary>
+        /// <returns>If there is an error message it returns it otherwise returns null.</returns>
         public string? Delete()
         {
             try
@@ -117,6 +151,12 @@ namespace Cluster
             return null;
         }
 
+        /// <summary>
+        ///  Modifies the computer's processor and memory.
+        /// </summary>
+        /// <param name="processor">The capacity of processor</param>
+        /// <param name="memory">The capacity of memory</param>
+        /// <returns>If there is an error message it returns it, otherwise it will be null returned</returns>
         public string? Modify(int processor, int memory)
         {
             if (processor < ProcessorUsage)
@@ -132,6 +172,11 @@ namespace Cluster
             return null;
         }
 
+        /// <summary>
+        ///  Checks if the programs can be outsourced to other computers.
+        /// </summary>
+        /// <param name="path">Path of the clusters</param>
+        /// <returns>Is it possible to outsource the programs or not.</returns>
         public bool CanOutSourcePrograms(string? path = null)
         {
             List<Computer> computers = GetComputers(path ?? MainWindow.ClusterPath)
@@ -149,6 +194,10 @@ namespace Cluster
             return true;
         }
 
+        /// <summary>
+        ///   Giving messagebox to the user to decide whether outsource the programs to other computers.
+        /// </summary>
+        /// <returns>If there is an error message it returns it otherwise returns null.</returns>
         public List<string>? OutSourcePrograms()
         {
             MessageBox mgbox = new()
@@ -218,6 +267,11 @@ namespace Cluster
             return [TranslationSource.Instance.WithParam("Outsourcing.Success", Name), "Success"];
         }
 
+        /// <summary>
+        ///   Outsourcing the programs to other computers.
+        /// </summary>
+        /// <param name="path">Path of the cluster</param>
+        /// <returns>If there is an error message it returns it otherwise returns null.</returns>
         private string? OutSource(string? path = null, bool forceOutSource = false)
         {
             path = path ?? MainWindow.ClusterPath;
@@ -253,10 +307,10 @@ namespace Cluster
         /// <summary>
         ///    Moves a process from one computer to another.
         /// </summary>
-        /// <param name="processFilename"></param>
-        /// <param name="sourceComputer"></param>
-        /// <param name="destinationComputer"></param>
-        /// <param name="path"></param>
+        /// <param name="processFilename">The filename of the current process</param>
+        /// <param name="sourceComputer">Source computer</param>
+        /// <param name="destinationComputer">Destination computer</param>
+        /// <param name="path">Path of the cluster</param>
         private static void MoveProcess(string processFilename, Computer sourceComputer, Computer destinationComputer, string? path = null)
         {
             path = path ?? MainWindow.ClusterPath;

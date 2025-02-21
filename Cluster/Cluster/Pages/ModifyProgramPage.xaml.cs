@@ -29,6 +29,11 @@ namespace Cluster
             Loaded += ModifyProgramPage_Loaded;
         }
 
+        /// <summary>
+        /// Load the program data into the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModifyProgramPage_Loaded(object sender, RoutedEventArgs e)
         {
             if (DataContext is not ProgramType program)
@@ -44,6 +49,11 @@ namespace Cluster
             nbMemory.Value = Program.Memory;
         }
 
+        /// <summary>
+        /// Save the modified program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if(nbActive.Value == null || nbProcessor.Value == null || nbMemory.Value == null)

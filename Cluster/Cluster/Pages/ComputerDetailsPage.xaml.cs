@@ -31,8 +31,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         _window.PropertyChanged += _window_PropertyChanged;
     }
 
-
-
+    /// <summary>
+    /// Sets the data of the page if the DataContext is a Computer
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         if (DataContext is not Computer computer)
@@ -44,6 +47,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         SetData(computer);
     }
 
+    /// <summary>
+    /// Changing values of the charts
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void _window_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(MainWindow.DarkMode))
@@ -57,6 +65,10 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Sets the data of the page
+    /// </summary>
+    /// <param name="computer">Instance of a computer</param>
     private void SetData(Computer computer)
     {
         PageComputer = computer;
@@ -70,6 +82,9 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         chartsRow.Height = PageComputer.processes.Count != 0 ? new GridLength(175) : new GridLength(0);
     }
 
+    /// <summary>
+    /// Updating the charts
+    /// </summary>
     private void UpdateCharts()
     {
         ComputerDetailsPageCharts data = new(PageComputer);
@@ -80,12 +95,22 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         pieMemory.MaxValue = PageComputer.RamCapacity;
     }
 
+    /// <summary>
+    /// Editing computer click event
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Edit_OnClick(object sender, RoutedEventArgs e)
     {
         _window.RootNavigation.GoBack();
         _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyComputerPage), PageComputer);
     }
 
+    /// <summary>
+    /// Deleting computer or outsourcing programs
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Delete_OnClick(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
@@ -132,6 +157,11 @@ public partial class ComputerDetailsPage : CustomPage, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Set data with the right computers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ProcessCard_OnProcessChange(object sender, EventArgs e)
     {
         SetData(Computer.GetComputers(MainWindow.ClusterPath).Find(x => x.Name == PageComputer.Name));

@@ -24,6 +24,11 @@ namespace Cluster
         public int CpuMilliCore { get; set; }
         public int Memory { get; set; }
 
+        /// <summary>
+        /// Reads the .klaszter file in the given path and returns the programs in a list
+        /// </summary>
+        /// <param name="path">The path of the chosen cluster</param>
+        /// <returns>List of program types</returns>
         public static List<ProgramType> ReadClusterFile(string path)
         {
             try
@@ -55,17 +60,31 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Adds a new program to the cluster
+        /// </summary>
+        /// <param name="path">The path of the cluster</param>
         public void AddNewProgramToCluster(string path)
         {
             string fileContent = ClusterFileLines(this);
             File.AppendAllText(path + "/.klaszter", fileContent);
         }
 
+        /// <summary>
+        /// Returns the program in a string format
+        /// </summary>
+        /// <param name="program">Chosen program</param>
+        /// <returns>The program in a string format</returns>
         public static string ClusterFileLines(ProgramType program)
         {
             return $"{program.ProgramName}\n{program.ActivePrograms}\n{program.CpuMilliCore}\n{program.Memory}\n";
         }
 
+        /// <summary>
+        /// Shuts down a program
+        /// </summary>
+        /// <param name="program">Chosen progrm</param>
+        /// <returns>Success or not</returns>
         public static bool ShutdownProgram(ProgramType program)
         {
             List<ProgramType> programs = ReadClusterFile(MainWindow.ClusterPath);
@@ -93,6 +112,14 @@ namespace Cluster
             return true;
         }
 
+        /// <summary>
+        /// Modifies a program
+        /// </summary>
+        /// <param name="program">Chosen program</param>
+        /// <param name="activePrograms">Number of active programs</param>
+        /// <param name="processor">Processor capacity</param>
+        /// <param name="memory">RAM capacity</param>
+        /// <returns>Success or not</returns>
         public static bool ModifyProgram(ProgramType program, int activePrograms, int processor, int memory)
         {
             List<ProgramType> programs = ReadClusterFile(MainWindow.ClusterPath);

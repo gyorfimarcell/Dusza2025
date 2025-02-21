@@ -67,15 +67,27 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Returns a CSV row of the process
+        /// </summary>
+        /// <returns>CSV row</returns>
         public string GetCSVRow() {
             string status = Active ? "Active" : "Inactive";
             return $"{FileName};{HostComputer.Name};{status};{ProcessorUsage};{MemoryUsage}";
-    }
+        }
 
+        /// <summary>
+        /// Writes the process to a file
+        /// </summary>
+        /// <param name="folder">The path of the computer folder</param>
         public void Write(string folder) {
             File.WriteAllText(Path.Combine(folder, FileName), FileContent);
         }
 
+        /// <summary>
+        /// Generates a random 6 character long id for the process
+        /// </summary>
+        /// <returns>The generated id</returns>
         public static string GenerateId()
         {
             Random r = new();
@@ -98,11 +110,17 @@ namespace Cluster
             return id;
         }
 
+        /// <summary>
+        /// Shuts down the process
+        /// </summary>
         public void Shutdown() {
             File.Delete($@"{MainWindow.ClusterPath}\{HostComputer.Name}\{FileName}");
             Log.WriteLog([$"{FileName}", $"{StartTime:yyyy.MM.dd. HH:mm:ss}", $"{Active}", $"{ProcessorUsage}", $"{MemoryUsage}", HostComputer.Name], LogType.ShutdownProgramInstance);
         }
 
+        /// <summary>
+        /// Toggles the active state of the process
+        /// </summary>
         public bool ToggleActive() {
             if (Active == false)
             {

@@ -9,6 +9,12 @@ namespace Cluster
 {
     public class Validate
     {
+
+        /// <summary>
+        /// Validates the computer object
+        /// </summary>
+        /// <param name="computer">Chosen computer</param>
+        /// <returns>Valid or not</returns>
         public static bool ValidateComputer(Computer computer)
         {
             if (computer == null)
@@ -25,6 +31,12 @@ namespace Cluster
                 return false;
             return true;
         }
+
+        /// <summary>
+        /// Validates the process object
+        /// </summary>
+        /// <param name="process">Chosen process</param>
+        /// <returns>Valid or not</returns>
         public static bool ValidateProcess(Process process)
         {
             if (process == null)
@@ -41,6 +53,12 @@ namespace Cluster
                 return false;
             return true;
         }
+
+        /// <summary>
+        /// Validates the program type object
+        /// </summary>
+        /// <param name="programType">Chosen program type</param>
+        /// <returns>Valid or not</returns>
         public static bool ValidateProgramType(ProgramType programType)
         {
             if (programType == null)
@@ -56,6 +74,11 @@ namespace Cluster
             return true;
         }
 
+        /// <summary>
+        /// Validates the filename
+        /// </summary>
+        /// <param name="fileName">Chosen filename</param>
+        /// <returns>Valid or not</returns>
         public static bool ValidateFileName(string fileName)
         {
             fileName = fileName.Trim();

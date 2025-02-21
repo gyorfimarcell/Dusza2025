@@ -26,6 +26,9 @@ public partial class ComputersPage : CustomPage
     }
     ComputersPageSort sort = ComputersPageSort.Name;
 
+    /// <summary>
+    /// Loading the computers of the cluster
+    /// </summary>
     private void LoadData()
     {
         Computers = Computer.GetComputers(MainWindow.ClusterPath);
@@ -43,6 +46,10 @@ public partial class ComputersPage : CustomPage
         MemoryCapacity
     }
 
+    /// <summary>
+    /// Updates the filtering of the computers
+    /// </summary>
+    /// <exception cref="NotImplementedException">If filtering is not implemented</exception>
     private void UpdateFiltering()
     {
         IEnumerable<Computer> filtered = [.. Computers];
@@ -66,11 +73,21 @@ public partial class ComputersPage : CustomPage
         icComputers.ItemsSource = filtered;
     }
 
+    /// <summary>
+    /// Navigate to the AddComputerPage
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void MenuItemNew_OnClick(object sender, RoutedEventArgs e)
     {
         _window.RootNavigation.NavigateWithHierarchy(typeof(AddComputerPage));
     }
 
+    /// <summary>
+    /// Navigate to the ComputerDetailsPage
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ComputerCard_OnClick(object sender, RoutedEventArgs e)
     {
         CardAction cardControl = (CardAction)sender;
@@ -79,6 +96,11 @@ public partial class ComputersPage : CustomPage
         _window.RootNavigation.NavigateWithHierarchy(typeof(ComputerDetailsPage), computer);
     }
 
+    /// <summary>
+    /// Edit computer click event
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Edit_OnClick(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
@@ -89,6 +111,11 @@ public partial class ComputersPage : CustomPage
         _window.RootNavigation.NavigateWithHierarchy(typeof(ModifyComputerPage), computer);
     }
 
+    /// <summary>
+    /// Deleting a computer
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Delete_OnClick(object sender, RoutedEventArgs e)
     {
         e.Handled = true;
@@ -131,6 +158,11 @@ public partial class ComputersPage : CustomPage
         LoadData();
     }
 
+    /// <summary>
+    /// Exporting the computers to a CSV file
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void MenuItemExport_Click(object sender, RoutedEventArgs e)
     {
         SaveFileDialog sfd = new SaveFileDialog();
@@ -147,6 +179,11 @@ public partial class ComputersPage : CustomPage
         }
     }
 
+    /// <summary>
+    /// Sorting the computers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void MenuItemSort_Click(object sender, RoutedEventArgs e)
     {
         foreach (object item in MenuItemSort.Items)
@@ -163,6 +200,12 @@ public partial class ComputersPage : CustomPage
         sort = (ComputersPageSort)Enum.Parse(typeof(ComputersPageSort), (string)menuItem.Tag);
         UpdateFiltering();
     }
+
+    /// <summary>
+    /// Optimizing the computers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void MenuItemOptimize_Click(object sender, RoutedEventArgs e)
     {
         MainWindow window = (MainWindow)Application.Current.MainWindow!;
@@ -228,11 +271,21 @@ public partial class ComputersPage : CustomPage
         window.RootSnackbarService.Show(TranslationSource.T("Success"), TranslationSource.T("Optimize.Success"), ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
     }
 
+    /// <summary>
+    /// Filtering the computers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void tbFilter_TextChanged(object sender, TextChangedEventArgs e)
     {
         UpdateFiltering();
     }
 
+    /// <summary>
+    /// Changing the sort order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void MenuItemSortOrder_Click(object sender, RoutedEventArgs e)
     {
         UpdateFiltering();

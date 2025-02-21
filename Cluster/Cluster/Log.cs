@@ -36,6 +36,9 @@ namespace Cluster
     public class Log
     {
 
+        /// <summary>
+        /// Fields of the logs
+        /// </summary>
         public static Dictionary<LogType, List<string>> LogDataTypes = new()
         {
             { LogType.OpenProgram, new(){} },
@@ -60,6 +63,10 @@ namespace Cluster
             { LogType.GenerateCluster, new(){ "Path", "Computers", "Programtypes", "Processes" } }
         };
 
+        /// <summary>
+        /// Returns the path of the log directory
+        /// </summary>
+        /// <returns>The path of the directory</returns>
         public static string GetLogDirectoryPath()
         {
             string logDirectoryPath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, "Logs");
@@ -69,6 +76,12 @@ namespace Cluster
             }
             return logDirectoryPath;
         }
+
+        /// <summary>
+        /// Writes a log entry to the log file
+        /// </summary>
+        /// <param name="logData">The data which should be written into the log fiel</param>
+        /// <param name="type">The type of the log</param>
         public static void WriteLog(List<string> logData, LogType type)
         {
             if (logData == null) return;

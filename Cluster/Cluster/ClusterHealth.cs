@@ -14,6 +14,11 @@ namespace Cluster
         public List<string> Errors { get; set; }
         public bool Ok => Errors.Count == 0;
 
+        /// <summary>
+        /// ClusterHealth constructor
+        /// </summary>
+        /// <param name="computers">List of computers</param>
+        /// <param name="programs">List of programs</param>
         public ClusterHealth(List<Computer> computers, List<ProgramType> programs)
         {
             Errors = new();
@@ -54,6 +59,10 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Fix the issues in the cluster
+        /// </summary>
+        /// <returns>The number of changed processes</returns>
         public static int FixIssues()
         {
             List<Computer> computers = Computer.GetComputers(MainWindow.ClusterPath);

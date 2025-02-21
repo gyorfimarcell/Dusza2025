@@ -37,6 +37,11 @@ namespace Cluster
             cbComputer.ItemsSource = Computer.GetComputers(path).Select(x => x.Name);
         }
 
+        /// <summary>
+        /// Add new instance to the selected computer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (cbComputer.SelectedIndex == -1 || cbProgram.SelectedIndex == -1)
@@ -70,6 +75,11 @@ namespace Cluster
             Log.WriteLog([$"{process.FileName}", $"{process.StartTime:yyyy.MM.dd. HH:mm:ss}", $"{process.Active}", $"{process.ProcessorUsage}", $"{process.MemoryUsage}", computer.Name], LogType.RunProgramInstance);
         }
 
+        /// <summary>
+        /// Changing the items in the computer combobox based on the selected program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbProgram_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ProgramType program = instances.Find(x => x.ProgramName == cbProgram.SelectedItem.ToString());

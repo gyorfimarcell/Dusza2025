@@ -32,6 +32,11 @@ namespace Cluster
             window = (MainWindow)Application.Current.MainWindow!;
         }
 
+        /// <summary>
+        /// Adds a computer to the cluster.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (tbName.Text == "" || nbProcessor.Value == null || nbMemory.Value == null)

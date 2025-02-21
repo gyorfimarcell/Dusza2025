@@ -34,6 +34,11 @@ namespace Cluster
             tsDarkmode.IsChecked = _window.DarkMode;
         }
 
+        /// <summary>
+        /// Changes the language of the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string newLanguage = (string)((ComboBoxItem)cbLanguage.SelectedItem).Tag;
@@ -45,6 +50,11 @@ namespace Cluster
             _window.RefreshLblPath();
         }
 
+        /// <summary>
+        /// Changes the darkmode of the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsDarkmode_Click(object sender, RoutedEventArgs e)
         {
             _window.DarkMode = tsDarkmode.IsChecked == true;

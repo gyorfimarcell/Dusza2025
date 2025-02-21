@@ -82,12 +82,18 @@ namespace Cluster
             Log.WriteLog([], LogType.OpenProgram);
         }
 
+        /// <summary>
+        /// Refreshes the label that shows the path of the currently loaded cluster
+        /// </summary>
         public void RefreshLblPath()
         {
             lblPath.Text = Path.GetFileName(ClusterPath);
             loadNavItem.Content = TranslationSource.T("Menu.LoadAnother");
         }
 
+        /// <summary>
+        /// Enables all navigation items in the NavigationView
+        /// </summary>
         public void EnableNavigationItems()
         {
             foreach (var item in RootNavigation.MenuItems)
@@ -100,6 +106,9 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Loads the last opened cluster from the log files
+        /// </summary>
         private void LoadLastOpenedCluster()
         {
             string directoryPath = Log.GetLogDirectoryPath();
@@ -149,6 +158,9 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Opens a dialog to select a cluster folder
+        /// </summary>
         public void OpenClusterSelectionDialog() {
             OpenFolderDialog ofd = new OpenFolderDialog();
             if (ofd.ShowDialog() == true)
@@ -173,6 +185,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// If MainWindow loaded sets light or dark mode then switches to the last opened cluster
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             bool savedDarkMode = Registry.GetValue(SETTINGS_KEY, "darkMode", false) is string s && s == "True";
@@ -196,6 +213,11 @@ namespace Cluster
             LoadLastOpenedCluster();
         }
 
+        /// <summary>
+        /// Sets the header controls and the breadcrumbs for the current page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void RootNavigationOnNavigated(NavigationView sender, NavigatedEventArgs args)
         {
             BreadcrumbBar.ItemsSource = originalBreadcrumbs;
@@ -210,16 +232,41 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Opens the cluster selection dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void loadNavItem_Click(object sender, RoutedEventArgs e)
         {
             OpenClusterSelectionDialog();
         }
 
+        /// <summary>
+        /// Closes the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FluentWindow_Closed(object sender, EventArgs e)
         {
             Log.WriteLog([], LogType.CloseProgram);
         }
 
+        /// <summary>
+        /// Switches between light and dark mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemTheme_Click(object sender, RoutedEventArgs e)
+        {
+            DarkMode = !DarkMode;
+        }
+
+        /// <summary>
+        /// Opening file explorer at the cluster path with mouse
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LblPath_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (ClusterPath != "")
@@ -228,6 +275,11 @@ namespace Cluster
             }
         }
 
+        /// <summary>
+        /// Opening file explorer at the cluster path with keyboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LblPath_OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key is Key.Enter or Key.Space && ClusterPath != "")
