@@ -717,13 +717,4 @@
   <data name="GeneratePage.Consistent" xml:space="preserve">
     <value>Egyenletes</value>
   </data>
-  <data name="GeneratePage.SpreadClusters" xml:space="preserve">
-    <value>Futattandó példányok szórása</value>
-  </data>
-  <data name="GeneratePage.Random" xml:space="preserve">
-    <value>Véletlenszerű</value>
-  </data>
-  <data name="GeneratePage.Consistent" xml:space="preserve">
-    <value>Egyenletes</value>
-  </data>
 </root>

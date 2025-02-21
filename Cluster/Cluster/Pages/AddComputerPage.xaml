@@ -43,11 +43,11 @@
                           MinWidth="250" />
         </controls:CustomCard>
 
-        <ui:Button x:Name="btnAdd"
-                   Appearance="Primary"
-                   HorizontalAlignment="Right"
-                   MinWidth="300"
-                   Content="{local:Translate Add}"
-                   Click="btnAdd_Click" />
+        <ui:Button
+            Appearance="Primary"
+            HorizontalAlignment="Right"
+            MinWidth="300"
+            Content="{local:Translate Add}"
+            Click="btnAdd_Click" />
     </StackPanel>
 </Page>
