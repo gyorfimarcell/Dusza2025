@@ -65,10 +65,7 @@ namespace Cluster
         /// <returns>The path of the directory</returns>
         public static string GetLogDirectoryPath()
         {
-            string logDirectoryPath =
-                Path.Combine(
-                    Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName!,
-                    "Logs");
+            string logDirectoryPath = "Logs";
             if (!Directory.Exists(logDirectoryPath))
             {
                 Directory.CreateDirectory(logDirectoryPath);
