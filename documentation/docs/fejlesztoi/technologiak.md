@@ -23,11 +23,15 @@ A program megjelenésének alapját a `WPF-UI` package adja. Ez a Microsoft ált
 valósítja meg WPF-ben. Számos Windows rendszeralkalmazás követi ezeket az irányelveket. A Fluent 2 észtétikailag vonzóbbá
 és felhasználóbarátabbá teszi az alkalmazást. Ezen kívül rengeteg, egységes stílusú ikont is tartalmaz.
 
+A kiegészítő az MIT licenc feltételei szerint használható.
+
 ### LiveCharts 2
 
 A `LiveCharts` egy több keretrendszerhez is elérhető library, ami különböző grafikonok megjelenítését teszi lehetővé.
 Számos grafikon típust tartalmaz, beleértve az általunk használt kör- és oszlopdiagrammokat is. Mindezt egyszerűen testreszabható,
 esztétikus, és teljesítmény-kímélő módon biztosítja.
+
+A kiegészítő az MIT licenc feltételei szerint használható.
 
 ## Fejlesztői eszközök
 
