@@ -2,13 +2,24 @@ site_name: Kibirod, kolega Dokumentáció
 site_url: https://konlll.github.io/dusza2025/
 
 nav:
-  - Kezdőlap: 'index.md'
+  - Kezdőlap: "index.md"
   - Bevezetés:
-    - 'bevezetes/programrol.md'
+      - "bevezetes/programrol.md"
+      - "bevezetes/licenszek.md"
   - Felhasználói dokumentáció:
-    - 'felhasznaloi/mukodes.md'
+      - "felhasznaloi/mukodes.md"
+      - "felhasznaloi/klaszter.md"
+      - "felhasznaloi/szamitogep.md"
+      - "felhasznaloi/folyamat.md"
+      - "felhasznaloi/program.md"
+      - "felhasznaloi/naplozas.md"
+      - "felhasznaloi/beallitasok.md"
   - Fejlesztői dokumentáció:
-    - 'fejlesztoi/fejlesztes.md'
+      - "fejlesztoi/fejlesztes.md"
+      - "fejlesztoi/futtatas.md"
+      - "fejlesztoi/szerkezet.md"
+      - "fejlesztoi/technologiak.md"
+      - "fejlesztoi/dokumentacio.md"
 
 theme:
   name: material
@@ -21,7 +32,7 @@ theme:
         icon: material/brightness-auto
         name: Váltás világos módra
     - media: "(prefers-color-scheme: light)"
-      scheme: default 
+      scheme: default
       toggle:
         icon: material/brightness-7
         name: Váltás sötét módra

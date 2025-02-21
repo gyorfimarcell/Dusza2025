@@ -379,7 +379,7 @@
     <value>Futtatás</value>
   </data>
   <data name="Errors.NotEnoughResources" xml:space="preserve">
-    <value>Ennek a számítógépnek nincs elég erőforrás!</value>
+    <value>A gazdaszámítógépnek nincs elég erőforrása.</value>
   </data>
   <data name="NewInstancePage.Success.Title" xml:space="preserve">
     <value>Folyamat elindítva</value>
@@ -707,6 +707,15 @@
   </data>
   <data name="Export.Success.Text" xml:space="preserve">
     <value>Fájl elmentve a '{0}' elérési útra.</value>
+  </data>
+  <data name="GeneratePage.SpreadClusters" xml:space="preserve">
+    <value>Futattandó példányok szórása</value>
+  </data>
+  <data name="GeneratePage.Random" xml:space="preserve">
+    <value>Véletlenszerű</value>
+  </data>
+  <data name="GeneratePage.Consistent" xml:space="preserve">
+    <value>Egyenletes</value>
   </data>
   <data name="GeneratePage.SpreadClusters" xml:space="preserve">
     <value>Futattandó példányok szórása</value>
