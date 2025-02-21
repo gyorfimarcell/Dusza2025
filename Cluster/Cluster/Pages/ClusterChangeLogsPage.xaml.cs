@@ -98,6 +98,10 @@ namespace Cluster
         {
             if (sender is Wpf.Ui.Controls.Button { Parent: Grid grid })
             {
+                Wpf.Ui.Controls.Button button = sender as Wpf.Ui.Controls.Button;
+
+                button.Content = button.Content == TranslationSource.T("Logs.ExpandAll") ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
+
                 expandAllItem((grid.Parent as Expander)!);
             }
         }

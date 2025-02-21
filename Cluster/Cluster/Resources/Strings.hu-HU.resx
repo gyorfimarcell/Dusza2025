@@ -561,11 +561,11 @@
   <data name="Errors.SpreadNone" xml:space="preserve">
     <value>Nincsenek számítógépek vagy aktív folyamatok a szóráshoz!</value>
   </data>
-  <data name="LogType.OpenProgram" xml:space="preserve">
-    <value>Program megnyitás</value>
+  <data name="LogType.OpenApplication" xml:space="preserve">
+    <value>Alkalmazás megnyitás</value>
   </data>
-  <data name="LogType.CloseProgram" xml:space="preserve">
-    <value>Program bezárás</value>
+  <data name="LogType.CloseApplication" xml:space="preserve">
+    <value>Alkalmazás bezárás</value>
   </data>
   <data name="LogType.LoadCluster" xml:space="preserve">
     <value>Klaszter betöltés</value>
@@ -716,5 +716,8 @@
   </data>
   <data name="GeneratePage.Consistent" xml:space="preserve">
     <value>Egyenletes</value>
+  </data>
+  <data name="Logs.CollapseAll" xml:space="preserve">
+    <value>Összecsuk</value>
   </data>
 </root>

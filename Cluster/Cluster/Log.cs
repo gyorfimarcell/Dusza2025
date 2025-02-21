@@ -5,8 +5,8 @@ namespace Cluster
 {
     public enum LogType
     {
-        OpenProgram,
-        CloseProgram,
+        OpenApplication,
+        CloseApplication,
         LoadCluster,
         AddComputer,
         DeleteComputer,
@@ -34,8 +34,8 @@ namespace Cluster
         /// </summary>
         public static readonly Dictionary<LogType, List<string>> LogDataTypes = new()
         {
-            { LogType.OpenProgram, [] },
-            { LogType.CloseProgram, [] },
+            { LogType.OpenApplication, [] },
+            { LogType.CloseApplication, [] },
             { LogType.LoadCluster, ["Path"] },
             { LogType.AddComputer, ["Name", "CPU", "Memory"] },
             { LogType.DeleteComputer, ["Name", "CPU", "Memory"] },
