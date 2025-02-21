@@ -146,7 +146,7 @@ namespace Cluster
                             {
                                 new DateTime(2020, 1, 1)
                                     .AddDays(rnd.Next(0, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays))
-                                    .ToString(),
+                                    .ToString("yyyy. MMMM dd.", new System.Globalization.CultureInfo("hu-HU")),
                                 "AKTÍV",
                                 program.CpuMilliCore.ToString(),
                                 program.Memory.ToString()
@@ -177,8 +177,8 @@ namespace Cluster
                         File.WriteAllLines(filePath, new List<string>
                         {
                             new DateTime(2020, 1, 1)
-                                .AddDays(rnd.Next(0, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays))
-                                .ToString(),
+                                    .AddDays(rnd.Next(0, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays))
+                                    .ToString("yyyy. MMMM dd.", new System.Globalization.CultureInfo("hu-HU")),
                             "INAKTÍV",
                             program.CpuMilliCore.ToString(),
                             program.Memory.ToString()
