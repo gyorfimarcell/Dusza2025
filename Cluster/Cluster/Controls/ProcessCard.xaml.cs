@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -68,10 +69,19 @@ namespace Cluster.Controls
 
         private void btnShutdown_Click(object sender, RoutedEventArgs e)
         {
-            Process.Shutdown();
+            string? res = Process.Shutdown();
 
             if (OnProcessShutdown == null) return;
             OnProcessShutdown(this, new());
+
+            if (res == null)
+            {
+                ((MainWindow)Application.Current.MainWindow!).RootSnackbarService.Show(TranslationSource.T("Success"), $"'{Process.FileName}' {TranslationSource.T("ProgramsPage.Shutdown.Success")}",
+                    ControlAppearance.Success, new SymbolIcon(SymbolRegular.Checkmark24), TimeSpan.FromSeconds(10));
+                return;
+            }
+            ((MainWindow)Application.Current.MainWindow!).RootSnackbarService.Show(TranslationSource.T("Errors.Error"), res,
+                ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), TimeSpan.FromSeconds(10));
         }
 
         private void btnActivate_Click(object sender, RoutedEventArgs e)
