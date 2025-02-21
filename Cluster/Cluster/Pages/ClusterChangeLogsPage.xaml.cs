@@ -108,10 +108,6 @@ namespace Cluster
         {
             if (sender is Wpf.Ui.Controls.Button { Parent: Grid grid })
             {
-                Wpf.Ui.Controls.Button button = sender as Wpf.Ui.Controls.Button;
-
-                button.Content = button.Content == TranslationSource.T("Logs.ExpandAll") ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
-
                 expandAllItem((grid.Parent as Expander)!);
             }
         }
@@ -158,14 +154,7 @@ namespace Cluster
                 headerGrid.Children.Add(headerButton);
 
                 expander.Header = headerGrid;
-                expander.Collapsed += (sender, e) =>
-                {
-                   headerButton.Content = TranslationSource.T("Logs.ExpandAll");
-                };
-                expander.Expanded += (sender, e) =>
-                {
-                    headerButton.Content = TranslationSource.T("Logs.CollapseAll");
-                };
+
                 var stackPanel = new StackPanel();
 
                 for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
@@ -229,6 +218,33 @@ namespace Cluster
                     expander.Content = stackPanel;
                     stLogs.Children.Add(expander);
                 }
+
+                expander.Collapsed += (sender, e) =>
+                {
+                    bool isAllSubItemsExpanded = true;
+                    foreach (object? child in ((StackPanel)expander.Content).Children)
+                    {
+                        if (child is Expander { IsExpanded: false })
+                        {
+                            isAllSubItemsExpanded = false;
+                            break;
+                        }
+                    }
+                    headerButton.Content = isAllSubItemsExpanded ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
+                };
+                expander.Expanded += (sender, e) =>
+                {
+                    bool isAllSubItemsExpanded = true;
+                    foreach (object? child in ((StackPanel)expander.Content).Children)
+                    {
+                        if (child is Expander { IsExpanded: false })
+                        {
+                            isAllSubItemsExpanded = false;
+                            break;
+                        }
+                    }
+                    headerButton.Content = isAllSubItemsExpanded ? TranslationSource.T("Logs.CollapseAll") : TranslationSource.T("Logs.ExpandAll");
+                };
 
                 showStatus.Visibility = stLogs.Children.Count > 0 ? Visibility.Hidden : Visibility.Visible;
             }
