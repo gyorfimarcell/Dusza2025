@@ -38,7 +38,7 @@ Számítógép törlése esetén két opció léphet fel. Az egyik, hogy a kitö
 
 **Kivétel**: Szélsőséges esetben történhet olyan, hogy a többi rendelkezsére álló számítógépek magas kihasználtsága miatt nincs lehetőség teljes tehermentesítésre. Erre a program figyelmeztet minket, és csak annyi folyamatot fog áthelyezni a többi számítógépre, amennyit csak tud, a többit meg rajta hagyja a jelenlegi gépen. Ebben az esetben akár a törlés gombra, akár a kiszervezés gombra kattintva, csak annyi program fog kiszerveződni, amennyi csak tud, a többi pedig a gépen marad.
 
-![Számítógép nem törölhető](../img/felhasznaloi/szamitogep/are-you-sure-not-deletable.png)
+![Számítógép nem törölhető](../img/felhasznaloi/szamitogep/computer-outsource.png)
 
 ## Rendezés és szűrés
 
@@ -90,7 +90,7 @@ Ez amennyiben nem lehetséges a program felajánlja azt a lehetőséget, hogy mi
 
 ## Részletek
 
-A számítógép részletesebb információinak megtekintéséhez rá kell kattintani a megfelelő kártyára. Ezután látható a számítógépen futó folyamatok száma (aktív és inaktív), a számítógép leterheltsége, valamint különféle grafikonok. A grafikonok azt mutatják meg, hogy milyen eloszlásban mennyi program fut, valamint hogy az egyes programok milyen eloszlásban terhelik processzor és memória szintjén egyaránt a számítógépeket.
+A számítógépek részletesebb információinak megtekintéséhez rá kell kattintani a megfelelő kártyára. Ezután látható a számítógépen futó folyamatok száma (aktív és inaktív), a számítógép leterheltsége, valamint különféle grafikonok. A grafikonok azt mutatják meg, hogy milyen eloszlásban mennyi program fut, valamint hogy az egyes programok milyen eloszlásban terhelik processzor és memória szintjén egyaránt a számítógépeket.
 
 ![Számítógép részletek](../img/felhasznaloi/szamitogep/computer-details.png)
 
@@ -98,7 +98,7 @@ Továbbiakban lehetőség van itt is a számítógép törlésére, amire ugyan 
 
 ![Számítógép részletek törlés](../img/felhasznaloi/szamitogep/computer-details-delete.png)
 
-Lehet még a számítógépet szerkeszteni is, ahol a processzor és a memória kapacitását lehet állítani. Fontos megjegyeznivaló, hogy mind a processzor és mind a memóriakapacitásnak nagyobbnak kell lennie, mint az akutális leterheltség, ha ennek nem teszünk eleget, a program nem fogja engedélyezni a szerkesztést.
+Lehet még a számítógépeket szerkeszteni is, ahol a processzor és a memória kapacitását lehet állítani. Fontos megjegyeznivaló, hogy mind a processzor és mind a memóriakapacitásnak nagyobbnak kell lennie, mint az akutális leterheltség, ha ennek nem teszünk eleget, a program nem fogja engedélyezni a szerkesztést.
 
 ![Számítógép részletek szerkesztés](../img/felhasznaloi/szamitogep/computer-details-edit.png)
 

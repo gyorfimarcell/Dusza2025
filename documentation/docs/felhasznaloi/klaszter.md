@@ -42,7 +42,7 @@ A felhasználó legfőbb célja, hogy olyan állapotot érjen el a klaszteren, a
 
 ## Betöltés
 
-A program megynitása után több lehetőségünk van:
+A program megnyitása után több lehetőségünk van:
 
 1. Egy már jelenlegi klaszter kiválasztása
    ![Meglévő klaszter betöltése](../img/felhasznaloi/klaszter/open-existing-cluster.png)<br>
