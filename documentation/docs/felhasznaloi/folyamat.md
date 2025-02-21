@@ -75,22 +75,21 @@ Az exportált fájlban minden egyes sor egy-egy folyamat adatait tartalmazza, am
 Új folyamatot indítani a `Folyamatok` fül jobb felső sarkában található `[Új]` gombbal lehet. A gomb megnyomásakor egy felugró oldal jelenik meg, ahol meg kell adni a <b>program típusát</b>, a <b>[számítógépet](szamitogep.md)</b>, ahol a folyamat futni fog, valamint annak <b>[állapotát](#allapot)</b>. <br>
 ![Export gomb](../img/felhasznaloi/folyamat/run-new-process.png) <br>
 ![Export gomb](../img/felhasznaloi/folyamat/run-new-process-page.png) <br>
-Amikor a [programtípust](program.md) választjuk ki, és a folyamat aktív állapotot kap, a rendszer automatikusan ellenőrzi, hogy mely [számítógépek](szamitogep.md) erőforrásai elegendőek-e a folyamat futtatásához, és csak ezeket engedi kiválasztani. Ha a folyamat inaktív állapotot kap, akkor az erőforrások nem befolyásolják a választást. <br>
-*`*screenshot*`* <br>
+A [programtípus](program.md) kiválasztása utáni kritikus lépés a folyamat jövőbeni állapotának megadása. Ha folyamat aktív állapotot kap, a rendszer automatikusan ellenőrzi, hogy mely [számítógépek](szamitogep.md) erőforrásai elegendőek a folyamat futtatásához, és csak ezeket engedi kiválasztani. Ha a folyamat inaktív lesz, akkor bármely számítógép kiválasztható, hiszen nem lesz hatással futtatáskor annak erőforrásaira.<br>
+![Inaktív folyamat futtatása](../img/felhasznaloi/folyamat/run-inactive-process.png) <br>
 A `[Futtatás]` gombra kattintva, ha a megadott adatok helyesek, a rendszer végrehajtja a műveletet és elindítja az új folyamatot.
 
 ## Leállítás
 
 Egy folyamatot könnyedén leállíthatunk a folyamat szélén található `Kuka(🗑️)` ikonra kattintva. <br>
-*`*screenshot*`* <br>
+![Folyamat leállítása](../img/felhasznaloi/folyamat/process-delete.png) <br>
 Ez a művelet automatikusan törli az adott folyamatot a rendszerből. Fontos megjegyezni, hogy a folyamat leállítása hatással van a [klaszter állapotára](klaszter.md#allapot), mivel a folyamatok leállítása erőforrás-változásokkal járhat. A leállítás sikerességét vagy annak hiányát egy *felugró üzenet* jelzi, amely tájékoztat a művelet eredményéről, így azonnal értesülhetünk arról, hogy a folyamat sikeresen leállt-e vagy sem.<br>
-*`*screenshot*`*
+![Folyamat leállításának visszajelzése](../img/felhasznaloi/folyamat/shutdown-process-snackbar.png)
 
 ## Egyéb információk
 
-Érdekesség, hogy minden egyes folyamatnál mindig pontosan jelzésre kerül, hogy mikor indult el. <br>
-*`*screenshot*`* <br>
-Azonban nemcsak az indítás ideje lehet figyelemre méltó, hanem a programnevek is, mivel egyesek rejtett utalásokat, vagy easter egg-eket tartalmaznak, amelyek szórakoztató felfedezéseket kínálnak. <br>
-*`*screenshot*`* <br>
-Emellett egy számítógépen akár végtelen számú inaktív program is jelen lehet, hiszen bár ezek nem aktívan futnak, mégis ott maradhatnak a rendszerben, anélkül, hogy erőforrást használnának, ezáltal nem befolyásolják a rendszer működését.<br>
-*`*screenshot*`*
+- Érdekesség, hogy minden egyes folyamatnál mindig pontosan jelzésre kerül, hogy mikor indult el.
+- Azonban nemcsak az indítás ideje lehet figyelemre méltó, hanem a programnevek is, mivel egyesek rejtett utalásokat, vagy easter egg-eket tartalmaznak, amelyek szórakoztató felfedezéseket kínálnak.
+![Folyamat easter eggek](../img/felhasznaloi/folyamat/process-easter-egg.png)
+- Emellett egy számítógépen akár végtelen számú inaktív program is jelen lehet, hiszen bár ezek nem aktívan futnak, mégis ott maradhatnak a rendszerben, anélkül, hogy erőforrást használnának, ezáltal nem befolyásolják a rendszer működését.
+![Sok inaktív folyamat](../img/felhasznaloi/folyamat/lot-inactive-processes.png)
