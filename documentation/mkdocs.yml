@@ -7,6 +7,7 @@ nav:
       - "bevezetes/programrol.md"
       - "bevezetes/feladat.md"
       - "bevezetes/csapatunk.md"
+      - "bevezetes/beadott.md"
   - Felhasználói dokumentáció:
       - "felhasznaloi/mukodes.md"
       - "felhasznaloi/klaszter.md"
@@ -25,8 +26,8 @@ nav:
 theme:
   name: material
   language: hu
-  icon:
-    logo: material/server
+  logo: img/icon.png
+  favicon: img/icon.png
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
