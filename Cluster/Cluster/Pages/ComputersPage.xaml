@@ -148,7 +148,7 @@
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Value="" Binding="{Binding Text, ElementName=tbFilter}">
-                            <Setter Value="{local:Translate ComputersPage.Empty.EmptyText}" Property="Description"/>
+                            <Setter Value="{local:Translate ComputersPage.Empty.EmptyText}" Property="Description" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

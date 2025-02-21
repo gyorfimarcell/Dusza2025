@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:Cluster.Controls"
                     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
     <Style TargetType="{x:Type local:CustomCard}">
-        <Setter Value="False" Property="Focusable"/>
+        <Setter Value="False" Property="Focusable" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CustomCard}">
