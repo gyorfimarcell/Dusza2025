@@ -1,4 +1,15 @@
+---
+hide:
+  - toc
+---
+
 # Kezdőlap
+
+<div id="homepage-images">
+   <img src="./img/felhasznaloi/szamitogep/computer-landing-page.png"/>
+   <img src="./img/felhasznaloi/folyamat/frontpage.png"/>
+   <img src="./img/felhasznaloi/program/program-list.png"/>
+</div>
 
 ## Bevezetés
 

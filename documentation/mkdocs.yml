@@ -65,3 +65,6 @@ markdown_extensions:
   - admonition
   - toc
   - tables
+
+extra_css:
+  - style.css
